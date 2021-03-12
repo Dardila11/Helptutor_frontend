@@ -12,6 +12,7 @@ import {
   makeStyles
 } from '@material-ui/core'
 import Page from '../../components/Page'
+import SignInGoogle from '../../components/SignGoogle'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -186,6 +187,9 @@ const RegisterView = () => {
                     variant="contained">
                     Registrarse
                   </Button>
+                </Box>
+                <Box my={2}>
+                  <SignInGoogle></SignInGoogle>
                 </Box>
               </form>
             )}
