@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import {
@@ -9,9 +9,14 @@ import {
   FormHelperText,
   TextField,
   Typography,
-  makeStyles
+  Select,
+  makeStyles,
+  InputLabel,
+  FormControl,
+  MenuItem
 } from '@material-ui/core'
 import Page from '../../components/Page'
+import allCountries from 'all-countries'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,10 +24,21 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3)
+  },
+  selectControl: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(1)
   }
 }))
 
 const RegisterView = () => {
+  const [countries, setCountries] = useState([])
+  useEffect(() => {
+    const getAllCountries = () => {
+      setCountries(allCountries.all.sort())
+    }
+    getAllCountries()
+  }, [])
   const classes = useStyles()
   return (
     <Page className={classes.root} title="Register">
@@ -34,7 +50,7 @@ const RegisterView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              name: 'lalal',
+              name: '',
               email: '',
               country: '',
               phone: '',
@@ -93,7 +109,7 @@ const RegisterView = () => {
                   helperText={touched.name && errors.name}
                   label="Nombre"
                   margin="normal"
-                  onblur={handleBlur}
+                  onBlur={handleBlur}
                   onChange={handleChange}
                   name="name"
                   value={values.name}
@@ -105,31 +121,59 @@ const RegisterView = () => {
                   helperText={touched.email && errors.email}
                   label="Correo Electrónico"
                   margin="normal"
-                  onblur={handleBlur}
+                  onBlur={handleBlur}
                   onChange={handleChange}
                   name="email"
                   value={values.email}
                   variant="outlined"
                 />
-                <TextField
+                <FormControl
+                  variant="outlined"
+                  className={classes.selectControl}
+                  error={Boolean(touched.country && errors.country)}
+                  helpertext={touched.country && errors.country}
+                  onBlur={handleBlur}
+                  fullWidth>
+                  <InputLabel id="select-country-label"> Pais </InputLabel>
+                  <Select
+                    labelId="select-country-label"
+                    id="select-country"
+                    value={values.country}
+                    name="country"
+                    onChange={handleChange}
+                    label="Pais">
+                    <MenuItem value="">
+                      <em>---</em>
+                    </MenuItem>
+                    {countries.map((country, index) => (
+                      <MenuItem key={index} value={country}>
+                        {country}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {Boolean(touched.country && errors.country) && (
+                    <FormHelperText error> {errors.country} </FormHelperText>
+                  )}
+                </FormControl>
+                {/* <TextField
                   error={Boolean(touched.country && errors.country)}
                   fullWidth
                   helperText={touched.country && errors.country}
                   label="Pais"
                   margin="normal"
-                  onblur={handleBlur}
+                  onBlur={handleBlur}
                   onChange={handleChange}
                   name="country"
                   value={values.country}
                   variant="outlined"
-                />
+                /> */}
                 <TextField
                   error={Boolean(touched.phone && errors.phone)}
                   fullWidth
                   helperText={touched.phone && errors.phone}
                   label="Teléfono"
                   margin="normal"
-                  onblur={handleBlur}
+                  onBlur={handleBlur}
                   onChange={handleChange}
                   name="phone"
                   value={values.phone}
@@ -141,7 +185,7 @@ const RegisterView = () => {
                   helperText={touched.password && errors.password}
                   label="Contraseña"
                   margin="normal"
-                  onblur={handleBlur}
+                  onBlur={handleBlur}
                   onChange={handleChange}
                   type="password"
                   name="password"
@@ -156,7 +200,7 @@ const RegisterView = () => {
                   helperText={touched.confirmPassword && errors.confirmPassword}
                   label="Confirmar Contraseña"
                   margin="normal"
-                  onblur={handleBlur}
+                  onBlur={handleBlur}
                   onChange={handleChange}
                   type="password"
                   name="confirmPassword"
