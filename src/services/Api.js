@@ -22,14 +22,18 @@ const getUniversity = () => {
 /* Tutor services */
 
 const postTutor = data => {
-    return https.post('/api/tutor', data);
+    return https.post('/api/tutor/', data)
   };
 
+const postGoogleTutor = data => {
+    return https.post('/api/google/tutor/', data)
+}  
 export default {
     getCountries,
     getState,
     getCity,
     getUniversity,
-    postTutor
+    postTutor,
+    postGoogleTutor,
 }
 

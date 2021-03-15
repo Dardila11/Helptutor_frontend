@@ -111,7 +111,20 @@ const RegisterView = () => {
             */
               console.log('Registrando')
               console.log(values)
-              
+              let jsonValues = {
+                first_name: values.name,
+                email: values.email,
+                country: values.country,
+                telephone: values.phone,
+                password: values.password,      
+              }
+              console.log(jsonValues);
+               Api.postTutor(jsonValues)
+                .then(res => {
+                  if (res.status == 201) {
+                    console.log(res.status)
+                  }
+                })
             }}>
             {({
               errors,

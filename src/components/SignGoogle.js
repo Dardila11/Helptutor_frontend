@@ -1,22 +1,19 @@
 import React from 'react';
-import {
-  Container,
-  Card,
-  Typography,
-  Box,
-  makeStyles,
-  CardActionArea,
-  Button
-} from '@material-ui/core';
 import GoogleLogin from 'react-google-login'
+import Api from '../services/Api'
 
-const responseGoogle = (response)=> {
-    console.log(response)
+const responseGoogle = async (response)=> { 
+    let jsonValues = {
+      id_token: response.tokenId,          
+    }
+    console.log(jsonValues);
+     Api.postGoogleTutor(jsonValues)
+      .then(res => {
+        if (res.status === 201) {
+          console.log(res.status)
+        }
+      })
 }
-
-const useStyles = makeStyles({
-  root: {}
-});
 
 const SignInGoogle = () => {
  return(
