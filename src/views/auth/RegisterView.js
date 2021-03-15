@@ -18,6 +18,7 @@ import {
 import Page from '../../components/Page'
 import allCountries from 'all-countries'
 import SignInGoogle from '../../components/SignGoogle'
+import RoleCard from '../../components/RoleCard'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
   selectControl: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(1)
+  },
+  input: {
+    color: '#005579'
   }
 }))
 
@@ -57,7 +61,9 @@ const RegisterView = () => {
               phone: '',
               password: '',
               confirmPassword: '',
-              policy: false
+              policy: false,
+              isStudent: true,
+              isTutor: false
             }}
             validationSchema={Yup.object().shape({
               name: Yup.string().max(255).required('Nombre es requerido'),
@@ -101,20 +107,27 @@ const RegisterView = () => {
               <form onSubmit={handleSubmit}>
                 <Box mb={3} textAlign="center">
                   <Typography color="textPrimary" variant="h2">
-                    Crear cuenta
+                    INSCRIBETE
                   </Typography>
+                </Box>
+                <Box display="flex" textAlign="center" justifyContent="center">
+                  <RoleCard role="ESTUDIANTE" isSelected={values.isStudent}    />
+                  <RoleCard role="TUTOR" isSelected={values.isTutor}    />
                 </Box>
                 <TextField
                   error={Boolean(touched.name && errors.name)}
                   fullWidth
                   helperText={touched.name && errors.name}
-                  label="Nombre"
+                  label="Nombre Completo"
                   margin="normal"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   name="name"
                   value={values.name}
                   variant="outlined"
+                  InputProps={{
+                    className: classes.input
+                  }}
                 />
                 <TextField
                   error={Boolean(touched.email && errors.email)}
@@ -133,7 +146,7 @@ const RegisterView = () => {
                   className={classes.selectControl}
                   error={Boolean(touched.country && errors.country)}
                   helpertext={touched.country && errors.country}
-                  onBlur={handleBlur}
+                  /* onBlur={handleBlur} */
                   fullWidth>
                   <InputLabel id="select-country-label"> Pais </InputLabel>
                   <Select
@@ -156,18 +169,6 @@ const RegisterView = () => {
                     <FormHelperText error> {errors.country} </FormHelperText>
                   )}
                 </FormControl>
-                {/* <TextField
-                  error={Boolean(touched.country && errors.country)}
-                  fullWidth
-                  helperText={touched.country && errors.country}
-                  label="Pais"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  name="country"
-                  value={values.country}
-                  variant="outlined"
-                /> */}
                 <TextField
                   error={Boolean(touched.phone && errors.phone)}
                   fullWidth

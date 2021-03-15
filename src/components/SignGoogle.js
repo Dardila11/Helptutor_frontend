@@ -1,22 +1,9 @@
-import React from 'react';
-import {
-  Container,
-  Card,
-  Typography,
-  Box,
-  makeStyles,
-  CardActionArea,
-  Button
-} from '@material-ui/core';
+import React from 'react'
 import GoogleLogin from 'react-google-login'
 
 const responseGoogle = (response)=> {
     console.log(response)
 }
-
-const useStyles = makeStyles({
-  root: {}
-});
 
 const SignInGoogle = () => {
  return(
