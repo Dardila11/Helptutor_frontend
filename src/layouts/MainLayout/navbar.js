@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
   title: {
     display: 'none',
@@ -99,18 +99,12 @@ const MainNavBar = () => {
     <div className={classes.grow}>
       <AppBar position="static" color='primary'>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h2" color='initial' noWrap>
-            HELPTUTOR
-          </Typography>
-          
+          <Button className={classes.button} variant='outlined' href='/'>
+          <img src='https://gitlab.com/alexvi/diagonals-react/-/raw/master/src/data/logo-removebg-preview.png' width='50'></img>
+            <Typography className={classes.title} variant="h2" color='initial' noWrap>
+              HELPTUTOR
+            </Typography>
+            </Button> 
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Button className={classes.button} variant='outlined' href='/register'>

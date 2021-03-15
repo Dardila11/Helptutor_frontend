@@ -137,8 +137,8 @@ const RegisterView = () => {
             }) => (
               <form onSubmit={handleSubmit}>
                 <Box mb={3} textAlign="center">
-                  <Typography color="textPrimary" variant="h2">
-                    Crear cuenta
+                  <Typography color="textPrimary" variant="h1">
+                    <b>Crear cuenta</b>
                   </Typography>
                 </Box>
                 <TextField
