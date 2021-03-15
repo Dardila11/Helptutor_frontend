@@ -18,6 +18,7 @@ import {
 import Page from '../../components/Page'
 import allCountries from 'all-countries'
 import SignInGoogle from '../../components/SignGoogle'
+import Api from '../../services/Api'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,12 +36,33 @@ const useStyles = makeStyles((theme) => ({
 const RegisterView = () => {
   const [countries, setCountries] = useState([])
   useEffect(() => {
-    const getAllCountries = () => {
-      setCountries(allCountries.all.sort())
+    const fetchData = async () => {
+      await Api.getCountries().then(res => {
+        console.log(res.data)
+        setCountries(res.data)
+      })
     }
-    getAllCountries()
+    fetchData()
   }, [])
   const classes = useStyles()
+
+  const postData = async (values) => {
+    let jsonValues = {
+      first_name: values.name,
+      email: values.email,
+      country: values.country,
+      telephone: values.phone,
+      password: values.password,      
+    }
+    console.log(jsonValues);
+     Api.postTutor(jsonValues)
+      .then(res => {
+        if (res.status == 201) {
+          console.log(res.status)
+        }
+      })
+  }
+  
   return (
     <Page className={classes.root} title="Register">
       <Box
@@ -80,7 +102,7 @@ const RegisterView = () => {
                 'Este campo debe ser aceptado'
               )
             })}
-            onSubmit={() => {
+            onSubmit={(values) => {
               /* 
               1. call api
               2. Check whether is a valid user
@@ -88,6 +110,8 @@ const RegisterView = () => {
               4. Navigate to login page. navigate('/tutor', { replace: true });
             */
               console.log('Registrando')
+              console.log(values)
+              
             }}>
             {({
               errors,
@@ -148,7 +172,7 @@ const RegisterView = () => {
                     </MenuItem>
                     {countries.map((country, index) => (
                       <MenuItem key={index} value={country}>
-                        {country}
+                        {country.name}
                       </MenuItem>
                     ))}
                   </Select>
