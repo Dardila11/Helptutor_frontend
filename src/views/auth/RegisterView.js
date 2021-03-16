@@ -41,7 +41,7 @@ const RegisterView = () => {
   const [countries, setCountries] = useState([])
   useEffect(() => {
     const fetchData = async () => {
-      await Api.getCountries().then(res => {
+      await Api.getCountries().then((res) => {
         console.log(res.data)
         setCountries(res.data)
       })
@@ -56,17 +56,16 @@ const RegisterView = () => {
       email: values.email,
       country: values.country,
       telephone: values.phone,
-      password: values.password,      
+      password: values.password
     }
-    console.log(jsonValues);
-     Api.postTutor(jsonValues)
-      .then(res => {
-        if (res.status == 201) {
-          console.log(res.status)
-        }
-      })
+    console.log(jsonValues)
+    Api.postTutor(jsonValues).then((res) => {
+      if (res.status == 201) {
+        console.log(res.status)
+      }
+    })
   }
-  
+
   return (
     <Page className={classes.root} title="Register">
       <Box
@@ -122,15 +121,14 @@ const RegisterView = () => {
                 email: values.email,
                 country: values.country,
                 telephone: values.phone,
-                password: values.password,      
+                password: values.password
               }
-              console.log(jsonValues);
-               Api.postTutor(jsonValues)
-                .then(res => {
-                  if (res.status == 201) {
-                    console.log(res.status)
-                  }
-                })
+              console.log(jsonValues)
+              Api.postTutor(jsonValues).then((res) => {
+                if (res.status == 201) {
+                  console.log(res.status)
+                }
+              })
             }}>
             {({
               errors,
@@ -148,8 +146,8 @@ const RegisterView = () => {
                   </Typography>
                 </Box>
                 <Box display="flex" textAlign="center" justifyContent="center">
-                  <RoleCard role="ESTUDIANTE" isSelected={values.isStudent}    />
-                  <RoleCard role="TUTOR" isSelected={values.isTutor}    />
+                  <RoleCard role="ESTUDIANTE" isSelected={values.isStudent} />
+                  <RoleCard role="TUTOR" isSelected={values.isTutor} />
                 </Box>
                 <TextField
                   error={Boolean(touched.name && errors.name)}

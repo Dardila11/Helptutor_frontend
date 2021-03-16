@@ -4,8 +4,7 @@ import { makeStyles } from '@material-ui/core'
 import MainNavBar from './navbar'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-  },
+  root: {},
   wrapper: {
     display: 'flex',
     flex: '1 1 auto',
@@ -29,7 +28,7 @@ export const MainLayout = () => {
   return (
     <div className={classes.root}>
       {/* TopBar */}
-      <MainNavBar/>
+      <MainNavBar />
       <div className={classes.wrapper}>
         <div className={classes.contentContainer}>
           <div className={classes.content}>

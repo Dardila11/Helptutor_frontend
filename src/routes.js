@@ -19,10 +19,10 @@ const routes = [
   },
   {
     path: '/tutor',
-    element: <TutorLayout  /> /* Layouts */,
+    element: <TutorLayout /> /* Layouts */,
     children: [
       /* Views */
-      { path: '/myAccount', element: <EditInfoView /> },
+      { path: '/account', element: <EditInfoView /> },
       { path: '404', element: <NotFoundView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
