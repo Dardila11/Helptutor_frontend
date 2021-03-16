@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Avatar,
   Card,
@@ -25,25 +25,20 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = () => {
   const classes = useStyles()
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index)
-  }
-  const content = []
   return (
     <Box display="flex" flexDirection="column" mr={5}>
       <Card className={classes.root}>
         <Avatar className={classes.avatar} mb={2} />
-        <ListItem button onClick={(event) => handleListItemClick(event, 0)}>
+        <ListItem button >
           <ListItemIcon>
             <Visibility />
           </ListItemIcon>
           <span>Ver Perfil</span>
         </ListItem>
-        <ListItem button onClick={(event) => handleListItemClick(event, 0)}>
+        <ListItem button >
           <ListItemIcon></ListItemIcon>
         </ListItem>
-        <ListItem button onClick={(event) => handleListItemClick(event, 0)}>
+        <ListItem button >
           <ListItemIcon></ListItemIcon>
         </ListItem>
       </Card>

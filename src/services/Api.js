@@ -27,7 +27,8 @@ const postTutor = (data) => {
 const postGoogleTutor = (data) => {
   return https.post('/api/google/tutor/', data)
 }
-export default {
+
+const logConstants = {
   getCountries,
   getState,
   getCity,
@@ -35,3 +36,4 @@ export default {
   postTutor,
   postGoogleTutor
 }
+export default logConstants

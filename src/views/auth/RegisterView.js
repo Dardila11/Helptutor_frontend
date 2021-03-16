@@ -16,7 +16,6 @@ import {
   MenuItem
 } from '@material-ui/core'
 import Page from '../../components/Page'
-import allCountries from 'all-countries'
 import SignInGoogle from '../../components/SignGoogle'
 import RoleCard from '../../components/RoleCard'
 import Api from '../../services/Api'
@@ -49,22 +48,6 @@ const RegisterView = () => {
     fetchData()
   }, [])
   const classes = useStyles()
-
-  const postData = async (values) => {
-    let jsonValues = {
-      first_name: values.name,
-      email: values.email,
-      country: values.country,
-      telephone: values.phone,
-      password: values.password
-    }
-    console.log(jsonValues)
-    Api.postTutor(jsonValues).then((res) => {
-      if (res.status == 201) {
-        console.log(res.status)
-      }
-    })
-  }
 
   return (
     <Page className={classes.root} title="Register">
@@ -125,7 +108,7 @@ const RegisterView = () => {
               }
               console.log(jsonValues)
               Api.postTutor(jsonValues).then((res) => {
-                if (res.status == 201) {
+                if (res.status === 201) {
                   console.log(res.status)
                 }
               })

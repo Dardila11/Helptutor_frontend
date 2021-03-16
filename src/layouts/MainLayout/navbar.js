@@ -99,7 +99,10 @@ const MainNavBar = () => {
           <Button className={classes.button} variant="outlined" href="/">
             <img
               src="https://gitlab.com/alexvi/diagonals-react/-/raw/master/src/data/logo-removebg-preview.png"
-              width="50"></img>
+              width="50"
+              alt="LogoImage"
+              >
+              </img>
             <Typography
               className={classes.title}
               variant="h2"
