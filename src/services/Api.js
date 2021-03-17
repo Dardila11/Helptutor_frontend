@@ -27,11 +27,19 @@ const postTutor = (data) => {
 const postGoogleTutor = (data) => {
   return https.post('/api/google/tutor/', data)
 }
-export default {
+
+/*TODO: Ask for enterpoint*/
+const postKnowledgeArea = (data) => {
+  return https.post('',data)
+}
+
+const logConstants = {
   getCountries,
   getState,
   getCity,
   getUniversity,
   postTutor,
-  postGoogleTutor
+  postGoogleTutor,
+  postKnowledgeArea
 }
+export default logConstants
