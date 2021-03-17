@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1)
   },
   input: {
-    color: '#005579',
+    color: '#005579'
   },
   text: {
-    marginRight: '10px'
+    width: '270px'
   }
 }))
 
@@ -77,11 +77,13 @@ const RegisterView = () => {
               lastname: Yup.string().max(255).required('Apellido es requerido'),
               email: Yup.string()
                 .email('Debe ser un email valido')
-                .test("Valido", "Email debe ser @unicauca.edu.co", function() {
-                  if(this.parent.email != undefined){
+                .test('Valido', 'Email debe ser @unicauca.edu.co', function () {
+                  if (this.parent.email !== undefined) {
                     var email = this.parent.email.toLowerCase()
-                    if(email !== ''){
-                      return email.substr(email.length - 15) === 'unicauca.edu.co'
+                    if (email !== '') {
+                      return (
+                        email.substr(email.length - 15) === 'unicauca.edu.co'
+                      )
                     }
                   }
                 })
@@ -144,38 +146,39 @@ const RegisterView = () => {
                   <RoleCard role="ESTUDIANTE" isSelected={values.isStudent} />
                   <RoleCard role="TUTOR" isSelected={values.isTutor} />
                 </Box>
-                <Box display="flex" justifyContent="space-between" >
-                    <TextField
-                      error={Boolean(touched.name && errors.name)}
-                      maxWidth="sm"
-                      helperText={touched.name && errors.name}
-                      label="Nombre"
-                      margin="normal"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      name="name"
-                      value={values.name}
-                      variant="outlined"
-                      InputProps={{
-                        className: classes.input
-                      }}
-                    />
-                    <TextField
+                <Box display="flex" justifyContent="space-between">
+                  <TextField
                     className={classes.text}
-                      error={Boolean(touched.lastname && errors.lastname)}
-                      fullWidth
-                      helperText={touched.lastname && errors.lastname}
-                      label="Apellido"
-                      margin="normal"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      name="lastname"
-                      value={values.lastname}
-                      variant="outlined"
-                      InputProps={{
-                        className: classes.input
-                      }}
-                    />
+                    error={Boolean(touched.name && errors.name)}
+                    maxWidth={true}
+                    helperText={touched.name && errors.name}
+                    label="Nombre"
+                    margin="normal"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    name="name"
+                    value={values.name}
+                    variant="outlined"
+                    InputProps={{
+                      className: classes.input
+                    }}
+                  />
+                  <TextField
+                    className={classes.text}
+                    error={Boolean(touched.lastname && errors.lastname)}
+                    maxWidth={true}
+                    helperText={touched.lastname && errors.lastname}
+                    label="Apellido"
+                    margin="normal"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    name="lastname"
+                    value={values.lastname}
+                    variant="outlined"
+                    InputProps={{
+                      className: classes.input
+                    }}
+                  />
                 </Box>
                 <TextField
                   error={Boolean(touched.email && errors.email)}
