@@ -1,49 +1,60 @@
 import React from 'react'
 import {
-  Avatar,
-  Card,
-  Box,
   makeStyles,
-  ListItem,
-  ListItemIcon
+  Toolbar,
+  IconButton,
+  Container,
+  Paper,
+  Typography
 } from '@material-ui/core'
-
-import { Visibility } from '@material-ui/icons'
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '350px',
-    padding: '20px',
-    borderRadius: '20px'
+    marginTop: theme.spacing(1),
+    marginBlockEnd: theme.spacing(2),
+    justifyContent: 'space-between',
   },
-  avatar: {
-    cursor: 'pointer',
-    width: 128,
-    height: 128
+  toolbar:{
+    alignItems: 'center'
+  },
+  navicons:{
+    marginRight: theme.spacing(3),
+    marginLeft: theme.spacing(1)
   }
 }))
 
-const NavBar = () => {
+const TutorNavBar = () => {
   const classes = useStyles()
   return (
-    <Box display="flex" flexDirection="column" mr={5}>
-      <Card className={classes.root}>
-        <Avatar className={classes.avatar} mb={2} />
-        <ListItem button >
-          <ListItemIcon>
-            <Visibility />
-          </ListItemIcon>
-          <span>Ver Perfil</span>
-        </ListItem>
-        <ListItem button >
-          <ListItemIcon></ListItemIcon>
-        </ListItem>
-        <ListItem button >
-          <ListItemIcon></ListItemIcon>
-        </ListItem>
-      </Card>
-    </Box>
+    <Container className={classes.root} float='center'>
+      <Paper elevation={3}>
+      <Toolbar className={classes.toolbar} float='center'>        
+      <RouterLink to='news'>
+        <IconButton>
+            <Typography variant='h4'>Noticias</Typography>
+            <LibraryBooksIcon className={classes.navicons} />
+        </IconButton>
+      </RouterLink>
+      <RouterLink to='offers'>
+        <IconButton>
+            <Typography variant='h4'>Ofertas</Typography>
+            <ListAltIcon className={classes.navicons}/>
+        </IconButton>
+      </RouterLink>
+      <RouterLink to='profile'>
+        <IconButton>
+            <Typography variant='h4'>Perfil</Typography>
+            <AccountBoxIcon className={classes.navicons}/>
+        </IconButton>
+       </RouterLink>
+      </Toolbar>
+      </Paper>
+    </Container>
   )
 }
 
-export default NavBar
+export default TutorNavBar

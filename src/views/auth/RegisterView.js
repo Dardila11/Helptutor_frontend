@@ -41,7 +41,6 @@ const RegisterView = () => {
   useEffect(() => {
     const fetchData = async () => {
       await Api.getCountries().then((res) => {
-        console.log(res.data)
         setCountries(res.data)
       })
     }

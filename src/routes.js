@@ -6,6 +6,7 @@ import { TutorLayout } from './layouts/TutorLayout'
 import RegisterView from './views/auth/RegisterView'
 import NotFoundView from './views/errors/NotFoundView'
 import EditInfoView from './views/tutorInfo/EditInfoView'
+import ManageKnowledgeAreaView from './views/tutorviews/manageKnowledgeArea'
 
 const routes = [
   {
@@ -23,6 +24,7 @@ const routes = [
     children: [
       /* Views */
       { path: '/account', element: <EditInfoView /> },
+      { path: '/manageKnowledgeArea', element: <ManageKnowledgeAreaView/>},
       { path: '404', element: <NotFoundView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
