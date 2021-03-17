@@ -1,23 +1,15 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
+import MainNavBar from './navbar'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.dark,
-    display: 'flex',
-    height: '100%',
-    overflow: 'hidden',
-    width: '100%'
-  },
+  root: {},
   wrapper: {
     display: 'flex',
     flex: '1 1 auto',
     overflow: 'hidden',
-    paddingTop: 64,
-    [theme.breakpoints.up('lg')]: {
-      paddingLeft: 256
-    }
+    paddingTop: 64
   },
   contentContainer: {
     display: 'flex',
@@ -36,7 +28,7 @@ export const MainLayout = () => {
   return (
     <div className={classes.root}>
       {/* TopBar */}
-      <h1> Landing Page </h1>
+      <MainNavBar />
       <div className={classes.wrapper}>
         <div className={classes.contentContainer}>
           <div className={classes.content}>
