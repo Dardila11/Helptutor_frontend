@@ -16,7 +16,6 @@ import {
   MenuItem
 } from '@material-ui/core'
 import Page from '../../components/Page'
-import allCountries from 'all-countries'
 import SignInGoogle from '../../components/SignGoogle'
 import RoleCard from '../../components/RoleCard'
 import Api from '../../services/Api'
@@ -33,11 +32,15 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1)
   },
   input: {
-    color: '#005579'
+    color: '#005579',
+  },
+  text: {
+    marginRight: '10px'
   }
 }))
 
 const RegisterView = () => {
+  const classes = useStyles()
   const [countries, setCountries] = useState([])
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +51,6 @@ const RegisterView = () => {
     }
     fetchData()
   }, [])
-  const classes = useStyles()
 
   const postData = async (values) => {
     let jsonValues = {
@@ -77,6 +79,7 @@ const RegisterView = () => {
           <Formik
             initialValues={{
               name: '',
+              lastname: '',
               email: '',
               country: '',
               phone: '',
@@ -88,8 +91,17 @@ const RegisterView = () => {
             }}
             validationSchema={Yup.object().shape({
               name: Yup.string().max(255).required('Nombre es requerido'),
+              lastname: Yup.string().max(255).required('Apellido es requerido'),
               email: Yup.string()
                 .email('Debe ser un email valido')
+                .test("Valido", "Email debe ser @unicauca.edu.co", function() {
+                  if(this.parent.email != undefined){
+                    var email = this.parent.email.toLowerCase()
+                    if(email !== ''){
+                      return email.substr(email.length - 15) === 'unicauca.edu.co'
+                    }
+                  }
+                })
                 .max(255)
                 .required('Correo Electrónico es requerido'),
               country: Yup.string().max(255).required('Pais es requerido'),
@@ -109,7 +121,6 @@ const RegisterView = () => {
             })}
             onSubmit={(values) => {
               /* 
-              1. call api
               2. Check whether is a valid user
               3. show message
               4. Navigate to login page. navigate('/tutor', { replace: true });
@@ -118,6 +129,7 @@ const RegisterView = () => {
               console.log(values)
               let jsonValues = {
                 first_name: values.name,
+                last_name: values.lastname,
                 email: values.email,
                 country: values.country,
                 telephone: values.phone,
@@ -149,21 +161,39 @@ const RegisterView = () => {
                   <RoleCard role="ESTUDIANTE" isSelected={values.isStudent} />
                   <RoleCard role="TUTOR" isSelected={values.isTutor} />
                 </Box>
-                <TextField
-                  error={Boolean(touched.name && errors.name)}
-                  fullWidth
-                  helperText={touched.name && errors.name}
-                  label="Nombre Completo"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  name="name"
-                  value={values.name}
-                  variant="outlined"
-                  InputProps={{
-                    className: classes.input
-                  }}
-                />
+                <Box display="flex" justifyContent="space-between" >
+                    <TextField
+                      error={Boolean(touched.name && errors.name)}
+                      maxWidth="sm"
+                      helperText={touched.name && errors.name}
+                      label="Nombre"
+                      margin="normal"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      name="name"
+                      value={values.name}
+                      variant="outlined"
+                      InputProps={{
+                        className: classes.input
+                      }}
+                    />
+                    <TextField
+                    className={classes.text}
+                      error={Boolean(touched.lastname && errors.lastname)}
+                      fullWidth
+                      helperText={touched.lastname && errors.lastname}
+                      label="Apellido"
+                      margin="normal"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      name="lastname"
+                      value={values.lastname}
+                      variant="outlined"
+                      InputProps={{
+                        className: classes.input
+                      }}
+                    />
+                </Box>
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
