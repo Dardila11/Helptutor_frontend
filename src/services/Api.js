@@ -29,9 +29,36 @@ const postGoogleTutor = (data) => {
 }
 
 /*TODO: Ask for enterpoint*/
-const postKnowledgeArea = (data) => {
-  return https.post('',data)
+const postKnowledgeAreaTutor = (data) => {
+  return https.post('/api/knowledgearea_tutor/',data)
 }
+
+const getSupports = () => {
+  return https.get('/api/certificate')
+}
+
+const getTutorKnowledgeAreas = (idTutor) => {
+  return https.get('/api/tutor/'+idTutor+'/speciality/')
+}
+
+const deleteTutorKnowledgeArea = (idArea) => {
+  return https.delete('/api/knowledgearea_tutor/'+idArea+'/')
+}
+
+/**Knowledge Area services */
+
+const getknowledgeAreas = () => {
+  return https.get('/api/knowledgearea/')
+} 
+
+const getKnowledgeArea = (id) => {
+  return https.get('/api/knowledgearea/'+id+'/')
+}
+
+const getSubKnowledgeAreas = (idArea) => {
+  return https.get('/api/knowledgearea/'+idArea+'/speciality/')
+}
+
 
 const logConstants = {
   getCountries,
@@ -40,6 +67,12 @@ const logConstants = {
   getUniversity,
   postTutor,
   postGoogleTutor,
-  postKnowledgeArea
+  postKnowledgeAreaTutor,
+  getknowledgeAreas,
+  getKnowledgeArea,
+  getSubKnowledgeAreas,
+  getSupports,
+  getTutorKnowledgeAreas,
+  deleteTutorKnowledgeArea
 }
 export default logConstants

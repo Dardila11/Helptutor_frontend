@@ -1,5 +1,7 @@
 import React from 'react'
-import { Card, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Button, Card, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
+import { isUndefined } from 'lodash-es'
+import AreaCard from './areaCard'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -14,16 +16,36 @@ const useStyles = makeStyles((theme) => ({
     }
   }))
 
-const KnowledgeAreaListView = () => {
-    const classes = useStyles() 
+const KnowledgeAreaListView = (areas) => {
+    const classes = useStyles()
+    let info = false 
+    console.log(areas)
+    if (isUndefined(areas.areas) ){
+        info = false
+    }else{
+        info = true
+    }
     return (
         <>
             <Grid item xs={4}>
                 <Paper className = {classes.lateralView} elevation={3}>
                     <Card>
-                        <Typography className={classes.containerTitle}variant='h3' align='center'>
-                            Mis areas de conocimiento
-                        </Typography>
+                    <Typography className={classes.containerTitle}variant='h3' align='center'> 
+                        Areas de conocimiento
+                    </Typography>
+                        {info? (
+                            <>
+                             {areas.areas.map((area, index) => (                                 
+                              <AreaCard key={index} area={area.knowledge_area} idArea={area.id}></AreaCard> 
+                             ))}    
+                             </>
+                        ):(
+                            <>
+                            <Typography>
+                                No se encontraron areas
+                            </Typography>
+                            </>
+                        )}
                     </Card>
                 </Paper>
             </Grid>
