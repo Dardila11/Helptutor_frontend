@@ -148,6 +148,7 @@ const RegisterView = () => {
                 </Box>
                 <Box display="flex" justifyContent="space-between">
                   <TextField
+                    id='txt_name'
                     className={classes.text}
                     error={Boolean(touched.name && errors.name)}
                     maxWidth={true}
@@ -164,6 +165,7 @@ const RegisterView = () => {
                     }}
                   />
                   <TextField
+                    id='txt_lastname'
                     className={classes.text}
                     error={Boolean(touched.lastname && errors.lastname)}
                     maxWidth={true}
@@ -181,6 +183,7 @@ const RegisterView = () => {
                   />
                 </Box>
                 <TextField
+                  id='txt_email'
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
                   helperText={touched.email && errors.email}
@@ -221,6 +224,7 @@ const RegisterView = () => {
                   )}
                 </FormControl>
                 <TextField
+                  id='text_phone'
                   error={Boolean(touched.phone && errors.phone)}
                   fullWidth
                   helperText={touched.phone && errors.phone}
@@ -233,6 +237,7 @@ const RegisterView = () => {
                   variant="outlined"
                 />
                 <TextField
+                  id='text_password'
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
                   helperText={touched.password && errors.password}
@@ -246,6 +251,7 @@ const RegisterView = () => {
                   variant="outlined"
                 />
                 <TextField
+                  id='txt_confirmPassword'
                   error={Boolean(
                     touched.confirmPassword && errors.confirmPassword
                   )}
@@ -262,6 +268,7 @@ const RegisterView = () => {
                 />
                 <Box alignItems="center" display="flex" ml={-1}>
                   <Checkbox
+                    id='checkboxPolicy'
                     checked={values.policy}
                     name="policy"
                     onChange={handleChange}
@@ -275,6 +282,7 @@ const RegisterView = () => {
                 )}
                 <Box my={2}>
                   <Button
+                    id='btn_registerUser'
                     color="primary"
                     disabled={isSubmitting}
                     fullWidth

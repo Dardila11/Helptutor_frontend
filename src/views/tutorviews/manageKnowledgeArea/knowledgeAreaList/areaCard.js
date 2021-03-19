@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
 import Api from '../../../../services/Api'
 import DeleteIcon from '@material-ui/icons/Delete'
 
@@ -30,16 +30,20 @@ const AreaCard = (knowledgearea) => {
     return (
         <>
                 <Paper className={classes.root}elevation={3}>
-                    <Card>
-                            <>
-                            <Typography align='left'> 
-                            {knowledgearea.area.name}
+                    <Grid container>
+                        <Grid item xs={9}>
+                            <Button variant='outlined'>
+                                <Typography align='left'> 
+                                    {knowledgearea.area.name}
+                                </Typography>
+                            </Button>
+                        </Grid > 
+                        <Grid item xs={3}>
                             <Button id={knowledgearea.area.id} key={knowledgearea.area.id} onClick={handleClick}>
                                 <DeleteIcon className={classes.delete}/>
                             </Button>
-                            </Typography>
-                            </>              
-                    </Card>
+                        </Grid>                      
+                    </Grid>            
                 </Paper>
         </>
     )

@@ -77,7 +77,7 @@ const KnowledgeAreaInfoView = (props) => {
     }
     return (
         <>
-            <Grid item xs={8}>
+            <Grid item xs={9}>
                 <Paper className={classes.infoView} elevation={3}>
                     <Card>
                         <Typography className={classes.containerTitle} variant='h3' align='center'> 
@@ -178,6 +178,7 @@ const KnowledgeAreaInfoView = (props) => {
                                         )}
                                         </FormControl>
                                         <TextField
+                                        id='txt_tags'
                                         error={Boolean(touched.tags && errors.tags)}
                                         fullWidth
                                         helperText={touched.tags && errors.tags}
@@ -193,6 +194,7 @@ const KnowledgeAreaInfoView = (props) => {
                                         }}
                                         />
                                         <TextField
+                                        id='txt_description'
                                         error={Boolean(touched.description && errors.description)}
                                         fullWidth
                                         helperText={touched.description && errors.description}
@@ -207,6 +209,7 @@ const KnowledgeAreaInfoView = (props) => {
                                        <SupportsView></SupportsView>
                                         <Box my={2}>
                                         <Button
+                                            id='btn_registerArea'
                                             color="primary"
                                             disabled={isSubmitting}
                                             fullWidth

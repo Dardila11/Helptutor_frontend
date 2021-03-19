@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {CircularProgress, Container, Grid, makeStyles } from '@material-ui/core'
+import {LinearProgress, CircularProgress, Container, Grid, makeStyles } from '@material-ui/core'
 import Page from '../../../components/Page'
 import KnowledgeAreaInfoView from './knowledgeAreaInfo'
 import KnowledgeAreaListView from './knowledgeAreaList'
@@ -9,6 +9,10 @@ const useStyles = makeStyles((theme) => ({
     root: {
       backgroundColor: theme.palette.background.dark,
       paddingBottom: theme.spacing(3)
+    },
+    progress: {
+        marginTop: theme.spacing(5),
+        float: 'center'
     }
   }))
 
@@ -36,7 +40,10 @@ const ManageKnowledgeAreaView = () => {
                             <KnowledgeAreaInfoView />    
                             </>
                         ):(
-                            <CircularProgress />
+                            <>
+                            <CircularProgress className={classes.progress}/>
+                            <LinearProgress className={classes.progress}/>
+                            </>
                         )}
                     </Grid>
                 </Container>

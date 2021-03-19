@@ -27,7 +27,7 @@ const KnowledgeAreaListView = (areas) => {
     }
     return (
         <>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
                 <Paper className = {classes.lateralView} elevation={3}>
                     <Card>
                     <Typography className={classes.containerTitle}variant='h3' align='center'> 
