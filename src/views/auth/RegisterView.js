@@ -1,14 +1,10 @@
 //REACT
-import React, { useState, useEffect } from 'react'
+import React, {useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 
 //REDUX
 import { addUser } from '../../redux/actions/auth'
-
 import { connect } from 'react-redux'
-
-//ALERT
-import { useAlert } from 'react-alert'
 
 //COMPONENTS MATERIAL UI
 import {
@@ -55,12 +51,10 @@ const useStyles = makeStyles((theme) => ({
 const RegisterView = (props) => {
   //DEFINED CONST, VAR AND LET
   const classes = useStyles()
-  const alert = useAlert()
   let navigate = useNavigate()
   const { isAuthenticated } = props
 
   useEffect(() => {
-    console.log('generando efecto')
     if (isAuthenticated) navigate('/tutor/manageknowledgearea')
   }, [isAuthenticated])
 
@@ -78,13 +72,6 @@ const RegisterView = (props) => {
             //ON_SUBMIT ENVIO DEL FORMULARIO
             onSubmit={(values) => {
               let jsonValues = Validation.getValues(values)
-              //LLAMADO DEL API REGISTRAR TUTOR
-              // Api.postTutor(jsonValues).then((res) => {
-              //   if (res.status === 200) {
-              //     alert.show('Registro exitoso', { type: 'success' })
-              //     navigate('/tutor/manageknowledgeArea')
-              //   }
-              // })
               props.addUser(jsonValues)
             }}>
             {({
