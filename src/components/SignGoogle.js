@@ -1,37 +1,46 @@
-import React from 'react'
-import GoogleLogin from 'react-google-login'
-import Api from '../services/Api'
-import Alert from '@material-ui/lab/Alert';
+//REACT
+import React, {useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const responseGoogle = async (response) => {
+//COMPONENTS
+import GoogleLogin from 'react-google-login'
+
+//REDUX
+import { addUserGoogle } from '../redux/actions/auth'
+import { connect } from 'react-redux'
+
+const responseGoogle = async (props, response) => {
   let jsonValues = {
     id_token: response.tokenId
   }
-  Api.postGoogleTutor(jsonValues).then((res) => {
-    if (res.status === 200) {
-      return (
-        <Alert variant='filled' severity="success">Usuario registrado correctamente</Alert>
-      )
-    }else {
-      return (
-        <Alert variant='filled' severity="error">Error registrando el usuario</Alert>
-      )
-    }
-  })
+  props.addUserGoogle(jsonValues)
 }
 
-const SignInGoogle = () => {
+const SignInGoogle = (props) => {
+  let navigate = useNavigate()
+  const { isAuthenticated } = props
+
+  useEffect(() => {
+    if (isAuthenticated) navigate('/tutor/manageknowledgearea')
+  }, [isAuthenticated])
 
   return (
     <>
-    <GoogleLogin
-      clientId="581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com"
-      buttonText="Acceder con google"
-      onSuccess={responseGoogle}
-      onFailure={responseGoogle}
-      cookiePolicy={'single_host_origin'}
-    />
+      <GoogleLogin
+        clientId="581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com"
+        buttonText="Registrarme con Google"
+        onSuccess={(response) => responseGoogle(props, response)}
+        onFailure={(response) => responseGoogle(props, response)}
+        cookiePolicy={'single_host_origin'}
+      />
     </>
   )
 }
-export default SignInGoogle
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, {
+  addUserGoogle
+})(SignInGoogle)
