@@ -1,5 +1,5 @@
-import React from 'react'
-import { Card, Grid, Paper} from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { Card, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Paper, Select} from '@material-ui/core'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import {
@@ -12,8 +12,10 @@ import {
 } from '@material-ui/core'
 import Api from '../../../../services/Api'
 import SupportsView from './supports'
+import { isUndefined } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
+  
   root: {
     backgroundColor: theme.palette.background.dark,
     paddingBottom: theme.spacing(3),
@@ -32,11 +34,50 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const KnowledgeAreaInfoView = () => {
+const KnowledgeAreaInfoView = (props) => {
     const classes = useStyles() 
+    const [areasList,setAreasList] = useState([])
+    const [subareas, setsubareas] = useState([])
+    let option = false
+    let initialvalues = {}
+
+    if(isUndefined(props.area)){
+        option = true
+        initialvalues = {
+            area: '',
+            subarea: '',
+            description: '',
+            tags: ''
+        }
+        console.log("area undefined")
+    }else{
+        console.log("area defined")
+        initialvalues = {
+            area: '',
+            subarea: '',
+            description: props.area.description,
+            tags: props.area.tags
+        }
+    }
+    useEffect(() => {
+        const fetchData = async () => {
+          await Api.getknowledgeAreas().then(res => {
+              setAreasList(res.data)
+          });          
+        };
+        fetchData();
+      }, []);
+    const handleSelect = (e) => {
+        console.log("Area seleccionada: ")
+        console.log(e.target.value.name)
+        Api.getSubKnowledgeAreas(e.target.value.id).then(res => {
+                  console.log(res.data)
+                  setsubareas(res.data)
+              });
+    }
     return (
         <>
-            <Grid item xs={8}>
+            <Grid item xs={9}>
                 <Paper className={classes.infoView} elevation={3}>
                     <Card>
                         <Typography className={classes.containerTitle} variant='h3' align='center'> 
@@ -49,57 +90,24 @@ const KnowledgeAreaInfoView = () => {
                                 justifyContent="center">
                                 <Container maxWidth="sm">
                                 <Formik
-                                    initialValues={{
-                                    nameKnowledgeArea: '',
-                                    subCategoryKnoledgeArea: '',
-                                    Description: '',
-                                    Tags: '',
-                                    password: '',
-                                    confirmPassword: '',
-                                    policy: false,
-                                    isStudent: true,
-                                    isTutor: false
-                                    }}
+                                    initialValues={initialvalues}
                                     validationSchema={Yup.object().shape({
-                                    name: Yup.string().max(255).required('Nombre es requerido'),
-                                    email: Yup.string()
-                                        .email('Debe ser un email valido')
-                                        .max(255)
-                                        .required('Correo Electrónico es requerido'),
-                                    country: Yup.string().max(255).required('Pais es requerido'),
-                                    phone: Yup.string().max(255).required('Teléfono es requerido'),
-                                    password: Yup.string()
-                                        .max(255)
-                                        .required('Contraseña es requerido'),
-                                    confirmPassword: Yup.mixed()
-                                        .test('iguales', 'Contraseñas no son iguales', function () {
-                                        return this.parent.password === this.parent.confirmPassword
-                                        })
-                                        .required('Contraseña es requerido'),
-                                    policy: Yup.boolean().oneOf(
-                                        [true],
-                                        'Este campo debe ser aceptado'
-                                    )
+                                    area: Yup.string().max(255).required('Area requerida'),
+                                    subarea: Yup.string().max(255).required('Sub area requerida'),
+                                    description: Yup.string().max(255),
+                                    tags: Yup.string().max(255)
                                     })}
                                     onSubmit={(values) => {
-                                    /* 
-                                    1. call api
-                                    2. Check whether is a valid user
-                                    3. show message
-                                    4. Navigate to login page. navigate('/tutor', { replace: true });
-                                    */
-                                    console.log('Registrando')
                                     console.log(values)
                                     let jsonValues = {
-                                        first_name: values.nameKnowledgeArea,
-                                        email: values.subCategoryKnoledgeArea,
-                                        country: values.Description,
-                                        telephone: values.Tags,
-                                        password: values.password
+                                        tags: values.tags,
+                                        description: values.description,
+                                        knowledge_area: values.subarea.id,
+                                        user: 12
                                     }
                                     console.log(jsonValues)
-                                    Api.postTutor(jsonValues).then((res) => {
-                                        if (res.status === 201) {
+                                    Api.postKnowledgeAreaTutor(jsonValues).then((res) => {
+                                        if (res.status === 200) {
                                         console.log(res.status)
                                         }
                                     })
@@ -114,88 +122,94 @@ const KnowledgeAreaInfoView = () => {
                                     values
                                     }) => (
                                     <form onSubmit={handleSubmit}>
+                                        
+                                        <FormControl
+                                        variant="outlined"
+                                        className={classes.selectControl}
+                                        error={Boolean(touched.area && errors.area)}
+                                        helpertext={touched.area && errors.area}
+                                        fullWidth>
+                                        <InputLabel id="select-area-label"> Area </InputLabel>
+                                        <Select
+                                            labelId="select-area-label"
+                                            id="select-area"
+                                            value={values.area}
+                                            name="area"
+                                            onChange={e => { handleChange(e); handleSelect(e) }}
+                                            label="Area">
+                                            <MenuItem value="">
+                                            <em>---</em>
+                                            </MenuItem>
+                                            {areasList.map((area, index) => (
+                                                <MenuItem key={index} value={area}>
+                                                    {area.name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                        {Boolean(touched.area && errors.area) && (
+                                            <FormHelperText error> {errors.area} </FormHelperText>
+                                        )}
+                                        </FormControl>
+                                        <FormControl
+                                        variant="outlined"
+                                        className={classes.selectControl}
+                                        error={Boolean(touched.subarea && errors.subarea)}
+                                        helpertext={touched.subarea && errors.subarea}
+                                        fullWidth>
+                                        <InputLabel id="select-subarea-label"> subArea </InputLabel>
+                                        <Select
+                                            labelId="select-subarea-label"
+                                            id="select-subarea"
+                                            value={values.subarea}
+                                            name="subarea"
+                                            onChange={handleChange}
+                                            label="Sub Area">
+                                            <MenuItem value="">
+                                            <em>---</em>
+                                            </MenuItem>
+                                            {subareas.map((subarea, index) => (
+                                            <MenuItem key={index} value={subarea}>
+                                                {subarea.name}
+                                            </MenuItem>
+                                            ))}
+                                        </Select>
+                                        {Boolean(touched.subarea && errors.subarea) && (
+                                            <FormHelperText error> {errors.subarea} </FormHelperText>
+                                        )}
+                                        </FormControl>
                                         <TextField
-                                        error={Boolean(touched.nameKnowledgeArea && errors.nameKnowledgeArea)}
+                                        id='txt_tags'
+                                        error={Boolean(touched.tags && errors.tags)}
                                         fullWidth
-                                        helperText={touched.nameKnowledgeArea && errors.nameKnowledgeArea}
-                                        label="Nombre del area"
+                                        helperText={touched.tags && errors.tags}
+                                        label="Etiquetas, describa palabras clave separadas por coma(,)"
                                         margin="normal"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
-                                        name="name"
-                                        value={values.nameKnowledgeArea}
+                                        name="tags"
+                                        value={values.tags}
                                         variant="outlined"
                                         InputProps={{
                                             className: classes.input
                                         }}
                                         />
                                         <TextField
-                                        error={Boolean(touched.subCategoryKnoledgeArea && errors.subCategoryKnoledgeArea)}
+                                        id='txt_description'
+                                        error={Boolean(touched.description && errors.description)}
                                         fullWidth
-                                        helperText={touched.subCategoryKnoledgeArea && errors.subCategoryKnoledgeArea}
-                                        label="Sub-Categoria del area"
-                                        margin="normal"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        name="email"
-                                        value={values.subCategoryKnoledgeArea}
-                                        variant="outlined"
-                                        />
-                                        {/*
-                                        <FormControl
-                                        variant="outlined"
-                                        className={classes.selectControl}
-                                        error={Boolean(touched.country && errors.country)}
-                                        helpertext={touched.country && errors.country}
-                                        fullWidth>
-                                        <InputLabel id="select-country-label"> Pais </InputLabel>
-                                        <Select
-                                            labelId="select-country-label"
-                                            id="select-country"
-                                            value={values.country}
-                                            name="country"
-                                            onChange={handleChange}
-                                            label="Pais">
-                                            <MenuItem value="">
-                                            <em>---</em>
-                                            </MenuItem>
-                                            {countries.map((country, index) => (
-                                            <MenuItem key={index} value={country}>
-                                                {country.name}
-                                            </MenuItem>
-                                            ))}
-                                        </Select>
-                                        {Boolean(touched.country && errors.country) && (
-                                            <FormHelperText error> {errors.country} </FormHelperText>
-                                        )}
-                                        </FormControl>*/}
-                                        <TextField
-                                        error={Boolean(touched.Tags && errors.Tags)}
-                                        fullWidth
-                                        helperText={touched.Tags && errors.Tags}
-                                        label="Etiquetas"
-                                        margin="normal"
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        name="phone"
-                                        value={values.Tags}
-                                        variant="outlined"
-                                        />
-                                        <TextField
-                                        error={Boolean(touched.password && errors.password)}
-                                        fullWidth
-                                        helperText={touched.password && errors.password}
+                                        helperText={touched.description && errors.description}
                                         label="Descripción"
                                         margin="normal"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
-                                        name="password"
-                                        value={values.password}
+                                        name="description"
+                                        value={values.description}
                                         variant="outlined"
                                         />
                                        <SupportsView></SupportsView>
                                         <Box my={2}>
                                         <Button
+                                            id='btn_registerArea'
                                             color="primary"
                                             disabled={isSubmitting}
                                             fullWidth
