@@ -1,25 +1,37 @@
+//REACT
 import React, { useState, useEffect } from 'react'
-import * as Yup from 'yup'
-import { Formik } from 'formik'
+import { useNavigate } from 'react-router-dom'
+
+//REDUX
+
+//ALERT
+import { useAlert } from 'react-alert'
+
+//COMPONENTS MATERIAL UI
 import {
   Box,
   Button,
   Checkbox,
   Container,
   FormHelperText,
-  TextField,
-  Typography,
-  Select,
   makeStyles,
-  InputLabel,
-  FormControl,
-  MenuItem
+  TextField,
+  Typography
 } from '@material-ui/core'
+
+//COMPONENTS
 import Page from '../../components/Page'
-import SignInGoogle from '../../components/SignGoogle'
 import RoleCard from '../../components/RoleCard'
+import SignInGoogle from '../../components/SignGoogle'
+
+import { Formik } from 'formik'
+
+//UTILS
 import Api from '../../services/Api'
 
+import Validation from './formikValues'
+
+//STYLESS
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -40,16 +52,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const RegisterView = () => {
+  //DEFINED CONST, VAR AND LET
   const classes = useStyles()
-  const [countries, setCountries] = useState([])
-  useEffect(() => {
-    const fetchData = async () => {
-      await Api.getCountries().then((res) => {
-        setCountries(res.data)
-      })
-    }
-    fetchData()
-  }, [])
+  const alert = useAlert()
+  let navigate = useNavigate()
 
   return (
     <Page className={classes.root} title="Register">
@@ -60,70 +66,16 @@ const RegisterView = () => {
         justifyContent="center">
         <Container maxWidth="sm">
           <Formik
-            initialValues={{
-              name: '',
-              lastname: '',
-              email: '',
-              country: '',
-              phone: '',
-              password: '',
-              confirmPassword: '',
-              policy: false,
-              isStudent: true,
-              isTutor: false
-            }}
-            validationSchema={Yup.object().shape({
-              name: Yup.string().max(255).required('Nombre es requerido'),
-              lastname: Yup.string().max(255).required('Apellido es requerido'),
-              email: Yup.string()
-                .email('Debe ser un email valido')
-                .test('Valido', 'Email debe ser @unicauca.edu.co', function () {
-                  if (this.parent.email !== undefined) {
-                    var email = this.parent.email.toLowerCase()
-                    if (email !== '') {
-                      return (
-                        email.substr(email.length - 15) === 'unicauca.edu.co'
-                      )
-                    }
-                  }
-                })
-                .max(255)
-                .required('Correo Electrónico es requerido'),
-              country: Yup.string().max(255).required('Pais es requerido'),
-              phone: Yup.string().max(255).required('Teléfono es requerido'),
-              password: Yup.string()
-                .max(255)
-                .required('Contraseña es requerido'),
-              confirmPassword: Yup.mixed()
-                .test('iguales', 'Contraseñas no son iguales', function () {
-                  return this.parent.password === this.parent.confirmPassword
-                })
-                .required('Contraseña es requerido'),
-              policy: Yup.boolean().oneOf(
-                [true],
-                'Este campo debe ser aceptado'
-              )
-            })}
+            initialValues={Validation.initialValues}
+            validationSchema={Validation.validation}
+            //ON_SUBMIT ENVIO DEL FORMULARIO
             onSubmit={(values) => {
-              /* 
-              2. Check whether is a valid user
-              3. show message
-              4. Navigate to login page. navigate('/tutor', { replace: true });
-            */
-              console.log('Registrando')
-              console.log(values)
-              let jsonValues = {
-                first_name: values.name,
-                last_name: values.lastname,
-                email: values.email,
-                country: values.country,
-                telephone: values.phone,
-                password: values.password
-              }
-              console.log(jsonValues)
+              let jsonValues = Validation.getValues(values)
+              //LLAMADO DEL API REGISTRAR TUTOR
               Api.postTutor(jsonValues).then((res) => {
-                if (res.status === 201) {
-                  console.log(res.status)
+                if (res.status === 200) {
+                  alert.show('Registro exitoso', { type: 'success' })
+                  navigate('/tutor/manageknowledgeArea')
                 }
               })
             }}>
@@ -148,10 +100,9 @@ const RegisterView = () => {
                 </Box>
                 <Box display="flex" justifyContent="space-between">
                   <TextField
-                    id='txt_name'
+                    id="txt_name"
                     className={classes.text}
                     error={Boolean(touched.name && errors.name)}
-                    maxWidth={true}
                     helperText={touched.name && errors.name}
                     label="Nombre"
                     margin="normal"
@@ -165,10 +116,9 @@ const RegisterView = () => {
                     }}
                   />
                   <TextField
-                    id='txt_lastname'
+                    id="txt_lastname"
                     className={classes.text}
                     error={Boolean(touched.lastname && errors.lastname)}
-                    maxWidth={true}
                     helperText={touched.lastname && errors.lastname}
                     label="Apellido"
                     margin="normal"
@@ -182,99 +132,66 @@ const RegisterView = () => {
                     }}
                   />
                 </Box>
-                <TextField
-                  id='txt_email'
-                  error={Boolean(touched.email && errors.email)}
-                  fullWidth
-                  helperText={touched.email && errors.email}
-                  label="Correo Electrónico"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  name="email"
-                  value={values.email}
-                  variant="outlined"
-                />
-                <FormControl
-                  variant="outlined"
-                  className={classes.selectControl}
-                  error={Boolean(touched.country && errors.country)}
-                  helpertext={touched.country && errors.country}
-                  /* onBlur={handleBlur} */
-                  fullWidth>
-                  <InputLabel id="select-country-label"> Pais </InputLabel>
-                  <Select
-                    labelId="select-country-label"
-                    id="select-country"
-                    value={values.country}
-                    name="country"
+                <Box>
+                  <TextField
+                    id="txt_email"
+                    error={Boolean(touched.email && errors.email)}
+                    fullWidth
+                    helperText={touched.email && errors.email}
+                    label="Correo electrónico"
+                    margin="normal"
+                    onBlur={handleBlur}
                     onChange={handleChange}
-                    label="Pais">
-                    <MenuItem value="">
-                      <em>---</em>
-                    </MenuItem>
-                    {countries.map((country, index) => (
-                      <MenuItem key={index} value={country}>
-                        {country.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {Boolean(touched.country && errors.country) && (
-                    <FormHelperText error> {errors.country} </FormHelperText>
-                  )}
-                </FormControl>
-                <TextField
-                  id='text_phone'
-                  error={Boolean(touched.phone && errors.phone)}
-                  fullWidth
-                  helperText={touched.phone && errors.phone}
-                  label="Teléfono"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  name="phone"
-                  value={values.phone}
-                  variant="outlined"
-                />
-                <TextField
-                  id='text_password'
-                  error={Boolean(touched.password && errors.password)}
-                  fullWidth
-                  helperText={touched.password && errors.password}
-                  label="Contraseña"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="password"
-                  name="password"
-                  value={values.password}
-                  variant="outlined"
-                />
-                <TextField
-                  id='txt_confirmPassword'
-                  error={Boolean(
-                    touched.confirmPassword && errors.confirmPassword
-                  )}
-                  fullWidth
-                  helperText={touched.confirmPassword && errors.confirmPassword}
-                  label="Confirmar Contraseña"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="password"
-                  name="confirmPassword"
-                  value={values.confirmPassword}
-                  variant="outlined"
-                />
+                    name="email"
+                    value={values.email}
+                    variant="outlined"
+                  />
+                </Box>
+                <Box>
+                  <TextField
+                    id="text_password"
+                    error={Boolean(touched.password && errors.password)}
+                    fullWidth
+                    helperText={touched.password && errors.password}
+                    label="Contraseña"
+                    margin="normal"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    type="password"
+                    name="password"
+                    value={values.password}
+                    variant="outlined"
+                  />
+                </Box>
+                <Box>
+                  <TextField
+                    id="txt_confirmPassword"
+                    error={Boolean(
+                      touched.confirmPassword && errors.confirmPassword
+                    )}
+                    fullWidth
+                    helperText={
+                      touched.confirmPassword && errors.confirmPassword
+                    }
+                    label="Confirmar Contraseña"
+                    margin="normal"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    type="password"
+                    name="confirmPassword"
+                    value={values.confirmPassword}
+                    variant="outlined"
+                  />
+                </Box>
                 <Box alignItems="center" display="flex" ml={-1}>
                   <Checkbox
-                    id='checkboxPolicy'
+                    id="checkboxPolicy"
                     checked={values.policy}
                     name="policy"
                     onChange={handleChange}
                   />
                   <Typography color="textSecondary" variant="body1">
-                    He leido los terminos y condiciones
+                    He leído los términos y condiciones
                   </Typography>
                 </Box>
                 {Boolean(touched.policy && errors.policy) && (
@@ -282,7 +199,7 @@ const RegisterView = () => {
                 )}
                 <Box my={2}>
                   <Button
-                    id='btn_registerUser'
+                    id="btn_registerUser"
                     color="primary"
                     disabled={isSubmitting}
                     fullWidth
