@@ -46,7 +46,7 @@ const KnowledgeAreaListView = (areas) => {
                             </Typography>
                             </>
                         )}
-                    </Card>
+                    </Card> 
                 </Paper>
             </Grid>
         </>

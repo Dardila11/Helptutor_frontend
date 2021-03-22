@@ -60,15 +60,13 @@ const TutorTopBar = () => {
   
   return (
     <div className={classes.grow}>
-      <AppBar position="static" color="primary">
+      <AppBar position="fixed" color="primary">
         <Toolbar>
           <Button className={classes.button} variant="outlined" href="/">
             <img
               src="https://gitlab.com/alexvi/diagonals-react/-/raw/master/src/data/logo-removebg-preview.png"
               width="50"
-              alt="LogoImage"
-              >
-              </img>
+              alt="LogoImage"></img>
             <Typography
               className={classes.title}
               variant="h2"
@@ -80,21 +78,20 @@ const TutorTopBar = () => {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <RouterLink to="profile">
-            <div className = {classes.userSection}>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                color="inherit"
-              >
-              <Typography className={classes.username} variant='h4'>
-                User Name
-              </Typography>
-                <AccountCircle color="action"/>
-              </IconButton>
-            </div>
+              <div className={classes.userSection}>
+                <IconButton
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  color="inherit">
+                  <Typography className={classes.username} variant="h4">
+                    User Name
+                  </Typography>
+                  <AccountCircle color="action" />
+                </IconButton>
+              </div>
             </RouterLink>
-            </div>
+          </div>
         </Toolbar>
       </AppBar>
     </div>
