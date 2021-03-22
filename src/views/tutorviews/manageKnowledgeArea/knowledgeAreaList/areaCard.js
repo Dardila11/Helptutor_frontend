@@ -19,11 +19,11 @@ const AreaCard = (knowledgearea) => {
     const classes = useStyles()
     const handleClick = () => {
         Api.deleteTutorKnowledgeArea(knowledgearea.idArea).then(res => {
-            if(res.status == 200){
-                console.log("Area eliminada correctamente")
-            }else{
-                console.log(res.status)
-                console.log("Error eliminando el area")
+            if (res.status === 200) {
+              console.log('Area eliminada correctamente')
+            } else {
+              console.log(res.status)
+              console.log('Error eliminando el area')
             }
         })
     }

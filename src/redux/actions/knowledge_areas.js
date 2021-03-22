@@ -1,5 +1,5 @@
 import Api from '../../services/Api'
-import { createMessage, returnErrors } from './messages'
+import { /* createMessage */ returnErrors } from './messages'
 
 import {
   LIST_KNOWLEDGEAREAS,

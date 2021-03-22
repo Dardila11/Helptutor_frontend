@@ -61,6 +61,7 @@ const EditInfoView = () => {
               birthday: 'birthday',
               email: 'email'
             }
+            console.log(jsonValues)
           }}>
           {({
             errors,

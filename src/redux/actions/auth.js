@@ -3,10 +3,10 @@ import { createMessage, returnErrors } from './messages'
 
 import {
   ADD_TUTOR,
-  UPDATE_TUTOR,
+  /* UPDATE_TUTOR,
   DELETE_TUTOR,
   GET_TUTOR,
-  LIST_TUTOR
+  LIST_TUTOR */
 } from './types_auth'
 
 export const addUser = (data) => (dispatch) => {

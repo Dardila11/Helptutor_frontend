@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-const SelectRole = (props) => {
+const SelectRole = () => {
   return <div> SelectRole page </div>
 }
 

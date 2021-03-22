@@ -1,19 +1,9 @@
 import React, { useState } from 'react'
-import * as Yup from 'yup'
-import { Formik } from 'formik'
 import {
   Box,
   Button,
-  Checkbox,
   Container,
-  FormHelperText,
-  TextField,
-  Typography,
-  Select,
   makeStyles,
-  InputLabel,
-  FormControl,
-  MenuItem,
   Stepper,
   Step,
   StepLabel
@@ -75,13 +65,13 @@ const RegisterView = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
 
-  const handleBack = () => {
+  /* const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1)
   }
 
   const handleReset = () => {
     setActiveStep(0)
-  }
+  } */
 
   return (
     <Page className={classes.root} title="Register">

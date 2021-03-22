@@ -58,12 +58,12 @@ const useStyles = makeStyles((theme) => ({
 
 const KnowledgeAreaInfoView = (props) => {
   const classes = useStyles()
-  const {knowledge_areas, specialities} = props;
-  let option = false
+  const { knowledge_areas, specialities } = props
+  //let option = false
   let initialvalues = {}
 
   if (isUndefined(props.area)) {
-    option = true
+    //option = true
     initialvalues = {
       area: '',
       subarea: '',
@@ -84,6 +84,7 @@ const KnowledgeAreaInfoView = (props) => {
   useEffect(() => {
     props.getKnowledgeAreas()
     console.log(knowledge_areas)
+    // eslint-disable-next-line
   }, [])
 
   const handleSelect = (e) => {

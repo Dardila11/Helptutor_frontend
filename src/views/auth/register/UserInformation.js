@@ -1,23 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import {
   Box,
   Button,
   Checkbox,
-  Container,
+
   FormHelperText,
   TextField,
   Typography,
-  Select,
   makeStyles,
-  InputLabel,
-  FormControl,
-  MenuItem
 } from '@material-ui/core'
-import Page from '../../../components/Page'
+
 import SignInGoogle from '../../../components/SignGoogle'
-import RoleCard from '../../../components/RoleCard'
 import Api from '../../../services/Api'
 
 const useStyles = makeStyles((theme) => ({
