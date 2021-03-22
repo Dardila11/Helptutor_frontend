@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 //REDUX
+import { addUser } from '../../redux/actions/auth'
+
+import { connect } from 'react-redux'
 
 //ALERT
 import { useAlert } from 'react-alert'
@@ -27,8 +30,6 @@ import SignInGoogle from '../../components/SignGoogle'
 import { Formik } from 'formik'
 
 //UTILS
-import Api from '../../services/Api'
-
 import Validation from './formikValues'
 
 //STYLESS
@@ -51,11 +52,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const RegisterView = () => {
+const RegisterView = (props) => {
   //DEFINED CONST, VAR AND LET
   const classes = useStyles()
   const alert = useAlert()
   let navigate = useNavigate()
+  const { isAuthenticated } = props
+
+  useEffect(() => {
+    console.log('generando efecto')
+    if (isAuthenticated) navigate('/tutor/manageknowledgearea')
+  }, [isAuthenticated])
 
   return (
     <Page className={classes.root} title="Register">
@@ -72,12 +79,13 @@ const RegisterView = () => {
             onSubmit={(values) => {
               let jsonValues = Validation.getValues(values)
               //LLAMADO DEL API REGISTRAR TUTOR
-              Api.postTutor(jsonValues).then((res) => {
-                if (res.status === 200) {
-                  alert.show('Registro exitoso', { type: 'success' })
-                  navigate('/tutor/manageknowledgeArea')
-                }
-              })
+              // Api.postTutor(jsonValues).then((res) => {
+              //   if (res.status === 200) {
+              //     alert.show('Registro exitoso', { type: 'success' })
+              //     navigate('/tutor/manageknowledgeArea')
+              //   }
+              // })
+              props.addUser(jsonValues)
             }}>
             {({
               errors,
@@ -221,4 +229,10 @@ const RegisterView = () => {
   )
 }
 
-export default RegisterView
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, {
+  addUser
+})(RegisterView)

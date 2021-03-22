@@ -8,21 +8,29 @@ import theme from './theme'
 //ALERTS
 import { Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
+import Alerts from './layouts/Alert/Alerts';
+
+//REDUX
+import { Provider } from 'react-redux'
+import store from './redux/store'
 
 const alertOptions = {
   timeout: 3000,
-  position: 'top center',
-};
+  position: 'top center'
+}
 
 const App = () => {
   const routing = useRoutes(routes)
   return (
-    <AlertProvider template={AlertTemplate} {...alertOptions}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        {routing}
-      </ThemeProvider>
-    </AlertProvider>
+    <Provider store={store}>
+      <AlertProvider template={AlertTemplate} {...alertOptions}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <Alerts />
+          {routing}
+        </ThemeProvider>
+      </AlertProvider>
+    </Provider>
   )
 }
 
