@@ -4,7 +4,8 @@ import React, { useEffect } from 'react'
 //REDUX
 import {
   getKnowledgeAreas,
-  getSpecialities
+  getSpecialities,
+  AddSpecialityTutor
 } from '../../../../redux/actions/knowledge_areas'
 import { connect } from 'react-redux'
 
@@ -58,8 +59,8 @@ const useStyles = makeStyles((theme) => ({
 
 const KnowledgeAreaInfoView = (props) => {
   const classes = useStyles()
-  const { knowledge_areas, specialities } = props
-  //let option = false
+  const {knowledge_areas, specialities, getKnowledgeAreas} = props;
+  let option = false
   let initialvalues = {}
 
   if (isUndefined(props.area)) {
@@ -82,9 +83,7 @@ const KnowledgeAreaInfoView = (props) => {
   }
 
   useEffect(() => {
-    props.getKnowledgeAreas()
-    console.log(knowledge_areas)
-    // eslint-disable-next-line
+    getKnowledgeAreas()
   }, [])
 
   const handleSelect = (e) => {
@@ -100,7 +99,7 @@ const KnowledgeAreaInfoView = (props) => {
               className={classes.containerTitle}
               variant="h3"
               align="center">
-              Información del area
+              Información del Área de Conocimiento
             </Typography>
             <Box
               display="flex"
@@ -127,11 +126,7 @@ const KnowledgeAreaInfoView = (props) => {
                       user: 12
                     }
                     console.log(jsonValues)
-                    Api.postKnowledgeAreaTutor(jsonValues).then((res) => {
-                      if (res.status === 200) {
-                        console.log(res.status)
-                      }
-                    })
+                    props.AddSpecialityTutor(jsonValues)
                   }}>
                   {({
                     errors,
@@ -149,7 +144,7 @@ const KnowledgeAreaInfoView = (props) => {
                         error={Boolean(touched.area && errors.area)}
                         helpertext={touched.area && errors.area}
                         fullWidth>
-                        <InputLabel id="select-area-label"> Area </InputLabel>
+                        <InputLabel id="select-area-label"> Área de conocimiento</InputLabel>
                         <Select
                           labelId="select-area-label"
                           id="select-area"
@@ -180,8 +175,7 @@ const KnowledgeAreaInfoView = (props) => {
                         helpertext={touched.subarea && errors.subarea}
                         fullWidth>
                         <InputLabel id="select-subarea-label">
-                          {' '}
-                          subArea{' '}
+                          Especialidad
                         </InputLabel>
                         <Select
                           labelId="select-subarea-label"
@@ -247,7 +241,7 @@ const KnowledgeAreaInfoView = (props) => {
                           size="large"
                           type="submit"
                           variant="contained">
-                          Registrar Area de conocimiento
+                          Registrar Área de conocimiento
                         </Button>
                       </Box>
                       <Box my={2}></Box>
@@ -270,5 +264,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getKnowledgeAreas,
-  getSpecialities
+  getSpecialities,
+  AddSpecialityTutor
 })(KnowledgeAreaInfoView)
