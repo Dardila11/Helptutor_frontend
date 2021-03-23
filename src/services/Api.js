@@ -24,6 +24,10 @@ const postTutor = (data) => {
   return https.post('/api/tutor/', data)
 }
 
+const updateTutorInfo = (id, data) => {
+  return https.patch(`/api/tutor/${id}/`, data)
+}
+
 const postGoogleTutor = (data) => {
   return https.post('/api/google/tutor/', data)
 }
@@ -73,6 +77,7 @@ const logConstants = {
   getSubKnowledgeAreas,
   getSupports,
   getTutorKnowledgeAreas,
-  deleteTutorKnowledgeArea
+  deleteTutorKnowledgeArea,
+  updateTutorInfo
 }
 export default logConstants

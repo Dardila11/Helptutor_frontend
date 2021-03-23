@@ -1,4 +1,4 @@
-import { ADD_TUTOR } from '../actions/types_auth'
+import { ADD_TUTOR, UPDATE_TUTOR } from '../actions/types_auth'
 
 const initialState = {
   token: localStorage.getItem('token'),
@@ -11,6 +11,12 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case ADD_TUTOR:
+      return {
+        ...state,
+        user: action.payload,
+        isAuthenticated: true
+      }
+    case UPDATE_TUTOR:
       return {
         ...state,
         user: action.payload,

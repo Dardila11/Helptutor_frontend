@@ -1,7 +1,7 @@
-import React, { Component, Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { withAlert } from 'react-alert'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 
 const Alerts = (props) => {
   // static propTypes = {

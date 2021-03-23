@@ -2,10 +2,11 @@ import React from 'react'
 import { Navigate } from 'react-router-dom'
 import { MainLayout } from './layouts/MainLayout'
 import { StudentLayout } from './layouts/StudentLayout'
+import { TutorAccountLayout } from './layouts/TutorAccountLayout'
 import { TutorLayout } from './layouts/TutorLayout'
 import RegisterView from './views/auth/RegisterView'
 import NotFoundView from './views/errors/NotFoundView'
-import EditInfoView from './views/tutorInfo/EditInfoView'
+import EditInfoView from './views/tutorviews/tutorInfo/EditInfoView'
 import ManageKnowledgeAreaView from './views/tutorviews/manageKnowledgeArea'
 
 const routes = [
@@ -19,12 +20,20 @@ const routes = [
     ]
   },
   {
+    path: '/tutor/account',
+    element: <TutorAccountLayout />,
+    children: [
+      { path: '/myInfo', element: <EditInfoView /> },
+      { path: '/viewProfile', element: <EditInfoView /> }
+    ]
+  },
+  {
     path: '/tutor',
     element: <TutorLayout /> /* Layouts */,
     children: [
       /* Views */
-      { path: '/account', element: <EditInfoView /> },
-      { path: '/manageKnowledgeArea', element: <ManageKnowledgeAreaView/>},
+      /* { path: '/account', element: <EditInfoView /> }, */
+      { path: '/manageKnowledgeArea', element: <ManageKnowledgeAreaView /> },
       { path: '404', element: <NotFoundView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]

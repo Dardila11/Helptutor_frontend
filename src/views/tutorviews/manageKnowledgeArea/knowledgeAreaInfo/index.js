@@ -64,7 +64,7 @@ const KnowledgeAreaInfoView = (props) => {
   let initialvalues = {}
 
   if (isUndefined(props.area)) {
-    option = true
+    //option = true
     initialvalues = {
       area: '',
       subarea: '',
