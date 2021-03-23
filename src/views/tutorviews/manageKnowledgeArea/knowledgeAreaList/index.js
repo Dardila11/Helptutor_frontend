@@ -1,8 +1,8 @@
 //REACT
-import React from 'react'
+import React, { useEffect } from 'react'
 
 //REDUX
-import { getKnowledgeAreas } from '../../../../redux/actions/knowledge_areas'
+import { getSpecialitiesTutor } from '../../../../redux/actions/knowledge_areas'
 import { connect } from 'react-redux'
 
 //COMPONENTS MATERAIL UI
@@ -13,6 +13,7 @@ import AreaCard from './areaCard'
 
 //UTILS
 import { isUndefined } from 'lodash-es'
+import { getThemeProps } from '@material-ui/styles'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -28,15 +29,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const KnowledgeAreaListView = (areas) => {
+const KnowledgeAreaListView = (props) => {
+
+  const {specialities_tutor, getSpecialitiesTutor} = props
   const classes = useStyles()
   let info = false
-  console.log(areas)
-  if (isUndefined(areas.areas)) {
+  console.log(props)
+  if (isUndefined(specialities_tutor)) {
     info = false
   } else {
     info = true
   }
+  useEffect(() => {
+      getSpecialitiesTutor(11)
+  },[])
   return (
     <>
       <Grid item xs={3}>
@@ -46,11 +52,11 @@ const KnowledgeAreaListView = (areas) => {
               className={classes.containerTitle}
               variant="h3"
               align="center">
-              Areas de conocimiento
+              Áreas de conocimiento
             </Typography>
             {info ? (
               <>
-                {areas.areas.map((area, index) => (
+                {specialities_tutor.map((area, index) => (
                   <AreaCard
                     key={index}
                     area={area.knowledge_area}
@@ -59,7 +65,7 @@ const KnowledgeAreaListView = (areas) => {
               </>
             ) : (
               <>
-                <Typography>No se encontraron areas</Typography>
+                <Typography>No se encontraron áreas</Typography>
               </>
             )}
           </Card>
@@ -70,9 +76,9 @@ const KnowledgeAreaListView = (areas) => {
 }
 
 const mapStateToProps = (state) => ({
-  knowledge_areas: state.knowledge_areas.knowledge_areas
+    specialities_tutor: state.knowledge_areas.specialities_tutor
 })
 
 export default connect(mapStateToProps, {
-  getKnowledgeAreas
+  getSpecialitiesTutor
 })(KnowledgeAreaListView)
