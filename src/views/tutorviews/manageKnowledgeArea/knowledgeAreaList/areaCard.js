@@ -4,7 +4,11 @@ import Api from '../../../../services/Api'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 //REDUX
-import { deleteSpecialityTutor } from '../../../../redux/actions/knowledge_areas'
+import {
+  deleteSpecialityTutor,
+  setSpecialityTutor,
+  setIsCreate
+} from '../../../../redux/actions/knowledge_areas'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +32,11 @@ const AreaCard = (props) => {
       <Paper className={classes.root} elevation={3}>
         <Grid container>
           <Grid item xs={9}>
-            <Button variant="outlined">
+            <Button
+              variant="outlined"
+              onClick={() => {
+                props.setSpecialityTutor(props.my_area)
+              }}>
               <Typography align="left">{props.area.name}</Typography>
             </Button>
           </Grid>
@@ -51,5 +59,7 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-  deleteSpecialityTutor
+  deleteSpecialityTutor,
+  setSpecialityTutor,
+  setIsCreate
 })(AreaCard)

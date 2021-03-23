@@ -6,7 +6,9 @@ import {
   LIST_SPECIALITIES,
   ADD_SPECIALITY_TUTOR,
   DELETE_SPECIALITY_TUTOR,
-  LIST_SPECIALITIES_TUTOR
+  LIST_SPECIALITIES_TUTOR,
+  SET_SPECIALITY_TUTOR,
+  SET_IS_CREATE
 } from './types_knowledge_areas'
 
 export const getKnowledgeAreas = () => (dispatch) => {
@@ -51,7 +53,7 @@ export const getSpecialities = (pk_knowledge_area) => (dispatch) => {
     })
 }
 
-export const AddSpecialityTutor = (data) => (dispatch) => {
+export const addSpecialityTutor = (data) => (dispatch) => {
   //   dispatch({ type: USER_LOADING });
 
   const request = Api.postKnowledgeAreaTutor(data)
@@ -114,4 +116,22 @@ export const getSpecialitiesTutor = (pk_tutor) => (dispatch) => {
         })
       )
     })
+}
+
+export const setSpecialityTutor = (tutor) => (dispatch) => {
+  //   dispatch({ type: USER_LOADING });
+
+  dispatch({
+    type: SET_SPECIALITY_TUTOR,
+    payload: tutor
+  })
+}
+
+export const setIsCreate = (value) => (dispatch) => {
+  //   dispatch({ type: USER_LOADING });
+
+  dispatch({
+    type: SET_IS_CREATE,
+    payload: value
+  })
 }

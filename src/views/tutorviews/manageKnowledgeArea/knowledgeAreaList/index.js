@@ -60,6 +60,7 @@ const KnowledgeAreaListView = (props) => {
                   <AreaCard
                     key={index}
                     area={area.knowledge_area}
+                    my_area={area}
                     idArea={area.id}></AreaCard>
                 ))}
               </>

@@ -56,7 +56,6 @@ const RegisterView = (props) => {
 
   useEffect(() => {
     if (isAuthenticated) navigate('/tutor/manageknowledgearea')
-    // eslint-disable-next-line
   }, [isAuthenticated])
 
   return (

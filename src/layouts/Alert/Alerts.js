@@ -15,8 +15,10 @@ const Alerts = (props) => {
       if (error.msg.non_field_errors)
         alert.error(error.msg.non_field_errors.join())
     }
-    if (message.setMessage) alert.success(message.setMessage)
-  }, [error, alert, message])
+    if (message) {
+      if (message.setMessage) alert.success(message.setMessage)
+    }
+  }, [error, message])
 
   return <Fragment />
 }
