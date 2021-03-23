@@ -90,8 +90,8 @@ const RegisterView = (props) => {
                   </Typography>
                 </Box>
                 <Box display="flex" textAlign="center" justifyContent="center">
-                  <RoleCard role="ESTUDIANTE" isSelected={values.isStudent} />
-                  <RoleCard role="TUTOR" isSelected={values.isTutor} />
+                  <RoleCard role="ESTUDIANTE" style={{margin: 2}} isSelected={values.isStudent} />
+                  <RoleCard role="TUTOR" style={{margin: 2}} isSelected={values.isTutor} />
                 </Box>
                 <Box display="flex" justifyContent="space-between">
                   <TextField

@@ -154,7 +154,7 @@ const KnowledgeAreaInfoView = (props) => {
                             handleChange(e)
                             handleSelect(e)
                           }}
-                          label="Area">
+                          label="Área de conocimiento">
                           <MenuItem value="">
                             <em>---</em>
                           </MenuItem>
@@ -183,7 +183,7 @@ const KnowledgeAreaInfoView = (props) => {
                           value={values.subarea}
                           name="subarea"
                           onChange={handleChange}
-                          label="Sub Area">
+                          label="Especialidad">
                           <MenuItem value="">
                             <em>---</em>
                           </MenuItem>
