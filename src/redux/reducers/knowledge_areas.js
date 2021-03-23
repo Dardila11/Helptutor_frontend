@@ -5,7 +5,8 @@ import {
   LIST_SPECIALITIES,
   LIST_SPECIALITIES_TUTOR,
   SET_SPECIALITY_TUTOR,
-  SET_IS_CREATE
+  SET_IS_CREATE,
+  UPDATE_SPECIALITY_TUTOR
 } from '../actions/types_knowledge_areas'
 
 const initialState = {
@@ -39,6 +40,16 @@ export default function (state = initialState, action) {
         ...state,
         is_create: false,
         specialities_tutor: state.specialities_tutor.concat(action.payload)
+      }
+    case UPDATE_SPECIALITY_TUTOR:
+      const specialities_tutor = state.specialities_tutor.map((item) => {
+        if (item.id === action.payload.id) return { ...action.payload }
+        return item
+      })
+      return {
+        ...state,
+        is_create: false,
+        specialities_tutor: specialities_tutor
       }
     case DELETE_SPECIALITY_TUTOR:
       return {

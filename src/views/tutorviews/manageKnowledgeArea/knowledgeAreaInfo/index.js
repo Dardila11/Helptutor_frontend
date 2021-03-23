@@ -6,7 +6,7 @@ import {
   getKnowledgeAreas,
   getSpecialities,
   addSpecialityTutor,
-  setIsCreate
+  updateSpecialityTutor
 } from '../../../../redux/actions/knowledge_areas'
 import { connect } from 'react-redux'
 
@@ -102,7 +102,8 @@ const KnowledgeAreaInfoView = (props) => {
                   validationSchema={Validation.validation}
                   onSubmit={(values) => {
                     let jsonValues = Validation.getValues(values)
-                    props.addSpecialityTutor(jsonValues)
+                    if (props.is_create) props.addSpecialityTutor(jsonValues)
+                    else props.updateSpecialityTutor(jsonValues, props.speciality_tutor.id)
                   }}>
                   {({
                     errors,
@@ -124,7 +125,6 @@ const KnowledgeAreaInfoView = (props) => {
                         }
                         fullWidth>
                         <InputLabel id="select-area-label">
-                          {' '}
                           Área de conocimiento
                         </InputLabel>
                         <Select
@@ -133,6 +133,7 @@ const KnowledgeAreaInfoView = (props) => {
                           value={values.knowledge_area}
                           name="knowledge_area"
                           onChange={(e) => {
+                            console.log('cambiando automaticamente')
                             handleChange(e)
                             handleSelect(e)
                           }}
@@ -255,5 +256,5 @@ export default connect(mapStateToProps, {
   getKnowledgeAreas,
   getSpecialities,
   addSpecialityTutor,
-  setIsCreate
+  updateSpecialityTutor
 })(KnowledgeAreaInfoView)

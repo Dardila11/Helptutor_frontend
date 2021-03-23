@@ -5,6 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 
 //REDUX
 import {
+  getSpecialities,
   deleteSpecialityTutor,
   setSpecialityTutor,
   setIsCreate
@@ -35,6 +36,7 @@ const AreaCard = (props) => {
             <Button
               variant="outlined"
               onClick={() => {
+                props.getSpecialities(props.my_area.knowledge_area.knowledge_area)
                 props.setSpecialityTutor(props.my_area)
               }}>
               <Typography align="left">{props.area.name}</Typography>
@@ -61,5 +63,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   deleteSpecialityTutor,
   setSpecialityTutor,
+  getSpecialities,
   setIsCreate
 })(AreaCard)
