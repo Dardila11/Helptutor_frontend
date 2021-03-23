@@ -38,7 +38,6 @@ export default function (state = initialState, action) {
     case ADD_SPECIALITY_TUTOR:
       return {
         ...state,
-        is_create: false,
         specialities_tutor: state.specialities_tutor.concat(action.payload)
       }
     case UPDATE_SPECIALITY_TUTOR:
@@ -48,7 +47,7 @@ export default function (state = initialState, action) {
       })
       return {
         ...state,
-        is_create: false,
+        is_create: true,
         specialities_tutor: specialities_tutor
       }
     case DELETE_SPECIALITY_TUTOR:
