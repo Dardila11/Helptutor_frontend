@@ -3,10 +3,10 @@ import { createMessage, returnErrors } from './messages'
 
 import {
   ADD_TUTOR,
-  UPDATE_TUTOR
+  UPDATE_TUTOR,
+  GET_TUTOR
   /* 
   DELETE_TUTOR,
-  GET_TUTOR,
   LIST_TUTOR */
 } from './types_auth'
 
@@ -21,6 +21,27 @@ export const updateTutor = (id, data) => (dispatch) => {
       dispatch(
         createMessage({ setMessage: 'Información del tutor actualizada' })
       )
+    })
+    .catch((err) => {
+      dispatch(
+        returnErrors({
+          non_field_errors: [err.response.data.detail],
+          status: 400
+        })
+      )
+    })
+}
+
+export const getTutorInfo = (id) => (dispatch) => {
+  Api.getTutorInfo(id)
+    .then((res) => {
+      if (res.status === 200) {
+        dispatch({
+          type: GET_TUTOR,
+          payload: res.data
+        })
+        dispatch(createMessage({ setMessage: 'Information retrieved' }))
+      }
     })
     .catch((err) => {
       dispatch(

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Typography,
@@ -8,14 +8,15 @@ import {
   FormControl,
   Select,
   MenuItem,
-  InputLabel
+  InputLabel,
+  CircularProgress
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { Formik } from 'formik'
-import * as Yup from 'yup'
+import formikValues from './formikValues'
 
 //REDUX
-import { updateTutor } from '../../../redux/actions/auth'
+import { updateTutor, getTutorInfo } from '../../../redux/actions/auth'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
@@ -28,62 +29,50 @@ const useStyles = makeStyles((theme) => ({
   selectControl: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(1)
+  },
+  progress: {
+    marginTop: theme.spacing(5),
+    float: 'center'
   }
 }))
 
-const EditInfoView = ({ updateTutor }) => {
+const EditInfoView = ({ updateTutor, getTutorInfo, userInfo }) => {
+  const [loading, setLoading] = useState(true)
+
+
+  useEffect(() => {
+    function getTutorInformation() {
+      let userId = 12
+      getTutorInfo(userId)
+      if (userInfo != null) {
+        console.log(userInfo)
+        formikValues.putValues(userInfo)
+        setLoading(false)
+
+      }
+    }
+    getTutorInformation()
+  },  [])
   const classes = useStyles()
-  return (
+  return loading ? (
+    <CircularProgress className={classes.progress} />
+  ) : (
     <Card className={classes.root}>
       <Box display="flex" flexDirection="column" justifyContent="center">
         <Formik
-          initialValues={{
-            first_name: '',
-            last_name: '',
-            interests: '', //change name
-            methodology: '',
-            skills: '',
-            sex: '',
-            birthday: '',
-            email: ''
-          }}
-          /* validationSchema={Yup.object().shape({
-            name: Yup.string().max(255).required('Nombre es requerido'),
-            email: Yup.string()
-              .email('Debe ser un email valido')
-              .max(255)
-              .required('Correo Electrónico es requerido'),
-            country: Yup.string().max(255).required('Pais es requerido'),
-            phone: Yup.string().max(255).required('Teléfono es requerido'),
-            password: Yup.string().max(255).required('Contraseña es requerido'),
-            confirmPassword: Yup.mixed()
-              .test('iguales', 'Contraseñas no son iguales', function () {
-                return this.parent.password === this.parent.confirmPassword
-              })
-              .required('Contraseña es requerido')
-          })} */
+          initialValues={formikValues.initialValues}
+          //validationSchema={formikValues.validation}
           onSubmit={(values) => {
-            console.log('onSubmit called')
-            let jsonValues = {
-              //username: 'get this from localstorage ?',
-              first_name: values.first_name,
-              last_name: values.last_name,
-              interest: values.interests,
-              methodology: values.methodology,
-              skills: values.skills,
-              gender: values.sex,
-              birthday: values.birthday,
-              email: values.email
-            }
+            let userId = 12
+            let jsonValues = formikValues.getValues(values)
             console.log(jsonValues)
-            updateTutor(9, jsonValues)
+            updateTutor(userId, jsonValues)
           }}>
           {({
             errors,
             handleBlur,
             handleChange,
             handleSubmit,
-            isSubmitting,
             touched,
             values
           }) => (
@@ -161,24 +150,29 @@ const EditInfoView = ({ updateTutor }) => {
                 variant="outlined"
               />
               <FormControl
-              variant="outlined"
-              className={classes.selectControl}
-              error={Boolean(touched.sex && errors.sex)}
-              helpertext={touched.sex && errors.sex}
-              fullWidth>
+                variant="outlined"
+                className={classes.selectControl}
+                error={Boolean(touched.sex && errors.sex)}
+                helpertext={touched.sex && errors.sex}
+                fullWidth>
                 <InputLabel id="select-sex-label"> Género </InputLabel>
                 <Select
-                labelId="select-sex-label"
-                id="select_sex"
-                value={values.sex}
-                name="sex"
-                onChange={handleChange}
-                label="Género"
-                >
+                  labelId="select-sex-label"
+                  id="select_sex"
+                  value={values.sex}
+                  name="sex"
+                  onChange={handleChange}
+                  label="Género">
                   <MenuItem value="">--</MenuItem>
-                  <MenuItem key={1} value={1}>Masculino</MenuItem>
-                  <MenuItem key={2} value={2}>Femenino</MenuItem>
-                  <MenuItem key={3} value={3}>Otro</MenuItem>
+                  <MenuItem key={1} value={1}>
+                    Masculino
+                  </MenuItem>
+                  <MenuItem key={2} value={2}>
+                    Femenino
+                  </MenuItem>
+                  <MenuItem key={3} value={3}>
+                    Otro
+                  </MenuItem>
                 </Select>
               </FormControl>
               <TextField
@@ -233,9 +227,11 @@ const EditInfoView = ({ updateTutor }) => {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  user: state.auth.user,
+  userInfo: state.auth.userInfo
 })
 
 export default connect(mapStateToProps, {
-  updateTutor
+  updateTutor,
+  getTutorInfo
 })(EditInfoView)
