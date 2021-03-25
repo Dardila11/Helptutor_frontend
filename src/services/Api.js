@@ -41,6 +41,10 @@ const postKnowledgeAreaTutor = (data) => {
   return https.post('/api/knowledgearea_tutor/',data)
 }
 
+const patchTutorKnowledgeAreas = (data, pk) => {
+  return https.patch('/api/knowledgearea_tutor/' + pk + '/', data)
+}
+
 const getSupports = () => {
   return https.get('/api/certificate')
 }
@@ -76,6 +80,7 @@ const logConstants = {
   postTutor,
   postGoogleTutor,
   postKnowledgeAreaTutor,
+  patchTutorKnowledgeAreas,
   getknowledgeAreas,
   getKnowledgeArea,
   getSubKnowledgeAreas,

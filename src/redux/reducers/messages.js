@@ -2,7 +2,7 @@ import { CREATE_MESSAGE } from '../actions/types_messages';
 
 const initialState = {};
 
-export default function (state = initialState, action) {
+const messageReducer = (state = initialState, action) =>{
   switch (action.type) {
     case CREATE_MESSAGE:
       return (state = action.payload);
@@ -10,3 +10,5 @@ export default function (state = initialState, action) {
       return state;
   }
 }
+
+export default messageReducer

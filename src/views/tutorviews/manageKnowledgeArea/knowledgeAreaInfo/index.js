@@ -1,11 +1,12 @@
 //REACT
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 //REDUX
 import {
   getKnowledgeAreas,
   getSpecialities,
-  AddSpecialityTutor
+  addSpecialityTutor,
+  updateSpecialityTutor
 } from '../../../../redux/actions/knowledge_areas'
 import { connect } from 'react-redux'
 
@@ -31,11 +32,9 @@ import {
 import SupportsView from './supports'
 
 import { Formik } from 'formik'
-import { isUndefined } from 'lodash-es'
 
 //UTILS
-import * as Yup from 'yup'
-import Api from '../../../../services/Api'
+import Validation from './formikValues'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -57,38 +56,30 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+let initialValuesObj= {
+    id: -1,
+    knowledge_area: -1,
+    speciality: -1,
+    tags: '',
+    description: ''
+}
+
 const KnowledgeAreaInfoView = (props) => {
   const classes = useStyles()
-  const {knowledge_areas, specialities, getKnowledgeAreas} = props;
-  let option = false
-  let initialvalues = {}
 
-  if (isUndefined(props.area)) {
-    //option = true
-    initialvalues = {
-      area: '',
-      subarea: '',
-      description: '',
-      tags: ''
-    }
-    console.log('area undefined')
-  } else {
-    console.log('area defined')
-    initialvalues = {
-      area: '',
-      subarea: '',
-      description: props.area.description,
-      tags: props.area.tags
-    }
+  const [initialValues, setInitialValues] = useState(initialValuesObj)
+
+  useEffect(() => {
+    props.getKnowledgeAreas()
+  })
+
+  const handleSelect = (e) => {
+    props.getSpecialities(e.target.value)
   }
 
   useEffect(() => {
-    getKnowledgeAreas()
-  }, [])
-
-  const handleSelect = (e) => {
-    props.getSpecialities(e.target.value.id)
-  }
+    setInitialValues(props.speciality_tutor)
+  }, [props.speciality_tutor])
 
   return (
     <>
@@ -108,32 +99,19 @@ const KnowledgeAreaInfoView = (props) => {
               justifyContent="center">
               <Container maxWidth="sm">
                 <Formik
-                  initialValues={initialvalues}
-                  validationSchema={Yup.object().shape({
-                    area: Yup.string().max(255).required('Area requerida'),
-                    subarea: Yup.string()
-                      .max(255)
-                      .required('Sub area requerida'),
-                    description: Yup.string().max(255),
-                    tags: Yup.string().max(255)
-                  })}
+                  enableReinitialize={true}
+                  initialValues={initialValues}
+                  validationSchema={Validation.validation}
                   onSubmit={(values) => {
-                    console.log(values)
-                    let jsonValues = {
-                      tags: values.tags,
-                      description: values.description,
-                      knowledge_area: values.subarea.id,
-                      user: 12
-                    }
-                    console.log(jsonValues)
-                    props.AddSpecialityTutor(jsonValues)
+                    let jsonValues = Validation.getValues(values)
+                    if (props.is_create) props.addSpecialityTutor(jsonValues)
+                    else props.updateSpecialityTutor(jsonValues, props.speciality_tutor.id)
                   }}>
                   {({
                     errors,
                     handleBlur,
                     handleChange,
                     handleSubmit,
-                    isSubmitting,
                     touched,
                     values
                   }) => (
@@ -141,38 +119,49 @@ const KnowledgeAreaInfoView = (props) => {
                       <FormControl
                         variant="outlined"
                         className={classes.selectControl}
-                        error={Boolean(touched.area && errors.area)}
-                        helpertext={touched.area && errors.area}
+                        error={Boolean(
+                          touched.knowledge_area && errors.knowledge_area
+                        )}
+                        helpertext={
+                          touched.knowledge_area && errors.knowledge_area
+                        }
                         fullWidth>
-                        <InputLabel id="select-area-label"> Área de conocimiento</InputLabel>
+                        <InputLabel id="select-area-label">
+                          Área de conocimiento
+                        </InputLabel>
                         <Select
                           labelId="select-area-label"
                           id="select-area"
-                          value={values.area}
-                          name="area"
+                          value={values.knowledge_area}
+                          name="knowledge_area"
                           onChange={(e) => {
                             handleChange(e)
                             handleSelect(e)
                           }}
-                          label="Area">
-                          <MenuItem value="">
+                          label="Área de conocimiento">
+                          <MenuItem value={-1}>
                             <em>---</em>
                           </MenuItem>
-                          {knowledge_areas.map((area, index) => (
-                            <MenuItem key={index} value={area}>
+                          {props.knowledge_areas.map((area, index) => (
+                            <MenuItem key={index} value={area.id}>
                               {area.name}
                             </MenuItem>
                           ))}
                         </Select>
-                        {Boolean(touched.area && errors.area) && (
-                          <FormHelperText error> {errors.area} </FormHelperText>
+                        {Boolean(
+                          touched.knowledge_area && errors.knowledge_area
+                        ) && (
+                          <FormHelperText error>
+                            {' '}
+                            {errors.knowledge_area}{' '}
+                          </FormHelperText>
                         )}
                       </FormControl>
                       <FormControl
                         variant="outlined"
                         className={classes.selectControl}
-                        error={Boolean(touched.subarea && errors.subarea)}
-                        helpertext={touched.subarea && errors.subarea}
+                        error={Boolean(touched.speciality && errors.speciality)}
+                        helpertext={touched.speciality && errors.speciality}
                         fullWidth>
                         <InputLabel id="select-subarea-label">
                           Especialidad
@@ -180,23 +169,22 @@ const KnowledgeAreaInfoView = (props) => {
                         <Select
                           labelId="select-subarea-label"
                           id="select-subarea"
-                          value={values.subarea}
-                          name="subarea"
+                          value={values.speciality}
+                          name="speciality"
                           onChange={handleChange}
-                          label="Sub Area">
-                          <MenuItem value="">
+                          label="Especialidad">
+                          <MenuItem value={-1}>
                             <em>---</em>
                           </MenuItem>
-                          {specialities.map((subarea, index) => (
-                            <MenuItem key={index} value={subarea}>
+                          {props.specialities.map((subarea, index) => (
+                            <MenuItem key={index} value={subarea.id}>
                               {subarea.name}
                             </MenuItem>
                           ))}
                         </Select>
-                        {Boolean(touched.subarea && errors.subarea) && (
+                        {Boolean(touched.speciality && errors.speciality) && (
                           <FormHelperText error>
-                            {' '}
-                            {errors.subarea}{' '}
+                            {errors.speciality}
                           </FormHelperText>
                         )}
                       </FormControl>
@@ -231,17 +219,18 @@ const KnowledgeAreaInfoView = (props) => {
                         value={values.description}
                         variant="outlined"
                       />
-                      <SupportsView></SupportsView>
+                      <SupportsView is_create={props.is_create}></SupportsView>
                       <Box my={2}>
                         <Button
                           id="btn_registerArea"
                           color="primary"
-                          disabled={isSubmitting}
                           fullWidth
                           size="large"
                           type="submit"
                           variant="contained">
-                          Registrar Área de conocimiento
+                          {props.is_create
+                            ? 'Registrar Área de conocimiento'
+                            : 'Actualizar'}
                         </Button>
                       </Box>
                       <Box my={2}></Box>
@@ -259,11 +248,14 @@ const KnowledgeAreaInfoView = (props) => {
 
 const mapStateToProps = (state) => ({
   knowledge_areas: state.knowledge_areas.knowledge_areas,
-  specialities: state.knowledge_areas.specialities
+  specialities: state.knowledge_areas.specialities,
+  speciality_tutor: state.knowledge_areas.speciality_tutor,
+  is_create: state.knowledge_areas.is_create
 })
 
 export default connect(mapStateToProps, {
   getKnowledgeAreas,
   getSpecialities,
-  AddSpecialityTutor
+  addSpecialityTutor,
+  updateSpecialityTutor
 })(KnowledgeAreaInfoView)

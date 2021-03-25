@@ -3,8 +3,6 @@ import {
   makeStyles,
   Toolbar,
   IconButton,
-  Container,
-  Paper,
   Typography
 } from '@material-ui/core'
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
@@ -14,9 +12,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(1),
-    marginBlockEnd: theme.spacing(2),
-    justifyContent: 'space-between',
+    
   },
   toolbar:{
     alignItems: 'center'
@@ -30,30 +26,26 @@ const useStyles = makeStyles((theme) => ({
 const TutorNavBar = () => {
   const classes = useStyles()
   return (
-    <Container className={classes.root} float='center'>
-      <Paper elevation={3}>
-      <Toolbar className={classes.toolbar} float='center'>        
+      <Toolbar className={classes.toolbar}>        
       <RouterLink to='news'>
         <IconButton>
-            <Typography variant='h4'>Noticias</Typography>
+            <Typography variant='h4' color='initial'>Noticias</Typography>
             <LibraryBooksIcon className={classes.navicons} />
         </IconButton>
       </RouterLink>
       <RouterLink to='offers'>
         <IconButton>
-            <Typography variant='h4'>Ofertas</Typography>
+            <Typography variant='h4' color='initial'>Ofertas</Typography>
             <ListAltIcon className={classes.navicons}/>
         </IconButton>
       </RouterLink>
-      <RouterLink to='profile'>
+      <RouterLink to='account'>
         <IconButton>
-            <Typography variant='h4'>Perfil</Typography>
+            <Typography variant='h4' color='initial'>Perfil</Typography>
             <AccountBoxIcon className={classes.navicons}/>
         </IconButton>
        </RouterLink>
       </Toolbar>
-      </Paper>
-    </Container>
   )
 }
 
