@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import {
-  AppBar,
   Toolbar,
   Typography,
   Button,
@@ -9,10 +8,12 @@ import {
   IconButton
 } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
+import TutorNavBar from '../NavBar'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
+    marginBlockEnd: theme.spacing(2)
   },
   menuButton: {
     marginRight: theme.spacing(1)
@@ -52,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
   },
   username: {
     marginRight : theme.spacing(1)
+  },
+  toolbar: {
+    backgroundColor: theme.palette.primary.main
   }
 }))
 
@@ -60,8 +64,7 @@ const TutorTopBar = () => {
   
   return (
     <div className={classes.grow}>
-      <AppBar position="fixed" color="primary">
-        <Toolbar>
+        <Toolbar className={classes.toolbar}color="primary">
           <Button className={classes.button} variant="outlined" href="/">
             <img
               src="https://gitlab.com/alexvi/diagonals-react/-/raw/master/src/data/logo-removebg-preview.png"
@@ -75,9 +78,10 @@ const TutorTopBar = () => {
               HELPTUTOR
             </Typography>
           </Button>
+          <TutorNavBar/>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <RouterLink to="profile">
+            <RouterLink to="/tutor/account">
               <div className={classes.userSection}>
                 <IconButton
                   aria-label="account of current user"
@@ -93,7 +97,6 @@ const TutorTopBar = () => {
             </RouterLink>
           </div>
         </Toolbar>
-      </AppBar>
     </div>
   )
 }

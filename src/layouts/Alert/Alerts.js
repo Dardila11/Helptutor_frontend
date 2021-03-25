@@ -18,7 +18,7 @@ const Alerts = (props) => {
     if (message) {
       if (message.setMessage) alert.success(message.setMessage)
     }
-  }, [error, message])
+  })
 
   return <Fragment />
 }

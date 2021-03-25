@@ -2,7 +2,6 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
 import TutorTopBar from './TopBar'
-import TutorNavBar from './NavBar'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,8 +35,7 @@ export const TutorLayout = () => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <TutorTopBar />     
-      <TutorNavBar />
+      <TutorTopBar />  
         <div className={classes.contentContainer}>   
           <div className={classes.content}>          
             <Outlet />

@@ -8,7 +8,7 @@ const initialState = {
   user: null
 }
 
-export default function (state = initialState, action) {
+const auth = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TUTOR:
       return {
@@ -36,3 +36,5 @@ export default function (state = initialState, action) {
       return state
   }
 }
+
+export default auth

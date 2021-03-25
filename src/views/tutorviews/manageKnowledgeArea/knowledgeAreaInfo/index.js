@@ -56,28 +56,30 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const KnowledgeAreaInfoView = (props) => {
-  const classes = useStyles()
-
-  const [initialValues, setInitialValues] = useState({
+let initialValuesObj= {
     id: -1,
     knowledge_area: -1,
     speciality: -1,
     tags: '',
     description: ''
-  })
+}
+
+const KnowledgeAreaInfoView = (props) => {
+  const classes = useStyles()
+
+  const [initialValues, setInitialValues] = useState(initialValuesObj)
 
   useEffect(() => {
     props.getKnowledgeAreas()
-  }, [])
-
-  useEffect(() => {
-    setInitialValues(props.speciality_tutor)
-  }, [props.speciality_tutor])
+  })
 
   const handleSelect = (e) => {
     props.getSpecialities(e.target.value)
   }
+
+  useEffect(() => {
+    setInitialValues(props.speciality_tutor)
+  }, [props.speciality_tutor])
 
   return (
     <>
@@ -133,7 +135,6 @@ const KnowledgeAreaInfoView = (props) => {
                           value={values.knowledge_area}
                           name="knowledge_area"
                           onChange={(e) => {
-                            console.log('cambiando automaticamente')
                             handleChange(e)
                             handleSelect(e)
                           }}

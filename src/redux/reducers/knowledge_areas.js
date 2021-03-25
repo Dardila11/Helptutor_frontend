@@ -9,21 +9,23 @@ import {
   UPDATE_SPECIALITY_TUTOR
 } from '../actions/types_knowledge_areas'
 
-const initialState = {
-  knowledge_areas: [],
-  specialities: [],
-  specialities_tutor: [],
-  speciality_tutor: {
+const initialValuesSpeciality = {
     id: -1,
     knowledge_area: -1,
     speciality: -1,
     tags: '',
     description: ''
-  },
+}
+
+const initialState = {
+  knowledge_areas: [],
+  specialities: [],
+  specialities_tutor: [],
+  speciality_tutor: initialValuesSpeciality,
   is_create: true
 }
 
-export default function (state = initialState, action) {
+const knowledge_area = (state = initialState, action) => {
   switch (action.type) {
     case LIST_KNOWLEDGEAREAS:
       return {
@@ -77,10 +79,16 @@ export default function (state = initialState, action) {
         is_create: false
       }
     case SET_IS_CREATE:
-      return {
-        ...state,
-        is_create: action.payload
+      if(action.payload){
+        return {
+          ...state, speciality_tutor: initialValuesSpeciality, is_create: action.payload
+        }
+      }else{
+        return {
+          ...state, speciality_tutor: speciality_tutor, is_create: action.payload
+        }
       }
+      
     //   case ACTION_RUNNING:
     //     return {
     //       ...state,
@@ -95,3 +103,5 @@ export default function (state = initialState, action) {
       return state
   }
 }
+
+export default knowledge_area

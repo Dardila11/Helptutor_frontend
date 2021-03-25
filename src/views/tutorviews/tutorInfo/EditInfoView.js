@@ -12,7 +12,6 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { Formik } from 'formik'
-import * as Yup from 'yup'
 
 //REDUX
 import { updateTutor } from '../../../redux/actions/auth'

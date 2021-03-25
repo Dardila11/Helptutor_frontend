@@ -56,7 +56,7 @@ const RegisterView = (props) => {
 
   useEffect(() => {
     if (isAuthenticated) navigate('/tutor/manageknowledgearea')
-  }, [isAuthenticated])
+  })
 
   return (
     <Page className={classes.root} title="Register">

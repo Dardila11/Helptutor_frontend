@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
   nav: {
     width: theme.spacing(30),
     height: theme.spacing(55),
-    margin: theme.spacing(10),
-    marginTop: theme.spacing(7),
+    marginLeft: theme.spacing(10),
+    marginRight: theme.spacing(5),
     borderRadius: '20px'
   }
 }))
@@ -30,7 +30,7 @@ const NavBar = () => {
   const classes = useStyles()
   return (
     <Card className={classes.nav} xs={3}>
-      <Grid display="flex" flexDirection="column">
+      <Grid display="flex" flex="column">
         <Avatar
           className={classes.avatar}
           alt="my-avatar"
@@ -46,10 +46,10 @@ const NavBar = () => {
             button>
             <ListItemText primary="Editar Información" />
           </ListItem>
-          <ListItem component={RouterLink} to="/tutor/account" button>
+          <ListItem component={RouterLink} to="/tutor/manageKnowledgeArea" button>
             <ListItemText primary="Gestionar asesorias" />
           </ListItem>
-          <ListItem bcomponent={RouterLink} to="/tutor/account" buttonutton>
+          <ListItem bcomponent={RouterLink} to="/tutor/account" button>
             <ListItemText primary="Servicios" />
           </ListItem>
           <ListItem component={RouterLink} to="/tutor/account" button>
