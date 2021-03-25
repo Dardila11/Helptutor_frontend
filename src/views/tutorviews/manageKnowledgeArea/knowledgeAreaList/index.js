@@ -85,7 +85,7 @@ const KnowledgeAreaListView = (props) => {
               fullWidth={true}
               color='primary'
               variant='contained'
-              startIcon={<AddCircleIcon />}
+              endIcon={<AddCircleIcon />}
               onClick={handleClick}>
                 Agregar Area
               </Button>

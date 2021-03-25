@@ -219,7 +219,7 @@ const KnowledgeAreaInfoView = (props) => {
                         value={values.description}
                         variant="outlined"
                       />
-                      <SupportsView></SupportsView>
+                      <SupportsView is_create={props.is_create}></SupportsView>
                       <Box my={2}>
                         <Button
                           id="btn_registerArea"
