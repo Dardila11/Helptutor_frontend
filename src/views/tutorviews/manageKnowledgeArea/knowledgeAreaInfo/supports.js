@@ -127,7 +127,7 @@ const SupportsView = (props) => {
                               margin="normal"
                               onBlur={handleBlur}
                               onChange={handleChange}
-                              name="awared_by"
+                              name="awarded_by"
                               value={values.awarded_by}
                               variant="outlined"
                             />
