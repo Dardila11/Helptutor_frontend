@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 let initialValues = {
   first_name: '',
   last_name: '',
-  interests: '',
+  interest: '',
   methodology: '',
   skills: '',
   sex: '',
@@ -14,7 +14,7 @@ let initialValues = {
 const putValues = (values) => {
   initialValues.first_name = values.user.first_name
   initialValues.last_name = values.user.last_name
-  initialValues.interests = values.interest
+  initialValues.interest = values.interest
   initialValues.methodology = values.methodology
   initialValues.skills = values.skills
   initialValues.sex = values.user.gender
@@ -29,7 +29,7 @@ const getValues = (values) => {
     interest: values.interest,
     methodology: values.methodology,
     skills: values.skills,
-    gender: values.gender,
+    gender: values.sex,
     birthday: values.birthday,
     email: values.email
   }

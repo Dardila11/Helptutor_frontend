@@ -21,7 +21,6 @@ import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(7),
     maxWidth: '500px',
     padding: '20px',
     borderRadius: '20px'
@@ -112,15 +111,15 @@ const EditInfoView = ({ updateTutor, getTutorInfo, userInfo }) => {
               </Box>
               <TextField
                 id="txt_interests"
-                error={Boolean(touched.interests && errors.interests)}
+                error={Boolean(touched.interest && errors.interest)}
                 fullWidth
-                helperText={touched.interests && errors.interests}
+                helperText={touched.interest && errors.interest}
                 label="Mis intereses"
                 margin="normal"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                name="interests"
-                value={values.interests}
+                name="interest"
+                value={values.interest}
                 variant="outlined"
               />
               <TextField
@@ -165,10 +164,10 @@ const EditInfoView = ({ updateTutor, getTutorInfo, userInfo }) => {
                   label="Género">
                   <MenuItem value="">--</MenuItem>
                   <MenuItem key={1} value={1}>
-                    Masculino
+                    Femenino
                   </MenuItem>
                   <MenuItem key={2} value={2}>
-                    Femenino
+                    Masculino
                   </MenuItem>
                   <MenuItem key={3} value={3}>
                     Otro
@@ -205,6 +204,7 @@ const EditInfoView = ({ updateTutor, getTutorInfo, userInfo }) => {
                 type="email"
                 value={values.email}
                 variant="outlined"
+                disabled
               />
               <Box my={2}>
                 <Button
