@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {LinearProgress, CircularProgress, Grid, makeStyles } from '@material-ui/core'
 import Page from '../../../components/Page'
 import KnowledgeAreaInfoView from './knowledgeAreaInfo'
-import KnowledgeAreaListView from './knowledgeAreaList'
+import KnowledgeAreaListView from './servicesList'
 import Api from '../../../services/Api'
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }))
 
-const ManageKnowledgeAreaView = () => {
+const ManageServicesView = () => {
     const [knowledgeAreas, setKnowledgeAreas] = useState([])
     const [loading, setloading] = useState(false)
     const classes = useStyles() 
@@ -48,4 +48,4 @@ const ManageKnowledgeAreaView = () => {
     )
 }
 
-export default ManageKnowledgeAreaView
+export default ManageServicesView

@@ -62,7 +62,7 @@ const KnowledgeAreaListView = (props) => {
               className={classes.containerTitle}
               variant="h4"
               align="center">
-              Áreas de conocimiento
+              Servicios
             </Typography>
             {info ? (
               <>

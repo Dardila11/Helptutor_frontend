@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   nav: {
     width: theme.spacing(30),
     height: theme.spacing(55),
-    marginLeft: theme.spacing(10),
+    marginLeft: theme.spacing(5),
     marginRight: theme.spacing(5),
     borderRadius: '20px'
   }
@@ -48,13 +48,13 @@ const NavBar = () => {
           </ListItem>
           <ListItem
             component={RouterLink}
-            to="/tutor/manageKnowledgeArea"
+            to="/tutor/account/manageKnowledgeArea"
             button>
             <ListItemText primary="Gestionar asesorias" />
           </ListItem>
           <ListItem
-            bcomponent={RouterLink}
-            to="/tutor/account/ProfileView"
+            component={RouterLink}
+            to="/tutor/account/manageServices"
             button>
             <ListItemText primary="Servicios" />
           </ListItem>
