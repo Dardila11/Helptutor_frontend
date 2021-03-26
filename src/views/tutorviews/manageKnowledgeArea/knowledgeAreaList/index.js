@@ -2,12 +2,23 @@
 import React, { useEffect } from 'react'
 
 //REDUX
-import { getSpecialitiesTutor,setIsCreate } from '../../../../redux/actions/knowledge_areas'
+import {
+  getSpecialitiesTutor,
+  setIsCreate
+} from '../../../../redux/actions/knowledge_areas'
 import { connect } from 'react-redux'
 
 //COMPONENTS MATERAIL UI
-import { Button, Card, Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import {
+  Button,
+  Card,
+  Container,
+  Grid,
+  makeStyles,
+  Paper,
+  Typography
+} from '@material-ui/core'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 //COMPONENTS
 import AreaCard from './areaCard'
@@ -27,18 +38,17 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBlockEnd: theme.spacing(2)
   },
-  actions:{
+  actions: {
     marginTop: theme.spacing(2),
     marginBlockEnd: theme.spacing(2)
   },
-  lateralView:{
+  lateralView: {
     borderRadius: '50px'
   }
 }))
 
 const KnowledgeAreaListView = (props) => {
-
-  const {specialities_tutor, getSpecialitiesTutor} = props
+  const { specialities_tutor, getSpecialitiesTutor } = props
   const classes = useStyles()
   let info = false
   if (isUndefined(specialities_tutor)) {
@@ -52,8 +62,8 @@ const KnowledgeAreaListView = (props) => {
   }
 
   useEffect(() => {
-      getSpecialitiesTutor(11)
-  })
+    getSpecialitiesTutor(11)
+  }, [])
   return (
     <>
       <Grid item xs={3}>
@@ -77,16 +87,16 @@ const KnowledgeAreaListView = (props) => {
               </>
             ) : (
               <>
-                <Typography align='center'>No se encontraron áreas</Typography>
+                <Typography align="center">No se encontraron áreas</Typography>
               </>
             )}
             <Container className={classes.actions}>
               <Button
-              fullWidth={true}
-              color='primary'
-              variant='contained'
-              endIcon={<AddCircleIcon />}
-              onClick={handleClick}>
+                fullWidth={true}
+                color="primary"
+                variant="contained"
+                endIcon={<AddCircleIcon />}
+                onClick={handleClick}>
                 Agregar Area
               </Button>
             </Container>
@@ -98,8 +108,8 @@ const KnowledgeAreaListView = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    specialities_tutor: state.knowledge_areas.specialities_tutor,
-    is_create: state.knowledge_areas.is_create
+  specialities_tutor: state.knowledge_areas.specialities_tutor,
+  is_create: state.knowledge_areas.is_create
 })
 
 export default connect(mapStateToProps, {

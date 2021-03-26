@@ -71,7 +71,7 @@ const KnowledgeAreaInfoView = (props) => {
 
   useEffect(() => {
     props.getKnowledgeAreas()
-  })
+  }, [])
 
   const handleSelect = (e) => {
     props.getSpecialities(e.target.value)
