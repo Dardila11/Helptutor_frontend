@@ -8,6 +8,7 @@ import RegisterView from './views/auth/RegisterView'
 import NotFoundView from './views/errors/NotFoundView'
 import EditInfoView from './views/tutorviews/tutorInfo/EditInfoView'
 import ManageKnowledgeAreaView from './views/tutorviews/manageKnowledgeArea'
+import ProfileView from './views/tutorviews/profile/ProfileView'
 
 const routes = [
   {
@@ -24,7 +25,7 @@ const routes = [
     element: <TutorAccountLayout />,
     children: [
       { path: '/myInfo', element: <EditInfoView /> },
-      { path: '/viewProfile', element: <EditInfoView /> }
+      { path: '/ProfileView', element: <ProfileView /> }
     ]
   },
   {
