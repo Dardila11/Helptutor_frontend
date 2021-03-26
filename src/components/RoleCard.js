@@ -4,13 +4,14 @@ import { makeStyles, Card, Typography } from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
   card: {
     minWidth: '170px',
-    padding: theme.spacing(2),
+    padding: theme.spacing(0.7),
+    marginRight: theme.spacing(1),
     borderRadius: '10px',
     backgroundColor: '#DFE1E1'
   },
   activeColor: {
     minWidth: '170px',
-    padding: theme.spacing(2),
+    padding: theme.spacing(0.7),
     marginRight: theme.spacing(1),
     borderRadius: '10px',
     backgroundColor: '#005579',
