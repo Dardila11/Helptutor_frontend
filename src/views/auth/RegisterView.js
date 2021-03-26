@@ -1,5 +1,5 @@
 //REACT
-import React, {useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 //REDUX
@@ -48,15 +48,30 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const RegisterView = (props) => {
-  //DEFINED CONST, VAR AND LET
+const RegisterView = ({ isAuthenticated, addUser }) => {
+  const [tutorSelect, setTutorSelect] = useState(true)
+  const [studentSelect, setStudentSelect] = useState(false)
   const classes = useStyles()
   let navigate = useNavigate()
-  const { isAuthenticated } = props
 
   useEffect(() => {
     if (isAuthenticated) navigate('/tutor/manageknowledgearea')
   })
+
+  const selectRole = (role) => {
+    console.log(role)
+    if (role === 'tutor') {
+      if (!tutorSelect) {
+        setTutorSelect(true)
+        setStudentSelect(false)
+      }
+    } else if (role === 'student') {
+      if (!studentSelect) {
+        setTutorSelect(false)
+        setStudentSelect(true)
+      }
+    }
+  }
 
   return (
     <Page className={classes.root} title="Register">
@@ -71,8 +86,17 @@ const RegisterView = (props) => {
             validationSchema={Validation.validation}
             //ON_SUBMIT ENVIO DEL FORMULARIO
             onSubmit={(values) => {
-              let jsonValues = Validation.getValues(values)
-              props.addUser(jsonValues)
+              if (tutorSelect) {
+                // tutor registration api
+                console.log('registro de tutor...')
+                let jsonValues = Validation.getValues(values)
+                addUser(jsonValues)
+              } else if (studentSelect) {
+                // student registration api
+                console.log('registro de estudiante...')
+              } else {
+                console.log('Debe elegir un rol')
+              }
             }}>
             {({
               errors,
@@ -90,8 +114,12 @@ const RegisterView = (props) => {
                   </Typography>
                 </Box>
                 <Box display="flex" textAlign="center" justifyContent="center">
-                  <RoleCard role="ESTUDIANTE" style={{margin: 2}} isSelected={values.isStudent} />
-                  <RoleCard role="TUTOR" style={{margin: 2}} isSelected={values.isTutor} />
+                  <div onClick={(e) => selectRole('student')}>
+                    <RoleCard role="ESTUDIANTE" isSelected={studentSelect} />
+                  </div>
+                  <div onClick={(e) => selectRole('tutor')}>
+                    <RoleCard role="TUTOR" isSelected={tutorSelect} />
+                  </div>
                 </Box>
                 <Box display="flex" justifyContent="space-between">
                   <TextField
@@ -204,6 +232,7 @@ const RegisterView = (props) => {
                     Registrarse
                   </Button>
                 </Box>
+                <Box textAlign="center"> ó </Box>
                 <Box my={2}>
                   <SignInGoogle></SignInGoogle>
                 </Box>
