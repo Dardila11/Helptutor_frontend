@@ -6,14 +6,17 @@ import { useNavigate } from 'react-router-dom'
 import GoogleLogin from 'react-google-login'
 
 //REDUX
-import { addUserGoogle } from '../redux/actions/auth'
+import { addUserGoogle, loginGoogle } from '../redux/actions/auth'
 import { connect } from 'react-redux'
 
 const responseGoogle = async (props, response) => {
   let jsonValues = {
     id_token: response.tokenId
   }
-  props.addUserGoogle(jsonValues)
+  if(props.login) props.loginGoogle(jsonValues)
+  else {
+    props.addUserGoogle(jsonValues)
+  }
 }
 
 const SignInGoogle = (props) => {
@@ -21,19 +24,19 @@ const SignInGoogle = (props) => {
   const { isAuthenticated } = props
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/tutor/manageknowledgearea')
+    if (isAuthenticated) navigate('/tutor/account')
     // eslint-disable-next-line
   }, [isAuthenticated])
 
   return (
     <>
       <GoogleLogin
-        clientId="581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com"
-        buttonText="Registrarme con Google"
-        onSuccess={(response) => responseGoogle(props, response)}
-        onFailure={(response) => responseGoogle(props, response)}
-        cookiePolicy={'single_host_origin'}
-      />
+      clientId="581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com"
+      buttonText={props.login ? 'Iniciar sesión con Google' : 'Registrarme con Google'}
+      onSuccess={(response) => responseGoogle(props, response)}
+      onFailure={(response) => responseGoogle(props, response)}
+      cookiePolicy={'single_host_origin'}
+      />      
     </>
   )
 }
@@ -43,5 +46,6 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-  addUserGoogle
+  addUserGoogle,
+  loginGoogle
 })(SignInGoogle)

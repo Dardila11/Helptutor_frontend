@@ -44,7 +44,6 @@ const EditInfoView = ({ updateTutor, getTutorInfo, userInfo }) => {
       let userId = 12
       getTutorInfo(userId)
       if (userInfo != null) {
-        console.log(userInfo)
         formikValues.putValues(userInfo)
         setLoading(false)
 
@@ -64,7 +63,6 @@ const EditInfoView = ({ updateTutor, getTutorInfo, userInfo }) => {
           onSubmit={(values) => {
             let userId = 12
             let jsonValues = formikValues.getValues(values)
-            console.log(jsonValues)
             updateTutor(userId, jsonValues)
           }}>
           {({

@@ -71,6 +71,44 @@ const getSubKnowledgeAreas = (idArea) => {
   return https.get('/api/knowledgearea/'+idArea+'/speciality/')
 }
 
+/*LOGIN*/
+
+const login = (data) => {
+  return https.post('/api/auth/login', data)
+}
+
+const loginGoogle = (data) => {
+  return https.post('/api/auth/google/login', data)
+}
+
+/*
+const loadUser = () => {
+  return https.get('api/auth/user')
+}*/
+
+
+const logout = (values) => {
+  return https.post('api/auth/logout', null, tokenConfig(values.state))
+}
+
+const tokenConfig = (getState) => {
+  const token = getState().auth.token
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  if (token) {
+    config.headers['Authorization'] = 'Token '+token
+  }
+
+  return config
+}
+
+
+
 
 const logConstants = {
   getCountries,
@@ -88,6 +126,9 @@ const logConstants = {
   getTutorKnowledgeAreas,
   deleteTutorKnowledgeArea,
   updateTutorInfo,
-  getTutorInfo
+  getTutorInfo,
+  login,
+  loginGoogle,
+  logout
 }
 export default logConstants

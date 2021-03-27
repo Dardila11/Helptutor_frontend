@@ -15,11 +15,15 @@ const useStyles = makeStyles((theme) => ({
     
   },
   toolbar:{
-    alignItems: 'center'
+    alignItems: 'center',
+    color: theme.palette.common.white
   },
   navicons:{
     marginRight: theme.spacing(3),
     marginLeft: theme.spacing(1)
+  },
+  options:{
+    color: theme.palette.common.white
   }
 }))
 
@@ -28,20 +32,20 @@ const TutorNavBar = () => {
   return (
       <Toolbar className={classes.toolbar}>        
       <RouterLink to='news'>
-        <IconButton>
-            <Typography variant='h4' color='initial'>Noticias</Typography>
+        <IconButton className={classes.options}>
+            <Typography variant='h4' >Noticias</Typography>
             <LibraryBooksIcon className={classes.navicons} />
         </IconButton>
       </RouterLink>
       <RouterLink to='offers'>
-        <IconButton>
-            <Typography variant='h4' color='initial'>Ofertas</Typography>
+        <IconButton className={classes.options}>
+            <Typography variant='h4' >Ofertas</Typography>
             <ListAltIcon className={classes.navicons}/>
         </IconButton>
       </RouterLink>
       <RouterLink to='/tutor/account/ProfileView'>
-        <IconButton>
-            <Typography variant='h4' color='initial'>Perfil</Typography>
+        <IconButton className={classes.options}>
+            <Typography variant='h4'>Perfil</Typography>
             <AccountBoxIcon className={classes.navicons}/>
         </IconButton>
        </RouterLink>

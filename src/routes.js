@@ -4,7 +4,8 @@ import { MainLayout } from './layouts/MainLayout'
 import { StudentLayout } from './layouts/StudentLayout'
 import { TutorAccountLayout } from './layouts/TutorAccountLayout'
 import { TutorLayout } from './layouts/TutorLayout'
-import RegisterView from './views/auth/RegisterView'
+import RegisterView from './views/auth/Register/RegisterView'
+import LoginView from './views/auth/Login/'
 import NotFoundView from './views/errors/NotFoundView'
 import EditInfoView from './views/tutorviews/tutorInfo/EditInfoView'
 import ManageKnowledgeAreaView from './views/tutorviews/manageKnowledgeArea'
@@ -47,6 +48,7 @@ const routes = [
     children: [
       /* Views */
       { path: 'register', element: <RegisterView /> },
+      { path: 'login', element: <LoginView/>},
       { path: 'info', element: <EditInfoView /> },
       { path: '404', element: <NotFoundView /> },
       { path: '*', element: <Navigate to="/404" /> }

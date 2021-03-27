@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import {
   Toolbar,
   Typography,
@@ -8,7 +8,13 @@ import {
   IconButton
 } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import TutorNavBar from '../NavBar'
+import logo from '../logo.svg'
+
+/* Redux */
+import { connect } from 'react-redux'
+import { logout } from '../../../redux/actions/auth'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -33,16 +39,6 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex'
     }
   },
-  sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none'
-    }
-  },
-  separate: {
-    display: 'flex',
-    paddingRight: '10px'
-  },
   button: {
     border: '0px',
     color: 'white'
@@ -51,23 +47,35 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     margin : theme.spacing(0)
   },
-  username: {
+  userSpace: {
+    color : theme.palette.common.white,
     marginRight : theme.spacing(1)
   },
   toolbar: {
     backgroundColor: theme.palette.primary.main
+  },
+  img: {
+    color: theme.palette.common.white
   }
 }))
 
-const TutorTopBar = () => {
+const TutorTopBar = (props) => {
   const classes = useStyles()
+  let navigate = useNavigate()
   
+  const handleLogOut = () => {
+    props.logout()    
+  }
+
+  useEffect(() => {
+    if (!props.isAuthenticated) navigate('/')
+  },[props.isAuthenticated])
   return (
     <div className={classes.grow}>
-        <Toolbar className={classes.toolbar}color="primary">
+        <Toolbar className={classes.toolbar}color="primary" >
           <Button className={classes.button} variant="outlined" href="/">
-            <img
-              src="https://gitlab.com/alexvi/diagonals-react/-/raw/master/src/data/logo-removebg-preview.png"
+            <img className={classes.img}
+              src={logo}
               width="50"
               alt="LogoImage"></img>
             <Typography
@@ -84,21 +92,38 @@ const TutorTopBar = () => {
             <RouterLink to="/tutor/account">
               <div className={classes.userSection}>
                 <IconButton
+                  className={classes.userSpace}
                   aria-label="account of current user"
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
                   color="inherit">
-                  <Typography className={classes.username} variant="h4">
-                    User Name
+                  <Typography className={classes.userSpace} variant="h4">
+                    {props.user!=null? (
+                        <>{props.user.first_name} {props.user.last_name}</>
+                    ):(
+                      <></>
+                    )}
+                    
                   </Typography>
-                  <AccountCircle color="action" />
+                  <AccountCircle />
                 </IconButton>
               </div>
             </RouterLink>
+            <Button endIcon={<ExitToAppIcon/>} onClick={handleLogOut}>
+                  Salir
+            </Button>
           </div>
         </Toolbar>
     </div>
   )
 }
 
-export default TutorTopBar
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user
+})
+
+export default connect(mapStateToProps, {
+logout
+})(TutorTopBar)
+

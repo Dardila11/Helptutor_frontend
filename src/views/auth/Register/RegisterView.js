@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 //REDUX
-import { addUser } from '../../redux/actions/auth'
+import { addUser } from '../../../redux/actions/auth'
 import { connect } from 'react-redux'
 
 //COMPONENTS MATERIAL UI
@@ -19,9 +19,9 @@ import {
 } from '@material-ui/core'
 
 //COMPONENTS
-import Page from '../../components/Page'
-import RoleCard from '../../components/RoleCard'
-import SignInGoogle from '../../components/SignGoogle'
+import Page from '../../../components/Page'
+import RoleCard from '../../../components/RoleCard'
+import SignInGoogle from '../../../components/SignGoogle'
 
 import { Formik } from 'formik'
 
@@ -59,7 +59,6 @@ const RegisterView = ({ isAuthenticated, addUser }) => {
   })
 
   const selectRole = (role) => {
-    console.log(role)
     if (role === 'tutor') {
       if (!tutorSelect) {
         setTutorSelect(true)

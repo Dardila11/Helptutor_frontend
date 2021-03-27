@@ -1,4 +1,13 @@
-import { ADD_TUTOR, UPDATE_TUTOR, GET_TUTOR } from '../actions/types_auth'
+import { 
+  ADD_TUTOR, 
+  UPDATE_TUTOR, 
+  GET_TUTOR,
+  USER_LOADING,
+  USER_LOADED,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  AUTH_ERROR,
+  LOGOUT_SUCCESS } from '../actions/types_auth'
 
 const initialState = {
   token: localStorage.getItem('token'),
@@ -29,16 +38,37 @@ const auth = (state = initialState, action) => {
         userInfo: action.payload,
         isAuthenticated: true
       }
-    //   case ACTION_RUNNING:
-    //     return {
-    //       ...state,
-    //       isRunning: true,
-    //     };
-    //   case ACTION_END:
-    //     return {
-    //       ...state,
-    //       isRunning: false,
-    //     };
+      case USER_LOADING:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case USER_LOADED:
+        return {
+          ...state,
+          isAuthenticated: true,
+          isLoading: false,
+          user: action.payload,
+        };
+      case LOGIN_SUCCESS:
+        localStorage.setItem('token', action.payload.token);
+        return {
+          ...state,
+          ...action.payload,
+          isAuthenticated: true,
+          isLoading: false,
+        };
+      case AUTH_ERROR:
+        case LOGIN_FAIL:
+        case LOGOUT_SUCCESS:
+          localStorage.removeItem('token');
+          return {
+            ...state,
+            token: null,
+            user: null,
+            isAuthenticated: false,
+            isLoading: false,
+          };
     default:
       return state
   }

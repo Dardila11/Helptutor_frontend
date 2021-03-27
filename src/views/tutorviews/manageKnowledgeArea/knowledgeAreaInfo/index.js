@@ -28,6 +28,8 @@ import {
   Typography
 } from '@material-ui/core'
 
+import SaveIcon from '@material-ui/icons/Save';
+
 //COMPONENTS
 import SupportsView from './supports'
 
@@ -56,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
   },
   infoView: {
     borderRadius: '20px'
+  },
+  button: {
+    background: theme.palette.button.primary,
+    color: theme.palette.common.white
   }
 }))
 
@@ -223,16 +229,15 @@ const KnowledgeAreaInfoView = (props) => {
                         variant="outlined"
                       />
                       <SupportsView is_create={props.is_create}></SupportsView>
-                      <Box my={2}>
+                      <Box my={2} align='center'>
                         <Button
                           id="btn_registerArea"
-                          color="primary"
-                          fullWidth
-                          size="large"
+                          className={classes.button}
                           type="submit"
+                          endIcon={<SaveIcon/>}
                           variant="contained">
                           {props.is_create
-                            ? 'Registrar Área de conocimiento'
+                            ? 'Guardar area'
                             : 'Actualizar'}
                         </Button>
                       </Box>

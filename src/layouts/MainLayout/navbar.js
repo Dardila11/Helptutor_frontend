@@ -123,11 +123,13 @@ const MainNavBar = () => {
               </Button>
             </RouterLink>
             <div className={classes.separate}></div>
+            <RouterLink to="/login">
             <Button className={classes.button} variant="outlined">
               <span>
                 <b>Iniciar Sesión</b>
               </span>
             </Button>
+            </RouterLink>
           </div>
         </Toolbar>
       </AppBar>
