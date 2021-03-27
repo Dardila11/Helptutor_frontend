@@ -1,18 +1,22 @@
-import React from 'react'
-import { useRoutes } from 'react-router-dom'
+import React, {useEffect} from 'react'
 import { ThemeProvider } from '@material-ui/core'
 import GlobalStyles from './components/GlobalStyles'
-import routes from './routes'
 import theme from './theme'
+
+import Routing from './routing/composeRouter'
 
 //ALERTS
 import { Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 import Alerts from './layouts/Alert/Alerts';
 
+import ProgressAction from './layouts/Progress/ProgressAction'
+
 //REDUX
 import { Provider } from 'react-redux'
 import store from './redux/store'
+
+import { loadUser } from './redux/actions/auth'
 
 const alertOptions = {
   timeout: 3000,
@@ -20,14 +24,19 @@ const alertOptions = {
 }
 
 const App = () => {
-  const routing = useRoutes(routes)
+  useEffect(() => {
+    console.log('cargando');
+    store.dispatch(loadUser());
+  }, []);
+
   return (
     <Provider store={store}>
       <AlertProvider template={AlertTemplate} {...alertOptions}>
         <ThemeProvider theme={theme}>
           <GlobalStyles />
+          <ProgressAction />
           <Alerts />
-          {routing}
+          <Routing />
         </ThemeProvider>
       </AlertProvider>
     </Provider>

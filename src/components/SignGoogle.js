@@ -24,7 +24,7 @@ const SignInGoogle = (props) => {
   const { isAuthenticated } = props
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/tutor/account')
+    if (isAuthenticated) navigate('/tutor/cuenta')
     // eslint-disable-next-line
   }, [isAuthenticated])
 

@@ -11,7 +11,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   USER_LOADING,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  ACTION_RUNNING,
+  ACTION_END
   /* 
   DELETE_TUTOR,
   LIST_TUTOR */
@@ -83,7 +85,7 @@ export const addUser = (data) => (dispatch) => {
 }
 
 export const addUserGoogle = (data) => (dispatch) => {
-  //   dispatch({ type: USER_LOADING });
+    // dispatch({ type: USER_LOADING });
 
   const request = Api.postGoogleTutor(data)
   request
@@ -108,9 +110,11 @@ export const addUserGoogle = (data) => (dispatch) => {
 
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
+  console.log('cargando data')
+  console.log(tokenConfig(getState))
 
   axios
-    .get('api/auth/user', tokenConfig(getState))
+    .get('https://mdquilindo.pythonanywhere.com/api/auth/user', tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: USER_LOADED,
@@ -126,34 +130,41 @@ export const loadUser = () => (dispatch, getState) => {
 }
 
 export const login = (data) => (dispatch) => {
+  dispatch({ type: ACTION_RUNNING });
+
   Api.login(data)
     .then((res) => {
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
       })
+      dispatch({ type: ACTION_END });
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: LOGIN_FAIL,
       })
+      dispatch({ type: ACTION_END });
     })
 }
 
 export const loginGoogle = (data) => (dispatch) => {
+  dispatch({ type: ACTION_RUNNING });
   Api.loginGoogle(data)
     .then((res) => {
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
       })
+      dispatch({ type: ACTION_END });
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: LOGIN_FAIL,
       })
+      dispatch({ type: ACTION_END });
     })
 }
 

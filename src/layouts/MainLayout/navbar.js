@@ -113,7 +113,7 @@ const MainNavBar = () => {
           </Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <RouterLink to="/register">
+            <RouterLink to="/registrar">
               <Button
                 className={classes.button}
                 variant="outlined">

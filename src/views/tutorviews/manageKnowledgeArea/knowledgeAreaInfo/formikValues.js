@@ -5,7 +5,7 @@ const getValues = (values) => {
     tags: values.tags,
     description: values.description,
     knowledge_area: values.speciality,
-    user: 12
+    user: values.user
   }
 }
 

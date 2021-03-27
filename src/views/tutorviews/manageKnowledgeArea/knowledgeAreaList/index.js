@@ -61,7 +61,7 @@ const KnowledgeAreaListView = (props) => {
   }
 
   useEffect(() => {
-    getSpecialitiesTutor(11)
+    getSpecialitiesTutor(props.user.id)
   }, [])
   return (
     <>
@@ -108,7 +108,8 @@ const KnowledgeAreaListView = (props) => {
 
 const mapStateToProps = (state) => ({
   specialities_tutor: state.knowledge_areas.specialities_tutor,
-  is_create: state.knowledge_areas.is_create
+  is_create: state.knowledge_areas.is_create,
+  user: state.auth.user
 })
 
 export default connect(mapStateToProps, {

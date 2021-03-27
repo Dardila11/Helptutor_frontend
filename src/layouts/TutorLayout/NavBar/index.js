@@ -43,7 +43,7 @@ const TutorNavBar = () => {
             <ListAltIcon className={classes.navicons}/>
         </IconButton>
       </RouterLink>
-      <RouterLink to='/tutor/account/ProfileView'>
+      <RouterLink to='/tutor/cuenta/perfil'>
         <IconButton className={classes.options}>
             <Typography variant='h4'>Perfil</Typography>
             <AccountBoxIcon className={classes.navicons}/>
