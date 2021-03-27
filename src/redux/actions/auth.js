@@ -14,9 +14,6 @@ import {
   LOGOUT_SUCCESS,
   ACTION_RUNNING,
   ACTION_END
-  /* 
-  DELETE_TUTOR,
-  LIST_TUTOR */
 } from './types_auth'
 
 export const updateTutor = (id, data) => (dispatch) => {
@@ -60,6 +57,9 @@ export const getTutorInfo = (id) => (dispatch) => {
         })
       )
     })
+    .catch((err) => {
+      dispatch(returnErrors('Error desconocido', '499'))
+    })
 }
 
 export const addUser = (data) => (dispatch) => {
@@ -85,7 +85,7 @@ export const addUser = (data) => (dispatch) => {
 }
 
 export const addUserGoogle = (data) => (dispatch) => {
-    // dispatch({ type: USER_LOADING });
+  // dispatch({ type: USER_LOADING });
 
   const request = Api.postGoogleTutor(data)
   request
@@ -109,76 +109,91 @@ export const addUserGoogle = (data) => (dispatch) => {
 /*Login actions*/
 
 export const loadUser = () => (dispatch, getState) => {
-  dispatch({ type: USER_LOADING });
+  dispatch({ type: USER_LOADING })
   console.log('cargando data')
   console.log(tokenConfig(getState))
 
   axios
-    .get('https://mdquilindo.pythonanywhere.com/api/auth/user', tokenConfig(getState))
+    .get(
+      'https://mdquilindo.pythonanywhere.com/api/auth/user',
+      tokenConfig(getState)
+    )
     .then((res) => {
       dispatch({
         type: USER_LOADED,
-        payload: res.data,
+        payload: res.data
       })
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(returnErrors(err.response.data, err.response.status))
       dispatch({
-        type: AUTH_ERROR,
+        type: AUTH_ERROR
       })
+    })
+    .catch((err) => {
+      dispatch(returnErrors('Error desconocido', '499'))
     })
 }
 
 export const login = (data) => (dispatch) => {
-  dispatch({ type: ACTION_RUNNING });
+  dispatch({ type: ACTION_RUNNING })
 
   Api.login(data)
     .then((res) => {
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: res.data,
+        payload: res.data
       })
-      dispatch({ type: ACTION_END });
+      dispatch({ type: ACTION_END })
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(returnErrors(err.response.data, err.response.status))
       dispatch({
-        type: LOGIN_FAIL,
+        type: LOGIN_FAIL
       })
-      dispatch({ type: ACTION_END });
+      dispatch({ type: ACTION_END })
+    })
+    .catch((err) => {
+      dispatch(returnErrors('Error desconocido', '499'))
     })
 }
 
 export const loginGoogle = (data) => (dispatch) => {
-  dispatch({ type: ACTION_RUNNING });
+  dispatch({ type: ACTION_RUNNING })
   Api.loginGoogle(data)
     .then((res) => {
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: res.data,
+        payload: res.data
       })
-      dispatch({ type: ACTION_END });
+      dispatch({ type: ACTION_END })
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(returnErrors(err.response.data, err.response.status))
       dispatch({
-        type: LOGIN_FAIL,
+        type: LOGIN_FAIL
       })
-      dispatch({ type: ACTION_END });
+      dispatch({ type: ACTION_END })
     })
 }
 
 export const logout = () => (dispatch, getState) => {
-
   let values = {
     dispatchP: dispatch,
-    state: getState 
+    state: getState
   }
-  Api.logout(values).then((res) => {
-      dispatch({ type: LOGOUT_SUCCESS });
+  Api.logout(values)
+    .then((res) => {
+      dispatch({ type: LOGOUT_SUCCESS })
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(returnErrors(err.response.data, err.response.status))
+    })
+    .catch((err) => {
+      dispatch(returnErrors('Error desconocido', '499'))
+      dispatch({
+        type: AUTH_ERROR
+      })
     })
 }
 
@@ -187,14 +202,13 @@ export const tokenConfig = (getState) => {
 
   const config = {
     headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+      'Content-Type': 'application/json'
+    }
+  }
 
   if (token) {
-    config.headers['Authorization'] = 'Token '+token
+    config.headers['Authorization'] = 'Token ' + token
   }
 
   return config
 }
-

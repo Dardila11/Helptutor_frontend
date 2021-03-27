@@ -17,8 +17,11 @@ const initialState = {
   isAuthenticated: false,
   isLoading: false,
   isRunning: false,
-  user: null,
-  userInfo: null
+  user: {
+    id: -1,
+    first_name: '',
+    last_name: ''
+  },
 }
 
 const auth = (state = initialState, action) => {
