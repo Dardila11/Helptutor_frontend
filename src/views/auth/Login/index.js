@@ -45,14 +45,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const LoginView = ( props ) => {
+const LoginView = (props) => {
   const classes = useStyles()
   let navigate = useNavigate()
 
   useEffect(() => {
     if (props.isAuthenticated) navigate('/tutor')
     else navigate('/login')
-  },[])
+  }, [])
 
   return (
     <Page className={classes.root} title="Login">
@@ -67,9 +67,9 @@ const LoginView = ( props ) => {
             validationSchema={Validation.validation}
             //ON_SUBMIT ENVIO DEL FORMULARIO
             onSubmit={(values) => {
-                let jsonValues = Validation.getValues(values)
-                console.log(jsonValues)
-                props.login(jsonValues)
+              let jsonValues = Validation.getValues(values)
+              console.log(jsonValues)
+              props.login(jsonValues)
             }}>
             {({
               errors,
@@ -86,10 +86,12 @@ const LoginView = ( props ) => {
                     Iniciar Sesión
                   </Typography>
                 </Box>
-                <Box display="flex" justifyContent="space-between">
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="space-between">
                   <TextField
                     id="txt_email"
-                    className={classes.text}
                     error={Boolean(touched.email && errors.email)}
                     fullWidth
                     helperText={touched.email && errors.email}
@@ -100,12 +102,7 @@ const LoginView = ( props ) => {
                     name="email"
                     value={values.email}
                     variant="outlined"
-                    InputProps={{
-                      className: classes.input
-                    }}
                   />
-                </Box>
-                <Box>
                   <TextField
                     id="text_password"
                     error={Boolean(touched.password && errors.password)}

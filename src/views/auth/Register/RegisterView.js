@@ -27,6 +27,7 @@ import { Formik } from 'formik'
 
 //UTILS
 import Validation from './formikValues'
+import LoginHooks from '../../../components/SignGoogleHooks'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -231,7 +232,12 @@ const RegisterView = ({ isAuthenticated, addUser }) => {
                     Registrarse
                   </Button>
                 </Box>
-                <Box textAlign="center"> ó </Box>
+                <Box textAlign="center" mb={2}>
+                  ó
+                </Box>
+                <Box>
+                  <LoginHooks />
+                </Box>
                 <Box my={2}>
                   <SignInGoogle></SignInGoogle>
                 </Box>

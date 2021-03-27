@@ -31,12 +31,14 @@ const SignInGoogle = (props) => {
   return (
     <>
       <GoogleLogin
-      clientId="581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com"
-      buttonText={props.login ? 'Iniciar sesión con Google' : 'Registrarme con Google'}
-      onSuccess={(response) => responseGoogle(props, response)}
-      onFailure={(response) => responseGoogle(props, response)}
-      cookiePolicy={'single_host_origin'}
-      />      
+        clientId="581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com"
+        buttonText={
+          props.login ? 'Iniciar sesión con Google' : 'Registrarme con Google'
+        }
+        onSuccess={(response) => responseGoogle(props, response)}
+        onFailure={(response) => responseGoogle(props, response)}
+        cookiePolicy={'single_host_origin'}
+      />
     </>
   )
 }
