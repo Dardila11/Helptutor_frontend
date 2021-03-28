@@ -61,16 +61,10 @@ const useStyles = makeStyles((theme) => ({
 
 const TutorTopBar = (props) => {
   const classes = useStyles()
-  let navigate = useNavigate()
   
   const handleLogOut = () => {
-    console.log('saliendo')
     props.logout()
   }
-
-  useEffect(() => {
-    if (!props.isAuthenticated) navigate('/login')
-  }, [props.isAuthenticated])
 
   return (
     <div className={classes.grow}>

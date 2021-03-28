@@ -25,9 +25,8 @@ const alertOptions = {
 
 const App = () => {
   useEffect(() => {
-    console.log('cargando');
     store.dispatch(loadUser());
-  }, []);
+  });
 
   return (
     <Provider store={store}>

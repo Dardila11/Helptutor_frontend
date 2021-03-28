@@ -110,8 +110,6 @@ export const addUserGoogle = (data) => (dispatch) => {
 
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING })
-  console.log('cargando data')
-  console.log(tokenConfig(getState))
 
   axios
     .get(
