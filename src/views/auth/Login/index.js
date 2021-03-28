@@ -47,12 +47,15 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginView = (props) => {
   const classes = useStyles()
+<<<<<<< HEAD
   let navigate = useNavigate()
 
   useEffect(() => {
     if (props.isAuthenticated) navigate('/tutor')
     else navigate('/login')
   }, [])
+=======
+>>>>>>> d2a78fc54f60640797389ba52e5a79c449e9ff72
 
   return (
     <Page className={classes.root} title="Login">

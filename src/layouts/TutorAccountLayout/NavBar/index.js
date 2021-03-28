@@ -37,28 +37,28 @@ const NavBar = () => {
           src="/static/images/avatars/avatar_6.png"
         />
         <List>
-          <ListItem component={RouterLink} to="/tutor/account/ProfileView" button>
+          <ListItem component={RouterLink} to="/tutor/cuenta/perfil" button>
             <ListItemText primary="Ver Perfil" />
           </ListItem>
           <ListItem
             component={RouterLink}
-            to="/tutor/account/myInfo"
+            to="/tutor/cuenta/informacion"
             button>
             <ListItemText primary="Editar Información" />
           </ListItem>
           <ListItem
             component={RouterLink}
-            to="/tutor/account/manageKnowledgeArea"
+            to="/tutor/cuenta/especialidades"
             button>
             <ListItemText primary="Gestionar asesorias" />
           </ListItem>
           <ListItem
             component={RouterLink}
-            to="/tutor/account/manageServices"
+            to="/tutor/cuenta/servicios"
             button>
             <ListItemText primary="Servicios" />
           </ListItem>
-          <ListItem component={RouterLink} to="/tutor/account" button>
+          <ListItem component={RouterLink} to="/tutor/cuenta" button>
             <ListItemText primary="Horarios" />
           </ListItem>
         </List>

@@ -28,7 +28,7 @@ import {
   Typography
 } from '@material-ui/core'
 
-import SaveIcon from '@material-ui/icons/Save';
+import SaveIcon from '@material-ui/icons/Save'
 
 //COMPONENTS
 import SupportsView from './supports'
@@ -65,12 +65,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-let initialValuesObj= {
-    id: -1,
-    knowledge_area: -1,
-    speciality: -1,
-    tags: '',
-    description: ''
+let initialValuesObj = {
+  id: -1,
+  knowledge_area: -1,
+  speciality: -1,
+  tags: '',
+  description: ''
 }
 
 const KnowledgeAreaInfoView = (props) => {
@@ -112,9 +112,16 @@ const KnowledgeAreaInfoView = (props) => {
                   initialValues={initialValues}
                   validationSchema={Validation.validation}
                   onSubmit={(values) => {
-                    let jsonValues = Validation.getValues(values)
+                    let jsonValues = Validation.getValues({
+                      ...values,
+                      user: props.user.id
+                    })
                     if (props.is_create) props.addSpecialityTutor(jsonValues)
-                    else props.updateSpecialityTutor(jsonValues, props.speciality_tutor.id)
+                    else
+                      props.updateSpecialityTutor(
+                        jsonValues,
+                        props.speciality_tutor.id
+                      )
                   }}>
                   {({
                     errors,
@@ -229,16 +236,14 @@ const KnowledgeAreaInfoView = (props) => {
                         variant="outlined"
                       />
                       <SupportsView is_create={props.is_create}></SupportsView>
-                      <Box my={2} align='center'>
+                      <Box my={2} align="center">
                         <Button
                           id="btn_registerArea"
                           className={classes.button}
                           type="submit"
-                          endIcon={<SaveIcon/>}
+                          endIcon={<SaveIcon />}
                           variant="contained">
-                          {props.is_create
-                            ? 'Guardar area'
-                            : 'Actualizar'}
+                          {props.is_create ? 'Guardar area' : 'Actualizar'}
                         </Button>
                       </Box>
                       <Box my={2}></Box>
@@ -258,7 +263,8 @@ const mapStateToProps = (state) => ({
   knowledge_areas: state.knowledge_areas.knowledge_areas,
   specialities: state.knowledge_areas.specialities,
   speciality_tutor: state.knowledge_areas.speciality_tutor,
-  is_create: state.knowledge_areas.is_create
+  is_create: state.knowledge_areas.is_create,
+  user: state.auth.user
 })
 
 export default connect(mapStateToProps, {

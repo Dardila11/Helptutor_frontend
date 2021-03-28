@@ -61,15 +61,11 @@ const useStyles = makeStyles((theme) => ({
 
 const TutorTopBar = (props) => {
   const classes = useStyles()
-  let navigate = useNavigate()
   
   const handleLogOut = () => {
-    props.logout()    
+    props.logout()
   }
 
-  useEffect(() => {
-    if (!props.isAuthenticated) navigate('/')
-  },[props.isAuthenticated])
   return (
     <div className={classes.grow}>
         <Toolbar className={classes.toolbar}color="primary" >
@@ -89,7 +85,7 @@ const TutorTopBar = (props) => {
           <TutorNavBar/>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <RouterLink to="/tutor/account">
+            <RouterLink to="/tutor/cuenta">
               <div className={classes.userSection}>
                 <IconButton
                   className={classes.userSpace}

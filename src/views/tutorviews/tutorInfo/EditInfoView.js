@@ -35,13 +35,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const EditInfoView = ({ updateTutor, getTutorInfo, userInfo }) => {
+const EditInfoView = (props) => {
+  const { updateTutor, getTutorInfo, userInfo } = props
   const [loading, setLoading] = useState(true)
 
 
   useEffect(() => {
     function getTutorInformation() {
-      let userId = 12
+      let userId = props.user.id
       getTutorInfo(userId)
       if (userInfo != null) {
         formikValues.putValues(userInfo)
@@ -61,7 +62,7 @@ const EditInfoView = ({ updateTutor, getTutorInfo, userInfo }) => {
           initialValues={formikValues.initialValues}
           //validationSchema={formikValues.validation}
           onSubmit={(values) => {
-            let userId = 12
+            let userId = props.user.id
             let jsonValues = formikValues.getValues(values)
             updateTutor(userId, jsonValues)
           }}>
