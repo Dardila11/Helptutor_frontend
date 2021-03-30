@@ -24,6 +24,7 @@ import { Formik } from 'formik'
 
 //UTILS
 import Validation from './formikValues'
+import SignGoogleHooks from '../../../components/SignGoogleHooks'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -52,7 +53,7 @@ const LoginView = (props) => {
   useEffect(() => {
     if (props.isAuthenticated) navigate('/tutor')
     else navigate('/login')
-  }, [])
+  }, [props.isAuthenticated])
 
   return (
     <Page className={classes.root} title="Login">
@@ -118,21 +119,22 @@ const LoginView = (props) => {
                     variant="outlined"
                   />
                 </Box>
-                <Box my={2}>
+                <Box my={2} mb={1}>
                   <Button
                     id="btn_login"
                     color="primary"
-                    disabled={isSubmitting}
+                    
                     fullWidth
-                    size="large"
+                    size="medium"
                     type="submit"
                     variant="contained">
-                    Iniciar Sesion
+                    Iniciar Sesión
                   </Button>
                 </Box>
                 <Box textAlign="center"> ó </Box>
-                <Box my={2}>
-                  <SignInGoogle login={true}></SignInGoogle>
+                <Box my={1}>
+                  <SignGoogleHooks login={true} />
+                  {/* <SignInGoogle login={true}></SignInGoogle> */}
                 </Box>
               </form>
             )}

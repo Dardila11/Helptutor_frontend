@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const RegisterView = ({ isAuthenticated, addUser }) => {
-  const [tutorSelect, setTutorSelect] = useState(true)
+  const [tutorSelect, setTutorSelect] = useState(false)
   const [studentSelect, setStudentSelect] = useState(false)
   const classes = useStyles()
   let navigate = useNavigate()
@@ -220,27 +220,27 @@ const RegisterView = ({ isAuthenticated, addUser }) => {
                 {Boolean(touched.policy && errors.policy) && (
                   <FormHelperText error> {errors.policy} </FormHelperText>
                 )}
-                <Box my={2}>
+                <Box my={1}>
                   <Button
                     id="btn_registerUser"
                     color="primary"
                     disabled={isSubmitting}
                     fullWidth
-                    size="large"
+                    size="medium"
                     type="submit"
                     variant="contained">
                     Registrarse
                   </Button>
                 </Box>
-                <Box textAlign="center" mb={2}>
+                <Box textAlign="center" mb={1}>
                   ó
                 </Box>
-                <Box>
+                <Box width="sm">
                   <LoginHooks />
                 </Box>
-                <Box my={2}>
+                {/* <Box my={3}>
                   <SignInGoogle></SignInGoogle>
-                </Box>
+                </Box> */}
               </form>
             )}
           </Formik>

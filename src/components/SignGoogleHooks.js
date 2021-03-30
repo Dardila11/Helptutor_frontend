@@ -14,22 +14,24 @@ const useStyles = makeStyles((theme) => ({
   button: {
     cursor: 'pointer',
     display: 'flex',
-    fontSize: '1.3rem',
+    /* fontSize: '1.3rem', */
     boxSizing: 'content-box',
     margin: '2px auto 0px',
-    width: '100%',
-    padding: '15px 20px',
+    
+    /* padding: theme.spacing(0.7), */
+    padding: '8px 22px',
     /* 
+    width: '100%',
     boxShadow: '0px 16px 60px rgba(78, 79, 114, 0.08)'
     borderRadius: '24px', 
-    */
     borderColor: 'transparent',
+    */
     backgroundColor: 'white',
     justifyContent: 'center'
   },
   icon: {
-    height: '25px',
-    width: '25px',
+    height: '20px',
+    width: '20px',
     marginRight: '10px',
     left: '30px',
     alignItems: 'center'
@@ -54,7 +56,7 @@ const LoginHooks = (props) => {
   const { isAuthenticated } = props
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/tutor/account')
+    if (isAuthenticated) navigate('/tutor/cuenta')
     // eslint-disable-next-line
   }, [isAuthenticated])
 
@@ -81,7 +83,6 @@ const LoginHooks = (props) => {
     <Card onClick={signIn} className={classes.button}>
       <img src="icons/google.svg" alt="google login" className={classes.icon} />
       <span className={classes.buttonText}>
-        {' '}
         {props.login ? 'Iniciar Sesión con Google' : 'Registrarme con Google'}
       </span>
     </Card>

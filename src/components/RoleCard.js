@@ -25,7 +25,7 @@ const RoleCard = ({ role, isSelected }) => {
 
   return (
     <Card className={isSelected ? classes.activeColor : classes.card}>
-      <Typography> {role} </Typography>
+      <Typography> Soy un {role.toLowerCase()} </Typography>
     </Card>
   )
 }

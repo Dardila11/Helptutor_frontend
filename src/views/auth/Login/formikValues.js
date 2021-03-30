@@ -1,8 +1,8 @@
 import * as Yup from 'yup'
 
 const initialValues = {
-  email: 'juanfuentes@unicauca.edu.co',
-  password: 'Colombia20',
+  email: '',
+  password: ''
 }
 
 const getValues = (values) => {
