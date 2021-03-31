@@ -107,6 +107,10 @@ const tokenConfig = (getState) => {
   return config
 }
 
+const getServicesTutor = (idTutor) => {
+  return https.get('/api/tutor/'+idTutor+'/speciality/')
+}
+
 
 
 
@@ -129,6 +133,7 @@ const logConstants = {
   getTutorInfo,
   login,
   loginGoogle,
-  logout
+  logout,
+  getServicesTutor
 }
 export default logConstants

@@ -6,8 +6,8 @@ import {
   makeStyles
 } from '@material-ui/core'
 import Page from '../../../components/Page'
-import KnowledgeAreaInfoView from './servicesInfo'
-import KnowledgeAreaListView from './servicesList'
+import ServicesInfoView from './servicesInfo'
+import ServicesListView from './servicesList'
 import Api from '../../../services/Api'
 
 import { connect } from 'react-redux';
@@ -34,14 +34,24 @@ const ManageServicesView = (props) => {
     }
     fetchData()
   }, [])
+  /*
+  useEffect(() => {
+    const fetchData = async () => {
+      await Api.getTutorKnowledgeAreas(props.user.id).then((res) => {
+        setKnowledgeAreas(res.data)
+        setloading(true)
+      })
+    }
+    fetchData()
+  }, [])*/
   return (
     <>
       <Page className={classes.root} title="Gestionar areas de conocimiento">
         <Grid container spacing={2}>
           {loading ? (
             <>
-              <KnowledgeAreaListView areas={knowledgeAreas} />
-              <KnowledgeAreaInfoView />
+              <ServicesListView areas={knowledgeAreas} />
+              <ServicesInfoView />
             </>
           ) : (
             <>

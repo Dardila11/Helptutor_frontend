@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Button,Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 //REDUX
@@ -16,18 +16,20 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     marginTop: theme.spacing(1),
     marginBlockEnd: theme.spacing(1),
-    borderRadius: '20px'
+    borderRadius: '20px',
+    border: '0px'
   },
   delete: {
     float: 'right',
-    color: '#ff7961'
+    color: theme.palette.secondary
   },
   button:{
-    borderRadius: '20px'
+    borderRadius: '20px',
+    marginBottom: theme.spacing(1)
   }
 }))
 
-const AreaCard = (props) => {
+const ServiceCard = (props) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -44,7 +46,7 @@ const AreaCard = (props) => {
   }
   return (
     <>
-      <Paper className={classes.root} elevation={3}>
+      <Container>
         <Grid container>
           <Grid item xs={9}>
             <Button
@@ -55,7 +57,7 @@ const AreaCard = (props) => {
                 props.getSpecialities(props.my_area.knowledge_area.knowledge_area)
                 props.setSpecialityTutor(props.my_area)
               }}>
-              <Typography align="left"> <b>{props.area.name}</b></Typography>
+              <Typography align="left" variant='h5'> {props.area.name}</Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>
@@ -76,7 +78,7 @@ const AreaCard = (props) => {
               <DialogTitle id="alert-dialog-title">{"Advertencia"}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                  ¿Estas seguro de eliminar el area <b>{props.area.name}</b> ?
+                  ¿Estas seguro de eliminar el servicio <b>{props.area.name}</b> ?
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -84,7 +86,7 @@ const AreaCard = (props) => {
                   Cancelar
                 </Button>
                 <Button onClick={handleDelete} 
-                  color="secondary" 
+                  color="primary" 
                   variant='contained'
                   autoFocus>
                   Eliminar
@@ -93,7 +95,7 @@ const AreaCard = (props) => {
             </Dialog>
           </Grid>
         </Grid>
-      </Paper>
+        </Container>
     </>
   )
 }
@@ -107,4 +109,4 @@ export default connect(mapStateToProps, {
   setSpecialityTutor,
   getSpecialities,
   setIsCreate
-})(AreaCard)
+})(ServiceCard)

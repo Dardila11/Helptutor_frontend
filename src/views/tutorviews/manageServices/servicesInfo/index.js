@@ -1,14 +1,9 @@
 //REACT
 import React, { useEffect, useState } from 'react'
 
-//REDUX
-import {
-  getKnowledgeAreas,
-  getSpecialities,
-  addSpecialityTutor,
-  updateSpecialityTutor
-} from '../../../../redux/actions/knowledge_areas'
 import { connect } from 'react-redux'
+
+import Api from '../../../../services/Api'
 
 //COMPONENTS MATERIAL UI
 import {
@@ -28,7 +23,11 @@ import {
   Typography
 } from '@material-ui/core'
 
+import SaveIcon from '@material-ui/icons/Save'
+
 import { Formik } from 'formik'
+
+import {getSpecialitiesTutor} from '../../../../redux/actions/services'
 
 //UTILS
 import Validation from './formikValues'
@@ -53,33 +52,26 @@ const useStyles = makeStyles((theme) => ({
   },
   infoView: {
     borderRadius: '20px'
+  },
+  button: {
+    background: theme.palette.button.primary,
+    color: theme.palette.common.white
   }
 }))
 
-let initialValuesObj= {
+let initialValuesObj = {
   title: '',
   speciality: -1,
   description: '',
-  price: -1
+  price: ''
 }
 
 const ServicesInfoView = (props) => {
   const classes = useStyles()
 
-  const [initialValues, setInitialValues] = useState(initialValuesObj)
-
   useEffect(() => {
-    props.getKnowledgeAreas()
+    props.getSpecialitiesTutor(props.user.id)
   })
-
-  const handleSelect = (e) => {
-    props.getSpecialities(e.target.value)
-  }
-
-  useEffect(() => {
-    setInitialValues(props.speciality_tutor)
-  }, [props.speciality_tutor])
-
   return (
     <>
       <Grid item xs={9}>
@@ -89,7 +81,7 @@ const ServicesInfoView = (props) => {
               className={classes.containerTitle}
               variant="h4"
               align="center">
-              Información del Área de Conocimiento
+              Información del Servicio
             </Typography>
             <Box
               display="flex"
@@ -99,12 +91,19 @@ const ServicesInfoView = (props) => {
               <Container maxWidth="sm">
                 <Formik
                   enableReinitialize={true}
-                  initialValues={initialValues}
+                  initialValues={initialValuesObj}
                   validationSchema={Validation.validation}
                   onSubmit={(values) => {
-                    let jsonValues = Validation.getValues(values)
+                    let jsonValues = Validation.getValues({
+                      ...values,
+                      user: props.user.id
+                    })
                     if (props.is_create) props.addSpecialityTutor(jsonValues)
-                    else props.updateSpecialityTutor(jsonValues, props.speciality_tutor.id)
+                    else
+                      props.updateSpecialityTutor(
+                        jsonValues,
+                        props.speciality_tutor.id
+                      )
                   }}>
                   {({
                     errors,
@@ -115,47 +114,22 @@ const ServicesInfoView = (props) => {
                     values
                   }) => (
                     <form onSubmit={handleSubmit}>
-                      <FormControl
+                      <TextField
+                        id="txt_title"
+                        error={Boolean(touched.title && errors.title)}
+                        fullWidth
+                        helperText={touched.title && errors.title}
+                        label="Titulo"
+                        margin="normal"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        name="title"
+                        value={values.title}
                         variant="outlined"
-                        className={classes.selectControl}
-                        error={Boolean(
-                          touched.knowledge_area && errors.knowledge_area
-                        )}
-                        helpertext={
-                          touched.knowledge_area && errors.knowledge_area
-                        }
-                        fullWidth>
-                        <InputLabel id="select-area-label">
-                          Área de conocimiento
-                        </InputLabel>
-                        <Select
-                          labelId="select-area-label"
-                          id="select-area"
-                          value={values.knowledge_area}
-                          name="knowledge_area"
-                          onChange={(e) => {
-                            handleChange(e)
-                            handleSelect(e)
-                          }}
-                          label="Área de conocimiento">
-                          <MenuItem value={-1}>
-                            <em>---</em>
-                          </MenuItem>
-                          {props.knowledge_areas.map((area, index) => (
-                            <MenuItem key={index} value={area.id}>
-                              {area.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                        {Boolean(
-                          touched.knowledge_area && errors.knowledge_area
-                        ) && (
-                          <FormHelperText error>
-                            {' '}
-                            {errors.knowledge_area}{' '}
-                          </FormHelperText>
-                        )}
-                      </FormControl>
+                        InputProps={{
+                          className: classes.input
+                        }}
+                      />
                       <FormControl
                         variant="outlined"
                         className={classes.selectControl}
@@ -176,8 +150,8 @@ const ServicesInfoView = (props) => {
                             <em>---</em>
                           </MenuItem>
                           {props.specialities.map((subarea, index) => (
-                            <MenuItem key={index} value={subarea.id}>
-                              {subarea.name}
+                            <MenuItem key={index} value={subarea.knowledge_area.id}>
+                              {subarea.knowledge_area.name}
                             </MenuItem>
                           ))}
                         </Select>
@@ -187,22 +161,6 @@ const ServicesInfoView = (props) => {
                           </FormHelperText>
                         )}
                       </FormControl>
-                      <TextField
-                        id="txt_tags"
-                        error={Boolean(touched.tags && errors.tags)}
-                        fullWidth
-                        helperText={touched.tags && errors.tags}
-                        label="Etiquetas, describa palabras clave separadas por coma(,)"
-                        margin="normal"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        name="tags"
-                        value={values.tags}
-                        variant="outlined"
-                        InputProps={{
-                          className: classes.input
-                        }}
-                      />
                       <TextField
                         id="txt_description"
                         error={Boolean(
@@ -218,17 +176,29 @@ const ServicesInfoView = (props) => {
                         value={values.description}
                         variant="outlined"
                       />
-                      <Box my={2}>
+                       <TextField
+                        id="txt_price"
+                        error={Boolean(
+                          touched.price && errors.price
+                        )}
+                        fullWidth
+                        helperText={touched.price && errors.price}
+                        label="Precio $"
+                        margin="normal"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        name="price"
+                        value={values.price}
+                        variant="outlined"
+                      />
+                      <Box my={2} align="center">
                         <Button
-                          id="btn_registerArea"
-                          color="primary"
-                          fullWidth
-                          size="large"
+                          id="btn_registerService"
+                          className={classes.button}
                           type="submit"
+                          endIcon={<SaveIcon />}
                           variant="contained">
-                          {props.is_create
-                            ? 'Registrar Área de conocimiento'
-                            : 'Actualizar'}
+                          {props.is_create ? 'Guardar Servicio' : 'Actualizar'}
                         </Button>
                       </Box>
                       <Box my={2}></Box>
@@ -245,15 +215,11 @@ const ServicesInfoView = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  knowledge_areas: state.knowledge_areas.knowledge_areas,
-  specialities: state.knowledge_areas.specialities,
-  speciality_tutor: state.knowledge_areas.speciality_tutor,
-  is_create: state.knowledge_areas.is_create
+  user: state.auth.user,
+  specialities : state.services.specialities_tutor,
+  is_create: state.services.is_create
 })
 
 export default connect(mapStateToProps, {
-  getKnowledgeAreas,
-  getSpecialities,
-  addSpecialityTutor,
-  updateSpecialityTutor
+  getSpecialitiesTutor
 })(ServicesInfoView)
