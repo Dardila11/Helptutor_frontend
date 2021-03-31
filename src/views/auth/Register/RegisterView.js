@@ -56,7 +56,7 @@ const RegisterView = ({ isAuthenticated, addUser }) => {
   let navigate = useNavigate()
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/tutor/manageknowledgearea')
+    if (isAuthenticated) navigate('/tutor')
   })
 
   const selectRole = (role) => {
@@ -235,12 +235,12 @@ const RegisterView = ({ isAuthenticated, addUser }) => {
                 <Box textAlign="center" mb={1}>
                   ó
                 </Box>
-                <Box width="sm">
+                {/*<Box width="sm">
                   <LoginHooks />
-                </Box>
-                {/* <Box my={3}>
+                </Box>*/}
+                <Box my={3}>
                   <SignInGoogle></SignInGoogle>
-                </Box> */}
+                </Box>
               </form>
             )}
           </Formik>
