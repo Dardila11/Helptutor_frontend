@@ -2,18 +2,19 @@ import * as Yup from 'yup'
 
 const getValues = (values) => {
   return {
-    tags: values.tags,
+    title: values.title,
+    speciality: values.speciality,
     description: values.description,
-    knowledge_area: values.speciality,
+    price: values.price,
     user: 12
   }
 }
 
 const validation = Yup.object().shape({
-  knowledge_area: Yup.number().positive('Área de conocimiento requerida'),
+  title: Yup.string().max(255),
   speciality: Yup.number().positive('Especialidad requierida'),
   description: Yup.string().max(255),
-  tags: Yup.string().max(255)
+  price : Yup.number().positive('Precio requerido')
 })
 
 const logConst = {

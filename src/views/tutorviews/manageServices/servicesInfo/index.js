@@ -28,9 +28,6 @@ import {
   Typography
 } from '@material-ui/core'
 
-//COMPONENTS
-import SupportsView from './supports'
-
 import { Formik } from 'formik'
 
 //UTILS
@@ -60,14 +57,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 let initialValuesObj= {
-    id: -1,
-    knowledge_area: -1,
-    speciality: -1,
-    tags: '',
-    description: ''
+  title: '',
+  speciality: -1,
+  description: '',
+  price: -1
 }
 
-const KnowledgeAreaInfoView = (props) => {
+const ServicesInfoView = (props) => {
   const classes = useStyles()
 
   const [initialValues, setInitialValues] = useState(initialValuesObj)
@@ -222,7 +218,6 @@ const KnowledgeAreaInfoView = (props) => {
                         value={values.description}
                         variant="outlined"
                       />
-                      <SupportsView is_create={props.is_create}></SupportsView>
                       <Box my={2}>
                         <Button
                           id="btn_registerArea"
@@ -261,4 +256,4 @@ export default connect(mapStateToProps, {
   getSpecialities,
   addSpecialityTutor,
   updateSpecialityTutor
-})(KnowledgeAreaInfoView)
+})(ServicesInfoView)
