@@ -15,7 +15,8 @@ import {
   FormHelperText,
   makeStyles,
   TextField,
-  Typography
+  Typography,
+  Dialog
 } from '@material-ui/core'
 
 //COMPONENTS
@@ -28,6 +29,7 @@ import { Formik } from 'formik'
 //UTILS
 import Validation from './formikValues'
 import LoginHooks from '../../../components/SignGoogleHooks'
+import TermsAndConditions from '../../../components/TermsDialog'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -46,14 +48,27 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     width: '270px'
+  },
+  terms: {
+    textDecoration: 'underline',
+    cursor: 'pointer'
   }
 }))
 
 const RegisterView = ({ isAuthenticated, addUser }) => {
+  const classes = useStyles()
+  const [open, setOpen] = useState(false)
   const [tutorSelect, setTutorSelect] = useState(false)
   const [studentSelect, setStudentSelect] = useState(false)
-  const classes = useStyles()
   let navigate = useNavigate()
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   useEffect(() => {
     if (isAuthenticated) navigate('/tutor')
@@ -214,8 +229,14 @@ const RegisterView = ({ isAuthenticated, addUser }) => {
                     onChange={handleChange}
                   />
                   <Typography color="textSecondary" variant="body1">
-                    He leído los términos y condiciones
+                    He leído los&nbsp;
+                    <span className={classes.terms} onClick={handleClickOpen}>
+                      términos y condiciones
+                    </span>
                   </Typography>
+                  <Dialog open={open} onClose={handleClose} scroll="paper">
+                    {<TermsAndConditions handleDialogClose={handleClose} />}
+                  </Dialog>
                 </Box>
                 {Boolean(touched.policy && errors.policy) && (
                   <FormHelperText error> {errors.policy} </FormHelperText>
