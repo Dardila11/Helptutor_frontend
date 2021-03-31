@@ -29,7 +29,7 @@ export const TutorAccountLayout = () => {
     <div className={classes.root}>
       <TutorTopBar />
       <div className={classes.contentContainer}>
-        <NavBar />
+        
         <div className={classes.content}>
           <Outlet />
         </div>

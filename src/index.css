@@ -11,3 +11,143 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'PT Sans', sans-serif;
+}
+
+/* all class */
+li:hover {
+  cursor: pointer;
+}
+
+li {
+  list-style-type: none;
+  color: white;
+}
+/* all class */
+
+header {
+  /* height: 57px; */
+}
+
+header,
+.header-lateral {
+  background: rgb(40, 108, 223);
+  background: linear-gradient(
+    90deg,
+    rgba(40, 108, 223, 1) 0%,
+    rgba(17, 144, 203, 1) 55%,
+    rgba(0, 112, 255, 1) 100%
+  );
+}
+
+.content-header {
+  padding: 15px;
+}
+
+.content-header,
+.options-header {
+  display: flex;
+}
+
+.options-header {
+  width: 100%;
+  justify-content: flex-end;
+}
+
+header ul {
+  display: flex;
+}
+
+.options-header li {
+  margin: 0 10px;
+  font-weight: bolder;
+}
+
+.sep-vertical {
+  border-left: 1px solid black;
+  margin: 0 10px;
+}
+
+header button {
+  padding: 4px 6px;
+}
+
+header > .logo-header,
+li {
+  align-self: center;
+}
+
+.logo-header {
+  align-self: center;
+}
+
+/* Navbar lateral */
+.navbar-lateral {
+  position: fixed;
+  top: auto;
+  background-color: #ffffff;
+  height: 100%;
+  width: 225px;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  transition: all 0.5s;
+}
+
+.navbar-lateral ul {
+  display: block;
+}
+
+.navbar-lateral li {
+  border-bottom: 1px solid grey;
+  padding: 10px;
+  margin: auto 10px;
+  display: flex;
+}
+
+.navbar-lateral span {
+  margin-left: 5px;
+  align-self: center;
+}
+
+.profile-photo {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.profile-photo > img {
+  background-color: aliceblue;
+  border-radius: 50%;
+  object-fit: contain;
+  width: 100px;
+  height: 100px;
+}
+
+.select-item {
+  background-color: beige;
+}
+
+.item-navbar {
+  color: rgb(40, 108, 223);
+}
+
+.show-transition {
+  margin-left: 0;
+  visibility: visible;
+}
+
+.hidden-transition {
+  margin-left: -265px;
+  visibility: hidden;
+}
+
+/* container page */
+.container-page {
+  margin: 15px 45px;
+  background-color: #f3f8fb;
+}

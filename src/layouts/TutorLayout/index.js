@@ -35,12 +35,12 @@ export const TutorLayout = () => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <TutorTopBar />  
-        <div className={classes.contentContainer}>   
-          <div className={classes.content}>          
-            <Outlet />
-          </div>
+      <TutorTopBar />
+      <div className={classes.contentContainer}>
+        <div className={classes.content}>
+          <Outlet />
         </div>
+      </div>
     </div>
   )
 }

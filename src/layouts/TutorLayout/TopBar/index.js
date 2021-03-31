@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import {
   Toolbar,
@@ -8,7 +8,15 @@ import {
   IconButton
 } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import InboxIcon from '@material-ui/icons/Inbox'
+import AccountBoxIcon from '@material-ui/icons/AccountBox'
+import BookIcon from '@material-ui/icons/Book'
+import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications'
+import ScheduleIcon from '@material-ui/icons/Schedule'
+import CastForEducationIcon from '@material-ui/icons/CastForEducation'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TutorNavBar from '../NavBar'
 import logo from '../logo.svg'
 
@@ -43,13 +51,13 @@ const useStyles = makeStyles((theme) => ({
     border: '0px',
     color: 'white'
   },
-  userSection:{
+  userSection: {
     color: 'white',
-    margin : theme.spacing(0)
+    margin: theme.spacing(0)
   },
   userSpace: {
-    color : theme.palette.common.white,
-    marginRight : theme.spacing(1)
+    color: theme.palette.common.white,
+    marginRight: theme.spacing(1)
   },
   toolbar: {
     backgroundColor: theme.palette.primary.main
@@ -61,55 +69,115 @@ const useStyles = makeStyles((theme) => ({
 
 const TutorTopBar = (props) => {
   const classes = useStyles()
-  
+  const [show, setShow] = useState(true)
+
   const handleLogOut = () => {
     props.logout()
   }
 
   return (
-    <div className={classes.grow}>
-        <Toolbar className={classes.toolbar}color="primary" >
-          <Button className={classes.button} variant="outlined" href="/">
-            <img className={classes.img}
-              src={logo}
-              width="50"
-              alt="LogoImage"></img>
-            <Typography
-              className={classes.title}
-              variant="h2"
-              color="initial"
-              noWrap>
-              HELPTUTOR
-            </Typography>
-          </Button>
-          <TutorNavBar/>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <RouterLink to="/tutor/cuenta">
-              <div className={classes.userSection}>
-                <IconButton
-                  className={classes.userSpace}
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  color="inherit">
-                  <Typography className={classes.userSpace} variant="h4">
-                    {props.user!=null? (
-                        <>{props.user.first_name} {props.user.last_name}</>
-                    ):(
-                      <></>
-                    )}
-                    
-                  </Typography>
-                  <AccountCircle />
-                </IconButton>
-              </div>
-            </RouterLink>
-            <Button endIcon={<ExitToAppIcon/>} onClick={handleLogOut}>
-                  Salir
-            </Button>
+    <div>
+      <header>
+        <div className="content-header">
+        <span onClick={() => setShow(true)}><ChevronRightIcon /></span>
+          <div className="logo-header">
+            <h4>HelpTutor</h4>
           </div>
-        </Toolbar>
+          <div className="options-header">
+            <ul>
+              <li>Noticias</li>
+              <li>Servicios</li>
+              <li>Ofertas</li>
+            </ul>
+            <div className="sep-vertical"></div>
+            <div className="action-header">
+              <Button onClick={handleLogOut}>
+                <ExitToAppIcon />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div
+        className={
+          'navbar-lateral' + (show ? ' show-transition' : ' hidden-transition')
+        }>
+        <header>
+          <div className="content-header">
+            
+            <div className="logo-header">
+              <h4>HelpTutor</h4>
+            </div>
+            <div className="options-header">
+              <div className="action-header">
+                <Button onClick={() => setShow(false)}>
+                  <ArrowBackIosIcon />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </header>
+        <ul>
+          <li>
+            <div className="profile-photo">
+              <img
+                src="http://localhost:3000/static/images/avatars/avatar_6.png"
+                alt="image-profile"
+              />
+            </div>
+          </li>
+          <RouterLink to="/tutor/cuenta/perfil">
+            <li
+              className="item-navbar select-item"
+              onClick={() => {
+                setShow(false)
+              }}>
+              <AccountBoxIcon />
+              <span>Perfil</span>
+            </li>
+          </RouterLink>
+          <RouterLink to="/tutor/cuenta/asesorias">
+            <li
+              className="item-navbar"
+              onClick={() => {
+                setShow(false)
+              }}>
+              <BookIcon />
+              <span>Asesorías</span>
+            </li>
+          </RouterLink>
+          <RouterLink to="/tutor/cuenta/servicios">
+            <li
+              className="item-navbar"
+              onClick={() => {
+                setShow(false)
+              }}>
+              <CastForEducationIcon />
+              <span>Servicios</span>
+            </li>
+          </RouterLink>
+          <RouterLink to="/tutor/cuenta/horarios">
+            <li
+              className="item-navbar"
+              onClick={() => {
+                setShow(false)
+              }}>
+              <ScheduleIcon />
+              <span>Horarios</span>
+            </li>
+          </RouterLink>
+          <RouterLink to="/tutor/cuenta/configuracion">
+            <li
+              className="item-navbar"
+              onClick={() => {
+                setShow(false)
+              }}>
+              <SettingsApplicationsIcon />
+              <span>Configuración</span>
+            </li>
+          </RouterLink>
+        </ul>
+      </div>
     </div>
   )
 }
@@ -120,6 +188,5 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-logout
+  logout
 })(TutorTopBar)
-
