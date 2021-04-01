@@ -256,12 +256,12 @@ const RegisterView = ({ isAuthenticated, addUser }) => {
                 <Box textAlign="center" mb={1}>
                   ó
                 </Box>
-                {/*<Box width="sm">
+                <Box width="sm">
                   <LoginHooks />
-                </Box>*/}
-                <Box my={3}>
-                  <SignInGoogle></SignInGoogle>
                 </Box>
+                {/* <Box my={3}>
+                  <SignInGoogle></SignInGoogle>
+                </Box> */}
               </form>
             )}
           </Formik>

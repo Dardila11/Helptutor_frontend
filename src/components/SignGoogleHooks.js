@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     /* fontSize: '1.3rem', */
     boxSizing: 'content-box',
     margin: '2px auto 0px',
-    
+
     /* padding: theme.spacing(0.7), */
     padding: '8px 22px',
     /* 
@@ -61,7 +61,8 @@ const LoginHooks = (props) => {
   }, [isAuthenticated])
 
   const onSuccess = (res) => {
-    console.log(`login success: currentUser ${res.profileObj}`)
+    console.log(res.profileObj.email)
+    console.log(`login success: currentUser ${res}`)
     responseGoogle(props, res)
   }
 
@@ -74,7 +75,7 @@ const LoginHooks = (props) => {
     onSuccess,
     onFailure,
     clientId,
-    isSignedIn: true,
+    /* isSignedIn: true, */
     accessType: false,
     cookiePolicy: 'single_host_origin'
   })
