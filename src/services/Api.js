@@ -33,7 +33,7 @@ const getTutorInfo = (id) => {
 }
 
 const postGoogleTutor = (data) => {
-  return https.post('/api/google/tutor/', data)
+  return https.post('/api/tutor/google/', data)
 }
 
 /*TODO: Ask for enterpoint*/
@@ -78,7 +78,7 @@ const login = (data) => {
 }
 
 const loginGoogle = (data) => {
-  return https.post('/api/auth/google/login', data)
+  return https.post('/api/auth/login/google', data)
 }
 
 /*

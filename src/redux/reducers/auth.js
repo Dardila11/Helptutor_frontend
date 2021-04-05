@@ -26,6 +26,15 @@ const initialState = {
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
+    case 'ADD_TUTOR_GOOGLE': {
+      localStorage.setItem('token', action.payload.token)
+      return {
+        ...state,
+        user: action.payload.user,
+        isAuthenticated: true,
+        isLoading: false
+      }
+    }
     case ADD_TUTOR:
       return {
         ...state,

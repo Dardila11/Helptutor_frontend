@@ -46,7 +46,7 @@ export const getTutorInfo = (id) => (dispatch) => {
           type: GET_TUTOR,
           payload: res.data
         })
-        dispatch(createMessage({ setMessage: 'Information retrieved' }))
+        //dispatch(createMessage({ setMessage: 'Information retrieved' }))
       }
     })
     .catch((err) => {
@@ -90,11 +90,12 @@ export const addUserGoogle = (data) => (dispatch) => {
   const request = Api.postGoogleTutor(data)
   request
     .then((res) => {
+      console.log(res.data)
       dispatch({
-        type: ADD_TUTOR,
+        type: 'ADD_TUTOR_GOOGLE',
         payload: res.data
       })
-      dispatch(createMessage({ setMessage: 'Tutor registrado' }))
+      dispatch(createMessage({ setMessage: 'Tutor registrado con Google' }))
     })
     .catch((err) => {
       dispatch(

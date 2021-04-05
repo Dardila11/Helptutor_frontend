@@ -105,6 +105,7 @@ const RegisterView = ({ isAuthenticated, addUser }) => {
                 // tutor registration api
                 console.log('registro de tutor...')
                 let jsonValues = Validation.getValues(values)
+                console.log(jsonValues)
                 addUser(jsonValues)
               } else if (studentSelect) {
                 // student registration api

@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 const responseGoogle = async (props, response) => {
   let jsonValues = {
-    id_token: response.tokenId
+    token: response.tokenId
   }
   if (props.login) props.loginGoogle(jsonValues)
   else {
@@ -61,9 +61,17 @@ const LoginHooks = (props) => {
   }, [isAuthenticated])
 
   const onSuccess = (res) => {
-    console.log(res.profileObj.email)
+    console.log(res)
     console.log(`login success: currentUser ${res}`)
-    responseGoogle(props, res)
+    /*
+     * check whether user email matches @unicauca.edu.co
+     */
+    let userEmail = res.profileObj.email
+    if  (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co')  {
+      responseGoogle(props, res)
+    } else {
+      console.log("No es de unicauca")
+    }
   }
 
   const onFailure = (res) => {

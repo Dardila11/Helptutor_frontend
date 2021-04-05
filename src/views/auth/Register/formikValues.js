@@ -13,10 +13,12 @@ const initialValues = {
 
 const getValues = (values) => {
   return {
-    first_name: values.name,
-    last_name: values.lastname,
-    email: values.email,
-    password: values.password
+    user: {
+      first_name: values.name,
+      last_name: values.lastname,
+      email: values.email,
+      password: values.password
+    }
   }
 }
 
