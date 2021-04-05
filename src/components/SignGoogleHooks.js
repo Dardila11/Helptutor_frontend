@@ -5,7 +5,7 @@ import { Card, makeStyles } from '@material-ui/core'
 
 //REDUX
 import { addUserGoogle, loginGoogle } from '../redux/actions/auth'
-import {createMessage} from '../redux/actions/messages'
+import { returnErrors } from '../redux/actions/messages'
 import { connect } from 'react-redux'
 import store from '../redux/store.js'
 const clientId =
@@ -51,11 +51,12 @@ const responseGoogle = async (props, response, isUnicaucaEmail) => {
     if(isUnicaucaEmail)  {
       props.addUserGoogle(jsonValues)
     } else {
-      /**
-       * mensaje...
-       */
-      //props.authGoogleError("No es correo unicauca")
-      store.dispatch(createMessage({ setMessage: 'No es correo unicauca' }))
+      store.dispatch(
+        returnErrors({
+          non_field_errors: ['No es correo de unicauca'],
+          status: 401
+        })
+      )
     }
   }
 }
