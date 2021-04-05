@@ -111,7 +111,9 @@ const getServicesTutor = (idTutor) => {
   return https.get('/api/tutor/'+idTutor+'/speciality/')
 }
 
-
+const postServiceTutor = (data, values) => {
+  return https.post('/api/service/', data, tokenConfig(values.state))
+}
 
 
 const logConstants = {
@@ -122,6 +124,7 @@ const logConstants = {
   postTutor,
   postGoogleTutor,
   postKnowledgeAreaTutor,
+  postServiceTutor,
   patchTutorKnowledgeAreas,
   getknowledgeAreas,
   getKnowledgeArea,

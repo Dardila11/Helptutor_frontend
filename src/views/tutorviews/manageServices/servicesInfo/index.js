@@ -27,7 +27,7 @@ import SaveIcon from '@material-ui/icons/Save'
 
 import { Formik } from 'formik'
 
-import {getSpecialitiesTutor} from '../../../../redux/actions/services'
+import {getSpecialitiesTutor, addServiceTutor} from '../../../../redux/actions/services'
 
 //UTILS
 import Validation from './formikValues'
@@ -98,7 +98,8 @@ const ServicesInfoView = (props) => {
                       ...values,
                       user: props.user.id
                     })
-                    if (props.is_create) props.addSpecialityTutor(jsonValues)
+                    console.log(jsonValues)
+                    if (props.is_create) props.addServiceTutor(jsonValues)
                     else
                       props.updateSpecialityTutor(
                         jsonValues,
@@ -150,7 +151,7 @@ const ServicesInfoView = (props) => {
                             <em>---</em>
                           </MenuItem>
                           {props.specialities.map((subarea, index) => (
-                            <MenuItem key={index} value={subarea.knowledge_area.id}>
+                            <MenuItem key={index} value={subarea.id}>
                               {subarea.knowledge_area.name}
                             </MenuItem>
                           ))}
@@ -221,5 +222,6 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-  getSpecialitiesTutor
+  getSpecialitiesTutor,
+  addServiceTutor
 })(ServicesInfoView)

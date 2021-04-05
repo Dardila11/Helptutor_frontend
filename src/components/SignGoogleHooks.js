@@ -5,8 +5,9 @@ import { Card, makeStyles } from '@material-ui/core'
 
 //REDUX
 import { addUserGoogle, loginGoogle } from '../redux/actions/auth'
+import { returnErrors } from '../redux/actions/messages'
 import { connect } from 'react-redux'
-
+import store from '../redux/store.js'
 const clientId =
   '581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com'
 
@@ -41,19 +42,41 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const responseGoogle = async (props, response) => {
-  let jsonValues = {
-    token: response.tokenId
-  }
-  if (props.login) props.loginGoogle(jsonValues)
-  else {
-    props.addUserGoogle(jsonValues)
+const responseGoogle = async (props, response, isUnicaucaEmail) => {
+  if (isUnicaucaEmail) {
+    let jsonValues = {
+      token: response.tokenId
+    }
+    if (props.login) props.loginGoogle(jsonValues)
+    else {
+      props.addUserGoogle(jsonValues)
+    }
+  } else {
+    store.dispatch(
+      returnErrors({
+        non_field_errors: ['No es correo de unicauca'],
+        status: 401
+      })
+    )
   }
 }
 const LoginHooks = (props) => {
   let navigate = useNavigate()
   const classes = useStyles()
-  const { isAuthenticated } = props
+  const { isAuthenticated, hasRoleSelected } = props
+
+  const validateRole = () => {
+    if (!hasRoleSelected && !props.login) {
+      store.dispatch(
+        returnErrors({
+          non_field_errors: ['Debe seleccionar un rol'],
+          status: 400
+        })
+      )
+    } else {
+      signIn()
+    }
+  }
 
   useEffect(() => {
     if (isAuthenticated) navigate('/tutor/cuenta')
@@ -67,10 +90,11 @@ const LoginHooks = (props) => {
      * check whether user email matches @unicauca.edu.co
      */
     let userEmail = res.profileObj.email
-    if  (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co')  {
-      responseGoogle(props, res)
+    if (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co') {
+      responseGoogle(props, res, true)
     } else {
-      console.log("No es de unicauca")
+      responseGoogle(props, res, false)
+      console.log('No es de unicauca')
     }
   }
 
@@ -89,7 +113,7 @@ const LoginHooks = (props) => {
   })
 
   return (
-    <Card onClick={signIn} className={classes.button}>
+    <Card onClick={validateRole} className={classes.button}>
       <img src="icons/google.svg" alt="google login" className={classes.icon} />
       <span className={classes.buttonText}>
         {props.login ? 'Iniciar Sesión con Google' : 'Registrarme con Google'}

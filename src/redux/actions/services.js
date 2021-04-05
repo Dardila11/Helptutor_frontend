@@ -31,10 +31,13 @@ export const getServicesTutor = (pk_tutor) => (dispatch) => {
           })
 }
 
-export const addServiceTutor = (data) => (dispatch) => {
+export const addServiceTutor = (data) => (dispatch, getState) => {
   //   dispatch({ type: USER_LOADING });
-
-  const request = Api.postServiceTutor(data)
+  let values = {
+    dispatchP: dispatch,
+    state: getState
+  }
+  const request = Api.postServiceTutor(data,values)
   request
     .then((res) => {
       dispatch({
