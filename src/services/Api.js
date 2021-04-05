@@ -37,8 +37,8 @@ const postGoogleTutor = (data) => {
 }
 
 /*TODO: Ask for enterpoint*/
-const postKnowledgeAreaTutor = (data) => {
-  return https.post('/api/knowledgearea_tutor/',data)
+const postKnowledgeAreaTutor = (data,values) => {
+  return https.post('/api/knowledgearea_tutor/',data, tokenConfig(values.state))
 }
 
 const patchTutorKnowledgeAreas = (data, pk) => {
