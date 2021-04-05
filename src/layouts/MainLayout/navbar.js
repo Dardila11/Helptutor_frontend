@@ -10,6 +10,7 @@ import {
   makeStyles
 } from '@material-ui/core'
 
+import logo from './logo.svg'
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1
@@ -98,7 +99,7 @@ const MainNavBar = () => {
         <Toolbar>
           <Button className={classes.button} variant="outlined" href="/">
             <img
-              src="https://gitlab.com/alexvi/diagonals-react/-/raw/master/src/data/logo-removebg-preview.png"
+              src={logo}
               width="50"
               alt="LogoImage"
               >
