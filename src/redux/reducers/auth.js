@@ -22,6 +22,7 @@ const initialState = {
     first_name: '',
     last_name: ''
   },
+  userInfo: null
 }
 
 const auth = (state = initialState, action) => {

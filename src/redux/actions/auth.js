@@ -16,14 +16,17 @@ import {
   ACTION_END
 } from './types_auth'
 
-export const updateTutor = (id, data) => (dispatch) => {
-  const request = Api.updateTutorInfo(id, data)
+export const updateTutor = (data) => (dispatch, getState) => {
+  const request = Api.updateTutorInfo(data, getState)
   request
     .then((res) => {
+      console.log(res.data)
       dispatch({
         type: UPDATE_TUTOR,
         payload: res.data
       })
+      console.log("UPDATE TUTOR RESPONSE")
+      console.log(res.data)
       dispatch(
         createMessage({ setMessage: 'Información del tutor actualizada' })
       )
@@ -38,9 +41,10 @@ export const updateTutor = (id, data) => (dispatch) => {
     })
 }
 
-export const getTutorInfo = (id) => (dispatch) => {
-  Api.getTutorInfo(id)
+export const getTutorInfo = (id) => (dispatch, getState) => {
+  Api.getTutorInfo(id,getState)
     .then((res) => {
+      console.log(res)
       if (res.status === 200) {
         dispatch({
           type: GET_TUTOR,

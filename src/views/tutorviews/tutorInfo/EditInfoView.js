@@ -46,18 +46,15 @@ const useStyles = makeStyles((theme) => ({
 const EditInfoView = (props) => {
   const { updateTutor, getTutorInfo, userInfo } = props
   const [loading, setLoading] = useState(true)
+  const [tutorInfo, setTutorInfo] = useState({})
 
   useEffect(() => {
-    function getTutorInformation() {
-      let userId = props.user.id
-      getTutorInfo(userId)
-      if (userInfo != null) {
-        formikValues.putValues(userInfo)
-        setLoading(false)
-      }
+    getTutorInfo(props.user.id)
+    if (userInfo !== null) {
+      setLoading(false)
+      formikValues.putValues(userInfo)
     }
-    getTutorInformation()
-  }, [])
+  }, [loading])
   const classes = useStyles()
   return loading ? (
     <CircularProgress className={classes.progress} />
@@ -68,9 +65,9 @@ const EditInfoView = (props) => {
           initialValues={formikValues.initialValues}
           //validationSchema={formikValues.validation}
           onSubmit={(values) => {
-            let userId = props.user.id
             let jsonValues = formikValues.getValues(values)
-            updateTutor(userId, jsonValues)
+            console.log(jsonValues)
+            updateTutor(jsonValues)
           }}>
           {({
             errors,
@@ -221,7 +218,7 @@ const EditInfoView = (props) => {
                   variant="outlined"
                 />
               </Box>
-              
+
               <Box my={2}>
                 <Button
                   id="btn_updateTutor"

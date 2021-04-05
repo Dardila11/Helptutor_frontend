@@ -24,12 +24,8 @@ const postTutor = (data) => {
   return https.post('/api/tutor/', data)
 }
 
-const updateTutorInfo = (id, data) => {
-  return https.patch(`/api/tutor/${id}/`, data)
-}
-
-const getTutorInfo = (id) => {
-  return https.get(`/api/tutor/${id}/`)
+const updateTutorInfo = (data, state) => {
+  return https.patch(`/api/tutor/`, data, tokenConfig(state))
 }
 
 const postGoogleTutor = (data) => {
@@ -89,6 +85,10 @@ const loadUser = () => {
 
 const logout = (values) => {
   return https.post('api/auth/logout', null, tokenConfig(values.state))
+}
+
+const getTutorInfo = (id, state) => {
+  return https.get(`/api/tutor/${id}/`, tokenConfig(state))
 }
 
 const tokenConfig = (getState) => {
