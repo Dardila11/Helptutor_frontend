@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 //REDUX
 import { addUser } from '../../../redux/actions/auth'
 import { connect } from 'react-redux'
+import { returnErrors } from '../../../redux/actions/messages'
+import store from '../../../redux/store'
 
 //COMPONENTS MATERIAL UI
 import {
@@ -103,15 +105,18 @@ const RegisterView = ({ isAuthenticated, addUser }) => {
             onSubmit={(values) => {
               if (tutorSelect) {
                 // tutor registration api
-                console.log('registro de tutor...')
                 let jsonValues = Validation.getValues(values)
-                console.log(jsonValues)
                 addUser(jsonValues)
               } else if (studentSelect) {
                 // student registration api
                 console.log('registro de estudiante...')
               } else {
-                console.log('Debe elegir un rol')
+                store.dispatch(
+                  returnErrors({
+                    non_field_errors: ['Debe seleccionar un rol'],
+                    status: 400
+                  })
+                )
               }
             }}>
             {({
@@ -246,7 +251,6 @@ const RegisterView = ({ isAuthenticated, addUser }) => {
                   <Button
                     id="btn_registerUser"
                     color="primary"
-                    disabled={isSubmitting}
                     fullWidth
                     size="medium"
                     type="submit"
@@ -258,7 +262,7 @@ const RegisterView = ({ isAuthenticated, addUser }) => {
                   ó
                 </Box>
                 <Box width="sm">
-                  <LoginHooks />
+                  <LoginHooks hasRoleSelected={tutorSelect || studentSelect} />
                 </Box>
                 {/* <Box my={3}>
                   <SignInGoogle></SignInGoogle>
