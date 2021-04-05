@@ -38,7 +38,6 @@ const ServicesListView = (props) => {
   const [loading, setLoading] = useState(false)
   const classes = useStyles()
   let info = false
-  console.log(services_tutor)
   if (services_tutor.length>0) {
     info = true
   } else {
@@ -51,8 +50,6 @@ const ServicesListView = (props) => {
 
   useEffect(() => {
       getServicesTutor()
-      console.log("Get services tutor")
-      console.log(services_tutor)
       setLoading(true)
   },[])
   

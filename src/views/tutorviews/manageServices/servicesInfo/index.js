@@ -156,7 +156,6 @@ const ServicesInfoView = (props) => {
                           <MenuItem value={-1}>
                             <em>---</em>
                           </MenuItem>
-                          {console.log(props.specialities)}
                           {props.specialities.map((subarea, index) => (
                             <MenuItem key={index} value={subarea.id}>
                               {subarea.knowledge_area.name}

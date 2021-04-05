@@ -56,13 +56,14 @@ const services = (state = initialState, action) =>{
             return {
                 ...state,
                 specialities_tutor: action.payload
-            }
+            }   
         case SET_SERVICE_TUTOR:
             const data = action.payload
+            console.log(data)
             const service_tutor = {
                 id: data.id,
                 title: data.title,
-                speciality: data.speciality,
+                speciality: data.knowledgeArea_Tutor,
                 description: data.description,
                 price: data.price
             }
