@@ -14,7 +14,11 @@ import {
 
 export const getServicesTutor = (pk_tutor) => (dispatch, getState) => {
 
-    const request = Api.getServicesTutor(pk_tutor)
+    let values = {
+      dispatchP: dispatch,
+      state: getState
+    }
+    const request = Api.getServicesTutor(values)
     request
       .then((res) => {
             dispatch({
