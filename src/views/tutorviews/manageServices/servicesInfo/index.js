@@ -27,7 +27,7 @@ import SaveIcon from '@material-ui/icons/Save'
 
 import { Formik } from 'formik'
 
-import {getSpecialitiesTutor, addServiceTutor} from '../../../../redux/actions/services'
+import {getSpecialitiesTutor, addServiceTutor, updateServiceTutor} from '../../../../redux/actions/services'
 
 //UTILS
 import Validation from './formikValues'
@@ -107,9 +107,9 @@ const ServicesInfoView = (props) => {
                     })
                     if (props.is_create) props.addServiceTutor(jsonValues)
                     else
-                      props.updateSpecialityTutor(
+                      props.updateServiceTutor(
                         jsonValues,
-                        props.speciality_tutor.id
+                        props.service_tutor.id
                       )
                   }}>
                   {({
@@ -230,5 +230,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getSpecialitiesTutor,
-  addServiceTutor
+  addServiceTutor,
+  updateServiceTutor
 })(ServicesInfoView)
