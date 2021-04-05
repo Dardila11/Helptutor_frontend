@@ -1,19 +1,16 @@
 //REACT
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 //REDUX
 import { getServicesTutor,setIsCreate } from '../../../../redux/actions/services'
 import { connect } from 'react-redux'
 
 //COMPONENTS MATERAIL UI
-import { Button, Card, Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Button, Card, CircularProgress, Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 //COMPONENTS
 import ServiceCard from './serviceCard'
-
-//UTILS
-import { isUndefined } from 'lodash-es'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -38,12 +35,13 @@ const useStyles = makeStyles((theme) => ({
 const ServicesListView = (props) => {
 
   const {services_tutor, getServicesTutor, user} = props
+  const [loading, setLoading] = useState(false)
   const classes = useStyles()
   let info = false
-  if (isUndefined(services_tutor)) {
-    info = false
-  } else {
+  if (services_tutor.length>0) {
     info = true
+  } else {
+    info = false
   }
 
   const handleClick = (e) => {
@@ -51,8 +49,9 @@ const ServicesListView = (props) => {
   }
 
   useEffect(() => {
-      getServicesTutor(user.id)
-  })
+      getServicesTutor()
+      setLoading(true)
+  },[])
   
   return (
     <>
@@ -65,21 +64,26 @@ const ServicesListView = (props) => {
               align="center">
               Servicios
             </Typography>
-            {info ? (
+            {loading ? (
               <>
-                {services_tutor.map((area, index) => (
-                  <ServiceCard
-                    key={index}
-                    area={area.knowledge_area}
-                    my_area={area}
-                    idArea={area.id}/>
-                ))}
+              {info ? (
+                <>
+                  {services_tutor.map((service, index) => (
+                    <ServiceCard
+                      id={service.id}
+                      service={service}/>
+                  ))}
+                </>
+              ) : (
+                <>
+                  <Typography align='center'>No se encontraron servicios</Typography>
+                </>
+              )}
               </>
             ) : (
-              <>
-                <Typography align='center'>No se encontraron servicios</Typography>
-              </>
+              <CircularProgress />
             )}
+            
             <Container className={classes.actions}>
               <Button
               fullWidth

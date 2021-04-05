@@ -5,8 +5,7 @@ const getValues = (values) => {
     title: values.title,
     speciality: values.speciality,
     description: values.description,
-    price: values.price,
-    user: 12
+    price: values.price
   }
 }
 

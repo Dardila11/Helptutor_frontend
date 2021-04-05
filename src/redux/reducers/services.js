@@ -11,9 +11,9 @@ import {
 const initialValuesService = {
     id: -1,
     title: '',
-    knowledge_area: -1,
+    speciality: -1,
     description: '',
-    price: -1
+    price: ''
 }
 
 const initialState = {
@@ -56,13 +56,14 @@ const services = (state = initialState, action) =>{
             return {
                 ...state,
                 specialities_tutor: action.payload
-            }
+            }   
         case SET_SERVICE_TUTOR:
             const data = action.payload
+            console.log(data)
             const service_tutor = {
                 id: data.id,
                 title: data.title,
-                knowledge_area: data.knowledge_area.knowledge_area[0],
+                speciality: data.knowledgeArea_Tutor,
                 description: data.description,
                 price: data.price
             }

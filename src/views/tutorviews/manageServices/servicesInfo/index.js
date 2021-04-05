@@ -27,7 +27,7 @@ import SaveIcon from '@material-ui/icons/Save'
 
 import { Formik } from 'formik'
 
-import {getSpecialitiesTutor} from '../../../../redux/actions/services'
+import {getSpecialitiesTutor, addServiceTutor} from '../../../../redux/actions/services'
 
 //UTILS
 import Validation from './formikValues'
@@ -63,15 +63,22 @@ let initialValuesObj = {
   title: '',
   speciality: -1,
   description: '',
-  price: ''
+  price: 0
 }
 
 const ServicesInfoView = (props) => {
   const classes = useStyles()
 
+  const [initialValues, setInitialValues] = useState(initialValuesObj)
+  
   useEffect(() => {
     props.getSpecialitiesTutor(props.user.id)
-  })
+  },[])
+
+  useEffect(() => {
+    setInitialValues(props.service_tutor)
+  }, [props.service_tutor])
+
   return (
     <>
       <Grid item xs={9}>
@@ -91,14 +98,14 @@ const ServicesInfoView = (props) => {
               <Container maxWidth="sm">
                 <Formik
                   enableReinitialize={true}
-                  initialValues={initialValuesObj}
+                  initialValues={initialValues}
                   validationSchema={Validation.validation}
                   onSubmit={(values) => {
                     let jsonValues = Validation.getValues({
                       ...values,
                       user: props.user.id
                     })
-                    if (props.is_create) props.addSpecialityTutor(jsonValues)
+                    if (props.is_create) props.addServiceTutor(jsonValues)
                     else
                       props.updateSpecialityTutor(
                         jsonValues,
@@ -150,7 +157,7 @@ const ServicesInfoView = (props) => {
                             <em>---</em>
                           </MenuItem>
                           {props.specialities.map((subarea, index) => (
-                            <MenuItem key={index} value={subarea.knowledge_area.id}>
+                            <MenuItem key={index} value={subarea.id}>
                               {subarea.knowledge_area.name}
                             </MenuItem>
                           ))}
@@ -216,10 +223,12 @@ const ServicesInfoView = (props) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  service_tutor: state.services.service_tutor,
   specialities : state.services.specialities_tutor,
   is_create: state.services.is_create
 })
 
 export default connect(mapStateToProps, {
-  getSpecialitiesTutor
+  getSpecialitiesTutor,
+  addServiceTutor
 })(ServicesInfoView)

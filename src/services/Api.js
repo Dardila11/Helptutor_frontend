@@ -5,7 +5,7 @@ import https from './ApiConfig'
 const getCountries = () => {
   return https.get('/api/country')
 }
-
+  
 const getState = () => {
   return https.get('/api/state')
 }
@@ -33,8 +33,8 @@ const postGoogleTutor = (data) => {
 }
 
 /*TODO: Ask for enterpoint*/
-const postKnowledgeAreaTutor = (data) => {
-  return https.post('/api/knowledgearea_tutor/',data)
+const postKnowledgeAreaTutor = (data,values) => {
+  return https.post('/api/knowledgearea_tutor/',data, tokenConfig(values.state))
 }
 
 const patchTutorKnowledgeAreas = (data, pk) => {
@@ -107,11 +107,17 @@ const tokenConfig = (getState) => {
   return config
 }
 
-const getServicesTutor = (idTutor) => {
-  return https.get('/api/tutor/'+idTutor+'/speciality/')
+const getServicesTutor = (values) => {
+  return https.get('/api/service/', tokenConfig(values.state))
 }
 
+const postServiceTutor = (data, values) => {
+  return https.post('/api/service/', data, tokenConfig(values.state))
+}
 
+const deleteServiceTutor = (id) => {
+  return https.delete('/api/service/'+id+'/')
+}
 
 
 const logConstants = {
@@ -122,6 +128,7 @@ const logConstants = {
   postTutor,
   postGoogleTutor,
   postKnowledgeAreaTutor,
+  postServiceTutor,
   patchTutorKnowledgeAreas,
   getknowledgeAreas,
   getKnowledgeArea,
@@ -129,6 +136,7 @@ const logConstants = {
   getSupports,
   getTutorKnowledgeAreas,
   deleteTutorKnowledgeArea,
+  deleteServiceTutor,
   updateTutorInfo,
   getTutorInfo,
   login,

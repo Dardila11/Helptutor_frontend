@@ -1,3 +1,4 @@
+import { valuesIn } from 'lodash-es'
 import Api from '../../services/Api'
 import { createMessage, returnErrors } from './messages'
 
@@ -11,9 +12,13 @@ import {
     SET_IS_CREATE
 } from './types_services'
 
-export const getServicesTutor = (pk_tutor) => (dispatch) => {
+export const getServicesTutor = (pk_tutor) => (dispatch, getState) => {
 
-    const request = Api.getServicesTutor(pk_tutor)
+    let values = {
+      dispatchP: dispatch,
+      state: getState
+    }
+    const request = Api.getServicesTutor(values)
     request
       .then((res) => {
             dispatch({
@@ -31,10 +36,14 @@ export const getServicesTutor = (pk_tutor) => (dispatch) => {
           })
 }
 
-export const addServiceTutor = (data) => (dispatch) => {
+export const addServiceTutor = (data) => (dispatch, getState) => {
   //   dispatch({ type: USER_LOADING });
-
-  const request = Api.postServiceTutor(data)
+  let values = {
+    dispatchP: dispatch,
+    state: getState
+  }
+  console.log(data)
+  const request = Api.postServiceTutor(data,values)
   request
     .then((res) => {
       dispatch({

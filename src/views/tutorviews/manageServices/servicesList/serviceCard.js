@@ -4,11 +4,11 @@ import DeleteIcon from '@material-ui/icons/Delete'
 
 //REDUX
 import {
-  getSpecialities,
-  deleteSpecialityTutor,
-  setSpecialityTutor,
+  getSpecialitiesTutor,
+  deleteServiceTutor,
+  setServiceTutor,
   setIsCreate
-} from '../../../../redux/actions/knowledge_areas'
+} from '../../../../redux/actions/services'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
 const ServiceCard = (props) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
-
+  
   const handleDelete = () => {
     setOpen(false)
-    props.deleteSpecialityTutor(props.idArea)
+    props.deleteServiceTutor(props.service.id)
     props.setIsCreate(true)
   }
   const handleOpen = () =>{
@@ -54,17 +54,16 @@ const ServiceCard = (props) => {
               fullWidth={true}
               variant='outlined'
               onClick={()=>{
-                props.getSpecialities(props.my_area.knowledge_area.knowledge_area)
-                props.setSpecialityTutor(props.my_area)
+                props.setServiceTutor(props.service)
               }}>
-              <Typography align="left" variant='h5'> {props.area.name}</Typography>
+              <Typography align="left" variant='h5'> {props.service.title}</Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>
             <Button
               className={classes.button}
-              id={props.area.id}
-              key={props.area.id}
+              id={props.service.id}
+              key={props.service.id}
               color='secondary'
               onClick={handleOpen}>
               <DeleteIcon className={classes.delete} />
@@ -78,7 +77,7 @@ const ServiceCard = (props) => {
               <DialogTitle id="alert-dialog-title">{"Advertencia"}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                  ¿Estas seguro de eliminar el servicio <b>{props.area.name}</b> ?
+                  ¿Estas seguro de eliminar el servicio <b>{props.service.title}</b> ?
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -105,8 +104,8 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-  deleteSpecialityTutor,
-  setSpecialityTutor,
-  getSpecialities,
+  deleteServiceTutor,
+  setServiceTutor,
+  getSpecialitiesTutor,
   setIsCreate
 })(ServiceCard)
