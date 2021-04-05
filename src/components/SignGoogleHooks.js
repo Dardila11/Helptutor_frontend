@@ -5,8 +5,9 @@ import { Card, makeStyles } from '@material-ui/core'
 
 //REDUX
 import { addUserGoogle, loginGoogle } from '../redux/actions/auth'
+import {createMessage} from '../redux/actions/messages'
 import { connect } from 'react-redux'
-
+import store from '../redux/store.js'
 const clientId =
   '581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com'
 
@@ -41,13 +42,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const responseGoogle = async (props, response) => {
+const responseGoogle = async (props, response, isUnicaucaEmail) => {
   let jsonValues = {
     token: response.tokenId
   }
   if (props.login) props.loginGoogle(jsonValues)
   else {
-    props.addUserGoogle(jsonValues)
+    if(isUnicaucaEmail)  {
+      props.addUserGoogle(jsonValues)
+    } else {
+      /**
+       * mensaje...
+       */
+      //props.authGoogleError("No es correo unicauca")
+      store.dispatch(createMessage({ setMessage: 'No es correo unicauca' }))
+    }
   }
 }
 const LoginHooks = (props) => {
@@ -68,8 +77,9 @@ const LoginHooks = (props) => {
      */
     let userEmail = res.profileObj.email
     if  (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co')  {
-      responseGoogle(props, res)
+      responseGoogle(props, res, true)
     } else {
+      responseGoogle(props, res, false)
       console.log("No es de unicauca")
     }
   }
