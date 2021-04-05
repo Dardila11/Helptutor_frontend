@@ -22,18 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ManageServicesView = (props) => {
-  const [knowledgeAreas, setKnowledgeAreas] = useState([])
-  const [loading, setloading] = useState(false)
   const classes = useStyles()
-  useEffect(() => {
-    const fetchData = async () => {
-      await Api.getTutorKnowledgeAreas(props.user.id).then((res) => {
-        setKnowledgeAreas(res.data)
-        setloading(true)
-      })
-    }
-    fetchData()
-  }, [])
   /*
   useEffect(() => {
     const fetchData = async () => {
@@ -48,17 +37,10 @@ const ManageServicesView = (props) => {
     <>
       <Page className={classes.root} title="Gestionar areas de conocimiento">
         <Grid container spacing={2}>
-          {loading ? (
             <>
-              <ServicesListView areas={knowledgeAreas} />
+              <ServicesListView />
               <ServicesInfoView />
             </>
-          ) : (
-            <>
-              <CircularProgress className={classes.progress} />
-              <LinearProgress className={classes.progress} />
-            </>
-          )}
         </Grid>
       </Page>
     </>

@@ -5,7 +5,7 @@ import https from './ApiConfig'
 const getCountries = () => {
   return https.get('/api/country')
 }
-
+  
 const getState = () => {
   return https.get('/api/state')
 }
@@ -107,12 +107,16 @@ const tokenConfig = (getState) => {
   return config
 }
 
-const getServicesTutor = (idTutor) => {
-  return https.get('/api/tutor/'+idTutor+'/speciality/')
+const getServicesTutor = (idTutor, values) => {
+  return https.get('/api/service/')
 }
 
 const postServiceTutor = (data, values) => {
   return https.post('/api/service/', data, tokenConfig(values.state))
+}
+
+const deleteServiceTutor = (id) => {
+  return https.delete('/api/service/'+id+'/')
 }
 
 
@@ -132,6 +136,7 @@ const logConstants = {
   getSupports,
   getTutorKnowledgeAreas,
   deleteTutorKnowledgeArea,
+  deleteServiceTutor,
   updateTutorInfo,
   getTutorInfo,
   login,

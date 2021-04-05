@@ -52,7 +52,7 @@ const ServicesListView = (props) => {
 
   useEffect(() => {
       getServicesTutor(user.id)
-  })
+  },[])
   
   return (
     <>
@@ -67,12 +67,10 @@ const ServicesListView = (props) => {
             </Typography>
             {info ? (
               <>
-                {services_tutor.map((area, index) => (
+                {services_tutor.map((service, index) => (
                   <ServiceCard
-                    key={index}
-                    area={area.knowledge_area}
-                    my_area={area}
-                    idArea={area.id}/>
+                    id={service.id}
+                    service={service}/>
                 ))}
               </>
             ) : (

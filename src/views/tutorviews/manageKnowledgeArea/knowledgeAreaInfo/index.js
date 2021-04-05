@@ -116,14 +116,12 @@ const KnowledgeAreaInfoView = (props) => {
                       ...values,
                       user: props.user.id
                     })
-                    console.log(jsonValues)
                     if (props.is_create) props.addSpecialityTutor(jsonValues)
                     else{
                       props.updateSpecialityTutor(
                         jsonValues,
                         props.speciality_tutor.id
                       )
-                      console.log("Updating areaa")
                     }
                       
                   }}>
