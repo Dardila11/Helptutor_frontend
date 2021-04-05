@@ -63,7 +63,20 @@ const responseGoogle = async (props, response, isUnicaucaEmail) => {
 const LoginHooks = (props) => {
   let navigate = useNavigate()
   const classes = useStyles()
-  const { isAuthenticated } = props
+  const { isAuthenticated, hasRoleSelected } = props
+
+  const validateRole = () => {
+    if (!hasRoleSelected && !props.login) {
+      store.dispatch(
+        returnErrors({
+          non_field_errors: ['Debe seleccionar un rol'],
+          status: 400
+        })
+      )
+    } else {
+      signIn()
+    }
+  }
 
   useEffect(() => {
     if (isAuthenticated) navigate('/tutor/cuenta')
@@ -100,7 +113,7 @@ const LoginHooks = (props) => {
   })
 
   return (
-    <Card onClick={signIn} className={classes.button}>
+    <Card onClick={validateRole} className={classes.button}>
       <img src="icons/google.svg" alt="google login" className={classes.icon} />
       <span className={classes.buttonText}>
         {props.login ? 'Iniciar Sesión con Google' : 'Registrarme con Google'}
