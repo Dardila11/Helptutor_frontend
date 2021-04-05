@@ -43,21 +43,21 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const responseGoogle = async (props, response, isUnicaucaEmail) => {
-  let jsonValues = {
-    token: response.tokenId
-  }
-  if (props.login) props.loginGoogle(jsonValues)
-  else {
-    if(isUnicaucaEmail)  {
-      props.addUserGoogle(jsonValues)
-    } else {
-      store.dispatch(
-        returnErrors({
-          non_field_errors: ['No es correo de unicauca'],
-          status: 401
-        })
-      )
+  if (isUnicaucaEmail) {
+    let jsonValues = {
+      token: response.tokenId
     }
+    if (props.login) props.loginGoogle(jsonValues)
+    else {
+      props.addUserGoogle(jsonValues)
+    }
+  } else {
+    store.dispatch(
+      returnErrors({
+        non_field_errors: ['No es correo de unicauca'],
+        status: 401
+      })
+    )
   }
 }
 const LoginHooks = (props) => {
@@ -77,11 +77,11 @@ const LoginHooks = (props) => {
      * check whether user email matches @unicauca.edu.co
      */
     let userEmail = res.profileObj.email
-    if  (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co')  {
+    if (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co') {
       responseGoogle(props, res, true)
     } else {
       responseGoogle(props, res, false)
-      console.log("No es de unicauca")
+      console.log('No es de unicauca')
     }
   }
 
