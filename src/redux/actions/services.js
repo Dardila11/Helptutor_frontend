@@ -42,7 +42,6 @@ export const addServiceTutor = (data) => (dispatch, getState) => {
     dispatchP: dispatch,
     state: getState
   }
-  console.log(data)
   const request = Api.postServiceTutor(data,values)
   request
     .then((res) => {
@@ -65,7 +64,7 @@ export const addServiceTutor = (data) => (dispatch, getState) => {
 export const updateServiceTutor = (data, pk) => (dispatch) => {
   //   dispatch({ type: USER_LOADING });
 
-  const request = Api.putServiceTutor(data, pk)
+  const request = Api.patchServiceTutor(pk, data)
   request
     .then((res) => {
       dispatch({

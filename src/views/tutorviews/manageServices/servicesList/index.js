@@ -70,6 +70,7 @@ const ServicesListView = (props) => {
                 <>
                   {services_tutor.map((service, index) => (
                     <ServiceCard
+                      key={index}
                       id={service.id}
                       service={service}/>
                   ))}

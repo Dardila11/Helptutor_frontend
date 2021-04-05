@@ -42,7 +42,7 @@ const services = (state = initialState, action) =>{
             })
             return {
                 ...state,
-                is_create: true,
+                is_create: false,
                 services_tutor: services_tutor
             }
         case DELETE_SERVICE_TUTOR:
@@ -59,7 +59,6 @@ const services = (state = initialState, action) =>{
             }   
         case SET_SERVICE_TUTOR:
             const data = action.payload
-            console.log(data)
             const service_tutor = {
                 id: data.id,
                 title: data.title,

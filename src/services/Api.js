@@ -119,6 +119,10 @@ const deleteServiceTutor = (id) => {
   return https.delete('/api/service/'+id+'/')
 }
 
+const patchServiceTutor = (id, data) => {
+  return https.patch('/api/service/'+id+'/', data)
+}
+
 
 const logConstants = {
   getCountries,
@@ -130,6 +134,7 @@ const logConstants = {
   postKnowledgeAreaTutor,
   postServiceTutor,
   patchTutorKnowledgeAreas,
+  patchServiceTutor,
   getknowledgeAreas,
   getKnowledgeArea,
   getSubKnowledgeAreas,
