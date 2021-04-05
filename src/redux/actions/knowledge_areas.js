@@ -54,10 +54,13 @@ export const getSpecialities = (pk_knowledge_area) => (dispatch) => {
     })
 }
 
-export const addSpecialityTutor = (data) => (dispatch) => {
+export const addSpecialityTutor = (data) => (dispatch, getState) => {
   //   dispatch({ type: USER_LOADING });
-
-  const request = Api.postKnowledgeAreaTutor(data)
+  let values = {
+    dispatchP: dispatch,
+    state: getState
+  }
+  const request = Api.postKnowledgeAreaTutor(data, values)
   request
     .then((res) => {
       dispatch({

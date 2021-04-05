@@ -3,16 +3,15 @@ import * as Yup from 'yup'
 const getValues = (values) => {
   return {
     title: values.title,
-    speciality: values.speciality,
+    knowledgeArea_Tutor: values.speciality,
     description: values.description,
-    price: values.price,
-    user: 12
+    price: values.price
   }
 }
 
 const validation = Yup.object().shape({
   title: Yup.string().max(255),
-  speciality: Yup.number().positive('Especialidad requierida'),
+  knowledgeArea_Tutor: Yup.number().positive('Especialidad requierida'),
   description: Yup.string().max(255),
   price : Yup.number().positive('Precio requerido')
 })
