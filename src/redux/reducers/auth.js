@@ -37,6 +37,7 @@ const auth = (state = initialState, action) => {
       }
     }
     case ADD_TUTOR:
+      localStorage.setItem('token', action.payload.token)
       return {
         ...state,
         user: action.payload,

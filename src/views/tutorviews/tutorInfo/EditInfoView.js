@@ -16,7 +16,6 @@ import { Formik } from 'formik'
 import formikValues from './formikValues'
 
 //REDUX
-//import { updateTutor, getTutorInfo } from '../../../redux/actions/auth'
 import { getTutorInfo, updateTutor } from '../../../redux/actions/tutor_data'
 import { connect } from 'react-redux'
 
@@ -50,7 +49,7 @@ const initialValuesTutor = {
   interest: '',
   methodology: '',
   skills: '',
-  gender: '',
+  gender: -1,
   birthday: '',
   email: ''
 }
@@ -125,18 +124,18 @@ const EditInfoView = (props) => {
                 <FormControl
                   variant="outlined"
                   className={classes.selectControl}
-                  error={Boolean(touched.sex && errors.sex)}
-                  helpertext={touched.sex && errors.sex}
+                  error={Boolean(touched.gender && errors.gender)}
+                  helpertext={touched.gender && errors.gender}
                   fullWidth>
-                  <InputLabel id="select-sex-label"> Género </InputLabel>
+                  <InputLabel id="select-gender-label"> Género </InputLabel>
                   <Select
-                    labelId="select-sex-label"
-                    id="select_sex"
+                    labelId="select-gender-label"
+                    id="select_gender"
                     value={values.gender}
-                    name="sex"
+                    name="gender"
                     onChange={handleChange}
                     label="Género">
-                    <MenuItem value="">--</MenuItem>
+                    <MenuItem value={-1}>--</MenuItem>
                     <MenuItem key={0} value={0}>
                       Femenino
                     </MenuItem>

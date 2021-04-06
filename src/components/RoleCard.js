@@ -7,7 +7,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0.7),
     marginRight: theme.spacing(1),
     borderRadius: '10px',
-    backgroundColor: '#DFE1E1'
+    backgroundColor: '#DFE1E1',
+    cursor: 'pointer'
   },
   activeColor: {
     minWidth: '170px',
@@ -16,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '10px',
     /* backgroundColor: '#005579', */
     backgroundColor: theme.palette.primary.main,
-    color: '#FFFFFF'
+    color: '#FFFFFF',
+    cursor: 'pointer'
   }
 }))
 
