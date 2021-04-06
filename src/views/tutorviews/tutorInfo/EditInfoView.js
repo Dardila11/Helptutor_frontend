@@ -16,7 +16,8 @@ import { Formik } from 'formik'
 import formikValues from './formikValues'
 
 //REDUX
-import { updateTutor, getTutorInfo } from '../../../redux/actions/auth'
+//import { updateTutor, getTutorInfo } from '../../../redux/actions/auth'
+import { getTutorInfo, updateTutor } from '../../../redux/actions/tutor_data'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
@@ -40,26 +41,23 @@ const useStyles = makeStyles((theme) => ({
     '& >:last-child': {
       marginRight: 0
     }
-  },
+  }
 }))
 
 const EditInfoView = (props) => {
-  const { updateTutor, getTutorInfo, userInfo } = props
-  const [loading, setLoading] = useState(true)
+  const { updateTutor, getTutorInfo, userInfo, requestInProgress } = props
+  useEffect(() => {
+    getTutorInfo(props.user.id)
+  },[])
 
   useEffect(() => {
-    function getTutorInformation() {
-      let userId = props.user.id
-      getTutorInfo(userId)
-      if (userInfo != null) {
-        formikValues.putValues(userInfo)
-        setLoading(false)
-      }
+    if (userInfo != null) {
+      formikValues.putValues(userInfo)
     }
-    getTutorInformation()
-  }, [])
+  }, [requestInProgress])
+
   const classes = useStyles()
-  return loading ? (
+  return requestInProgress ? (
     <CircularProgress className={classes.progress} />
   ) : (
     <Card className={classes.root}>
@@ -68,9 +66,9 @@ const EditInfoView = (props) => {
           initialValues={formikValues.initialValues}
           //validationSchema={formikValues.validation}
           onSubmit={(values) => {
-            let userId = props.user.id
             let jsonValues = formikValues.getValues(values)
-            updateTutor(userId, jsonValues)
+            console.log(jsonValues)
+            updateTutor(jsonValues)
           }}>
           {({
             errors,
@@ -221,7 +219,7 @@ const EditInfoView = (props) => {
                   variant="outlined"
                 />
               </Box>
-              
+
               <Box my={2}>
                 <Button
                   id="btn_updateTutor"
@@ -244,10 +242,11 @@ const EditInfoView = (props) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  userInfo: state.auth.userInfo
+  userInfo: state.tutorInfo.userInfo,
+  requestInProgress: state.tutorInfo.requestInProgress
 })
 
 export default connect(mapStateToProps, {
-  updateTutor,
-  getTutorInfo
+  getTutorInfo,
+  updateTutor
 })(EditInfoView)

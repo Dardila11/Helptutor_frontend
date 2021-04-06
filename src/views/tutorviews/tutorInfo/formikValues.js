@@ -24,14 +24,19 @@ const putValues = (values) => {
 
 const getValues = (values) => {
   return {
-    first_name: values.first_name,
-    last_name: values.last_name,
-    interest: values.interest,
+    user: {
+      first_name: values.first_name,
+      last_name: values.last_name,
+      email: values.email,
+      gender: values.sex,
+      birthday: values.birthday,
+      telephone: ''
+    },
+    score: 0,
     methodology: values.methodology,
+    trajectory: '',
     skills: values.skills,
-    gender: values.sex,
-    birthday: values.birthday,
-    email: values.email
+    interest: values.interest
   }
 }
 
