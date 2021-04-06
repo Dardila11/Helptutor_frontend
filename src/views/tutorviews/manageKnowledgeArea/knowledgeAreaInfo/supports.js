@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 //COMPONENTS MATERIAL UI
 import { Box, Button, Container, Dialog, DialogContent, DialogContentText, DialogTitle, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core'
-import PublishIcon from '@material-ui/icons/Publish'
+import UploadPDF from '../../../../components/uploadFile'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 //FOMIK
@@ -60,6 +60,19 @@ const SupportsView = (props) => {
     setOpen(false)
   }
 
+  const [archivo, setArchivo] = useState(null);
+  const uploadFile = e => {
+    setArchivo(e);
+    if (e.length > 0) { 
+      var name = e[0].name;
+      var nameSplit = name.split(".");
+      var ext = nameSplit[nameSplit.length - 1];
+      
+      setArchivo(e[0])
+    }
+    else { document.getElementById("text-file").textContent = ""; }
+  }
+
   return (
     <>
     <Grid container spacing={2}>
@@ -88,7 +101,10 @@ const SupportsView = (props) => {
                           validationSchema={Validation.validation}
                           onSubmit={(values) => {
                             let jsonValues = Validation.getValues(values)
-                            if (props.is_create) console.log('post support'+jsonValues)
+                            if (props.is_create) {
+                              console.log('post support:')
+                              console.log(jsonValues)
+                            }
                             else console.log('put support')
                           }}>
                           {({
@@ -144,18 +160,21 @@ const SupportsView = (props) => {
                                 <Typography>
                                   Certificado: 
                                 </Typography>
-                                <input
+                                {console.log(archivo)}
+                                <UploadPDF uploadFile={uploadFile} file={archivo}/>
+                                {/*<input
                                   className={classes.input}
                                   accept="application/pdf"
                                   id="contained-button-file"
                                   multiple
                                   type="file"
+                                  onChange= {handleFile}
                                 />
                                 <label htmlFor="contained-button-file">                                
                                     <Button variant="contained" color="primary" component="span" endIcon={<PublishIcon/>}>
                                       Subir archivo
                                     </Button>
-                                </label>
+                                </label>*/}
                               </Grid>
                               <Grid container spacing={2} className={classes.actionsContainer}>
                                   <Grid item sm={6} align='center'>
