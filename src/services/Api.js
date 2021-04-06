@@ -25,7 +25,7 @@ const postTutor = (data) => {
 }
 
 const updateTutorInfo = (data, state) => {
-  return https.patch(`/api/tutor/`, data, tokenConfig(state))
+  return https.patch('/api/tutor/', data, tokenConfig(state))
 }
 
 const postGoogleTutor = (data) => {

@@ -44,30 +44,39 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const initialValuesTutor = {
+  first_name: '',
+  last_name: '',
+  interest: '',
+  methodology: '',
+  skills: '',
+  gender: '',
+  birthday: '',
+  email: ''
+}
+
 const EditInfoView = (props) => {
-  const { updateTutor, getTutorInfo, userInfo, requestInProgress } = props
+  const { updateTutor, getTutorInfo, userInfo } = props
+  const [initialInfo, setInitialInfo] = useState(initialValuesTutor)
+
   useEffect(() => {
     getTutorInfo(props.user.id)
   },[])
 
-  useEffect(() => {
-    if (userInfo != null) {
-      formikValues.putValues(userInfo)
-    }
-  }, [requestInProgress])
+  useEffect(()=> {
+    setInitialInfo(userInfo)
+  }, [userInfo])
 
   const classes = useStyles()
-  return requestInProgress ? (
-    <CircularProgress className={classes.progress} />
-  ) : (
+  return (
     <Card className={classes.root}>
       <Box display="flex" flexDirection="column" justifyContent="center">
         <Formik
-          initialValues={formikValues.initialValues}
+          enableReinitialize={true}
+          initialValues={initialInfo}
           //validationSchema={formikValues.validation}
           onSubmit={(values) => {
             let jsonValues = formikValues.getValues(values)
-            console.log(jsonValues)
             updateTutor(jsonValues)
           }}>
           {({
@@ -123,18 +132,18 @@ const EditInfoView = (props) => {
                   <Select
                     labelId="select-sex-label"
                     id="select_sex"
-                    value={values.sex}
+                    value={values.gender}
                     name="sex"
                     onChange={handleChange}
                     label="Género">
                     <MenuItem value="">--</MenuItem>
-                    <MenuItem key={1} value={1}>
+                    <MenuItem key={0} value={0}>
                       Femenino
                     </MenuItem>
-                    <MenuItem key={2} value={2}>
+                    <MenuItem key={1} value={1}>
                       Masculino
                     </MenuItem>
-                    <MenuItem key={3} value={3}>
+                    <MenuItem key={2} value={2}>
                       Otro
                     </MenuItem>
                   </Select>
@@ -229,7 +238,7 @@ const EditInfoView = (props) => {
                   size="large"
                   type="submit"
                   variant="contained">
-                  GUARDAR
+                  Actualizar
                 </Button>
               </Box>
             </form>

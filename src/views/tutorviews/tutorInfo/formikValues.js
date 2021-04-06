@@ -6,7 +6,7 @@ let initialValues = {
   interest: '',
   methodology: '',
   skills: '',
-  sex: '',
+  gender: '',
   birthday: '',
   email: ''
 }
@@ -17,7 +17,7 @@ const putValues = (values) => {
   initialValues.interest = values.interest
   initialValues.methodology = values.methodology
   initialValues.skills = values.skills
-  initialValues.sex = values.user.gender
+  initialValues.gender = values.user.gender
   initialValues.birthday = values.user.birthday
   initialValues.email = values.user.email
 }
@@ -28,7 +28,7 @@ const getValues = (values) => {
       first_name: values.first_name,
       last_name: values.last_name,
       email: values.email,
-      gender: values.sex,
+      gender: values.gender,
       birthday: values.birthday,
       telephone: ''
     },
