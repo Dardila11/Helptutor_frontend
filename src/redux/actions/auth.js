@@ -16,7 +16,7 @@ import {
   ACTION_END
 } from './types_auth'
 
-export const updateTutor = (data) => (dispatch, getState) => {
+/* export const updateTutor = (data) => (dispatch, getState) => {
   const request = Api.updateTutorInfo(data, getState)
   request
     .then((res) => {
@@ -39,9 +39,9 @@ export const updateTutor = (data) => (dispatch, getState) => {
         })
       )
     })
-}
+} */
 
-export const getTutorInfo = (id) => (dispatch, getState) => {
+/* export const getTutorInfo = (id) => (dispatch, getState) => {
   Api.getTutorInfo(id,getState)
     .then((res) => {
       console.log(res)
@@ -64,7 +64,7 @@ export const getTutorInfo = (id) => (dispatch, getState) => {
     .catch((err) => {
       dispatch(returnErrors('Error desconocido', '499'))
     })
-}
+} */
 
 export const addUser = (data) => (dispatch) => {
   //   dispatch({ type: USER_LOADING });

@@ -108,7 +108,7 @@ const tokenConfig = (getState) => {
 }
 
 const getServicesTutor = (values) => {
-  return https.get('/api/service/', tokenConfig(values.state))
+  return https.get('/api/tutor/services/', tokenConfig(values.state))
 }
 
 const postServiceTutor = (data, values) => {
