@@ -5,7 +5,7 @@ import { Card, makeStyles } from '@material-ui/core'
 
 //REDUX
 import { addUserGoogle, loginGoogle } from '../redux/actions/auth'
-import { returnErrors } from '../redux/actions/messages'
+import { launchAlert } from '../redux/actions/alerts'
 import { connect } from 'react-redux'
 import store from '../redux/store.js'
 const clientId =
@@ -53,10 +53,7 @@ const responseGoogle = async (props, response, isUnicaucaEmail) => {
     }
   } else {
     store.dispatch(
-      returnErrors({
-        non_field_errors: ['No es correo de unicauca'],
-        status: 401
-      })
+      launchAlert('El correo proporcionado no pertenece a la universidad del cauca', 1)
     )
   }
 }
@@ -68,10 +65,7 @@ const LoginHooks = (props) => {
   const validateRole = () => {
     if (!hasRoleSelected && !props.login) {
       store.dispatch(
-        returnErrors({
-          non_field_errors: ['Debe seleccionar un rol'],
-          status: 400
-        })
+        launchAlert('Debes seleccionar un rol para registrarte', 1)
       )
     } else {
       signIn()

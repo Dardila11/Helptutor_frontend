@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 //REDUX
-import { addUser } from '../../../redux/actions/auth'
+import { addTutor, addStudent } from '../../../redux/actions/auth'
 import { connect } from 'react-redux'
-import { returnErrors } from '../../../redux/actions/messages'
+import { launchAlert } from '../../../redux/actions/alerts'
 import store from '../../../redux/store'
 
 //COMPONENTS MATERIAL UI
@@ -24,7 +24,6 @@ import {
 //COMPONENTS
 import Page from '../../../components/Page'
 import RoleCard from '../../../components/RoleCard'
-import SignInGoogle from '../../../components/SignGoogle'
 
 import { Formik } from 'formik'
 
@@ -57,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const RegisterView = ({ isAuthenticated, addUser }) => {
+const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [tutorSelect, setTutorSelect] = useState(false)
@@ -103,19 +102,17 @@ const RegisterView = ({ isAuthenticated, addUser }) => {
             validationSchema={Validation.validation}
             //ON_SUBMIT ENVIO DEL FORMULARIO
             onSubmit={(values) => {
+              let jsonValues = Validation.getValues(values)
               if (tutorSelect) {
                 // tutor registration api
-                let jsonValues = Validation.getValues(values)
-                addUser(jsonValues)
+                addTutor(jsonValues)
               } else if (studentSelect) {
                 // student registration api
-                console.log('registro de estudiante...')
+                addStudent(jsonValues)
+                console.log("registrando estudiante")
               } else {
                 store.dispatch(
-                  returnErrors({
-                    non_field_errors: ['Debe seleccionar un rol'],
-                    status: 400
-                  })
+                  launchAlert('Debes seleccionar un rol', 1)
                 )
               }
             }}>
@@ -281,5 +278,6 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-  addUser
+  addTutor,
+  addStudent
 })(RegisterView)

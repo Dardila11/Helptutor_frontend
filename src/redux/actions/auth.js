@@ -1,11 +1,11 @@
 import Api from '../../services/Api'
-import { returnErrors, createMessage } from './messages'
+
+import { launchAlert } from './alerts'
 import axios from 'axios'
 
 import {
   ADD_TUTOR,
-  UPDATE_TUTOR,
-  GET_TUTOR,
+  ADD_STUDENT,
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
@@ -21,23 +21,20 @@ export const updateTutor = (data) => (dispatch, getState) => {
   request
     .then((res) => {
       //console.log(res.data)
-      dispatch({
-        type: 'UPDATE_TUTOR',
-        payload: res.data
-      })
-      //console.log('UPDATE TUTOR RESPONSE')
-      //console.log(res.data)
-      dispatch(
-        createMessage({ setMessage: 'Información del tutor actualizada' })
-      )
+      if(res.status == 200) {
+
+        dispatch({
+          type: 'UPDATE_TUTOR',
+          payload: res.data
+        })
+        //console.log('UPDATE TUTOR RESPONSE')
+        //console.log(res.data)
+        dispatch(launchAlert('Información del tutor actualizada', res.status))
+      }
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: 400
-        })
-      )
+      console.log(err);
+      dispatch(launchAlert('Error actualizando información', 400))
     })
 }
 
@@ -55,17 +52,10 @@ export const getTutorInfo = (id) => (dispatch, getState) => {
       })
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: err.response.status
-        })
-      )
+      dispatch(launchAlert('Error registrando tutor', err.response.status))
     })
 }
-
-export const addUser = (data) => (dispatch) => {
-  //   dispatch({ type: USER_LOADING });
+export const addTutor = (data) => (dispatch) => {
 
   const request = Api.postTutor(data)
   request
@@ -74,15 +64,27 @@ export const addUser = (data) => (dispatch) => {
         type: ADD_TUTOR,
         payload: res.data
       })
-      dispatch(createMessage({ setMessage: 'Tutor registrado' }))
+      dispatch(launchAlert('Tutor registrado', 200))
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: 400
-        })
-      )
+      dispatch(launchAlert('Error registrando tutor', err.response.status))
+    })
+}
+
+export const addStudent = (data) => (dispatch) => {
+  //   dispatch({ type: USER_LOADING });
+
+  const request = Api.postStudent(data)
+  request
+    .then((res) => {
+      dispatch({
+        type: ADD_STUDENT,
+        payload: res.data
+      })
+      dispatch(launchAlert('Estudiante registrado', 200))
+    })
+    .catch((err) => {
+      dispatch(launchAlert('Error registrando estudiante', err.response.status))
     })
 }
 
@@ -97,15 +99,11 @@ export const addUserGoogle = (data) => (dispatch) => {
         type: 'ADD_TUTOR_GOOGLE',
         payload: res.data
       })
-      dispatch(createMessage({ setMessage: 'Tutor registrado con Google' }))
+      dispatch(launchAlert('Tutor registrado con google', 200))
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: 400
-        })
-      )
+      if(err.response.status == 400) dispatch(launchAlert('El tutor ya existe', err.response.status))
+      else dispatch(launchAlert('Error registrando tutor con google', err.response.status))
     })
 }
 
@@ -126,13 +124,10 @@ export const loadUser = () => (dispatch, getState) => {
       })
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status))
+      dispatch(launchAlert('Error obteniedo información del usuario', err.response.status))
       dispatch({
         type: AUTH_ERROR
       })
-    })
-    .catch((err) => {
-      dispatch(returnErrors('Error desconocido', '499'))
     })
 }
 
@@ -148,14 +143,11 @@ export const login = (data) => (dispatch) => {
       dispatch({ type: ACTION_END })
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status))
+      dispatch(launchAlert('Error iniciando sesión', err.response.status))
       dispatch({
         type: LOGIN_FAIL
       })
       dispatch({ type: ACTION_END })
-    })
-    .catch((err) => {
-      dispatch(returnErrors('Error desconocido', '499'))
     })
 }
 
@@ -170,7 +162,7 @@ export const loginGoogle = (data) => (dispatch) => {
       dispatch({ type: ACTION_END })
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status))
+      dispatch(launchAlert('Error iniciando sesión con google', err.response.status))
       dispatch({
         type: LOGIN_FAIL
       })
@@ -188,10 +180,10 @@ export const logout = () => (dispatch, getState) => {
       dispatch({ type: LOGOUT_SUCCESS })
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status))
+      dispatch(launchAlert('Error al cerrar sesión', err.response.status))
     })
     .catch((err) => {
-      dispatch(returnErrors('Error desconocido', '499'))
+      dispatch(launchAlert('Error 2 al cerrar sesión', err.response.status))
       dispatch({
         type: AUTH_ERROR
       })
@@ -213,3 +205,4 @@ export const tokenConfig = (getState) => {
 
   return config
 }
+

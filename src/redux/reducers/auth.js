@@ -1,5 +1,6 @@
 import {
   ADD_TUTOR,
+  ADD_STUDENT,
   UPDATE_TUTOR,
   GET_TUTOR,
   USER_LOADING,
@@ -69,6 +70,17 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         userInfo: tutorInfo,
+        user: {
+          first_name: tutorInfo.first_name,
+          last_name: tutorInfo.last_name
+        },
+        isAuthenticated: true
+      }
+    case ADD_STUDENT:
+      localStorage.setItem('token', action.payload.token)
+      return {
+        ...state,
+        user: action.payload,
         isAuthenticated: true
       }
     case 'UPDATE_TUTOR':

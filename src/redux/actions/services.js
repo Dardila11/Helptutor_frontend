@@ -1,6 +1,5 @@
-import { valuesIn } from 'lodash-es'
 import Api from '../../services/Api'
-import { createMessage, returnErrors } from './messages'
+import { launchAlert } from './alerts'
 
 import {
     LIST_SERVICES_TUTOR,
@@ -27,12 +26,7 @@ export const getServicesTutor = (pk_tutor) => (dispatch, getState) => {
             })
         })
         .catch((err) => {
-            dispatch(
-              returnErrors({
-                non_field_errors: [err.response.data.detail],
-                status: err.response.status
-              })
-            )
+          dispatch(launchAlert('Error obteniedo servicios', err.response.status))
           })
 }
 
@@ -49,15 +43,10 @@ export const addServiceTutor = (data) => (dispatch, getState) => {
         type: ADD_SERVICE_TUTOR,
         payload: res.data
       })
-      dispatch(createMessage({ setMessage: 'Servicio registrado' }))
+      dispatch(launchAlert('Servicio registrado', 200))
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: err.response.status
-        })
-      )
+      dispatch(launchAlert('Error agregando servicio', err.response.status))
     })
 }
 
@@ -71,15 +60,10 @@ export const updateServiceTutor = (data, pk) => (dispatch) => {
         type: UPDATE_SERVICE_TUTOR,
         payload: res.data
       })
-      dispatch(createMessage({ setMessage: 'Servicio actualizado' }))
+      dispatch(launchAlert('Servicio actualizado', 200))
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: err.response.status
-        })
-      )
+      dispatch(launchAlert('Error actualizando servicio', err.response.status))
     })
 }
 
@@ -93,15 +77,10 @@ export const deleteServiceTutor = (pk_service) => (dispatch) => {
         type: DELETE_SERVICE_TUTOR,
         payload: { pk: pk_service }
       })
-      dispatch(createMessage({ setMessage: 'Servicio eliminado' }))
+      dispatch(launchAlert('Servicio eliminado', 200))
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: err.response.status
-        })
-      )
+      dispatch(launchAlert('Error eliminando servicio', err.response.status))
     })
 }
 
@@ -116,12 +95,7 @@ export const getSpecialitiesTutor = (pk_tutor) => (dispatch) => {
       })
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: err.response.status
-        })
-      )
+      dispatch(launchAlert('Error obteniendo especialidades', err.response.status))
     })
 }
 

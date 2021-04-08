@@ -32,17 +32,17 @@ const postGoogleTutor = (data) => {
   return https.post('/api/tutor/google/', data)
 }
 
-/*TODO: Ask for enterpoint*/
+const getSupports = () => {
+  return https.get('/api/certificate')
+}
+
+/** TUTOR KNOWLEDGE AREA */
 const postKnowledgeAreaTutor = (data,values) => {
   return https.post('/api/knowledgearea_tutor/',data, tokenConfig(values.state))
 }
 
 const patchTutorKnowledgeAreas = (data, pk) => {
   return https.patch('/api/knowledgearea_tutor/' + pk + '/', data)
-}
-
-const getSupports = () => {
-  return https.get('/api/certificate')
 }
 
 const getTutorKnowledgeAreas = (idTutor) => {
@@ -77,12 +77,6 @@ const loginGoogle = (data) => {
   return https.post('/api/auth/login/google', data)
 }
 
-/*
-const loadUser = () => {
-  return https.get('api/auth/user')
-}*/
-
-
 const logout = (values) => {
   return https.post('api/auth/logout', null, tokenConfig(values.state))
 }
@@ -107,6 +101,8 @@ const tokenConfig = (getState) => {
   return config
 }
 
+/** TUTOR SERVICES */
+
 const getServicesTutor = (values) => {
   return https.get('/api/tutor/services/', tokenConfig(values.state))
 }
@@ -123,6 +119,12 @@ const patchServiceTutor = (id, data) => {
   return https.patch('/api/service/'+id+'/', data)
 }
 
+/** ESTUDENT SERVICES */
+
+const postStudent = (data) => {
+  return https.post('/api/student', data)
+}
+
 
 const logConstants = {
   getCountries,
@@ -133,6 +135,7 @@ const logConstants = {
   postGoogleTutor,
   postKnowledgeAreaTutor,
   postServiceTutor,
+  postStudent,
   patchTutorKnowledgeAreas,
   patchServiceTutor,
   getknowledgeAreas,
