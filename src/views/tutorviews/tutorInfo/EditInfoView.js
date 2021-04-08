@@ -16,7 +16,8 @@ import { Formik } from 'formik'
 import formikValues from './formikValues'
 
 //REDUX
-import { getTutorInfo, updateTutor } from '../../../redux/actions/tutor_data'
+//import { getTutorInfo, updateTutor } from '../../../redux/actions/tutor_data'
+import { getTutorInfo, updateTutor } from '../../../redux/actions/auth'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +50,7 @@ const initialValuesTutor = {
   interest: '',
   methodology: '',
   skills: '',
-  gender: -1,
+  gender: 0,
   birthday: '',
   email: ''
 }
@@ -60,9 +61,9 @@ const EditInfoView = (props) => {
 
   useEffect(() => {
     getTutorInfo(props.user.id)
-  },[])
+  }, [])
 
-  useEffect(()=> {
+  useEffect(() => {
     setInitialInfo(userInfo)
   }, [userInfo])
 
@@ -71,11 +72,14 @@ const EditInfoView = (props) => {
     <Card className={classes.root}>
       <Box display="flex" flexDirection="column" justifyContent="center">
         <Formik
-          enableReinitialize={true}
+          enableReinitialize
           initialValues={initialInfo}
           //validationSchema={formikValues.validation}
           onSubmit={(values) => {
+            console.log('VALUES')
+            console.log(values)
             let jsonValues = formikValues.getValues(values)
+            console.log(jsonValues)
             updateTutor(jsonValues)
           }}>
           {({
@@ -87,6 +91,7 @@ const EditInfoView = (props) => {
             values
           }) => (
             <form onSubmit={handleSubmit}>
+              {console.log(values)}
               <Box mb={3} textAlign="center">
                 <Typography color="textPrimary" variant="h4">
                   INFORMACIÓN
@@ -135,7 +140,9 @@ const EditInfoView = (props) => {
                     name="gender"
                     onChange={handleChange}
                     label="Género">
-                    <MenuItem value={-1}>--</MenuItem>
+                    <MenuItem key={3} value={3}>
+                      --
+                    </MenuItem>
                     <MenuItem key={0} value={0}>
                       Femenino
                     </MenuItem>
@@ -177,7 +184,6 @@ const EditInfoView = (props) => {
                   type="email"
                   value={values.email}
                   variant="outlined"
-                  disabled
                 />
               </Box>
               <Box className={classes.inputs} display="flex">
@@ -250,8 +256,9 @@ const EditInfoView = (props) => {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  //userInfo: state.auth.userInfo
   userInfo: state.tutorInfo.userInfo,
-  requestInProgress: state.tutorInfo.requestInProgress
+  //userInfo: state.auth.userInfo
 })
 
 export default connect(mapStateToProps, {

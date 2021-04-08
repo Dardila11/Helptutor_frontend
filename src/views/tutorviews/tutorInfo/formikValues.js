@@ -1,25 +1,28 @@
 import * as Yup from 'yup'
 
 let initialValues = {
-  first_name: '',
-  last_name: '',
-  interest: '',
-  methodology: '',
-  skills: '',
-  gender: -1,
-  birthday: '',
-  email: ''
+  id: -1, 
+  user: {
+    first_name: '',
+    last_name: '',
+    interest: '',
+    methodology: '',
+    skills: '',
+    gender: 3,
+    birthday: '',
+    email: ''
+  }
 }
 
 const putValues = (values) => {
-  initialValues.first_name = values.user.first_name
-  initialValues.last_name = values.user.last_name
-  initialValues.interest = values.interest
-  initialValues.methodology = values.methodology
-  initialValues.skills = values.skills
-  initialValues.gender = values.user.gender
-  initialValues.birthday = values.user.birthday
-  initialValues.email = values.user.email
+  initialValues.user.first_name = values.first_name
+  initialValues.user.last_name = values.last_name
+  initialValues.user.interest = values.interest
+  initialValues.user.methodology = values.methodology
+  initialValues.user.skills = values.skills
+  initialValues.user.gender = values.gender
+  initialValues.user.birthday = values.birthday
+  initialValues.user.email = values.email
 }
 
 const getValues = (values) => {

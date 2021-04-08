@@ -1,5 +1,5 @@
 import Api from '../../services/Api'
-import { createMessage, returnErrors } from './messages'
+import { returnErrors, createMessage } from './messages'
 import axios from 'axios'
 
 import {
@@ -16,17 +16,17 @@ import {
   ACTION_END
 } from './types_auth'
 
-/* export const updateTutor = (data) => (dispatch, getState) => {
+export const updateTutor = (data) => (dispatch, getState) => {
   const request = Api.updateTutorInfo(data, getState)
   request
     .then((res) => {
-      console.log(res.data)
+      //console.log(res.data)
       dispatch({
-        type: UPDATE_TUTOR,
+        type: 'UPDATE_TUTOR',
         payload: res.data
       })
-      console.log("UPDATE TUTOR RESPONSE")
-      console.log(res.data)
+      //console.log('UPDATE TUTOR RESPONSE')
+      //console.log(res.data)
       dispatch(
         createMessage({ setMessage: 'Información del tutor actualizada' })
       )
@@ -39,32 +39,30 @@ import {
         })
       )
     })
-} */
+}
 
-/* export const getTutorInfo = (id) => (dispatch, getState) => {
-  Api.getTutorInfo(id,getState)
+export const getTutorInfo = (id) => (dispatch, getState) => {
+  Api.getTutorInfo(id, getState)
     .then((res) => {
+      console.log('GET TUTOR INFO')
       console.log(res)
-      if (res.status === 200) {
-        dispatch({
-          type: GET_TUTOR,
-          payload: res.data
-        })
-        //dispatch(createMessage({ setMessage: 'Information retrieved' }))
-      }
+      dispatch({
+        type: 'GET_TUTOR',
+        payload: res.data
+      })
+      dispatch({
+        type: 'FINISHED_LOADING'
+      })
     })
     .catch((err) => {
       dispatch(
         returnErrors({
           non_field_errors: [err.response.data.detail],
-          status: 400
+          status: err.response.status
         })
       )
     })
-    .catch((err) => {
-      dispatch(returnErrors('Error desconocido', '499'))
-    })
-} */
+}
 
 export const addUser = (data) => (dispatch) => {
   //   dispatch({ type: USER_LOADING });

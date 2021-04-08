@@ -12,17 +12,28 @@ import {
   ACTION_END
 } from '../actions/types_auth'
 
+const userInfoData = {
+  first_name: '',
+  last_name: '',
+  interest: '',
+  methodology: '',
+  skills: '',
+  sex: '',
+  birthday: '',
+  email: ''
+}
+
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: false,
   isLoading: false,
   isRunning: false,
+  userInfo: userInfoData,
   user: {
     id: -1,
     first_name: '',
     last_name: ''
-  },
-  userInfo: null
+  }
 }
 
 const auth = (state = initialState, action) => {
@@ -43,17 +54,33 @@ const auth = (state = initialState, action) => {
         user: action.payload,
         isAuthenticated: true
       }
-    case UPDATE_TUTOR:
+    case 'GET_TUTOR':
+      const data = action.payload
+      const tutorInfo = {
+        first_name: data.user.first_name,
+        last_name: data.user.last_name,
+        gender: data.user.gender,
+        birthday: data.user.birthday,
+        email: data.user.email,
+        interest: data.interest,
+        methodology: data.methodology,
+        skills: data.skills
+      }
       return {
         ...state,
-        user: action.payload,
+        userInfo: tutorInfo,
         isAuthenticated: true
       }
-    case GET_TUTOR:
+    case 'UPDATE_TUTOR':
       return {
         ...state,
         userInfo: action.payload,
         isAuthenticated: true
+      }
+    case 'FINISHED_LOADING':
+      return {
+        ...state,
+        requestInProgress: false
       }
     case USER_LOADING:
       return {
@@ -84,7 +111,8 @@ const auth = (state = initialState, action) => {
         token: null,
         user: null,
         isAuthenticated: false,
-        isLoading: false
+        isLoading: false,
+        userInfo: null
       }
     case ACTION_RUNNING:
       return {
