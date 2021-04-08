@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const initialValuesTutor = {
+/* const initialValuesTutor = {
   first_name: '',
   last_name: '',
   interest: '',
@@ -53,11 +53,11 @@ const initialValuesTutor = {
   gender: 0,
   birthday: '',
   email: ''
-}
+} */
 
 const EditInfoView = (props) => {
   const { updateTutor, getTutorInfo, userInfo } = props
-  const [initialInfo, setInitialInfo] = useState(initialValuesTutor)
+  const [initialInfo, setInitialInfo] = useState(formikValues.initialValues)
 
   useEffect(() => {
     getTutorInfo(props.user.id)
@@ -91,7 +91,6 @@ const EditInfoView = (props) => {
             values
           }) => (
             <form onSubmit={handleSubmit}>
-              {console.log(values)}
               <Box mb={3} textAlign="center">
                 <Typography color="textPrimary" variant="h4">
                   INFORMACIÓN

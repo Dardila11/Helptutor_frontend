@@ -72,9 +72,24 @@ const auth = (state = initialState, action) => {
         isAuthenticated: true
       }
     case 'UPDATE_TUTOR':
+      const data1 = action.payload
+      const tutorInfo1 = {
+        first_name: data1.user.first_name,
+        last_name: data1.user.last_name,
+        gender: data1.user.gender,
+        birthday: data1.user.birthday,
+        email: data1.user.email,
+        interest: data1.interest,
+        methodology: data1.methodology,
+        skills: data1.skills
+      }
       return {
         ...state,
-        userInfo: action.payload,
+        userInfo: tutorInfo1,
+        user: {
+          first_name: tutorInfo1.first_name,
+          last_name: tutorInfo1.last_name
+        },
         isAuthenticated: true
       }
     case 'FINISHED_LOADING':
