@@ -1,5 +1,6 @@
 import {
   ADD_TUTOR,
+  ADD_STUDENT,
   UPDATE_TUTOR,
   GET_TUTOR,
   USER_LOADING,
@@ -37,6 +38,13 @@ const auth = (state = initialState, action) => {
       }
     }
     case ADD_TUTOR:
+      localStorage.setItem('token', action.payload.token)
+      return {
+        ...state,
+        user: action.payload,
+        isAuthenticated: true
+      }
+    case ADD_STUDENT:
       localStorage.setItem('token', action.payload.token)
       return {
         ...state,

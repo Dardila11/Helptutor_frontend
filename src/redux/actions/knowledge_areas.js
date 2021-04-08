@@ -1,5 +1,5 @@
 import Api from '../../services/Api'
-import { createMessage, returnErrors } from './messages'
+import { launchAlert } from './alerts'
 
 import {
   LIST_KNOWLEDGEAREAS,
@@ -24,12 +24,7 @@ export const getKnowledgeAreas = () => (dispatch) => {
       })
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: err.response.status
-        })
-      )
+      dispatch(launchAlert('Error obteniedo areas de conocimiento', err.response.status))
     })
 }
 
@@ -45,12 +40,7 @@ export const getSpecialities = (pk_knowledge_area) => (dispatch) => {
       })
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: err.response.status
-        })
-      )
+      dispatch(launchAlert('Error obteniedo especialidade', err.response.status))
     })
 }
 
@@ -67,14 +57,11 @@ export const addSpecialityTutor = (data) => (dispatch, getState) => {
         type: ADD_SPECIALITY_TUTOR,
         payload: res.data
       })
-      dispatch(createMessage({ setMessage: 'Especialidad registrada' }))
+      dispatch(launchAlert('Especialidad registrada', 200))
     })
     .catch((err) => {
       dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: err.response.status
-        })
+        launchAlert(err.response.data.knowledge_area[0], err.response.status)
       )
     })
 }
@@ -89,15 +76,10 @@ export const updateSpecialityTutor = (data, pk) => (dispatch) => {
         type: UPDATE_SPECIALITY_TUTOR,
         payload: res.data
       })
-      dispatch(createMessage({ setMessage: 'Especialidad actualizada' }))
+      dispatch(launchAlert('Especialidad Actualizada', 200))
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: err.response.status
-        })
-      )
+      dispatch(launchAlert('Error actualizando especialidad', err.response.status))
     })
 }
 
@@ -111,15 +93,10 @@ export const deleteSpecialityTutor = (pk_knowledge_area) => (dispatch) => {
         type: DELETE_SPECIALITY_TUTOR,
         payload: { pk: pk_knowledge_area }
       })
-      dispatch(createMessage({ setMessage: 'Especialidad eliminada' }))
+      dispatch(launchAlert('Especialidad eliminada', 200))
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: err.response.status
-        })
-      )
+      dispatch(launchAlert('Error eliminando especialidad', err.response.status))
     })
 }
 
@@ -135,12 +112,7 @@ export const getSpecialitiesTutor = (pk_tutor) => (dispatch) => {
       })
     })
     .catch((err) => {
-      dispatch(
-        returnErrors({
-          non_field_errors: [err.response.data.detail],
-          status: err.response.status
-        })
-      )
+      dispatch(launchAlert('Error obteniendo especialidades', err.response.status))
     })
 }
 

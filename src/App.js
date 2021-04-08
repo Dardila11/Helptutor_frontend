@@ -6,9 +6,7 @@ import theme from './theme'
 import Routing from './routing/composeRouter'
 
 //ALERTS
-import { Provider as AlertProvider } from 'react-alert'
-import AlertTemplate from 'react-alert-template-basic'
-import Alerts from './layouts/Alert/Alerts';
+import AlertComponent from './components/Alert'
 
 import ProgressAction from './layouts/Progress/ProgressAction'
 
@@ -18,26 +16,19 @@ import store from './redux/store'
 
 import { loadUser } from './redux/actions/auth'
 
-const alertOptions = {
-  timeout: 3000,
-  position: 'top center'
-}
-
 const App = () => {
   useEffect(() => {
-    store.dispatch(loadUser());
+    if(store.getState('auth').auth.isAuthenticated)store.dispatch(loadUser());    
   });
 
   return (
     <Provider store={store}>
-      <AlertProvider template={AlertTemplate} {...alertOptions}>
         <ThemeProvider theme={theme}>
           <GlobalStyles />
           <ProgressAction />
-          <Alerts />
+          <AlertComponent />
           <Routing />
         </ThemeProvider>
-      </AlertProvider>
     </Provider>
   )
 }
