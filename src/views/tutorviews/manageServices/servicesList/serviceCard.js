@@ -1,5 +1,16 @@
 import React, { useState } from 'react'
-import { Button,Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
+import {
+  Button,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  makeStyles,
+  Typography
+} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 //REDUX

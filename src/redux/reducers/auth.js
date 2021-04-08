@@ -1,6 +1,7 @@
 import {
   ADD_TUTOR,
   ADD_STUDENT,
+  ADD_TUTOR_GOOGLE,
   UPDATE_TUTOR,
   GET_TUTOR,
   USER_LOADING,
@@ -10,6 +11,7 @@ import {
   AUTH_ERROR,
   LOGOUT_SUCCESS,
   ACTION_RUNNING,
+  FINISHED_LOADING,
   ACTION_END
 } from '../actions/types_auth'
 
@@ -39,7 +41,7 @@ const initialState = {
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_TUTOR_GOOGLE': {
+    case ADD_TUTOR_GOOGLE: {
       localStorage.setItem('token', action.payload.token)
       return {
         ...state,
@@ -55,7 +57,7 @@ const auth = (state = initialState, action) => {
         user: action.payload,
         isAuthenticated: true
       }
-    case 'GET_TUTOR':
+    case GET_TUTOR:
       const data = action.payload
       const tutorInfo = {
         first_name: data.user.first_name,
@@ -83,7 +85,7 @@ const auth = (state = initialState, action) => {
         user: action.payload,
         isAuthenticated: true
       }
-    case 'UPDATE_TUTOR':
+    case UPDATE_TUTOR:
       const data1 = action.payload
       const tutorInfo1 = {
         first_name: data1.user.first_name,
@@ -104,7 +106,7 @@ const auth = (state = initialState, action) => {
         },
         isAuthenticated: true
       }
-    case 'FINISHED_LOADING':
+    case FINISHED_LOADING:
       return {
         ...state,
         requestInProgress: false

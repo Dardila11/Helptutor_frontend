@@ -8,8 +8,7 @@ import {
   FormControl,
   Select,
   MenuItem,
-  InputLabel,
-  CircularProgress
+  InputLabel
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { Formik } from 'formik'
@@ -44,24 +43,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-/* const initialValuesTutor = {
-  first_name: '',
-  last_name: '',
-  interest: '',
-  methodology: '',
-  skills: '',
-  gender: 0,
-  birthday: '',
-  email: ''
-} */
-
 const EditInfoView = (props) => {
   const { updateTutor, getTutorInfo, userInfo } = props
   const [initialInfo, setInitialInfo] = useState(formikValues.initialValues)
 
-  useEffect(() => {
-    getTutorInfo(props.user.id)
-  }, [])
+  useEffect(
+    () => {
+      getTutorInfo(props.user.id)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
 
   useEffect(() => {
     setInitialInfo(userInfo)

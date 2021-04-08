@@ -1,5 +1,5 @@
 //REACT
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 //REDUX
@@ -18,7 +18,6 @@ import {
 
 //COMPONENTS
 import Page from '../../../components/Page'
-import SignInGoogle from '../../../components/SignGoogle'
 
 import { Formik } from 'formik'
 
@@ -50,10 +49,13 @@ const LoginView = (props) => {
   const classes = useStyles()
   let navigate = useNavigate()
 
-  useEffect(() => {
-    if (props.isAuthenticated) navigate('/tutor')
-    else navigate('/login')
-  }, [props.isAuthenticated])
+  useEffect(
+    () => {
+      if (props.isAuthenticated) navigate('/tutor')
+      else navigate('/login')
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [props.isAuthenticated]
+  )
 
   return (
     <Page className={classes.root} title="Login">

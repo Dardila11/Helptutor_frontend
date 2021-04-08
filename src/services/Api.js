@@ -20,6 +20,10 @@ const getUniversity = () => {
 
 /* Tutor services */
 
+const getUser = (state) => {
+  return https.get('api/auth/user', tokenConfig(state))
+}
+
 const postTutor = (data) => {
   return https.post('/api/tutor/', data)
 }
@@ -131,6 +135,7 @@ const logConstants = {
   getState,
   getCity,
   getUniversity,
+  getUser,
   postTutor,
   postGoogleTutor,
   postKnowledgeAreaTutor,

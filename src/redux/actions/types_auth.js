@@ -28,3 +28,4 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 //Other
 export const ACTION_RUNNING = 'ACTION_RUNNING'
 export const ACTION_END = 'ACTION_END'
+export const FINISHED_LOADING = 'FINISHED_LOADING'

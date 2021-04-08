@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ServicesListView = (props) => {
 
-  const {services_tutor, getServicesTutor, user} = props
+  const { services_tutor, getServicesTutor } = props
   const [loading, setLoading] = useState(false)
   const classes = useStyles()
   let info = false
@@ -48,10 +48,14 @@ const ServicesListView = (props) => {
     props.setIsCreate(true)
   }
 
-  useEffect(() => {
+  useEffect(
+    () => {
       getServicesTutor()
       setLoading(true)
-  },[])
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
   
   return (
     <>

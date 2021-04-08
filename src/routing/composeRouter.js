@@ -6,7 +6,7 @@ import PrivateRoute from './privateRoute'
 
 import { MainLayout } from '../layouts/MainLayout'
 import { TutorAccountLayout } from '../layouts/TutorAccountLayout'
-import { TutorLayout } from '../layouts/TutorLayout'
+//import { TutorLayout } from '../layouts/TutorLayout'
 import RegisterView from '../views/auth/Register/RegisterView'
 import LoginView from '../views/auth/Login'
 import NotFoundView from '../views/errors/NotFoundView'

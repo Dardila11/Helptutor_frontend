@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
-  LinearProgress,
-  CircularProgress,
   Grid,
   makeStyles
 } from '@material-ui/core'
 import Page from '../../../components/Page'
 import ServicesInfoView from './servicesInfo'
 import ServicesListView from './servicesList'
-import Api from '../../../services/Api'
 
 import { connect } from 'react-redux';
 

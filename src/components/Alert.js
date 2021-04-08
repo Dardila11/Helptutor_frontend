@@ -15,7 +15,7 @@ const AlertComponent = (props) => {
   const [state, setState] = useState(initialValues);
 
     useEffect(() => {
-      if(alert.msg!=''){
+      if (alert.msg !== '') {
         setState(alert)
         setOpen(true)
       }

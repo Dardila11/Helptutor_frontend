@@ -1,11 +1,12 @@
 import Api from '../../services/Api'
-
 import { launchAlert } from './alerts'
-import axios from 'axios'
 
 import {
   ADD_TUTOR,
   ADD_STUDENT,
+  ADD_TUTOR_GOOGLE,
+  GET_TUTOR,
+  UPDATE_TUTOR,
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
@@ -13,6 +14,7 @@ import {
   USER_LOADING,
   LOGOUT_SUCCESS,
   ACTION_RUNNING,
+  FINISHED_LOADING,
   ACTION_END
 } from './types_auth'
 
@@ -21,10 +23,9 @@ export const updateTutor = (data) => (dispatch, getState) => {
   request
     .then((res) => {
       //console.log(res.data)
-      if(res.status == 200) {
-
+      if (res.status === 200) {
         dispatch({
-          type: 'UPDATE_TUTOR',
+          type: UPDATE_TUTOR,
           payload: res.data
         })
         //console.log('UPDATE TUTOR RESPONSE')
@@ -33,7 +34,7 @@ export const updateTutor = (data) => (dispatch, getState) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err)
       dispatch(launchAlert('Error actualizando información', 400))
     })
 }
@@ -44,11 +45,11 @@ export const getTutorInfo = (id) => (dispatch, getState) => {
       console.log('GET TUTOR INFO')
       console.log(res)
       dispatch({
-        type: 'GET_TUTOR',
+        type: GET_TUTOR,
         payload: res.data
       })
       dispatch({
-        type: 'FINISHED_LOADING'
+        type: FINISHED_LOADING
       })
     })
     .catch((err) => {
@@ -56,7 +57,6 @@ export const getTutorInfo = (id) => (dispatch, getState) => {
     })
 }
 export const addTutor = (data) => (dispatch) => {
-
   const request = Api.postTutor(data)
   request
     .then((res) => {
@@ -96,14 +96,18 @@ export const addUserGoogle = (data) => (dispatch) => {
     .then((res) => {
       console.log(res.data)
       dispatch({
-        type: 'ADD_TUTOR_GOOGLE',
+        type: ADD_TUTOR_GOOGLE,
         payload: res.data
       })
       dispatch(launchAlert('Tutor registrado con google', 200))
     })
     .catch((err) => {
-      if(err.response.status == 400) dispatch(launchAlert('El tutor ya existe', err.response.status))
-      else dispatch(launchAlert('Error registrando tutor con google', err.response.status))
+      if (err.response.status === 400)
+        dispatch(launchAlert('El tutor ya existe', err.response.status))
+      else
+        dispatch(
+          launchAlert('Error registrando tutor con google', err.response.status)
+        )
     })
 }
 
@@ -112,19 +116,22 @@ export const addUserGoogle = (data) => (dispatch) => {
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING })
 
-  axios
-    .get(
-      'https://mdquilindo.pythonanywhere.com/api/auth/user',
-      tokenConfig(getState)
-    )
+  Api.getUser(getState)
     .then((res) => {
+      console.log('LoadUser')
+      console.log(res)
       dispatch({
         type: USER_LOADED,
         payload: res.data
       })
     })
     .catch((err) => {
-      dispatch(launchAlert('Error obteniedo información del usuario', err.response.status))
+      dispatch(
+        launchAlert(
+          'Error obteniedo información del usuario',
+          err.response.status
+        )
+      )
       dispatch({
         type: AUTH_ERROR
       })
@@ -162,7 +169,9 @@ export const loginGoogle = (data) => (dispatch) => {
       dispatch({ type: ACTION_END })
     })
     .catch((err) => {
-      dispatch(launchAlert('Error iniciando sesión con google', err.response.status))
+      dispatch(
+        launchAlert('Error iniciando sesión con google', err.response.status)
+      )
       dispatch({
         type: LOGIN_FAIL
       })
@@ -189,20 +198,3 @@ export const logout = () => (dispatch, getState) => {
       })
     })
 }
-
-export const tokenConfig = (getState) => {
-  const token = getState().auth.token
-
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-
-  if (token) {
-    config.headers['Authorization'] = 'Token ' + token
-  }
-
-  return config
-}
-

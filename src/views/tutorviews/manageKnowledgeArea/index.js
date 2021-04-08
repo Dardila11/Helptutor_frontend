@@ -25,15 +25,19 @@ const ManageKnowledgeAreaView = (props) => {
   const [knowledgeAreas, setKnowledgeAreas] = useState([])
   const [loading, setloading] = useState(false)
   const classes = useStyles()
-  useEffect(() => {
-    const fetchData = async () => {
-      await Api.getTutorKnowledgeAreas(props.user.id).then((res) => {
-        setKnowledgeAreas(res.data)
-        setloading(true)
-      })
-    }
-    fetchData()
-  }, [])
+  useEffect(
+    () => {
+      const fetchData = async () => {
+        await Api.getTutorKnowledgeAreas(props.user.id).then((res) => {
+          setKnowledgeAreas(res.data)
+          setloading(true)
+        })
+      }
+      fetchData()
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
   return (
     <>
       <Page className={classes.root} title="Gestionar areas de conocimiento">

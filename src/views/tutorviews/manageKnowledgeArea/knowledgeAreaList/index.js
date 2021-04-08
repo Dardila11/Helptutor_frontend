@@ -60,9 +60,13 @@ const KnowledgeAreaListView = (props) => {
     props.setIsCreate(true)
   }
 
-  useEffect(() => {
-    getSpecialitiesTutor(props.user.id)
-  }, [])
+  useEffect(
+    () => {
+      getSpecialitiesTutor(props.user.id)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
   return (
     <>
       <Grid item xs={3}>

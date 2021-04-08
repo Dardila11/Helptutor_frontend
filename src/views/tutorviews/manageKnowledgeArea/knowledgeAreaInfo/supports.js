@@ -2,7 +2,19 @@
 import React, { useState } from 'react'
 
 //COMPONENTS MATERIAL UI
-import { Box, Button, Container, Dialog, DialogContent, DialogContentText, DialogTitle, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core'
+import {
+  Box,
+  Button,
+  Container,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  makeStyles,
+  Paper,
+  TextField,
+  Typography
+} from '@material-ui/core'
 import UploadPDF from '../../../../components/uploadFile'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
@@ -63,12 +75,12 @@ const SupportsView = (props) => {
   const [archivo, setArchivo] = useState(null);
   const uploadFile = e => {
     setArchivo(e);
-    if (e.length > 0) { 
-      var name = e[0].name;
-      var nameSplit = name.split(".");
-      var ext = nameSplit[nameSplit.length - 1];
-      
+    if (e.length > 0) {
+      var name = e[0].name
+      var nameSplit = name.split('.')
+      var ext = nameSplit[nameSplit.length - 1]
       setArchivo(e[0])
+      console.log(ext)
     }
     else { document.getElementById("text-file").textContent = ""; }
   }

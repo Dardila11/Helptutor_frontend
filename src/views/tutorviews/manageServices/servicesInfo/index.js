@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react'
 
 import { connect } from 'react-redux'
 
-import Api from '../../../../services/Api'
-
 //COMPONENTS MATERIAL UI
 import {
   Box,
@@ -71,9 +69,13 @@ const ServicesInfoView = (props) => {
 
   const [initialValues, setInitialValues] = useState(initialValuesObj)
   
-  useEffect(() => {
-    props.getSpecialitiesTutor(props.user.id)
-  },[])
+  useEffect(
+    () => {
+      props.getSpecialitiesTutor(props.user.id)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
 
   useEffect(() => {
     setInitialValues(props.service_tutor)

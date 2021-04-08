@@ -78,9 +78,13 @@ const KnowledgeAreaInfoView = (props) => {
 
   const [initialValues, setInitialValues] = useState(initialValuesObj)
 
-  useEffect(() => {
-    props.getKnowledgeAreas()
-  }, [])
+  useEffect(
+    () => {
+      props.getKnowledgeAreas()
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
 
   const handleSelect = (e) => {
     props.getSpecialities(e.target.value)
@@ -117,13 +121,12 @@ const KnowledgeAreaInfoView = (props) => {
                       user: props.user.id
                     })
                     if (props.is_create) props.addSpecialityTutor(jsonValues)
-                    else{
+                    else {
                       props.updateSpecialityTutor(
                         jsonValues,
                         props.speciality_tutor.id
                       )
                     }
-                      
                   }}>
                   {({
                     errors,
@@ -237,7 +240,7 @@ const KnowledgeAreaInfoView = (props) => {
                         value={values.description}
                         variant="outlined"
                       />
-                      <SupportsView is_create={props.is_create}></SupportsView>
+                      <SupportsView is_create={props.is_create} />
                       <Box my={2} align="center">
                         <Button
                           id="btn_registerArea"
