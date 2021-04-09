@@ -9,7 +9,6 @@ export const launchAlert = (msg, sts) => {
 }
 
 const getStatus = (status) => {
-    console.log(status) 
     let res = ''
     switch(status){
         case 400:

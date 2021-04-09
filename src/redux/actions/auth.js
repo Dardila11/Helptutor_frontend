@@ -5,8 +5,6 @@ import {
   ADD_TUTOR,
   ADD_STUDENT,
   ADD_TUTOR_GOOGLE,
-  GET_TUTOR,
-  UPDATE_TUTOR,
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
@@ -14,48 +12,10 @@ import {
   USER_LOADING,
   LOGOUT_SUCCESS,
   ACTION_RUNNING,
-  FINISHED_LOADING,
   ACTION_END
 } from './types_auth'
 
-export const updateTutor = (data) => (dispatch, getState) => {
-  const request = Api.updateTutorInfo(data, getState)
-  request
-    .then((res) => {
-      //console.log(res.data)
-      if (res.status === 200) {
-        dispatch({
-          type: UPDATE_TUTOR,
-          payload: res.data
-        })
-        //console.log('UPDATE TUTOR RESPONSE')
-        //console.log(res.data)
-        dispatch(launchAlert('Información del tutor actualizada', res.status))
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-      dispatch(launchAlert('Error actualizando información', 400))
-    })
-}
 
-export const getTutorInfo = (id) => (dispatch, getState) => {
-  Api.getTutorInfo(id, getState)
-    .then((res) => {
-      console.log('GET TUTOR INFO')
-      console.log(res)
-      dispatch({
-        type: GET_TUTOR,
-        payload: res.data
-      })
-      dispatch({
-        type: FINISHED_LOADING
-      })
-    })
-    .catch((err) => {
-      dispatch(launchAlert('Error registrando tutor', err.response.status))
-    })
-}
 export const addTutor = (data) => (dispatch) => {
   const request = Api.postTutor(data)
   request
@@ -94,7 +54,6 @@ export const addUserGoogle = (data) => (dispatch) => {
   const request = Api.postGoogleTutor(data)
   request
     .then((res) => {
-      console.log(res.data)
       dispatch({
         type: ADD_TUTOR_GOOGLE,
         payload: res.data
@@ -118,8 +77,6 @@ export const loadUser = () => (dispatch, getState) => {
 
   Api.getUser(getState)
     .then((res) => {
-      console.log('LoadUser')
-      console.log(res)
       dispatch({
         type: USER_LOADED,
         payload: res.data

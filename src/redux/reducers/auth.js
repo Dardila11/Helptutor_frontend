@@ -2,8 +2,6 @@ import {
   ADD_TUTOR,
   ADD_STUDENT,
   ADD_TUTOR_GOOGLE,
-  UPDATE_TUTOR,
-  GET_TUTOR,
   USER_LOADING,
   USER_LOADED,
   LOGIN_SUCCESS,
@@ -12,26 +10,15 @@ import {
   LOGOUT_SUCCESS,
   ACTION_RUNNING,
   FINISHED_LOADING,
-  ACTION_END
+  ACTION_END,
+  UPDATE_INFORMATION
 } from '../actions/types_auth'
-
-const userInfoData = {
-  first_name: '',
-  last_name: '',
-  interest: '',
-  methodology: '',
-  skills: '',
-  sex: '',
-  birthday: '',
-  email: ''
-}
 
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: false,
   isLoading: false,
   isRunning: false,
-  userInfo: userInfoData,
   user: {
     id: -1,
     first_name: '',
@@ -57,27 +44,6 @@ const auth = (state = initialState, action) => {
         user: action.payload,
         isAuthenticated: true
       }
-    case GET_TUTOR:
-      const data = action.payload
-      const tutorInfo = {
-        first_name: data.user.first_name,
-        last_name: data.user.last_name,
-        gender: data.user.gender,
-        birthday: data.user.birthday,
-        email: data.user.email,
-        interest: data.interest,
-        methodology: data.methodology,
-        skills: data.skills
-      }
-      return {
-        ...state,
-        userInfo: tutorInfo,
-        user: {
-          first_name: tutorInfo.first_name,
-          last_name: tutorInfo.last_name
-        },
-        isAuthenticated: true
-      }
     case ADD_STUDENT:
       localStorage.setItem('token', action.payload.token)
       return {
@@ -85,26 +51,10 @@ const auth = (state = initialState, action) => {
         user: action.payload,
         isAuthenticated: true
       }
-    case UPDATE_TUTOR:
-      const data1 = action.payload
-      const tutorInfo1 = {
-        first_name: data1.user.first_name,
-        last_name: data1.user.last_name,
-        gender: data1.user.gender,
-        birthday: data1.user.birthday,
-        email: data1.user.email,
-        interest: data1.interest,
-        methodology: data1.methodology,
-        skills: data1.skills
-      }
+    case UPDATE_INFORMATION: 
       return {
         ...state,
-        userInfo: tutorInfo1,
-        user: {
-          first_name: tutorInfo1.first_name,
-          last_name: tutorInfo1.last_name
-        },
-        isAuthenticated: true
+        user: action.payload
       }
     case FINISHED_LOADING:
       return {
@@ -140,8 +90,7 @@ const auth = (state = initialState, action) => {
         token: null,
         user: null,
         isAuthenticated: false,
-        isLoading: false,
-        userInfo: null
+        isLoading: false
       }
     case ACTION_RUNNING:
       return {

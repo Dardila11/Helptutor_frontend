@@ -71,7 +71,6 @@ const LoginView = (props) => {
             //ON_SUBMIT ENVIO DEL FORMULARIO
             onSubmit={(values) => {
               let jsonValues = Validation.getValues(values)
-              console.log(jsonValues)
               props.login(jsonValues)
             }}>
             {({

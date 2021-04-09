@@ -1,9 +1,6 @@
 /*Register TUTOR*/
 
 export const ADD_TUTOR = 'ADD_TUTOR'
-export const UPDATE_TUTOR = 'UPDATE_TUTOR'
-export const DELETE_TUTOR = 'DELETE_TUTOR'
-export const GET_TUTOR = 'GET_TUTOR'
 export const LIST_TUTOR = 'LIST_TUTOR'
 export const ADD_TUTOR_GOOGLE = 'ADD_TUTOR_GOOGLE'
 
@@ -26,6 +23,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL'
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 
 //Other
+export const UPDATE_INFORMATION = 'UPDATE_INFORMATION'
 export const ACTION_RUNNING = 'ACTION_RUNNING'
 export const ACTION_END = 'ACTION_END'
 export const FINISHED_LOADING = 'FINISHED_LOADING'

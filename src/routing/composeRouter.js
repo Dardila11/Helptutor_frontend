@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom'
 import PrivateRoute from './privateRoute'
 
 import { MainLayout } from '../layouts/MainLayout'
-import { TutorAccountLayout } from '../layouts/TutorAccountLayout'
+import TutorAccountLayout from '../layouts/TutorAccountLayout'
 //import { TutorLayout } from '../layouts/TutorLayout'
 import RegisterView from '../views/auth/Register/RegisterView'
 import LoginView from '../views/auth/Login'

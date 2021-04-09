@@ -80,7 +80,6 @@ const SupportsView = (props) => {
       var nameSplit = name.split('.')
       var ext = nameSplit[nameSplit.length - 1]
       setArchivo(e[0])
-      console.log(ext)
     }
     else { document.getElementById("text-file").textContent = ""; }
   }
@@ -172,7 +171,6 @@ const SupportsView = (props) => {
                                 <Typography>
                                   Certificado: 
                                 </Typography>
-                                {console.log(archivo)}
                                 <UploadPDF uploadFile={uploadFile} file={archivo}/>
                                 {/*<input
                                   className={classes.input}
