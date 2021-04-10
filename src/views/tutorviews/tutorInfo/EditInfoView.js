@@ -16,7 +16,8 @@ import formikValues from './formikValues'
 
 //REDUX
 //import { getTutorInfo, updateTutor } from '../../../redux/actions/tutor_data'
-import { getTutorInfo, updateTutor } from '../../../redux/actions/auth'
+//import { getTutorInfo, updateTutor } from '../../../redux/actions/auth'
+import { getTutorInfo, updateTutor } from 'src/redux/actions/auth'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
