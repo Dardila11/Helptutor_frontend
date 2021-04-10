@@ -18,7 +18,7 @@ import { loadUser } from './redux/actions/auth'
 
 const App = () => {
   useEffect(() => {
-    if(store.getState('auth').auth.isAuthenticated)store.dispatch(loadUser());    
+    if(store.getState('auth').auth.token!=null)store.dispatch(loadUser()); 
   });
 
   return (

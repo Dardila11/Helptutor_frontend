@@ -32,11 +32,6 @@ import Validation from './formikValues'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.dark,
-    paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3)
-  },
   selectControl: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(1)

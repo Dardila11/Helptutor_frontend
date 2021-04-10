@@ -109,7 +109,6 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
               } else if (studentSelect) {
                 // student registration api
                 addStudent(jsonValues)
-                console.log("registrando estudiante")
               } else {
                 store.dispatch(
                   launchAlert('Debes seleccionar un rol', 1)

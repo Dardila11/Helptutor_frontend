@@ -1,3 +1,5 @@
+import {GET_TUTOR, UPDATE_TUTOR} from './types_tutor'
+import {UPDATE_INFORMATION} from './types_auth'
 import Api from '../../services/Api'
 import { launchAlert } from './alerts'
 
@@ -6,8 +8,12 @@ export const updateTutor = (data) => (dispatch, getState) => {
   request
     .then((res) => {
       dispatch({
-        type: 'UPDATE_TUTOR',
+        type: UPDATE_TUTOR,
         payload: res.data
+      })
+      dispatch({
+        type: UPDATE_INFORMATION,
+        payload: res.data.user
       })
       dispatch(launchAlert('Información actualizada', 200))
     })
@@ -20,7 +26,7 @@ export const getTutorInfo = (id) => (dispatch, getState) => {
   Api.getTutorInfo(id, getState)
     .then((res) => {
       dispatch({
-        type: 'GET_TUTOR',
+        type: GET_TUTOR,
         payload: res.data
       })
       dispatch({

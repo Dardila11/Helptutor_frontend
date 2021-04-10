@@ -21,46 +21,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ManageKnowledgeAreaView = (props) => {
-  const [knowledgeAreas, setKnowledgeAreas] = useState([])
-  const [loading, setloading] = useState(false)
+const ManageKnowledgeAreaView = () => {
   const classes = useStyles()
-  useEffect(
-    () => {
-      const fetchData = async () => {
-        await Api.getTutorKnowledgeAreas(props.user.id).then((res) => {
-          setKnowledgeAreas(res.data)
-          setloading(true)
-        })
-      }
-      fetchData()
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
+
   return (
     <>
       <Page className={classes.root} title="Gestionar areas de conocimiento">
         <Grid container spacing={2}>
-          {loading ? (
-            <>
-              <KnowledgeAreaListView areas={knowledgeAreas} />
+              <KnowledgeAreaListView />
               <KnowledgeAreaInfoView />
-            </>
-          ) : (
-            <>
-              <CircularProgress className={classes.progress} />
-              <LinearProgress className={classes.progress} />
-            </>
-          )}
         </Grid>
       </Page>
     </>
   )
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user
-})
-
-export default connect(mapStateToProps, {})(ManageKnowledgeAreaView)
+export default ManageKnowledgeAreaView

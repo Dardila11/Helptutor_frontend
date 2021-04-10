@@ -78,8 +78,6 @@ const LoginHooks = (props) => {
   }, [isAuthenticated])
 
   const onSuccess = (res) => {
-    console.log(res)
-    console.log(`login success: currentUser ${res}`)
     /*
      * check whether user email matches @unicauca.edu.co
      */
@@ -88,12 +86,10 @@ const LoginHooks = (props) => {
       responseGoogle(props, res, true)
     } else {
       responseGoogle(props, res, false)
-      console.log('No es de unicauca')
     }
   }
 
   const onFailure = (res) => {
-    console.log(`login failure: res ${res}`)
     responseGoogle(props, res)
   }
 

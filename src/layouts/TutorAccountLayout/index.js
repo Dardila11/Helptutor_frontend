@@ -8,22 +8,20 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
     height: '100%',
-    overflow: 'auto',
-    width: '100%'
+    overflow: 'auto'
   },
   contentContainer: {
     display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden'
+    overflow: 'hidden'    
   },
   content: {
     flex: '1 1 auto',
-    height: '100%',
-    overflow: 'scroll'
+    overflow: 'hidden',
+    marginRight: theme.spacing(3)
   }
 }))
 
-export const TutorAccountLayout = () => {
+const TutorAccountLayout = () => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
@@ -37,3 +35,5 @@ export const TutorAccountLayout = () => {
     </div>
   )
 }
+
+export default TutorAccountLayout
