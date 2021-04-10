@@ -1,33 +1,32 @@
-import Api from '../../services/Api'
+import Api from 'src/services/Api'
 import { launchAlert } from './alerts'
 
 import {
-    LIST_SERVICES_TUTOR,
-    ADD_SERVICE_TUTOR,
-    UPDATE_SERVICE_TUTOR,
-    DELETE_SERVICE_TUTOR,
-    LIST_SPECIALITIES_TUTOR,
-    SET_SERVICE_TUTOR,
-    SET_IS_CREATE
+  LIST_SERVICES_TUTOR,
+  ADD_SERVICE_TUTOR,
+  UPDATE_SERVICE_TUTOR,
+  DELETE_SERVICE_TUTOR,
+  LIST_SPECIALITIES_TUTOR,
+  SET_SERVICE_TUTOR,
+  SET_IS_CREATE
 } from './types_services'
 
 export const getServicesTutor = (pk_tutor) => (dispatch, getState) => {
-
-    let values = {
-      dispatchP: dispatch,
-      state: getState
-    }
-    const request = Api.getServicesTutor(values)
-    request
-      .then((res) => {
-            dispatch({
-                type: LIST_SERVICES_TUTOR,
-                payload: res.data
-            })
-        })
-        .catch((err) => {
-          dispatch(launchAlert('Error obteniedo servicios', err.response.status))
-          })
+  let values = {
+    dispatchP: dispatch,
+    state: getState
+  }
+  const request = Api.getServicesTutor(values)
+  request
+    .then((res) => {
+      dispatch({
+        type: LIST_SERVICES_TUTOR,
+        payload: res.data
+      })
+    })
+    .catch((err) => {
+      dispatch(launchAlert('Error obteniedo servicios', err.response.status))
+    })
 }
 
 export const addServiceTutor = (data) => (dispatch, getState) => {
@@ -36,7 +35,7 @@ export const addServiceTutor = (data) => (dispatch, getState) => {
     dispatchP: dispatch,
     state: getState
   }
-  const request = Api.postServiceTutor(data,values)
+  const request = Api.postServiceTutor(data, values)
   request
     .then((res) => {
       dispatch({
@@ -85,7 +84,6 @@ export const deleteServiceTutor = (pk_service) => (dispatch) => {
 }
 
 export const getSpecialitiesTutor = (pk_tutor) => (dispatch) => {
-
   const request = Api.getTutorKnowledgeAreas(pk_tutor)
   request
     .then((res) => {
@@ -95,7 +93,9 @@ export const getSpecialitiesTutor = (pk_tutor) => (dispatch) => {
       })
     })
     .catch((err) => {
-      dispatch(launchAlert('Error obteniendo especialidades', err.response.status))
+      dispatch(
+        launchAlert('Error obteniendo especialidades', err.response.status)
+      )
     })
 }
 

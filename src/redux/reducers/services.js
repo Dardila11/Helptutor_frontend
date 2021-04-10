@@ -1,12 +1,12 @@
 import {
-    LIST_SERVICES_TUTOR,
-    ADD_SERVICE_TUTOR,
-    UPDATE_SERVICE_TUTOR,
-    DELETE_SERVICE_TUTOR,
-    LIST_SPECIALITIES_TUTOR,
-    SET_SERVICE_TUTOR,
-    SET_IS_CREATE
-} from '../actions/types_services'
+  LIST_SERVICES_TUTOR,
+  ADD_SERVICE_TUTOR,
+  UPDATE_SERVICE_TUTOR,
+  DELETE_SERVICE_TUTOR,
+  LIST_SPECIALITIES_TUTOR,
+  SET_SERVICE_TUTOR,
+  SET_IS_CREATE
+} from 'src/redux/actions/types_services'
 
 const initialValuesService = {
     id: -1,

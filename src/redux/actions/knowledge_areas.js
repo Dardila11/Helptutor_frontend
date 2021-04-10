@@ -1,4 +1,4 @@
-import Api from '../../services/Api'
+import Api from 'src/services/Api'
 import { launchAlert } from './alerts'
 
 import {
@@ -24,7 +24,12 @@ export const getKnowledgeAreas = () => (dispatch) => {
       })
     })
     .catch((err) => {
-      dispatch(launchAlert('Error obteniedo areas de conocimiento', err.response.status))
+      dispatch(
+        launchAlert(
+          'Error obteniedo areas de conocimiento',
+          err.response.status
+        )
+      )
     })
 }
 
@@ -40,7 +45,9 @@ export const getSpecialities = (pk_knowledge_area) => (dispatch) => {
       })
     })
     .catch((err) => {
-      dispatch(launchAlert('Error obteniedo especialidade', err.response.status))
+      dispatch(
+        launchAlert('Error obteniedo especialidade', err.response.status)
+      )
     })
 }
 
@@ -79,7 +86,9 @@ export const updateSpecialityTutor = (data, pk) => (dispatch) => {
       dispatch(launchAlert('Especialidad Actualizada', 200))
     })
     .catch((err) => {
-      dispatch(launchAlert('Error actualizando especialidad', err.response.status))
+      dispatch(
+        launchAlert('Error actualizando especialidad', err.response.status)
+      )
     })
 }
 
@@ -96,7 +105,9 @@ export const deleteSpecialityTutor = (pk_knowledge_area) => (dispatch) => {
       dispatch(launchAlert('Especialidad eliminada', 200))
     })
     .catch((err) => {
-      dispatch(launchAlert('Error eliminando especialidad', err.response.status))
+      dispatch(
+        launchAlert('Error eliminando especialidad', err.response.status)
+      )
     })
 }
 
@@ -112,7 +123,9 @@ export const getSpecialitiesTutor = (pk_tutor) => (dispatch) => {
       })
     })
     .catch((err) => {
-      dispatch(launchAlert('Error obteniendo especialidades', err.response.status))
+      dispatch(
+        launchAlert('Error obteniendo especialidades', err.response.status)
+      )
     })
 }
 

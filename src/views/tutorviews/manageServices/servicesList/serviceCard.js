@@ -19,7 +19,7 @@ import {
   deleteServiceTutor,
   setServiceTutor,
   setIsCreate
-} from '../../../../redux/actions/services'
+} from 'src/redux/actions/services'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({

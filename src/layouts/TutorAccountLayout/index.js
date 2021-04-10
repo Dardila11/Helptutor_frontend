@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core'
 import { Outlet } from 'react-router-dom'
-import TutorTopBar from '../TutorLayout/TopBar'
+import TutorTopBar from 'src/layouts/TutorLayout/TopBar'
 import NavBar from './NavBar'
 
 const useStyles = makeStyles((theme) => ({

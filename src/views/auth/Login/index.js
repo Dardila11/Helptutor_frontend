@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 //REDUX
-import { login } from '../../../redux/actions/auth'
+import { login } from 'src/redux/actions/auth'
 import { connect } from 'react-redux'
 
 //COMPONENTS MATERIAL UI
@@ -17,13 +17,13 @@ import {
 } from '@material-ui/core'
 
 //COMPONENTS
-import Page from '../../../components/Page'
+import Page from 'src/components/Page'
+import SignGoogleHooks from 'src/components/SignGoogleHooks'
 
 import { Formik } from 'formik'
 
 //UTILS
 import Validation from './formikValues'
-import SignGoogleHooks from '../../../components/SignGoogleHooks'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({

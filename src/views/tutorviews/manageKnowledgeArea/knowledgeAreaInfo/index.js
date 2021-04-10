@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from 'react'
 
 //REDUX
+import { connect } from 'react-redux'
 import {
   getKnowledgeAreas,
   getSpecialities,
   addSpecialityTutor,
   updateSpecialityTutor
-} from '../../../../redux/actions/knowledge_areas'
-import { connect } from 'react-redux'
+} from 'src/redux/actions/knowledge_areas'
 
 //COMPONENTS MATERIAL UI
 import {

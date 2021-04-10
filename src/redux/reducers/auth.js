@@ -13,7 +13,7 @@ import {
   ACTION_RUNNING,
   FINISHED_LOADING,
   ACTION_END
-} from '../actions/types_auth'
+} from 'src/redux/actions/types_auth'
 
 const userInfoData = {
   first_name: '',

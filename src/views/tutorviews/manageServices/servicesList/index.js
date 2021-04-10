@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 
 //REDUX
-import { getServicesTutor,setIsCreate } from '../../../../redux/actions/services'
+import { getServicesTutor, setIsCreate } from 'src/redux/actions/services'
 import { connect } from 'react-redux'
 
 //COMPONENTS MATERAIL UI

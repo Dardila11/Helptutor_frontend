@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
-  LinearProgress,
-  CircularProgress,
+
+
   Grid,
   makeStyles
 } from '@material-ui/core'
-import Page from '../../../components/Page'
+import Page from 'src/components/Page'
 import KnowledgeAreaInfoView from './knowledgeAreaInfo'
 import KnowledgeAreaListView from './knowledgeAreaList'
-import Api from '../../../services/Api'
-
-import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -15,8 +15,8 @@ import {
   TextField,
   Typography
 } from '@material-ui/core'
-import UploadPDF from '../../../../components/uploadFile'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import UploadPDF from 'src/components/uploadFile'
 
 //FOMIK
 import Validation from './formikValuesSupport'
@@ -79,6 +79,7 @@ const SupportsView = (props) => {
       var name = e[0].name
       var nameSplit = name.split('.')
       var ext = nameSplit[nameSplit.length - 1]
+      console.log(ext)
       setArchivo(e[0])
     }
     else { document.getElementById("text-file").textContent = ""; }

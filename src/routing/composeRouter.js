@@ -4,16 +4,15 @@ import { Routes, Route } from 'react-router-dom'
 
 import PrivateRoute from './privateRoute'
 
-import { MainLayout } from '../layouts/MainLayout'
-import TutorAccountLayout from '../layouts/TutorAccountLayout'
-//import { TutorLayout } from '../layouts/TutorLayout'
-import RegisterView from '../views/auth/Register/RegisterView'
-import LoginView from '../views/auth/Login'
-import NotFoundView from '../views/errors/NotFoundView'
-import EditInfoView from '../views/tutorviews/tutorInfo/EditInfoView'
-import ManageKnowledgeAreaView from '../views/tutorviews/manageKnowledgeArea'
-import ManageServicesView from '../views/tutorviews/manageServices'
-import ProfileView from '../views/tutorviews/profile/ProfileView'
+import { MainLayout } from 'src/layouts/MainLayout'
+import TutorAccountLayout from 'src/layouts/TutorAccountLayout'
+import RegisterView from 'src/views/auth/Register/RegisterView'
+import LoginView from 'src/views/auth/Login'
+import NotFoundView from 'src/views/errors/NotFoundView'
+import EditInfoView from 'src/views/tutorviews/tutorInfo/EditInfoView'
+import ManageKnowledgeAreaView from 'src/views/tutorviews/manageKnowledgeArea'
+import ManageServicesView from 'src/views/tutorviews/manageServices'
+import ProfileView from 'src/views/tutorviews/profile/ProfileView'
 
 const Routing = () => {
   return (

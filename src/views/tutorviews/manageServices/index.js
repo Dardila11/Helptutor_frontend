@@ -3,7 +3,7 @@ import {
   Grid,
   makeStyles
 } from '@material-ui/core'
-import Page from '../../../components/Page'
+import Page from 'src/components/Page'
 import ServicesInfoView from './servicesInfo'
 import ServicesListView from './servicesList'
 

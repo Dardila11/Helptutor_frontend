@@ -16,10 +16,8 @@ import { Formik } from 'formik'
 import formikValues from './formikValues'
 
 //REDUX
-//import { getTutorInfo, updateTutor } from '../../../redux/actions/tutor_data'
-//import { getTutorInfo, updateTutor } from '../../../redux/actions/auth'
-//import { getTutorInfo, updateTutor } from 'src/redux/actions/auth'
-import { getTutorInfo, updateTutor } from '../../../redux/actions/tutor_data'
+import { getTutorInfo, updateTutor } from 'src/redux/actions/auth'
+
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
@@ -51,9 +49,13 @@ const EditInfoView = (props) => {
   const [initialInfo, setInitialInfo] = useState(formikValues.initialValues)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
+  useEffect(
+    () => {
       getTutorInfo(props.user.id)
-    },[])
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
   
   useEffect(() => {
     setLoading(requestInProgress)

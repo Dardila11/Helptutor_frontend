@@ -14,13 +14,13 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete'
 
 //REDUX
+import { connect } from 'react-redux'
 import {
   getSpecialities,
   deleteSpecialityTutor,
   setSpecialityTutor,
   setIsCreate
-} from '../../../../redux/actions/knowledge_areas'
-import { connect } from 'react-redux'
+} from 'src/redux/actions/knowledge_areas'
 
 const useStyles = makeStyles((theme) => ({
   root: {

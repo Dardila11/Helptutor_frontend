@@ -9,12 +9,12 @@ import {
 } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import TutorNavBar from '../NavBar'
-import logo from '../logo.svg'
+import TutorNavBar from 'src/layouts/TutorLayout/NavBar'
+import logo from 'src/layouts/TutorLayout/logo.svg'
 
 /* Redux */
 import { connect } from 'react-redux'
-import { logout } from '../../../redux/actions/auth'
+import { logout } from 'src/redux/actions/auth'
 
 const useStyles = makeStyles((theme) => ({
   grow: {

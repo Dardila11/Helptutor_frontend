@@ -25,7 +25,11 @@ import SaveIcon from '@material-ui/icons/Save'
 
 import { Formik } from 'formik'
 
-import {getSpecialitiesTutor, addServiceTutor, updateServiceTutor} from '../../../../redux/actions/services'
+import {
+  getSpecialitiesTutor,
+  addServiceTutor,
+  updateServiceTutor
+} from 'src/redux/actions/services'
 
 //UTILS
 import Validation from './formikValues'

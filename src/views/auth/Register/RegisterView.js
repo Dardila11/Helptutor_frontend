@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 //REDUX
-import { addTutor, addStudent } from '../../../redux/actions/auth'
 import { connect } from 'react-redux'
-import { launchAlert } from '../../../redux/actions/alerts'
-import store from '../../../redux/store'
+import store from 'src/redux/store'
+import { addTutor, addStudent } from 'src/redux/actions/auth'
+import { launchAlert } from 'src/redux/actions/alerts'
 
 //COMPONENTS MATERIAL UI
 import {
