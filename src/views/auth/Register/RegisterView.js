@@ -110,9 +110,7 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                 // student registration api
                 addStudent(jsonValues)
               } else {
-                store.dispatch(
-                  launchAlert('Debes seleccionar un rol', 1)
-                )
+                store.dispatch(launchAlert('Debes seleccionar un rol', 1))
               }
             }}>
             {({
@@ -124,7 +122,7 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
               touched,
               values
             }) => (
-              <form onSubmit={handleSubmit}>
+              <form data-testid="register-form"  onSubmit={handleSubmit}>
                 <Box mb={3} textAlign="center">
                   <Typography color="textPrimary" variant="h2">
                     INSCRIBETE
@@ -140,7 +138,6 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                 </Box>
                 <Box display="flex" justifyContent="space-between">
                   <TextField
-                    id="txt_name"
                     className={classes.text}
                     error={Boolean(touched.name && errors.name)}
                     helperText={touched.name && errors.name}
@@ -151,12 +148,14 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                     name="name"
                     value={values.name}
                     variant="outlined"
+                    inputProps={{
+                      'data-testid': "firstname"
+                    }}
                     InputProps={{
                       className: classes.input
                     }}
                   />
                   <TextField
-                    id="txt_lastname"
                     className={classes.text}
                     error={Boolean(touched.lastname && errors.lastname)}
                     helperText={touched.lastname && errors.lastname}
@@ -167,6 +166,9 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                     name="lastname"
                     value={values.lastname}
                     variant="outlined"
+                    inputProps={{
+                      'data-testid': "lastname"
+                    }}
                     InputProps={{
                       className: classes.input
                     }}
@@ -174,7 +176,6 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                 </Box>
                 <Box>
                   <TextField
-                    id="txt_email"
                     error={Boolean(touched.email && errors.email)}
                     fullWidth
                     helperText={touched.email && errors.email}
@@ -185,11 +186,13 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                     name="email"
                     value={values.email}
                     variant="outlined"
+                    inputProps={{
+                      'data-testid': "email"
+                    }}
                   />
                 </Box>
                 <Box>
                   <TextField
-                    id="text_password"
                     error={Boolean(touched.password && errors.password)}
                     fullWidth
                     helperText={touched.password && errors.password}
@@ -201,11 +204,13 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                     name="password"
                     value={values.password}
                     variant="outlined"
+                    inputProps={{
+                      'data-testid': "password"
+                    }}
                   />
                 </Box>
                 <Box>
                   <TextField
-                    id="txt_confirmPassword"
                     error={Boolean(
                       touched.confirmPassword && errors.confirmPassword
                     )}
@@ -221,14 +226,20 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                     name="confirmPassword"
                     value={values.confirmPassword}
                     variant="outlined"
+                    inputProps={{
+                      'data-testid': "confirmPassword"
+                    }}
                   />
                 </Box>
                 <Box alignItems="center" display="flex" ml={-1}>
                   <Checkbox
-                    id="checkboxPolicy"
+                    aria-checked={values.policy}
                     checked={values.policy}
                     name="policy"
                     onChange={handleChange}
+                    inputProps={{
+                      'data-testid': "checkboxPolicy"
+                    }}
                   />
                   <Typography color="textSecondary" variant="body1">
                     He leído los&nbsp;
@@ -245,12 +256,13 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                 )}
                 <Box my={1}>
                   <Button
-                    id="btn_registerUser"
                     color="primary"
+                    data-testid="btn-register"
                     fullWidth
                     size="medium"
                     type="submit"
-                    variant="contained">
+                    variant="contained"
+                    >
                     Registrarse
                   </Button>
                 </Box>

@@ -1,11 +1,11 @@
 import * as Yup from 'yup'
 
 const initialValues = {
-  name: 'Juan',
-  lastname: 'Fuentes',
-  email: 'juanfuentes@unicauca.edu.co',
-  password: 'oracle',
-  confirmPassword: 'oracle',
+  name: '',
+  lastname: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
   policy: false,
   isStudent: false,
   isTutor: true
