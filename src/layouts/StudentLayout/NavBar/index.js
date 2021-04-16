@@ -31,9 +31,9 @@ const StudentNavBar = () => {
   const classes = useStyles()
   return (
       <Toolbar className={classes.toolbar}>        
-      <RouterLink to='news'>
+      <RouterLink to='/estudiante/publicaciones'>
         <IconButton className={classes.options}>
-            <Typography variant='h4' >Noticias</Typography>
+            <Typography variant='h4' >Publicaciones</Typography>
             <LibraryBooksIcon className={classes.navicons} />
         </IconButton>
       </RouterLink>

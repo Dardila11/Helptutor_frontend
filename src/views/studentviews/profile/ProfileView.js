@@ -19,7 +19,7 @@ const StudentProfileView = (props) => {
   useEffect(
     () => {
       getStudentInfo(user.id)
-    },[])
+    })
 
   return (
     <Card className= {classes.root}>

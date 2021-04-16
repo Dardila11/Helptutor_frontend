@@ -18,8 +18,7 @@ import { logout } from 'src/redux/actions/auth'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
-    flexGrow: 1,
-    marginBlockEnd: theme.spacing(2)
+    flexGrow: 1
   },
   menuButton: {
     marginRight: theme.spacing(1)

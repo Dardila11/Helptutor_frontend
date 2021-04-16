@@ -8,8 +8,7 @@ import {
   FormControl,
   Select,
   MenuItem,
-  InputLabel,
-  LinearProgress
+  InputLabel
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { Formik } from 'formik'

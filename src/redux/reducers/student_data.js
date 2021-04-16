@@ -9,6 +9,7 @@ const userInfoData = {
 }
 
 const initialState = {
+  student: null, 
   isLoading: false,
   requestInProgress: true,
   userInfo: userInfoData
@@ -29,7 +30,8 @@ const tutorInfo = (state = initialState, action) => {
       return {
         ...state,
         userInfo: student,
-        isAuthenticated: true
+        isAuthenticated: true,
+        student: data.id
       }
     case UPDATE_STUDENT:
       const data1 = action.payload

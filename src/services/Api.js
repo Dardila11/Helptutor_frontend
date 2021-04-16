@@ -141,6 +141,10 @@ const updateStudentInfo = (data, state) => {
   return https.patch('/api/student/', data, tokenConfig(state))
 }
 
+const postPublication = (data, state) => {
+  return https.post('/api/offer/', data )
+}
+
 
 const logConstants = {
   getCountries,
@@ -154,6 +158,7 @@ const logConstants = {
   postKnowledgeAreaTutor,
   postServiceTutor,
   postStudent,
+  postPublication,
   patchTutorKnowledgeAreas,
   patchServiceTutor,
   getknowledgeAreas,

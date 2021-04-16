@@ -7,6 +7,7 @@ import PrivateRoute from './privateRoute'
 import { MainLayout } from 'src/layouts/MainLayout'
 import TutorAccountLayout from 'src/layouts/TutorAccountLayout'
 import StudentAccountLayout from 'src/layouts/StudentAccountLayout'
+import StudentLayout from 'src/layouts/StudentLayout/index'
 import RegisterView from 'src/views/auth/Register/RegisterView'
 import LoginView from 'src/views/auth/Login'
 import NotFoundView from 'src/views/errors/NotFoundView'
@@ -16,6 +17,7 @@ import ManageServicesView from 'src/views/tutorviews/manageServices'
 import ProfileView from 'src/views/tutorviews/profile/ProfileView'
 import StudentProfileView from 'src/views/studentviews/profile/ProfileView'
 import StudentEditInfoView from 'src/views/studentviews/studentInfo/EditInfoView'
+import StudentPublicationsView from 'src/views/studentviews/publications/index'
 
 const Routing = () => {
   return (
@@ -34,10 +36,17 @@ const Routing = () => {
           element={<ManageKnowledgeAreaView />}
         />
       </PrivateRoute>
-      <PrivateRoute path="/estudiante" element={<StudentAccountLayout />}>
-        <Route path="/cuenta/perfil" element={<StudentProfileView />} />
-        <Route path="/cuenta/informacion" element={<StudentEditInfoView />} />
+      
+      <PrivateRoute path="/estudiante" element={<StudentLayout />}>
+        <Route path="/" element={<StudentPublicationsView />} />
+        <Route path="/publicaciones" element={<StudentPublicationsView />} />
       </PrivateRoute>
+
+      <PrivateRoute path="/estudiante/cuenta" element={<StudentAccountLayout />}>
+        <Route path="/perfil" element={<StudentProfileView />} />
+        <Route path="/informacion" element={<StudentEditInfoView />} />
+      </PrivateRoute>
+
       <Route path="*" element={<NotFoundView />} />
     </Routes>
   )
