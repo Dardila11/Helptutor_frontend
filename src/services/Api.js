@@ -36,6 +36,10 @@ const postGoogleTutor = (data) => {
   return https.post('/api/tutor/google/', data)
 }
 
+const postGoogleStudent = (data) => {
+  return https.post('/api/student/google/', data)
+}
+
 const getSupports = () => {
   return https.get('/api/certificate')
 }
@@ -89,6 +93,10 @@ const getTutorInfo = (id, state) => {
   return https.get(`/api/tutor/${id}/`, tokenConfig(state))
 }
 
+const getStudentInfo = (id, state) => {
+  return https.get(`/api/student/${id}/`, tokenConfig(state))
+}
+
 const tokenConfig = (getState) => {
   const token = getState().auth.token
 
@@ -126,7 +134,11 @@ const patchServiceTutor = (id, data) => {
 /** ESTUDENT SERVICES */
 
 const postStudent = (data) => {
-  return https.post('/api/student', data)
+  return https.post('/api/student/', data)
+}
+
+const updateStudentInfo = (data, state) => {
+  return https.patch('/api/student/', data, tokenConfig(state))
 }
 
 
@@ -138,6 +150,7 @@ const logConstants = {
   getUser,
   postTutor,
   postGoogleTutor,
+  postGoogleStudent,
   postKnowledgeAreaTutor,
   postServiceTutor,
   postStudent,
@@ -151,7 +164,9 @@ const logConstants = {
   deleteTutorKnowledgeArea,
   deleteServiceTutor,
   updateTutorInfo,
+  updateStudentInfo,
   getTutorInfo,
+  getStudentInfo,
   login,
   loginGoogle,
   logout,

@@ -11,6 +11,7 @@ import {
   Box,
   Button,
   Container,
+  Link,
   makeStyles,
   TextField,
   Typography
@@ -42,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     width: '270px'
+  },
+  register:{
+    marginTop: theme.spacing(2)
   }
 }))
 
@@ -139,6 +143,12 @@ const LoginView = (props) => {
               </form>
             )}
           </Formik>
+        </Container>
+        <Container className={classes.register} align='center'>
+          <Typography>
+            ¿No tienes una cuenta?, 
+            <Link href='./registrar'>haz click aqui para registrate</Link>
+          </Typography>
         </Container>
       </Box>
     </Page>

@@ -4,7 +4,7 @@ import { useGoogleLogin } from 'react-google-login'
 import { Card, makeStyles } from '@material-ui/core'
 
 //REDUX
-import { addUserGoogle, loginGoogle } from '../redux/actions/auth'
+import { addTutorGoogle, addStudentGoogle, loginGoogle } from '../redux/actions/auth'
 import { launchAlert } from '../redux/actions/alerts'
 import { connect } from 'react-redux'
 import store from '../redux/store.js'
@@ -42,14 +42,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const responseGoogle = async (props, response, isUnicaucaEmail) => {
+const responseGoogle = async (props, response, isUnicaucaEmail, role) => {
   if (isUnicaucaEmail) {
     let jsonValues = {
       token: response.tokenId
     }
     if (props.login) props.loginGoogle(jsonValues)
     else {
-      props.addUserGoogle(jsonValues)
+      console.log('Role selected:' + role)
+      if(role==='tutor')props.addTutorGoogle(jsonValues)
+      else props.addStudentGoogle(jsonValues)
     }
   } else {
     store.dispatch(
@@ -60,8 +62,9 @@ const responseGoogle = async (props, response, isUnicaucaEmail) => {
 const LoginHooks = (props) => {
   let navigate = useNavigate()
   const classes = useStyles()
-  const { isAuthenticated, hasRoleSelected } = props
-
+  const { isAuthenticated, tutorSelect, studentSelect } = props
+  const hasRoleSelected = tutorSelect || studentSelect 
+  
   const validateRole = () => {
     if (!hasRoleSelected && !props.login) {
       store.dispatch(
@@ -83,7 +86,8 @@ const LoginHooks = (props) => {
      */
     let userEmail = res.profileObj.email
     if (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co') {
-      responseGoogle(props, res, true)
+      if(tutorSelect)responseGoogle(props, res, true, 'tutor')
+      else responseGoogle(props, res, true, 'student')
     } else {
       responseGoogle(props, res, false)
     }
@@ -117,6 +121,7 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-  addUserGoogle,
+  addTutorGoogle,
+  addStudentGoogle,
   loginGoogle
 })(LoginHooks)
