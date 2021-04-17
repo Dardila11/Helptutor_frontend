@@ -1,9 +1,18 @@
 import React from 'react'
-import { render, fireEvent, screen, cleanup } from 'src/test-utils'
+import { render, fireEvent, screen, cleanup, waitFor } from 'src/test-utils'
 import userEvent from '@testing-library/user-event'
 import RegisterView from 'src/views/auth/Register/RegisterView'
 
 afterEach(cleanup)
+
+let firstname
+let lastname
+let email
+let password
+let confirmPassword
+let checkboxPolicy
+let btnRegister
+let role = 'tutor'
 
 beforeEach(() => {
   /**
@@ -13,6 +22,14 @@ beforeEach(() => {
   render(<RegisterView />, {
     initialState: { auth: { isAuthenticated: false } }
   })
+
+   firstname = screen.getByTestId('firstname')
+   lastname = screen.getByTestId('lastname')
+   email = screen.getByTestId('email')
+   password = screen.getByTestId('password')
+   confirmPassword = screen.getByTestId('confirmPassword')
+   checkboxPolicy = screen.getByTestId('checkboxPolicy')
+   btnRegister = screen.getByTestId('btn-register')
 })
 
 const mockedUsedNavigate = jest.fn()
@@ -22,11 +39,10 @@ jest.mock('react-router-dom', () => ({
 }))
 
 describe('RegisterView Test', () => {
-  it('renders registerView form', () => {
+  /* it('renders registerView form', () => {
     expect(screen.getByTestId('register-form')).toBeInTheDocument()
-  })
-
-  it('user checks checkboxPolicy', () => {
+  }) */
+  /* it('user checks checkboxPolicy', () => {
     // obtenemos la referencia de nuestro checkbox que ya está renderizado
     const checkboxPolicy = screen.getByTestId('checkboxPolicy')
     // se espera que el checkbox no este chequeado
@@ -35,22 +51,41 @@ describe('RegisterView Test', () => {
     userEvent.click(checkboxPolicy)
     // se espera que el checkbox sea chequeado
     expect(checkboxPolicy).toBeChecked()
-  })
-  it('user inputs data to form', () => {
-    const firstname = screen.getByTestId('firstname')
-    const lastname = screen.getByTestId('lastname')
-    const email = screen.getByTestId('email')
-    const password = screen.getByTestId('password')
-    const confirmPassword = screen.getByTestId('confirmPassword')
-    const btnRegister = screen.getByTestId('btn-register')
-    
+  }) */
+  it('datos correctos', async () => {
     expect(firstname).toHaveValue('')
     expect(lastname).toHaveValue('')
     expect(email).toHaveValue('')
     expect(password).toHaveValue('')
     expect(confirmPassword).toHaveValue('')
+    expect(checkboxPolicy).not.toBeChecked()
 
-    // cuando el usuario digita en un textfield
+    fireEvent.change(firstname, { target: { value: 'Dan' } })
+    fireEvent.change(lastname, { target: { value: 'Ardila' } })
+    fireEvent.change(email, { target: { value: 'dardila+10@unicauca.edu.co' } })
+    fireEvent.change(password, { target: { value: 'qwerty123' } })
+    fireEvent.change(confirmPassword, { target: { value: 'qwerty123' } })
+
+    userEvent.click(checkboxPolicy)
+    expect(checkboxPolicy).toBeChecked()
+
+    fireEvent.click(btnRegister)
+
+    await waitFor(() => {
+      // ya que los demas campos están vacios, deberia mostrar los mensajes de error
+      // en por lo menos uno de los campos que está vacio.
+      // TODO nos falta configurar la llamada al api o algo asi
+      //expect(screen.getByText('Debes seleccionar un rol')).toBeInTheDocument()
+    })
+  })
+
+  it.todo('Funciona el botón de acceder con google')
+  it.todo('Accede con cuenta de google correctamente')
+  it.todo('Accede con cuenta de google y la cuenta no es válida')
+  it('Falta el apellido', async () => {
+    /* const firstname = screen.getByTestId('firstname')
+    const btnRegister = screen.getByTestId('btn-register') */
+
     fireEvent.change(firstname, {
       target: {
         value: 'Dan'
@@ -59,10 +94,14 @@ describe('RegisterView Test', () => {
     expect(firstname).toHaveValue('Dan')
     // cuando el usuario le da click en registrarse
     fireEvent.click(btnRegister)
-    // ya que los demas campos están vacios, deberia mostrar los mensajes de error
-    // en por lo menos uno de los campos que está vacio.
-    expect(screen.getByText("Apellido es requerido")).toBeInTheDocument()
 
+    await waitFor(() => {
+      // ya que los demas campos están vacios, deberia mostrar los mensajes de error
+      // en por lo menos uno de los campos que está vacio.
+      expect(screen.getByText('Apellido es requerido')).toBeInTheDocument()
+    })
   })
-
+  it.todo('No se marca el checkbox términos y condiciones')
+  it.todo('El correo no tiene el @unicauca.edu.co')
+  it.todo('No coinciden las contraseñas')
 })

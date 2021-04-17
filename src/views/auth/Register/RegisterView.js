@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
+const RegisterView = ({ isAuthenticated, addTutor, addStudent }) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [tutorSelect, setTutorSelect] = useState(false)
@@ -122,17 +122,19 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
               touched,
               values
             }) => (
-              <form data-testid="register-form"  onSubmit={handleSubmit}>
+              <form data-testid="register-form" onSubmit={handleSubmit}>
                 <Box mb={3} textAlign="center">
                   <Typography color="textPrimary" variant="h2">
                     INSCRIBETE
                   </Typography>
                 </Box>
                 <Box display="flex" textAlign="center" justifyContent="center">
-                  <div onClick={(e) => selectRole('student')}>
+                  <div
+                    data-testid="student"
+                    onClick={(e) => selectRole('student')}>
                     <RoleCard role="ESTUDIANTE" isSelected={studentSelect} />
                   </div>
-                  <div onClick={(e) => selectRole('tutor')}>
+                  <div data-testid="tutor" onClick={(e) => selectRole('tutor')}>
                     <RoleCard role="TUTOR" isSelected={tutorSelect} />
                   </div>
                 </Box>
@@ -149,7 +151,7 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                     value={values.name}
                     variant="outlined"
                     inputProps={{
-                      'data-testid': "firstname"
+                      'data-testid': 'firstname'
                     }}
                     InputProps={{
                       className: classes.input
@@ -167,7 +169,7 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                     value={values.lastname}
                     variant="outlined"
                     inputProps={{
-                      'data-testid': "lastname"
+                      'data-testid': 'lastname'
                     }}
                     InputProps={{
                       className: classes.input
@@ -187,7 +189,7 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                     value={values.email}
                     variant="outlined"
                     inputProps={{
-                      'data-testid': "email"
+                      'data-testid': 'email'
                     }}
                   />
                 </Box>
@@ -205,7 +207,7 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                     value={values.password}
                     variant="outlined"
                     inputProps={{
-                      'data-testid': "password"
+                      'data-testid': 'password'
                     }}
                   />
                 </Box>
@@ -227,7 +229,7 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                     value={values.confirmPassword}
                     variant="outlined"
                     inputProps={{
-                      'data-testid': "confirmPassword"
+                      'data-testid': 'confirmPassword'
                     }}
                   />
                 </Box>
@@ -238,7 +240,7 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                     name="policy"
                     onChange={handleChange}
                     inputProps={{
-                      'data-testid': "checkboxPolicy"
+                      'data-testid': 'checkboxPolicy'
                     }}
                   />
                   <Typography color="textSecondary" variant="body1">
@@ -261,8 +263,7 @@ const RegisterView = ({ isAuthenticated, addTutor,addStudent }) => {
                     fullWidth
                     size="medium"
                     type="submit"
-                    variant="contained"
-                    >
+                    variant="contained">
                     Registrarse
                   </Button>
                 </Box>

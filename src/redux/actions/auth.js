@@ -64,7 +64,7 @@ export const addTutor = (data) => (dispatch) => {
         type: ADD_TUTOR,
         payload: res.data
       })
-      dispatch(launchAlert('Tutor registrado', 200))
+      dispatch(launchAlert('Registro exitoso', 200))
     })
     .catch((err) => {
       dispatch(launchAlert('Error registrando tutor', err.response.status))
