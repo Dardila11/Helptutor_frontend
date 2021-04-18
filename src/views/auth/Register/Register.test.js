@@ -101,7 +101,47 @@ describe('RegisterView Test', () => {
       expect(screen.getByText('Apellido es requerido')).toBeInTheDocument()
     })
   })
-  it.todo('No se marca el checkbox términos y condiciones')
-  it.todo('El correo no tiene el @unicauca.edu.co')
-  it.todo('No coinciden las contraseñas')
+  it('No se marca el checkbox términos y condiciones', async () => {
+    fireEvent.change(firstname, { target: { value: 'Dan' } })
+    fireEvent.change(lastname, { target: { value: 'Ardila' } })
+    fireEvent.change(email, { target: { value: 'dardila+10@unicauca.edu.co' } })
+    fireEvent.change(password, { target: { value: 'qwerty123' } })
+    fireEvent.change(confirmPassword, { target: { value: 'qwerty123' } })
+
+    fireEvent.click(btnRegister)
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Este campo debe ser aceptado')
+      ).toBeInTheDocument()
+    })
+  })
+  it('El correo no tiene el @unicauca.edu.co', async () => {
+    fireEvent.change(firstname, { target: { value: 'Dan' } })
+    fireEvent.change(lastname, { target: { value: 'Ardila' } })
+    fireEvent.change(email, { target: { value: 'dardila+10@gmail.com' } })
+    fireEvent.change(password, { target: { value: 'qwerty123' } })
+    fireEvent.change(confirmPassword, { target: { value: 'qwerty123' } })
+
+    fireEvent.click(btnRegister)
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Email debe ser @unicauca.edu.co')
+      ).toBeInTheDocument()
+    })
+  })
+  it('No coinciden las contraseñas', async () => {
+    fireEvent.change(firstname, { target: { value: 'Dan' } })
+    fireEvent.change(lastname, { target: { value: 'Ardila' } })
+    fireEvent.change(email, { target: { value: 'dardila+10@gmail.com' } })
+    fireEvent.change(password, { target: { value: 'qwerty123' } })
+    fireEvent.change(confirmPassword, { target: { value: 'qwerty12312' } })
+
+    fireEvent.click(btnRegister)
+
+    await waitFor(() => {
+      expect(screen.getByText('Contraseñas no son iguales')).toBeInTheDocument()
+    })
+  })
 })
