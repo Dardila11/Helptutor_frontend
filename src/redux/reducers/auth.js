@@ -2,6 +2,7 @@ import {
   ADD_TUTOR,
   ADD_STUDENT,
   ADD_TUTOR_GOOGLE,
+  ADD_STUDENT_GOOGLE,
   UPDATE_TUTOR,
   GET_TUTOR,
   USER_LOADING,
@@ -12,7 +13,8 @@ import {
   LOGOUT_SUCCESS,
   ACTION_RUNNING,
   FINISHED_LOADING,
-  ACTION_END
+  ACTION_END,
+  UPDATE_USER_INFORMATION
 } from 'src/redux/actions/types_auth'
 
 const userInfoData = {
@@ -42,6 +44,15 @@ const initialState = {
 const auth = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TUTOR_GOOGLE: {
+      localStorage.setItem('token', action.payload.token)
+      return {
+        ...state,
+        user: action.payload.user,
+        isAuthenticated: true,
+        isLoading: false
+      }
+    }
+    case ADD_STUDENT_GOOGLE: {
       localStorage.setItem('token', action.payload.token)
       return {
         ...state,
@@ -147,6 +158,13 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         isRunning: true
+      }
+    case UPDATE_USER_INFORMATION:
+      const newUserInfo = action.payload
+      return {
+        ...state,
+        user: newUserInfo,
+        isAuthenticated: true
       }
     case ACTION_END:
       return {

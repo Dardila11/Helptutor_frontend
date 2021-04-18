@@ -2,6 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core'
 import { Outlet } from 'react-router-dom'
 import StudentNavBar from '../StudentLayout/TopBar'
+import NavBar from './NavBar'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
   },
   contentContainer: {
     display: 'flex',
-    overflow: 'hidden'    
+    overflow: 'hidden',
+    margin: theme.spacing(1)    
   },
   content: {
     flex: '1 1 auto',
@@ -20,12 +22,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const StudentLayout = () => {
+const StudentAccountLayout = () => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
       <StudentNavBar />
       <div className={classes.contentContainer}>
+        <NavBar />
         <div className={classes.content}>
           <Outlet />
         </div>
@@ -34,4 +37,4 @@ const StudentLayout = () => {
   )
 }
 
-export default StudentLayout
+export default StudentAccountLayout

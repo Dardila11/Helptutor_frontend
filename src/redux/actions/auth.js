@@ -5,6 +5,7 @@ import {
   ADD_TUTOR,
   ADD_STUDENT,
   ADD_TUTOR_GOOGLE,
+  ADD_STUDENT_GOOGLE,
   GET_TUTOR,
   UPDATE_TUTOR,
   USER_LOADED,
@@ -42,8 +43,6 @@ export const updateTutor = (data) => (dispatch, getState) => {
 export const getTutorInfo = (id) => (dispatch, getState) => {
   Api.getTutorInfo(id, getState)
     .then((res) => {
-      console.log('GET TUTOR INFO')
-      console.log(res)
       dispatch({
         type: GET_TUTOR,
         payload: res.data
@@ -88,7 +87,7 @@ export const addStudent = (data) => (dispatch) => {
     })
 }
 
-export const addUserGoogle = (data) => (dispatch) => {
+export const addTutorGoogle = (data) => (dispatch) => {
   // dispatch({ type: USER_LOADING });
 
   const request = Api.postGoogleTutor(data)
@@ -111,6 +110,29 @@ export const addUserGoogle = (data) => (dispatch) => {
     })
 }
 
+export const addStudentGoogle = (data) => (dispatch) => {
+  // dispatch({ type: USER_LOADING });
+
+  const request = Api.postGoogleStudent(data)
+  request
+    .then((res) => {
+      console.log(res.data)
+      dispatch({
+        type: ADD_STUDENT_GOOGLE,
+        payload: res.data
+      })
+      dispatch(launchAlert('Estudiante registrado con google', 200))
+    })
+    .catch((err) => {
+      if (err.response.status === 400)
+        dispatch(launchAlert('El estudiante ya existe', err.response.status))
+      else
+        dispatch(
+          launchAlert('Error registrando estudiante con google', err.response.status)
+        )
+    })
+}
+
 /*Login actions*/
 
 export const loadUser = () => (dispatch, getState) => {
@@ -118,8 +140,6 @@ export const loadUser = () => (dispatch, getState) => {
 
   Api.getUser(getState)
     .then((res) => {
-      console.log('LoadUser')
-      console.log(res)
       dispatch({
         type: USER_LOADED,
         payload: res.data
@@ -143,6 +163,7 @@ export const login = (data) => (dispatch) => {
 
   Api.login(data)
     .then((res) => {
+      console.log(res.data)
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data

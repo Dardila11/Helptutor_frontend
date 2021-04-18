@@ -23,6 +23,9 @@ const getStatus = (status) => {
         case 201:
             res = 'success'
             break
+        case 500:
+            res = 'info'
+            break
         case 1:
             res = 'warning'
             break

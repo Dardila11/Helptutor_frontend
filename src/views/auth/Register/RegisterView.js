@@ -104,10 +104,8 @@ const RegisterView = ({ isAuthenticated, addTutor, addStudent }) => {
             onSubmit={(values) => {
               let jsonValues = Validation.getValues(values)
               if (tutorSelect) {
-                // tutor registration api
                 addTutor(jsonValues)
               } else if (studentSelect) {
-                // student registration api
                 addStudent(jsonValues)
               } else {
                 store.dispatch(launchAlert('Debes seleccionar un rol', 1))
@@ -271,7 +269,7 @@ const RegisterView = ({ isAuthenticated, addTutor, addStudent }) => {
                   ó
                 </Box>
                 <Box width="sm">
-                  <LoginHooks hasRoleSelected={tutorSelect || studentSelect} />
+                  <LoginHooks tutorSelect={tutorSelect} studentSelect={studentSelect} />
                 </Box>
                 {/* <Box my={3}>
                   <SignInGoogle></SignInGoogle>
