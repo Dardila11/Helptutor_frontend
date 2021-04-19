@@ -145,6 +145,10 @@ const postPublication = (data, state) => {
   return https.post('/api/offer/', data )
 }
 
+const getTutors = (state) => {
+  return https.get('api/tutor/', tokenConfig(state))
+}
+
 
 const logConstants = {
   getCountries,
@@ -152,6 +156,14 @@ const logConstants = {
   getCity,
   getUniversity,
   getUser,
+  getTutorInfo,
+  getStudentInfo,
+  getknowledgeAreas,
+  getKnowledgeArea,
+  getSubKnowledgeAreas,
+  getSupports,
+  getTutorKnowledgeAreas,
+  getTutors,
   postTutor,
   postGoogleTutor,
   postGoogleStudent,
@@ -161,17 +173,10 @@ const logConstants = {
   postPublication,
   patchTutorKnowledgeAreas,
   patchServiceTutor,
-  getknowledgeAreas,
-  getKnowledgeArea,
-  getSubKnowledgeAreas,
-  getSupports,
-  getTutorKnowledgeAreas,
   deleteTutorKnowledgeArea,
   deleteServiceTutor,
   updateTutorInfo,
   updateStudentInfo,
-  getTutorInfo,
-  getStudentInfo,
   login,
   loginGoogle,
   logout,

@@ -5,7 +5,7 @@ import { UPDATE_USER_INFORMATION } from './types_auth'
 import { launchAlert } from './alerts'
 
 export const getStudentInfo = (id) => (dispatch, getState) => {
-    Api.getStudentInfo(id, getState)
+  Api.getStudentInfo(id, getState)
       .then((res) => {
         dispatch({
           type: GET_STUDENT,

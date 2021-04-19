@@ -7,6 +7,7 @@ import alert from './alerts'
 import studentInfo from './student_data'
 import publications from './publications'
 import knowledge_areas from './knowledge_areas'
+import tutorsInfo from './tutors_data'
 
 export default combineReducers({
   auth,
@@ -15,5 +16,6 @@ export default combineReducers({
   services,
   tutorInfo,
   studentInfo,
-  publications
+  publications,
+  tutorsInfo
 })

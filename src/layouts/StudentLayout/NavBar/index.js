@@ -37,7 +37,7 @@ const StudentNavBar = () => {
             <LibraryBooksIcon className={classes.navicons} />
         </IconButton>
       </RouterLink>
-      <RouterLink to='tutors'>
+      <RouterLink to='/estudiante/tutores'>
         <IconButton className={classes.options}>
             <Typography variant='h4' >Tutores</Typography>
             <PeopleAltIcon className={classes.navicons}/>
