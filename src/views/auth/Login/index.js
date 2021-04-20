@@ -55,7 +55,7 @@ const LoginView = (props) => {
 
   useEffect(
     () => {
-      if (props.isAuthenticated) navigate('/tutor')
+      if (props.isAuthenticated) navigate('/estudiante')
       else navigate('/login')
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [props.isAuthenticated]

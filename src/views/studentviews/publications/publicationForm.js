@@ -55,82 +55,84 @@ const PublicationFormView = (props) => {
                 onClose={handleClose}    
                 aria-labelledby='publications-dialog-title'
             >
-                <DialogTitle id='publications-dialog-title' align='center'>
-                    <Typography> AGREGAR PUBLICACIÓN</Typography>
-                </DialogTitle>
-                <DialogContent>
-                    <Box
-                        display='flex'
-                        flexDirection='column'
-                        justifyContent='center'>
-                        <Container maxWidth='lg'>
-                            <Formik
-                                enableReinitialize = {true}
-                                initialValues={initialValues}
-                                validationSchema={Validation.validation}
-                                onSubmit={(values) => {
-                                    let jsonValues = Validation.getValues({
-                                        ...values,
-                                        student: student
-                                    })
-                                    addPublication(jsonValues)
-                                }}>
-                                {({
-                                    errors,
-                                    handleBlur,
-                                    handleChange,
-                                    handleSubmit,
-                                    touched,
-                                    values
-                                })=> (
-                                    <form onSubmit={handleSubmit}>
-                                        <TextField
-                                        id='txt_title'
-                                        error={Boolean(touched.title && errors.title)}
-                                        fullWidth
-                                        helperText={touched.title && errors.title}
-                                        label='Titulo'
-                                        margin='normal'
-                                        onBlur={handleBlur}
-                                        onChange={handleChange}
-                                        name='title'
-                                        value={values.title}
-                                        variant='outlined'
-                                        InputProps={{
-                                            className: classes.input
-                                        }}/>
-                                    <TextField
-                                    id='txt_description'
-                                    error={Boolean(touched.description && errors.description)}
-                                    fullWidth
-                                    helperText={touched.description && errors.description}
-                                    label='Descripción'
-                                    margin='normal'
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    name='description'
-                                    value={values.description}
-                                    variant='outlined'
-                                    InputProps={{
-                                        className: classes.input
-                                    }}/>
-                                    <Button
-                                    className={classes.submit}
-                                    id='btn_publish'
-                                    color='primary'
-                                    fullWidth
-                                    type='submit'
-                                    variant='contained'>
-                                        Publicar
-                                    </Button>
-                                </form>
-                                )}
+                    <>
+                        <DialogTitle id='publications-dialog-title' align='center'>
+                            <Typography> AGREGAR PUBLICACIÓN</Typography>
+                        </DialogTitle>
+                        <DialogContent>
+                            <Box
+                                display='flex'
+                                flexDirection='column'
+                                justifyContent='center'>
+                                <Container maxWidth='lg'>
+                                    <Formik
+                                        enableReinitialize = {true}
+                                        initialValues={initialValues}
+                                        validationSchema={Validation.validation}
+                                        onSubmit={(values) => {
+                                            let jsonValues = Validation.getValues({
+                                                ...values,
+                                                student: student
+                                            })
+                                            addPublication(jsonValues)
+                                        }}>
+                                        {({
+                                            errors,
+                                            handleBlur,
+                                            handleChange,
+                                            handleSubmit,
+                                            touched,
+                                            values
+                                        })=> (
+                                            <form onSubmit={handleSubmit}>
+                                                <TextField
+                                                id='txt_title'
+                                                error={Boolean(touched.title && errors.title)}
+                                                fullWidth
+                                                helperText={touched.title && errors.title}
+                                                label='Titulo'
+                                                margin='normal'
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                name='title'
+                                                value={values.title}
+                                                variant='outlined'
+                                                InputProps={{
+                                                    className: classes.input
+                                                }}/>
+                                            <TextField
+                                            id='txt_description'
+                                            error={Boolean(touched.description && errors.description)}
+                                            fullWidth
+                                            helperText={touched.description && errors.description}
+                                            label='Descripción'
+                                            margin='normal'
+                                            onBlur={handleBlur}
+                                            onChange={handleChange}
+                                            name='description'
+                                            value={values.description}
+                                            variant='outlined'
+                                            InputProps={{
+                                                className: classes.input
+                                            }}/>
+                                            <Button
+                                            className={classes.submit}
+                                            id='btn_publish'
+                                            color='primary'
+                                            fullWidth
+                                            type='submit'
+                                            variant='contained'>
+                                                Publicar
+                                            </Button>
+                                        </form>
+                                        )}
 
-                            </Formik>
-                        </Container>
+                                    </Formik>
+                                </Container>
 
-                    </Box>
-                </DialogContent>
+                            </Box>
+                        </DialogContent>
+                    </>                
             </Dialog>
         </Box>
     )

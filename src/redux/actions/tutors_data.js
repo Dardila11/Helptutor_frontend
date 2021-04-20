@@ -13,6 +13,8 @@ export const getTutors = () => (dispatch, getState) => {
             })
         })
         .catch((err) => {
-            dispatch(launchAlert('Error obteniendo tutores', err.response.status))
+            dispatch(
+                launchAlert('Error onteniendo tutores', 400)
+            )
         })
 }

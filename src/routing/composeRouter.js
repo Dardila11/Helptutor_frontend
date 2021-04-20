@@ -27,17 +27,7 @@ const Routing = () => {
         <Route path="login" element={<LoginView />} />
         <Route path="registrar" element={<RegisterView />} />
       </Route>
-      <PrivateRoute path="/tutor" element={<TutorAccountLayout />}>
-        <Route path="/cuenta" element={<ProfileView />} />
-        <Route path="/cuenta/perfil" element={<ProfileView />} />
-        <Route path="/cuenta/informacion" element={<EditInfoView />} />        
-        <Route path="/cuenta/servicios" element={<ManageServicesView />} />
-        <Route
-          path="/cuenta/especialidades"
-          element={<ManageKnowledgeAreaView />}
-        />
-      </PrivateRoute>
-      
+
       <PrivateRoute path="/estudiante" element={<StudentLayout />}>
         <Route path="/" element={<StudentPublicationsView />} />
         <Route path="/publicaciones" element={<StudentPublicationsView />} />
@@ -47,6 +37,17 @@ const Routing = () => {
       <PrivateRoute path="/estudiante/cuenta" element={<StudentAccountLayout />}>
         <Route path="/perfil" element={<StudentProfileView />} />
         <Route path="/informacion" element={<StudentEditInfoView />} />
+      </PrivateRoute>
+
+      <PrivateRoute path="/tutor" element={<TutorAccountLayout />}>
+        <Route path="/cuenta" element={<ProfileView />} />
+        <Route path="/cuenta/perfil" element={<ProfileView />} />
+        <Route path="/cuenta/informacion" element={<EditInfoView />} />        
+        <Route path="/cuenta/servicios" element={<ManageServicesView />} />
+        <Route
+          path="/cuenta/especialidades"
+          element={<ManageKnowledgeAreaView />}
+        />
       </PrivateRoute>
 
       <Route path="*" element={<NotFoundView />} />

@@ -142,11 +142,15 @@ const updateStudentInfo = (data, state) => {
 }
 
 const postPublication = (data, state) => {
-  return https.post('/api/offer/', data )
+  return https.post('/api/offer/', data , tokenConfig(state))
 }
 
 const getTutors = (state) => {
   return https.get('api/tutor/', tokenConfig(state))
+}
+
+const getOffers = (state) => {
+  return https.get('api/offer/', tokenConfig(state))
 }
 
 
@@ -164,6 +168,7 @@ const logConstants = {
   getSupports,
   getTutorKnowledgeAreas,
   getTutors,
+  getOffers,
   postTutor,
   postGoogleTutor,
   postGoogleStudent,

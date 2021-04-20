@@ -23,19 +23,15 @@ export const updateTutor = (data) => (dispatch, getState) => {
   const request = Api.updateTutorInfo(data, getState)
   request
     .then((res) => {
-      //console.log(res.data)
       if (res.status === 200) {
         dispatch({
           type: UPDATE_TUTOR,
           payload: res.data
         })
-        //console.log('UPDATE TUTOR RESPONSE')
-        //console.log(res.data)
         dispatch(launchAlert('Información del tutor actualizada', res.status))
       }
     })
     .catch((err) => {
-      console.log(err)
       dispatch(launchAlert('Error actualizando información', 400))
     })
 }
@@ -93,7 +89,6 @@ export const addTutorGoogle = (data) => (dispatch) => {
   const request = Api.postGoogleTutor(data)
   request
     .then((res) => {
-      console.log(res.data)
       dispatch({
         type: ADD_TUTOR_GOOGLE,
         payload: res.data
@@ -116,7 +111,6 @@ export const addStudentGoogle = (data) => (dispatch) => {
   const request = Api.postGoogleStudent(data)
   request
     .then((res) => {
-      console.log(res.data)
       dispatch({
         type: ADD_STUDENT_GOOGLE,
         payload: res.data
@@ -140,6 +134,8 @@ export const loadUser = () => (dispatch, getState) => {
 
   Api.getUser(getState)
     .then((res) => {
+      console.log('loadUser')
+      console.log(res.data)
       dispatch({
         type: USER_LOADED,
         payload: res.data
@@ -163,7 +159,6 @@ export const login = (data) => (dispatch) => {
 
   Api.login(data)
     .then((res) => {
-      console.log(res.data)
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data

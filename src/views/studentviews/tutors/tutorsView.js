@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
-import { Box, Card, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
 
 import { getTutors } from 'src/redux/actions/tutors_data'
 import { connect } from 'react-redux'
 import PublicationsViewSkeleton from 'src/components/skeletons/PublicationsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
 import TutorCard from 'src/components/tutorCard'
+import Page from 'src/components/Page'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,12 +26,15 @@ const useStyles = makeStyles((theme) => ({
 const TutorsView = (props) => {
   const classes = useStyles()
   const {loading, tutors, getTutors} = props
-  useEffect(
-    () => {
+
+  useEffect(() => {
         getTutors()
-    })
-  console.log(tutors)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [])   
+
   return (
+    <Page title='Tutores'>
       <Box display='flex' flexDirection="column" justifyContent='center' alignItems='center'>
         <SearchBar />
         <Paper elevation={3} className={classes.root}>
@@ -44,17 +48,18 @@ const TutorsView = (props) => {
                     </Typography>
                 </Box>
                 <Box>
-                    <Card className={classes.cardsContent}>
-                        {tutors.map((element) => {
-                          <TutorCard tutor={element}/>
-                        })}
-                        <TutorCard />
-                    </Card>
+                        {tutors.map((tutor, index) => (
+                          <TutorCard
+                            key={index}
+                            id={tutor.id}
+                            tutor={tutor}/>
+                        ))}
                 </Box>
             </>
         )}
         </Paper>
     </Box>
+    </Page>
   )
 }
 

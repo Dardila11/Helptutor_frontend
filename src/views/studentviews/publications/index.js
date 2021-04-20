@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
-import { Box, Card, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Box, CircularProgress, makeStyles, Paper, Typography } from '@material-ui/core'
 
-import { getStudentInfo } from 'src/redux/actions/student_data'
+import { getPublications } from 'src/redux/actions/publications'
 import { connect } from 'react-redux'
 import PublicationsViewSkeleton from 'src/components/skeletons/PublicationsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
 import PublicationFormView from './publicationForm'
+import PublicationCard from 'src/components/publicationCard'
+import Page from 'src/components/Page'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,17 +26,19 @@ const useStyles = makeStyles((theme) => ({
 
 const StudentPublicationsView = (props) => {
   const classes = useStyles()
-  const {user, requestInProgress, getStudentInfo} = props
-  useEffect(
-    () => {
-      getStudentInfo(user.id)
-    })
+  const {loadingPublications, getPublications, publications,creating} = props
+  useEffect(()=>{
+    getPublications()
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [])
 
   return (
+    <Page title='Publicaciones'>
       <Box display='flex' flexDirection="column" justifyContent='center' alignItems='center'>
         <SearchBar />
         <Paper elevation={3} className={classes.root}>
-        {requestInProgress? (
+        {loadingPublications? (
             <PublicationsViewSkeleton />
         ):(
             <>
@@ -43,24 +47,33 @@ const StudentPublicationsView = (props) => {
                     MIS PUBLICACIONES
                     </Typography>
                 </Box>
-                <PublicationFormView/>
+                {creating? (
+                  <CircularProgress />
+                ):(                  
+                  <PublicationFormView/>
+                )}
                 <Box>
-                    <Card className={classes.cardsContent}>
-                        Here publications cards
-                    </Card>
+                        {publications.map((publication, index) => (
+                          <PublicationCard
+                            key={index}
+                            id={publication.id}
+                            publication={publication}/>
+                        ))}
                 </Box>
             </>
         )}
         </Paper>
     </Box>
+    </Page>
   )
 }
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  requestInProgress: state.studentInfo.requestInProgress
+  publications: state.publications.publications,
+  loadingPublications: state.publications.loadingPublications,
+  creating: state.publications.creating
 })
 
 export default connect(mapStateToProps, {
-  getStudentInfo
+  getPublications
 })(StudentPublicationsView)

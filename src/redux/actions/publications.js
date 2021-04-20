@@ -2,20 +2,16 @@ import Api from 'src/services/Api'
 import { launchAlert } from './alerts'
 
 import {
-    ADD_PUBLICATION,
+    ADD_PUBLICATION, LIST_PUBLICATIONS, CREATING
 } from './types_publications'
 
 export const addPublication = (data) => (dispatch, getState) => {
-    let values = {
-        dispatchP: dispatch,
-        state: getState
-    }
-    console.log(data)
-    console.log(values)
-    const request = Api.postPublication(data,values)
+    const request = Api.postPublication(data,getState)
     request
         .then((res) => {
-            console.log(res)
+            dispatch({
+                type: CREATING
+            })
             dispatch({
                 type: ADD_PUBLICATION,
                 payload: res.data
@@ -23,9 +19,21 @@ export const addPublication = (data) => (dispatch, getState) => {
             dispatch(launchAlert('Oferta publicada', 200))
         })
         .catch((err) => {
-            console.log(err.response)
             dispatch(
                 launchAlert('Error publicando la oferta', err.response.status)
             )
         })
 }
+
+export const getPublications = () => (dispatch, getState) => {
+    Api.getOffers(getState).then((res) => (
+        dispatch({
+            type: LIST_PUBLICATIONS,
+            payload: res.data
+        })
+    )).catch((err) => {
+        dispatch(
+            launchAlert('Error obteniedo publicaciones', err.response.status)
+        )
+    })
+} 
