@@ -52,7 +52,7 @@ export const getTutorInfo = (id) => (dispatch, getState) => {
       })
     })
     .catch((err) => {
-      dispatch(launchAlert('Error registrando tutor', err.response.status))
+      dispatch(launchAlert('Error obteniendo información del tutor', '400'))
     })
 }
 export const addTutor = (data) => (dispatch) => {

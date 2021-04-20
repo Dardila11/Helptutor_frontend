@@ -65,6 +65,10 @@
   },
   "devDependencies": {
     "@testing-library/react": "^11.2.5",
+    "msw": "^0.28.1",
     "prettier": "^2.2.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
