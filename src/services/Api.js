@@ -153,6 +153,13 @@ const getOffers = (state) => {
   return https.get('api/offer/', tokenConfig(state))
 }
 
+const postAdvertisement = (data, state) => {
+  return https.post('api/advertisement/', data, tokenConfig(state))
+}
+
+const getAdvertisements = (state) => {
+  return https.get('/api/advertisement/', tokenConfig(state))
+}
 
 const logConstants = {
   getCountries,
@@ -169,6 +176,7 @@ const logConstants = {
   getTutorKnowledgeAreas,
   getTutors,
   getOffers,
+  getAdvertisements,
   postTutor,
   postGoogleTutor,
   postGoogleStudent,
@@ -176,6 +184,7 @@ const logConstants = {
   postServiceTutor,
   postStudent,
   postPublication,
+  postAdvertisement,
   patchTutorKnowledgeAreas,
   patchServiceTutor,
   deleteTutorKnowledgeArea,

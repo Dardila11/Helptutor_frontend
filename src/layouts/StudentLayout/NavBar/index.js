@@ -8,6 +8,7 @@ import {
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import ListAltIcon from '@material-ui/icons/ListAlt';
 import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +36,12 @@ const StudentNavBar = () => {
         <IconButton className={classes.options}>
             <Typography variant='h4' >Publicaciones</Typography>
             <LibraryBooksIcon className={classes.navicons} />
+        </IconButton>
+      </RouterLink>
+      <RouterLink to='/estudiante/anuncios'>
+        <IconButton className={classes.options}>
+            <Typography variant='h4' >Anuncios</Typography>
+            <ListAltIcon className={classes.navicons}/>
         </IconButton>
       </RouterLink>
       <RouterLink to='/estudiante/tutores'>
