@@ -18,6 +18,7 @@ import ProfileView from 'src/views/tutorviews/profile/ProfileView'
 import StudentProfileView from 'src/views/studentviews/profile/ProfileView'
 import StudentEditInfoView from 'src/views/studentviews/studentInfo/EditInfoView'
 import StudentPublicationsView from 'src/views/studentviews/publications/index'
+import TutorsView from 'src/views/studentviews/tutors/tutorsView'
 
 const Routing = () => {
   return (
@@ -26,6 +27,18 @@ const Routing = () => {
         <Route path="login" element={<LoginView />} />
         <Route path="registrar" element={<RegisterView />} />
       </Route>
+
+      <PrivateRoute path="/estudiante" element={<StudentLayout />}>
+        <Route path="/" element={<StudentPublicationsView />} />
+        <Route path="/publicaciones" element={<StudentPublicationsView />} />
+        <Route path="/tutores" element={<TutorsView />}/>
+      </PrivateRoute>
+
+      <PrivateRoute path="/estudiante/cuenta" element={<StudentAccountLayout />}>
+        <Route path="/perfil" element={<StudentProfileView />} />
+        <Route path="/informacion" element={<StudentEditInfoView />} />
+      </PrivateRoute>
+
       <PrivateRoute path="/tutor" element={<TutorAccountLayout />}>
         <Route path="/cuenta" element={<ProfileView />} />
         <Route path="/cuenta/perfil" element={<ProfileView />} />
@@ -35,16 +48,6 @@ const Routing = () => {
           path="/cuenta/especialidades"
           element={<ManageKnowledgeAreaView />}
         />
-      </PrivateRoute>
-      
-      <PrivateRoute path="/estudiante" element={<StudentLayout />}>
-        <Route path="/" element={<StudentPublicationsView />} />
-        <Route path="/publicaciones" element={<StudentPublicationsView />} />
-      </PrivateRoute>
-
-      <PrivateRoute path="/estudiante/cuenta" element={<StudentAccountLayout />}>
-        <Route path="/perfil" element={<StudentProfileView />} />
-        <Route path="/informacion" element={<StudentEditInfoView />} />
       </PrivateRoute>
 
       <Route path="*" element={<NotFoundView />} />

@@ -49,7 +49,6 @@ const responseGoogle = async (props, response, isUnicaucaEmail, role) => {
     }
     if (props.login) props.loginGoogle(jsonValues)
     else {
-      console.log('Role selected:' + role)
       if(role==='tutor')props.addTutorGoogle(jsonValues)
       else props.addStudentGoogle(jsonValues)
     }

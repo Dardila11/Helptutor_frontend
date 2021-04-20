@@ -1,7 +1,8 @@
 import {
     LIST_PUBLICATIONS,
     ADD_PUBLICATION,
-    SET_IS_CREATE
+    SET_IS_CREATE,
+    CREATING
 } from 'src/redux/actions/types_publications'
 
 const initialValues = {
@@ -13,7 +14,9 @@ const initialValues = {
 const initialState = {
     publications: [],
     publication: initialValues,
-    is_create: true
+    is_create: true,
+    loadingPublications: true,
+    creating: false
 }
 
 const publications = (state = initialState, action) => {
@@ -21,12 +24,14 @@ const publications = (state = initialState, action) => {
         case LIST_PUBLICATIONS:
             return {
                 ...state,
-                publications: action.payload
+                publications: action.payload,
+                loadingPublications: false,
             }
         case ADD_PUBLICATION:
             return {
                 ...state,
-                publications: state.publications.concat(action.payload)
+                publications: state.publications.concat(action.payload),
+                creating: false
             }
         case SET_IS_CREATE:
             if(action.payload){
@@ -38,6 +43,12 @@ const publications = (state = initialState, action) => {
                 ...state, publication: state.publication, is_create: action.payload
                 }
             }
+        case CREATING: {
+            return{
+                ...state,
+                creating: true
+            }
+        }
         default:
             return state
     }

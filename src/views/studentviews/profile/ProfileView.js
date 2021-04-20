@@ -4,6 +4,7 @@ import { Card, Divider, makeStyles } from '@material-ui/core'
 import { getStudentInfo } from 'src/redux/actions/student_data'
 import { connect } from 'react-redux'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
+import Page from 'src/components/Page'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,6 +23,7 @@ const StudentProfileView = (props) => {
     })
 
   return (
+    <Page title='Perfil'>
     <Card className= {classes.root}>
       {requestInProgress? (
         <ProfileViewSkeleton />
@@ -33,6 +35,7 @@ const StudentProfileView = (props) => {
         </>
       )}
     </Card>
+    </Page>
   )
 }
 

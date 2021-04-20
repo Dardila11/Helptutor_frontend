@@ -79,8 +79,7 @@ const SupportsView = (props) => {
       var name = e[0].name
       var nameSplit = name.split('.')
       var ext = nameSplit[nameSplit.length - 1]
-      console.log(ext)
-      setArchivo(e[0])
+      if(ext==='pdf') setArchivo(e[0])
     }
     else { document.getElementById("text-file").textContent = ""; }
   }
