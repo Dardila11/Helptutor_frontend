@@ -90,7 +90,7 @@ const EditInfoView = (props) => {
             touched,
             values
           }) => (
-            <form onSubmit={handleSubmit}>
+            <form data-testid="editinfo-form" onSubmit={handleSubmit}>
               <Box mb={3} textAlign="center">
                 <Typography color="textPrimary" variant="h4">
                   INFORMACIÓN

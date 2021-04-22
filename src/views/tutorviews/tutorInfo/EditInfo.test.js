@@ -5,7 +5,6 @@ import EditInfoView from 'src/views/tutorviews/tutorInfo/EditInfoView'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
-let userId = 35
 const API_URL = 'https://mdquilindo.pythonanywhere.com/'
 
 const userInfo = {
@@ -21,7 +20,7 @@ const userInfo = {
 }
 
 const server = setupServer(
-  rest.get('api/tutor/:id', (req, res, ctx) => {
+  rest.get(API_URL + 'api/tutor/:id', (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -31,29 +30,26 @@ const server = setupServer(
   })
 )
 
-//beforeAll(() => server.listen())
-//afterAll(() => server.close())
+beforeAll(() => server.listen())
+afterAll(() => server.close())
 afterEach(() => {
-  //server.resetHandlers()
+  server.resetHandlers()
   cleanup()
 })
 
-beforeEach(() => {
+/* beforeEach(() => {
   /**
    * render our component with a initialState.
    * this render comes from our test-util.js
-   */
+   
   render(<EditInfoView />, {
     initialState: {
       auth: {
-        user: { id: 35 },
-        token:
-          'b0d0ef0dfb4582487c1a63e6d8774873584b3788f3577773c08edcd42ecaef06',
-        isAuthenticated: true
+        user: { id: 35 }
       }
     }
   })
-})
+}) */
 
 const mockedUsedNavigate = jest.fn()
 jest.mock('react-router-dom', () => ({
@@ -62,28 +58,22 @@ jest.mock('react-router-dom', () => ({
 }))
 
 describe('TutorEditInfo View', () => {
-  it.todo('Campos incompletos')
   it('loading data', async () => {
-    //await screen.findByTestId('firstname')
     let loading = screen.getByRole('progressbar')
     expect(loading).toBeInTheDocument()
+
+  })
+  it('edit info form is visible', async () => {
+    const {  getByTestId } = render(<EditInfoView />, {
+      initialState: {
+        auth: {
+          user: { id: 35 },
+          requestInProgess: false
+        }
+      }
+    })
+    let email = await getByTestId('email')
+    expect(email).toBeDisabled()
   })
 })
 
-/* let firstname = screen.getByTestId('firstname')
-    let lastname = screen.getByTestId('lastname')
-    let email = screen.getByTestId('email')
-    let gender = screen.getByTestId('gender')
-    let birthday = screen.getByTestId('birthday')
-    let interests = screen.getByTestId('interets')
-    let methodology = screen.getByTestId('methodology')
-    let skills = screen.getByTestId('skills')
-    let btnUpdate = screen.getByTestId('btn-update')
-    expect(email).toBeDisabled() */
-/* fireEvent.change(firstname, { target: { value: 'Dan' } })
-    fireEvent.change(lastname, { target: { value: 'Ardila' } })
-    //fireEvent.change(gender, { target: { value: 0 } })
-    fireEvent.change(birthday, { target: { value: '18/10/1995' } })
-    fireEvent.change(interests, { target: { value: 'muchos' } })
-    fireEvent.change(methodology, { target: { value: 'pocas' } })
-    fireEvent.change(skills, { target: { value: 'no te imaginas' } }) */
