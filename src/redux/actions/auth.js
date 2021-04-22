@@ -134,8 +134,6 @@ export const loadUser = () => (dispatch, getState) => {
 
   Api.getUser(getState)
     .then((res) => {
-      console.log('loadUser')
-      console.log(res.data)
       dispatch({
         type: USER_LOADED,
         payload: res.data

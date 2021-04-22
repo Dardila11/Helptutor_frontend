@@ -167,7 +167,7 @@ const getAdvertisementAnswers = (id, state) => {
 }
 
 const getStudent = (id, state) => {
-  return https.get('api/student/'+id+'/', tokenConfig(state))
+  return https.get(`api/student/${id}/`, tokenConfig(state))
 }
 
 const logConstants = {

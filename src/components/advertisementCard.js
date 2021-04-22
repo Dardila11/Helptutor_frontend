@@ -6,6 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import { Avatar, Box, CardActionArea, Dialog, Grid, Paper } from '@material-ui/core';
 import AnswerView from 'src/views/studentviews/advertisements/answers/answer'
 
+import { clearAnswers } from 'src/redux/actions/advertisements'
+import { connect } from 'react-redux';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -42,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdvertisementCard = (props) => {
-  const { advertisement } = props
+  const { advertisement, clearAnswers } = props
   const [open, setOpen] = useState(false)
   const classes = useStyles();
   const idDialog = 'advertisement'+advertisement.id+'-dialog-title'
@@ -52,6 +55,7 @@ const AdvertisementCard = (props) => {
 
   const handleClose = () => {
     setOpen(false)
+    clearAnswers()
   }
   return (
     <Paper className={classes.paper} elevation={3}>
@@ -89,4 +93,9 @@ const AdvertisementCard = (props) => {
   );
 }
 
-export default AdvertisementCard
+const mapStateToProps = (state) => ({
+})
+
+export default connect(mapStateToProps,{
+  clearAnswers
+})(AdvertisementCard)

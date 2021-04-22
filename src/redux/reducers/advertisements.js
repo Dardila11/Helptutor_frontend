@@ -4,7 +4,8 @@ import {
     SET_IS_CREATE,
     CREATING_ADVERTISEMENT,
     GET_ANSWERS,
-    GET_STUDENT
+    GET_STUDENT,
+    CLEAR_ANSWERS
 } from 'src/redux/actions/types_advertisements'
 
 const initialValues = {
@@ -64,6 +65,17 @@ const advertisements = (state = initialState, action) => {
             let advertisement = state.advertisement
             advertisement = {...advertisement,
                                 student: action.payload}
+            return{
+                ...state,
+                advertisement: advertisement
+            }
+        }
+        case CLEAR_ANSWERS: {
+            let advertisement = state.advertisement
+            advertisement = {
+                ...advertisement,
+                answers: []
+            }
             return{
                 ...state,
                 advertisement: advertisement

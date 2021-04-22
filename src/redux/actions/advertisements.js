@@ -2,9 +2,8 @@ import Api from 'src/services/Api'
 import { launchAlert } from './alerts'
 
 import {
-    ADD_ADVERTISEMENT, LIST_ADVERTISEMENTS, CREATING_ADVERTISEMENT, GET_ANSWERS
+    ADD_ADVERTISEMENT, LIST_ADVERTISEMENTS, CREATING_ADVERTISEMENT, GET_ANSWERS, GET_STUDENT, CLEAR_ANSWERS
 } from './types_advertisements'
-import { GET_STUDENT } from './types_auth'
 
 export const addAdvertisement = (data) => (dispatch, getState) => {
     const request = Api.postAdvertisement(data,getState)
@@ -20,6 +19,7 @@ export const addAdvertisement = (data) => (dispatch, getState) => {
             dispatch(launchAlert('Anuncio publicado', 200))
         })
         .catch((err) => {
+            console.log(err.response)
             dispatch(
                 launchAlert('Error publicando el anuncio', err.response.status)
             )
@@ -62,5 +62,11 @@ export const getStudent = (id) => (dispatch, getState) => {
         dispatch(
             launchAlert('Error obteniendo estudiante', err.response.status)
         )
+    })
+}
+
+export const clearAnswers = () => (dispatch) =>{
+    dispatch({
+        type: CLEAR_ANSWERS
     })
 }

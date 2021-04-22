@@ -1,23 +1,27 @@
 import React, { useEffect } from 'react'
-import { Avatar, DialogContent, DialogTitle, Grid, makeStyles, Typography } from '@material-ui/core'
+import { Avatar, Box, DialogTitle, Grid, makeStyles, Typography } from '@material-ui/core'
 import AnswerFormView from './answerForm'
 
 //REDUX
 import { getAdvertisementAnswers } from 'src/redux/actions/advertisements'
 import { connect } from 'react-redux'
 import { getStudent } from 'src/redux/actions/advertisements'
+import AnswerCard from 'src/components/answerCard'
 
 const useStyles = makeStyles((theme) => ({
     cover: {        
-        width: 80,
-        height: 80
-    },
-    coverAnswer: {
-        width: 40,
-        height: 40
+        width: 70,
+        height: 70
     },
     answersTitle: {
         marginBlock: theme.spacing(1)
+    },
+    answers: {
+        marginLeft: theme.spacing(2)
+    },
+    content: {
+        marginTop: '0px',
+        margin: theme.spacing(2)
     }
 }))
 
@@ -31,23 +35,24 @@ const AnswerView = (props) => {
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [])
-    console.log(advertisement)
-    console.log(answers)
-    console.log(answers.length)
     return (        
             <>
                 <DialogTitle id='publications-dialog-title' align='center'>
-                    <Typography> ANUNCIO</Typography>
+                    <Typography><b>ANUNCIO</b></Typography>
                 </DialogTitle>
-                <DialogContent>
+                <Box className={classes.content}>
                     <Grid container>
-                                <Grid item xs={3}>
-                                    <Avatar className={classes.cover} alt='user photo' src='/static/images/avatars/avatar_6.png'/>
+                                <Grid item xs={2}>
+                                    <Box align='left'>
+                                        <Avatar className={classes.cover} alt='user photo' src='/static/images/avatars/avatar_6.png'/>
+                                    </Box>
                                     <Typography variant='h6'>
-                                        <b>{studentAd.user.first_name} {studentAd.user.last_name}</b>
+                                        <Box textAlign='left'>
+                                            <b>{studentAd.user.first_name} {studentAd.user.last_name}</b>
+                                        </Box>
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={8}>
+                                <Grid item xs={10}>
                                     <Typography>
                                         <b>{advertisement.title}</b>
                                     </Typography>
@@ -59,31 +64,23 @@ const AnswerView = (props) => {
                                     <AnswerFormView />
                                 </Grid>
                                 {answers.length > 0 ? 
-                                (
-                                    <Grid container>
-                                        <Grid className={classes.answersTitle} item xs={12}>
+                                (<>
+                                    <Grid className={classes.answersTitle} item xs={12}>
                                             <Typography variant='h6'>
                                                 Respuestas
                                             </Typography>
-                                        </Grid>
+                                    </Grid>
+                                    <Grid className={classes.answers} container>
                                         {answers.map((answer, index) =>(
-                                            <>
-                                            <Grid item xs={1}>
-                                                <Avatar className={classes.coverAnswer} alt='user photo' src='/static/images/avatars/avatar_6.png'/>
-                                            </Grid>
-                                            <Grid item xs={11}>
-                                                <Typography variant='h5'>
-                                                    {answer.description}
-                                                </Typography>
-                                            </Grid>
-                                            </>
+                                            <AnswerCard id={index} answer={answer}/>
                                         ))}
                                     </Grid>
+                                </>
                                 )
                                 :
                                 (<></>)}                 
                     </Grid>
-                </DialogContent>
+                </Box>
             </>                
     )
 }
