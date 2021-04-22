@@ -4,9 +4,9 @@ import { Formik } from 'formik';
 import Validation from './formikValues'
 
 //REDUX
-import { addPublication } from 'src/redux/actions/publications'
 
 import { connect } from 'react-redux'
+import { addAdvertisement } from 'src/redux/actions/advertisements';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -24,14 +24,14 @@ let initialValuesObj= {
     description: ''
 }
 
-const PublicationFormView = (props) => {
-    const {addPublication, student} = props
+const AdvertisementFormView = (props) => {
+    const {addAdvertisement, student} = props
     const classes = useStyles()
     return (
         
                     <>
                         <DialogTitle id='publications-dialog-title' align='center'>
-                            <Typography> AGREGAR PUBLICACIÓN</Typography>
+                            <Typography> NUEVO ANUNCIO</Typography>
                         </DialogTitle>
                         <DialogContent>
                             <Box
@@ -48,7 +48,7 @@ const PublicationFormView = (props) => {
                                                 ...values,
                                                 student: student
                                             })
-                                            addPublication(jsonValues)
+                                            addAdvertisement(jsonValues)
                                         }}>
                                         {({
                                             errors,
@@ -60,11 +60,11 @@ const PublicationFormView = (props) => {
                                         })=> (
                                             <form onSubmit={handleSubmit}>
                                                 <TextField
-                                                id='txt_title'
+                                                id='txt_title_advertisement'
                                                 error={Boolean(touched.title && errors.title)}
                                                 fullWidth
                                                 helperText={touched.title && errors.title}
-                                                label='Titulo'
+                                                label='Titulo del anuncio'
                                                 margin='normal'
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
@@ -75,11 +75,11 @@ const PublicationFormView = (props) => {
                                                     className: classes.input
                                                 }}/>
                                             <TextField
-                                            id='txt_description'
+                                            id='txt_description_advertisement'
                                             error={Boolean(touched.description && errors.description)}
                                             fullWidth
                                             helperText={touched.description && errors.description}
-                                            label='Descripción'
+                                            label='Descripción del anuncio'
                                             margin='normal'
                                             onBlur={handleBlur}
                                             onChange={handleChange}
@@ -91,7 +91,7 @@ const PublicationFormView = (props) => {
                                             }}/>
                                             <Button
                                             className={classes.submit}
-                                            id='btn_publish'
+                                            id='btn_publish_advertisement'
                                             color='primary'
                                             fullWidth
                                             type='submit'
@@ -115,5 +115,5 @@ const mapStateToProps = (state) => ({
   })
   
   export default connect(mapStateToProps, {
-    addPublication
-  })(PublicationFormView)
+    addAdvertisement
+  })(AdvertisementFormView)

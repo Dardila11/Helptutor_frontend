@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Avatar, Box, CardActionArea, Dialog, Grid, Paper } from '@material-ui/core';
-import AnswerFormView from 'src/views/studentviews/advertisements/answer/answerForm'
+import AnswerView from 'src/views/studentviews/advertisements/answers/answer'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     borderRadius: '20px',
-    border: theme.spacing(2)
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3)
   },
   options: {
       borderTop: theme.spacing(2)
@@ -81,7 +82,7 @@ const AdvertisementCard = (props) => {
           onClose={handleClose}    
           aria-labelledby={idDialog}
       >
-        <AnswerFormView id={advertisement.id} advertisement={advertisement}/>
+        <AnswerView id={advertisement.id} advertisement={advertisement}/>
       </Dialog>
     </Card>
     </Paper>

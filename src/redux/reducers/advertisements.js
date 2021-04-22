@@ -2,13 +2,16 @@ import {
     LIST_ADVERTISEMENTS,
     ADD_ADVERTISEMENT,
     SET_IS_CREATE,
-    CREATING_ADVERTISEMENT
+    CREATING_ADVERTISEMENT,
+    GET_ANSWERS,
+    GET_STUDENT
 } from 'src/redux/actions/types_advertisements'
 
 const initialValues = {
     title: '',
     description: '',
-    user: -1
+    student: {},
+    answers: []
 }
 
 const initialState = {
@@ -47,6 +50,23 @@ const advertisements = (state = initialState, action) => {
             return{
                 ...state,
                 creating: true
+            }
+        }
+        case GET_ANSWERS: {
+            let advertisement = state.advertisement
+            advertisement.answers = action.payload
+            return{
+                ...state,
+                advertisement: advertisement
+            }
+        }
+        case GET_STUDENT: {
+            let advertisement = state.advertisement
+            advertisement = {...advertisement,
+                                student: action.payload}
+            return{
+                ...state,
+                advertisement: advertisement
             }
         }
         default:

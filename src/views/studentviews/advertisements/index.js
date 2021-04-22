@@ -6,7 +6,7 @@ import { getAdvertisements } from 'src/redux/actions/advertisements'
 import { connect } from 'react-redux'
 import PublicationsViewSkeleton from 'src/components/skeletons/PublicationsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
-import PublicationFormView from './publicationForm'
+import AdvertisementFormView from './advertisementForm'
 import Page from 'src/components/Page'
 import AdvertisementCard from 'src/components/advertisementCard'
 
@@ -89,7 +89,7 @@ const StudentAdvertisementsView = (props) => {
                         onClose={handleClose}    
                         aria-labelledby='publications-dialog-title'
                     >
-                      <PublicationFormView />
+                      <AdvertisementFormView />
                     </Dialog>
                   </Box>
                 )}

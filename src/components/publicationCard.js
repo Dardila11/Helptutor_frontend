@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     borderRadius: '20px',
-    border: theme.spacing(2)
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
   },
   options: {
       borderTop: theme.spacing(2)

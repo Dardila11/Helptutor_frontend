@@ -161,6 +161,15 @@ const getAdvertisements = (state) => {
   return https.get('/api/advertisement/', tokenConfig(state))
 }
 
+const getAdvertisementAnswers = (id, state) => {
+  console.log(id)
+  return https.get('/api/answer/',tokenConfig(state))
+}
+
+const getStudent = (id, state) => {
+  return https.get('api/student/'+id+'/', tokenConfig(state))
+}
+
 const logConstants = {
   getCountries,
   getState,
@@ -177,6 +186,9 @@ const logConstants = {
   getTutors,
   getOffers,
   getAdvertisements,
+  getAdvertisementAnswers,
+  getStudent,
+  getServicesTutor,
   postTutor,
   postGoogleTutor,
   postGoogleStudent,
@@ -193,7 +205,6 @@ const logConstants = {
   updateStudentInfo,
   login,
   loginGoogle,
-  logout,
-  getServicesTutor
+  logout
 }
 export default logConstants

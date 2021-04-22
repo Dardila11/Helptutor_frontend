@@ -2,8 +2,9 @@ import Api from 'src/services/Api'
 import { launchAlert } from './alerts'
 
 import {
-    ADD_ADVERTISEMENT, LIST_ADVERTISEMENTS, CREATING_ADVERTISEMENT
+    ADD_ADVERTISEMENT, LIST_ADVERTISEMENTS, CREATING_ADVERTISEMENT, GET_ANSWERS
 } from './types_advertisements'
+import { GET_STUDENT } from './types_auth'
 
 export const addAdvertisement = (data) => (dispatch, getState) => {
     const request = Api.postAdvertisement(data,getState)
@@ -37,3 +38,29 @@ export const getAdvertisements = () => (dispatch, getState) => {
         )
     })
 } 
+
+export const getAdvertisementAnswers = (idAdvertisement) => (dispatch, getState) => {
+    Api.getAdvertisementAnswers(idAdvertisement,getState).then((res) => (
+        dispatch({
+            type: GET_ANSWERS,
+            payload: res.data
+        })
+    )).catch((err) => {
+        dispatch(
+            launchAlert('Error obteniendo respuestas', err.response.status)
+        )
+    })
+}
+
+export const getStudent = (id) => (dispatch, getState) => {
+    Api.getStudent(id, getState).then((res) => {
+        dispatch({
+            type: GET_STUDENT,
+            payload: res.data
+        })
+    }).catch((err) => {
+        dispatch(
+            launchAlert('Error obteniendo estudiante', err.response.status)
+        )
+    })
+}

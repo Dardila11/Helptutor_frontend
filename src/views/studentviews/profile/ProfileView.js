@@ -20,7 +20,9 @@ const StudentProfileView = (props) => {
   useEffect(
     () => {
       getStudentInfo(user.id)
-    })
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [])
 
   return (
     <Page title='Perfil'>
