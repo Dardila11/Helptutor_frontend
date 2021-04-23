@@ -42,76 +42,79 @@ const initialState = {
 }
 
 const auth = (state = initialState, action) => {
+  const payload = action.payload
   switch (action.type) {
     case ADD_TUTOR_GOOGLE: {
-      localStorage.setItem('token', action.payload.token)
+      localStorage.setItem('token', payload.token)
       return {
         ...state,
-        user: action.payload.user,
+        user: payload.user,
         isAuthenticated: true,
         isLoading: false
       }
     }
     case ADD_STUDENT_GOOGLE: {
-      localStorage.setItem('token', action.payload.token)
+      localStorage.setItem('token', payload.token)
       return {
         ...state,
-        user: action.payload.user,
+        user: payload.user,
         isAuthenticated: true,
         isLoading: false
       }
     }
     case ADD_TUTOR:
-      localStorage.setItem('token', action.payload.token)
+      localStorage.setItem('token', payload.token)
       return {
         ...state,
-        user: action.payload,
+        user: payload,
         isAuthenticated: true
       }
     case GET_TUTOR:
-      const data = action.payload
       const tutorInfo = {
-        first_name: data.user.first_name,
-        last_name: data.user.last_name,
-        gender: data.user.gender,
-        birthday: data.user.birthday,
-        email: data.user.email,
-        interest: data.interest,
-        methodology: data.methodology,
-        skills: data.skills
+        id: payload.user.id,
+        first_name: payload.user.first_name,
+        last_name: payload.user.last_name,
+        gender: payload.user.gender,
+        birthday: payload.user.birthday,
+        email: payload.user.email,
+        interest: payload.interest,
+        methodology: payload.methodology,
+        skills: payload.skills
       }
       return {
         ...state,
         userInfo: tutorInfo,
         user: {
+          id: tutorInfo.id,
           first_name: tutorInfo.first_name,
           last_name: tutorInfo.last_name
         },
         isAuthenticated: true
       }
     case ADD_STUDENT:
-      localStorage.setItem('token', action.payload.token)
+      localStorage.setItem('token', payload.token)
       return {
         ...state,
-        user: action.payload,
+        user: payload,
         isAuthenticated: true
       }
     case UPDATE_TUTOR:
-      const data1 = action.payload
       const tutorInfo1 = {
-        first_name: data1.user.first_name,
-        last_name: data1.user.last_name,
-        gender: data1.user.gender,
-        birthday: data1.user.birthday,
-        email: data1.user.email,
-        interest: data1.interest,
-        methodology: data1.methodology,
-        skills: data1.skills
+        id: payload.user.id,
+        first_name: payload.user.first_name,
+        last_name: payload.user.last_name,
+        gender: payload.user.gender,
+        birthday: payload.user.birthday,
+        email: payload.user.email,
+        interest: payload.interest,
+        methodology: payload.methodology,
+        skills: payload.skills
       }
       return {
         ...state,
         userInfo: tutorInfo1,
         user: {
+          id: tutorInfo1.id,
           first_name: tutorInfo1.first_name,
           last_name: tutorInfo1.last_name
         },
@@ -132,13 +135,18 @@ const auth = (state = initialState, action) => {
         ...state,
         isAuthenticated: true,
         isLoading: false,
-        user: action.payload
+        user: payload
       }
     case LOGIN_SUCCESS:
-      localStorage.setItem('token', action.payload.token)
+      localStorage.setItem('token', payload.token)
       return {
         ...state,
-        ...action.payload,
+        ...payload,
+        user: {
+          id: payload.user.id,
+          first_name: payload.user.first_name,
+          last_name: payload.user.last_name
+        },
         isAuthenticated: true,
         isLoading: false
       }
@@ -160,10 +168,9 @@ const auth = (state = initialState, action) => {
         isRunning: true
       }
     case UPDATE_USER_INFORMATION:
-      const newUserInfo = action.payload
       return {
         ...state,
-        user: newUserInfo,
+        user: payload,
         isAuthenticated: true
       }
     case ACTION_END:

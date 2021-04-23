@@ -23,6 +23,8 @@ export const updateTutor = (data) => (dispatch, getState) => {
   const request = Api.updateTutorInfo(data, getState)
   request
     .then((res) => {
+      console.log('RESPONSE UPDATE TUTOR')
+      console.log(res)
       if (res.status === 200) {
         dispatch({
           type: UPDATE_TUTOR,
@@ -39,6 +41,8 @@ export const updateTutor = (data) => (dispatch, getState) => {
 export const getTutorInfo = (id) => (dispatch, getState) => {
   Api.getTutorInfo(id, getState)
     .then((res) => {
+      console.log('RESPONSE GET TUTOR INFO')
+      console.log(res)
       dispatch({
         type: GET_TUTOR,
         payload: res.data
@@ -176,6 +180,8 @@ export const loginGoogle = (data) => (dispatch) => {
   dispatch({ type: ACTION_RUNNING })
   Api.loginGoogle(data)
     .then((res) => {
+      console.log('RESPONSE: LOGIN GOOGLE')
+      console.log(res)
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data
