@@ -17,7 +17,7 @@ import {
   ACTION_RUNNING,
   FINISHED_LOADING,
   ACTION_END
-} from './types_auth'
+} from '../types/types_auth'
 
 export const updateTutor = (data) => (dispatch, getState) => {
   const request = Api.updateTutorInfo(data, getState)

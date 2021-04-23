@@ -15,7 +15,7 @@ import {
   FINISHED_LOADING,
   ACTION_END,
   UPDATE_USER_INFORMATION
-} from 'src/redux/actions/types_auth'
+} from 'src/redux/types/types_auth'
 
 const userInfoData = {
   first_name: '',

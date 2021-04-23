@@ -6,7 +6,7 @@ import {
   LIST_SPECIALITIES_TUTOR,
   SET_SERVICE_TUTOR,
   SET_IS_CREATE
-} from 'src/redux/actions/types_services'
+} from 'src/redux/types/types_services'
 
 const initialValuesService = {
     id: -1,

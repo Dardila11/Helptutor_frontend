@@ -10,7 +10,7 @@ import {
   SET_SPECIALITY_TUTOR,
   SET_IS_CREATE,
   UPDATE_SPECIALITY_TUTOR
-} from './types_knowledge_areas'
+} from '../types/types_knowledge_areas'
 
 export const getKnowledgeAreas = () => (dispatch) => {
   //   dispatch({ type: USER_LOADING });

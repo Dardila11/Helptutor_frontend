@@ -1,4 +1,4 @@
-import { GET_STUDENT, UPDATE_STUDENT } from 'src/redux/actions/types_student'
+import { GET_STUDENT, UPDATE_STUDENT } from 'src/redux/types/types_student'
 
 const userInfoData = {
   first_name: '',
@@ -9,7 +9,7 @@ const userInfoData = {
 }
 
 const initialState = {
-  student: null, 
+  student: null,
   isLoading: false,
   requestInProgress: true,
   userInfo: userInfoData
@@ -25,7 +25,7 @@ const tutorInfo = (state = initialState, action) => {
         gender: data.user.gender,
         birthday: data.user.birthday,
         email: data.user.email,
-        interest: data.interest,
+        interest: data.interest
       }
       return {
         ...state,

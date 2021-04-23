@@ -1,7 +1,7 @@
 import Api from 'src/services/Api'
 
-import { GET_STUDENT, UPDATE_STUDENT } from './types_student'
-import { UPDATE_USER_INFORMATION } from './types_auth'
+import { GET_STUDENT, UPDATE_STUDENT } from '../types/types_student'
+import { UPDATE_USER_INFORMATION } from '../types/types_auth'
 import { launchAlert } from './alerts'
 
 export const getStudentInfo = (id) => (dispatch, getState) => {

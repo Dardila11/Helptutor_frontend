@@ -1,4 +1,4 @@
-import { GET_TUTOR, UPDATE_TUTOR } from 'src/redux/actions/types_tutor'
+import { GET_TUTOR, UPDATE_TUTOR } from 'src/redux/types/types_tutor'
 
 const userInfoData = {
   first_name: '',

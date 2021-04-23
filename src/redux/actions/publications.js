@@ -2,8 +2,10 @@ import Api from 'src/services/Api'
 import { launchAlert } from './alerts'
 
 import {
-    ADD_PUBLICATION, LIST_PUBLICATIONS, CREATING
-} from './types_publications'
+  ADD_PUBLICATION,
+  LIST_PUBLICATIONS,
+  CREATING
+} from '../types/types_publications'
 
 export const addPublication = (data) => (dispatch, getState) => {
     const request = Api.postPublication(data,getState)

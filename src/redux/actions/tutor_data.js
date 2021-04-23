@@ -1,7 +1,7 @@
 import Api from 'src/services/Api'
 
-import { GET_TUTOR, UPDATE_TUTOR } from './types_tutor'
-import {  UPDATE_INFORMATION  } from './types_auth'
+import { GET_TUTOR, UPDATE_TUTOR } from '../types/types_tutor'
+import { UPDATE_INFORMATION } from '../types/types_auth'
 import { launchAlert } from './alerts'
 
 export const updateTutor = (data) => (dispatch, getState) => {

@@ -1,9 +1,9 @@
 import {
-    LIST_PUBLICATIONS,
-    ADD_PUBLICATION,
-    SET_IS_CREATE,
-    CREATING
-} from 'src/redux/actions/types_publications'
+  LIST_PUBLICATIONS,
+  ADD_PUBLICATION,
+  SET_IS_CREATE,
+  CREATING
+} from 'src/redux/types/types_publications'
 
 const initialValues = {
     title: '',

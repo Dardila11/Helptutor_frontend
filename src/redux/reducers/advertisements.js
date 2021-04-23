@@ -1,12 +1,12 @@
 import {
-    LIST_ADVERTISEMENTS,
-    ADD_ADVERTISEMENT,
-    SET_IS_CREATE,
-    CREATING_ADVERTISEMENT,
-    GET_ANSWERS,
-    GET_STUDENT,
-    CLEAR_ANSWERS
-} from 'src/redux/actions/types_advertisements'
+  LIST_ADVERTISEMENTS,
+  ADD_ADVERTISEMENT,
+  SET_IS_CREATE,
+  CREATING_ADVERTISEMENT,
+  GET_ANSWERS,
+  GET_STUDENT,
+  CLEAR_ANSWERS
+} from 'src/redux/types/types_advertisements'
 
 const initialValues = {
     title: '',

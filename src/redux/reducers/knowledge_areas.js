@@ -7,7 +7,7 @@ import {
   SET_SPECIALITY_TUTOR,
   SET_IS_CREATE,
   UPDATE_SPECIALITY_TUTOR
-} from 'src/redux/actions/types_knowledge_areas'
+} from 'src/redux/types/types_knowledge_areas'
 
 const initialValuesSpeciality = {
     id: -1,

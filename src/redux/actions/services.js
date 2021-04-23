@@ -9,7 +9,7 @@ import {
   LIST_SPECIALITIES_TUTOR,
   SET_SERVICE_TUTOR,
   SET_IS_CREATE
-} from './types_services'
+} from '../types/types_services'
 
 export const getServicesTutor = (pk_tutor) => (dispatch, getState) => {
   let values = {

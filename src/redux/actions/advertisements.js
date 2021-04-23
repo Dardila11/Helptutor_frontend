@@ -2,8 +2,13 @@ import Api from 'src/services/Api'
 import { launchAlert } from './alerts'
 
 import {
-    ADD_ADVERTISEMENT, LIST_ADVERTISEMENTS, CREATING_ADVERTISEMENT, GET_ANSWERS, GET_STUDENT, CLEAR_ANSWERS
-} from './types_advertisements'
+  ADD_ADVERTISEMENT,
+  LIST_ADVERTISEMENTS,
+  CREATING_ADVERTISEMENT,
+  GET_ANSWERS,
+  GET_STUDENT,
+  CLEAR_ANSWERS
+} from '../types/types_advertisements'
 
 export const addAdvertisement = (data) => (dispatch, getState) => {
     const request = Api.postAdvertisement(data,getState)
