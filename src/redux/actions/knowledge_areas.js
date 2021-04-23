@@ -45,6 +45,8 @@ export const getSpecialities = (pk_knowledge_area) => (dispatch) => {
       })
     })
     .catch((err) => {
+      console.log('ERROR getSpecialities')
+      console.log(err)
       dispatch(
         launchAlert('Error obteniedo especialidade', err.response.status)
       )

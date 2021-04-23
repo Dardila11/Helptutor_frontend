@@ -72,7 +72,7 @@ const getKnowledgeArea = (id) => {
 }
 
 const getSubKnowledgeAreas = (idArea) => {
-  return https.get('/api/knowledgearea/'+idArea+'/speciality/')
+  return https.get('/api/knowledgearea/' + idArea + '/knowledgearea/')
 }
 
 /*LOGIN*/
