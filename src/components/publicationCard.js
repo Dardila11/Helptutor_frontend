@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { Avatar, Box, Button, Grid, Paper } from '@material-ui/core';
+import { Avatar, Box, Dialog, Grid, IconButton, Paper } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import TutorSelectionView from 'src/views/studentviews/publications/tutorselection/tutorSelectionView';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    height: 150,
+    height: 120,
     
     margin: theme.spacing(1),
     borderRadius: '20px'
@@ -35,21 +36,37 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(3),
   },
   options: {
-      borderTop: theme.spacing(2)
+    marginTop: theme.spacing(2)
   }
 }));
 
 const PublicationCard = (props) => {
-  const { publication } = props
+  const { publication, isStudent} = props
   const classes = useStyles();
+  const [watch, setWatch] = useState(false)
+  const handleWatch = () => {
+    setWatch(true)
+  }
+  const handleWatchClose = () => {
+    setWatch(false)
+  }
+  let gridValue = 10
+  if(isStudent){
+    gridValue = 7
+  }
   return (
     <Paper className={classes.paper} elevation={3}>
     <Card className={classes.root}>
       <Grid container >
         <Grid item xs={2}>
-          <Avatar className={classes.cover} alt='user photo' src='/static/images/avatars/avatar_6.png'/>
+          <Box display='flex' flexDirection='column' alignItems='center' textAlign='center'>
+            <Avatar className={classes.cover} alt='user photo' src='/static/images/avatars/avatar_6.png'/>
+            {/*<Typography>
+                {student.user.first_name} {student.user.last_name}
+            </Typography>*/}
+          </Box>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={gridValue}>
           <Box className={classes.details}>
             <CardContent className={classes.content}>
               <Typography component="h5" variant="h5">
@@ -63,24 +80,39 @@ const PublicationCard = (props) => {
             </CardContent>
         </Box>
         </Grid>
-        <Grid className={classes.options} item xs={3}>
+        {isStudent? (
+          <Grid className={classes.options} item xs={3}>
+          <Box display='flex' flexDirection='column' alignItems='center' textAlign='center'>
             <Typography color="textSecondary">
-               <Box textAlign='center' fontWeight={500}>
-                  Opciones
-               </Box>
+               <b>Opciones</b>
             </Typography>
             <Box spacing={3}> 
-                <Button>
+                <IconButton color='primary' onClick={handleWatch}>
                     <VisibilityIcon/>
-                </Button>
-                <Button>
+                </IconButton>
+                <IconButton color='primary'>
                     <EditIcon />
-                </Button>   
-                <Button>
+                </IconButton>   
+                <IconButton color='primary'>
                     <DeleteIcon />
-                </Button>
+                </IconButton>
             </Box>
+            </Box>
+            {watch? 
+            (
+              <Dialog 
+                open={watch}
+                onClose={handleWatchClose}    
+                aria-labelledby='tutorSelection-dialog-title'>
+                  <TutorSelectionView />
+              </Dialog>
+            )
+            :
+            (
+              <></>
+            )}
         </Grid>
+        ):(<></>)}
       </Grid>
     </Card>
     </Paper>

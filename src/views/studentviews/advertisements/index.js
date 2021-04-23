@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme) => ({
   title:{
       margin: theme.spacing(1)
   },
-  buttonContainer: {
-    flex: 'auto',
-    width: 850,
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2)
+  button:{
+    width: 300
+  },
+  addAdButton:{
+    float: 'right'
   }
 }))
 
@@ -67,17 +67,19 @@ const StudentAdvertisementsView = (props) => {
                 {creating? (
                   <CircularProgress />
                 ):(                  
-                  <Box>
+                  <>
                     <Grid container spacing={4} className={classes.buttonContainer} >
                       <Grid item xs={6}>
-                          <Button fullWidth variant='contained' color='primary' startIcon={<AddCircleIcon/>}
-                          onClick={handleOpen}
-                          > 
-                          Agregar anuncio
-                          </Button>
+                        <Box className={classes.addAdButton}>
+                            <Button className={classes.button} variant='contained' color='primary' startIcon={<AddCircleIcon/>}
+                            onClick={handleOpen}
+                            > 
+                            Agregar anuncio
+                            </Button>
+                          </Box>
                         </Grid>
                         <Grid item xs={6}>
-                          <Button fullWidth variant='contained' color='primary' startIcon={<VisibilityIcon/>}
+                          <Button className={classes.button} variant='contained' color='primary' startIcon={<VisibilityIcon/>}
                           onClick={handleOpen}
                           > 
                           Ver mis anuncios
@@ -91,7 +93,7 @@ const StudentAdvertisementsView = (props) => {
                     >
                       <AdvertisementFormView />
                     </Dialog>
-                  </Box>
+                  </>
                 )}
                 <Box>
                         {advertisements.map((advertisement, index) => (

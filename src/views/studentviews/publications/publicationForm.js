@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
     buttonContainer:{
-        marginRight: theme.spacing(5)
+        width: 300
     },
     input: {
         color: '#005579'
@@ -47,7 +47,7 @@ const PublicationFormView = (props) => {
                 <Button fullWidth variant='contained' color='primary' startIcon={<AddCircleIcon/>}
                 onClick={handleOpen}
                 > 
-                Agregar publicación
+                Agregar publicación 
                 </Button>
             </Container>
             <Dialog

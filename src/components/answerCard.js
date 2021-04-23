@@ -5,6 +5,9 @@ const useStyles = makeStyles((theme) => ({
     coverAnswer: {
         width: 40,
         height: 40
+    },
+    answer: {
+        marginBlockEnd: theme.spacing(2)
     }
 }))
 
@@ -16,8 +19,8 @@ const AnswerCard = (props) => {
             <Grid item xs={1}>
                 <Avatar className={classes.coverAnswer} alt='user photo' src='/static/images/avatars/avatar_6.png'/>
             </Grid>
-            <Grid item xs={11}>
-                <Typography variant='h6'>
+            <Grid className={classes.answer} item xs={11}>
+                <Typography lineheight={1} variant='h6'>
                     <b>Username</b>
                 </Typography>
                 <Typography variant='h6'>

@@ -57,7 +57,8 @@ const StudentPublicationsView = (props) => {
                           <PublicationCard
                             key={index}
                             id={publication.id}
-                            publication={publication}/>
+                            publication={publication}
+                            isStudent={true}/>
                         ))}
                 </Box>
             </>

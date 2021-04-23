@@ -1,18 +1,20 @@
 import {
-  LIST_ADVERTISEMENTS,
-  ADD_ADVERTISEMENT,
-  SET_IS_CREATE,
-  CREATING_ADVERTISEMENT,
-  GET_ANSWERS,
-  GET_STUDENT,
-  CLEAR_ANSWERS
+    LIST_ADVERTISEMENTS,
+    ADD_ADVERTISEMENT,
+    SET_IS_CREATE,
+    CREATING_ADVERTISEMENT,
+    GET_ANSWERS,
+    GET_STUDENT_ADVERTISEMENT,
+    CLEAR_ANSWERS,
+    LOADING_ADVERTISEMENT
 } from 'src/redux/types/types_advertisements'
 
 const initialValues = {
     title: '',
     description: '',
     student: {},
-    answers: []
+    answers: [],
+    loading: true
 }
 
 const initialState = {
@@ -61,7 +63,7 @@ const advertisements = (state = initialState, action) => {
                 advertisement: advertisement
             }
         }
-        case GET_STUDENT: {
+        case GET_STUDENT_ADVERTISEMENT: {
             let advertisement = state.advertisement
             advertisement = {...advertisement,
                                 student: action.payload}
@@ -71,10 +73,17 @@ const advertisements = (state = initialState, action) => {
             }
         }
         case CLEAR_ANSWERS: {
+            let advertisement = initialValues
+            return{
+                ...state,
+                advertisement: advertisement
+            }
+        }
+        case LOADING_ADVERTISEMENT: {
             let advertisement = state.advertisement
             advertisement = {
                 ...advertisement,
-                answers: []
+                loading: false
             }
             return{
                 ...state,
