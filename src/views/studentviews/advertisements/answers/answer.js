@@ -3,10 +3,10 @@ import { Avatar, Box, DialogTitle, Grid, makeStyles, Typography } from '@materia
 import AnswerFormView from './answerForm'
 
 //REDUX
-import { getAdvertisementAnswers } from 'src/redux/actions/advertisements'
+import { getAdvertisementAnswers, getStudent } from 'src/redux/actions/advertisements'
 import { connect } from 'react-redux'
-import { getStudent } from 'src/redux/actions/advertisements'
 import AnswerCard from 'src/components/answerCard'
+import AdvertisementInfoViewSkeleton from 'src/components/skeletons/AdvertisementInfoViewSkeleton'
 
 const useStyles = makeStyles((theme) => ({
     cover: {        
@@ -22,14 +22,16 @@ const useStyles = makeStyles((theme) => ({
     content: {
         marginTop: '0px',
         margin: theme.spacing(2)
-    }
+    },
 }))
 
 const AnswerView = (props) => {
-    const {answers, getAdvertisementAnswers, getStudent, advertisement, studentAd} = props
+    const {answers, getAdvertisementAnswers, getStudent, advertisement, studentAd, loading} = props
     const classes = useStyles()
 
     useEffect(()=>{
+        console.log("into answer dialog:")
+        console.log(advertisement.id)
         getAdvertisementAnswers(advertisement.id)
         getStudent(advertisement.student)
     },
@@ -37,57 +39,63 @@ const AnswerView = (props) => {
     [])
     return (        
             <>
-                <DialogTitle id='publications-dialog-title' align='center'>
-                    <Typography><b>ANUNCIO</b></Typography>
-                </DialogTitle>
-                <Box className={classes.content}>
-                    <Grid container>
-                                <Grid item xs={2}>
-                                    <Box align='left'>
-                                        <Avatar className={classes.cover} alt='user photo' src='/static/images/avatars/avatar_6.png'/>
-                                    </Box>
-                                    <Typography variant='h6'>
-                                        <Box textAlign='left'>
-                                            <b>{studentAd.user.first_name} {studentAd.user.last_name}</b>
-                                        </Box>
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={10}>
-                                    <Typography>
-                                        <b>{advertisement.title}</b>
-                                    </Typography>
-                                    <Typography>
-                                        {advertisement.description}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <AnswerFormView />
-                                </Grid>
-                                {answers.length > 0 ? 
-                                (<>
-                                    <Grid className={classes.answersTitle} item xs={12}>
-                                            <Typography variant='h6'>
-                                                Respuestas
+                {loading? (
+                    <AdvertisementInfoViewSkeleton/>
+                ):(
+                    <>
+                        <DialogTitle id='publications-dialog-title' align='center'>
+                            <Typography><b>ANUNCIO</b></Typography>
+                        </DialogTitle>
+                        <Box className={classes.content}>
+                            <Grid container>
+                                        <Grid item xs={2}>
+                                        <Box display='flex' flexDirection='column' alignItems='center' textAlign='center'>
+                                            <Avatar className={classes.cover} alt='user photo' src='/static/images/avatars/avatar_6.png'/>
+                                            <Typography>
+                                                <b>{studentAd.user.first_name} {studentAd.user.last_name}</b>
                                             </Typography>
-                                    </Grid>
-                                    <Grid className={classes.answers} container>
-                                        {answers.map((answer, index) =>(
-                                            <AnswerCard id={index} answer={answer}/>
-                                        ))}
-                                    </Grid>
-                                </>
-                                )
-                                :
-                                (<></>)}                 
-                    </Grid>
-                </Box>
+                                        </Box>
+                                        </Grid>
+                                        <Grid item xs={10}>
+                                            <Typography>
+                                                <b>{advertisement.title}</b>
+                                            </Typography>
+                                            <Typography>
+                                                {advertisement.description}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <AnswerFormView />
+                                        </Grid>
+                                        {answers.length > 0 ? 
+                                        (<>
+                                            <Grid className={classes.answersTitle} item xs={12}>
+                                                    <Typography variant='h6'>
+                                                        Respuestas
+                                                    </Typography>
+                                            </Grid>
+                                            <Grid className={classes.answers} container>
+                                                {answers.map((answer, index) =>(
+                                                    <AnswerCard id={index} answer={answer}/>
+                                                ))}
+                                            </Grid>
+                                        </>
+                                        )
+                                        :
+                                        (<></>)}                 
+                            </Grid>
+                        </Box>
+                    </>
+                )}
+                
             </>                
     )
 }
 
 const mapStateToProps = (state) => ({
     answers: state.advertisements.advertisement.answers,
-    studentAd: state.advertisements.advertisement.student
+    studentAd: state.advertisements.advertisement.student,
+    loading: state.advertisements.advertisement.loading
   })
   
   export default connect(mapStateToProps, {

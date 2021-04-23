@@ -2,7 +2,7 @@ import Api from 'src/services/Api'
 import { launchAlert } from './alerts'
 
 import {
-    ADD_ADVERTISEMENT, LIST_ADVERTISEMENTS, CREATING_ADVERTISEMENT, GET_ANSWERS, GET_STUDENT, CLEAR_ANSWERS
+    ADD_ADVERTISEMENT, LIST_ADVERTISEMENTS, CREATING_ADVERTISEMENT, GET_ANSWERS, GET_STUDENT_ADVERTISEMENT  , CLEAR_ANSWERS, LOADING_ADVERTISEMENT
 } from './types_advertisements'
 
 export const addAdvertisement = (data) => (dispatch, getState) => {
@@ -40,12 +40,14 @@ export const getAdvertisements = () => (dispatch, getState) => {
 } 
 
 export const getAdvertisementAnswers = (idAdvertisement) => (dispatch, getState) => {
-    Api.getAdvertisementAnswers(idAdvertisement,getState).then((res) => (
+    console.log('Advertisement action id: '+idAdvertisement)
+    Api.getAdvertisementAnswers(idAdvertisement,getState).then((res) => {
+        console.log(res.data)
         dispatch({
             type: GET_ANSWERS,
             payload: res.data
         })
-    )).catch((err) => {
+    }).catch((err) => {
         dispatch(
             launchAlert('Error obteniendo respuestas', err.response.status)
         )
@@ -53,10 +55,16 @@ export const getAdvertisementAnswers = (idAdvertisement) => (dispatch, getState)
 }
 
 export const getStudent = (id) => (dispatch, getState) => {
+    console.log('get student into action')
+    console.log(id)
     Api.getStudent(id, getState).then((res) => {
+        console.log(res.data)
         dispatch({
-            type: GET_STUDENT,
+            type: GET_STUDENT_ADVERTISEMENT,
             payload: res.data
+        })
+        dispatch({
+            type: LOADING_ADVERTISEMENT
         })
     }).catch((err) => {
         dispatch(
