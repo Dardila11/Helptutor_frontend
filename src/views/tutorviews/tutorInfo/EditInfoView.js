@@ -16,7 +16,7 @@ import { Formik } from 'formik'
 import formikValues from './formikValues'
 
 //REDUX
-import { getTutorInfo, updateTutor } from 'src/redux/actions/auth'
+import { getTutorInfo, updateTutor } from 'src/redux/actions/tutor_data'
 
 import { connect } from 'react-redux'
 

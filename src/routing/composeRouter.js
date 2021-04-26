@@ -8,13 +8,19 @@ import { MainLayout } from 'src/layouts/MainLayout'
 import TutorAccountLayout from 'src/layouts/TutorAccountLayout'
 import StudentAccountLayout from 'src/layouts/StudentAccountLayout'
 import StudentLayout from 'src/layouts/StudentLayout/index'
+import TutorLayout from 'src/layouts/TutorLayout'
 import RegisterView from 'src/views/auth/Register/RegisterView'
 import LoginView from 'src/views/auth/Login'
 import NotFoundView from 'src/views/errors/NotFoundView'
+
+//TUTOR VIEWS
 import EditInfoView from 'src/views/tutorviews/tutorInfo/EditInfoView'
 import ManageKnowledgeAreaView from 'src/views/tutorviews/manageKnowledgeArea'
 import ManageServicesView from 'src/views/tutorviews/manageServices'
 import ProfileView from 'src/views/tutorviews/profile/ProfileView'
+import TutorPublicationsView from 'src/views/tutorviews/publications/index'
+
+//STUDENT VIEWS
 import StudentProfileView from 'src/views/studentviews/profile/ProfileView'
 import StudentEditInfoView from 'src/views/studentviews/studentInfo/EditInfoView'
 import StudentPublicationsView from 'src/views/studentviews/publications/index'
@@ -39,6 +45,11 @@ const Routing = () => {
       <PrivateRoute path="/estudiante/cuenta" element={<StudentAccountLayout />}>
         <Route path="/perfil" element={<StudentProfileView />} />
         <Route path="/informacion" element={<StudentEditInfoView />} />
+      </PrivateRoute>
+
+      <PrivateRoute path="/tutor" element={<TutorLayout />} >
+        <Route path="/" element={<TutorPublicationsView />} />
+        <Route path="/publicaciones" element={<TutorPublicationsView />} />
       </PrivateRoute>
 
       <PrivateRoute path="/tutor" element={<TutorAccountLayout />}>

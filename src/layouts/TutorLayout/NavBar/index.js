@@ -5,7 +5,6 @@ import {
   IconButton,
   Typography
 } from '@material-ui/core'
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import { Link as RouterLink } from 'react-router-dom';
@@ -30,16 +29,10 @@ const useStyles = makeStyles((theme) => ({
 const TutorNavBar = () => {
   const classes = useStyles()
   return (
-      <Toolbar className={classes.toolbar}>        
-      <RouterLink to='news'>
+      <Toolbar className={classes.toolbar}>
+      <RouterLink to='/tutor/publicaciones'>
         <IconButton className={classes.options}>
-            <Typography variant='h4' >Noticias</Typography>
-            <LibraryBooksIcon className={classes.navicons} />
-        </IconButton>
-      </RouterLink>
-      <RouterLink to='offers'>
-        <IconButton className={classes.options}>
-            <Typography variant='h4' >Ofertas</Typography>
+            <Typography variant='h4' >Publicaciones</Typography>
             <ListAltIcon className={classes.navicons}/>
         </IconButton>
       </RouterLink>

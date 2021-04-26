@@ -12,6 +12,7 @@ const userInfoData = {
 }
 
 const initialState = {
+  tutor: '',
   isLoading: false,
   requestInProgress: true,
   userInfo: userInfoData
@@ -33,6 +34,7 @@ const tutorInfo = (state = initialState, action) => {
       }
       return {
         ...state,
+        tutor: data.id,
         userInfo: tutorInfo,
         isAuthenticated: true
       }

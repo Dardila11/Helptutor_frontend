@@ -34,7 +34,7 @@ const SearchBar = () => {
         <IconButton className={classes.icon} type="submit" aria-label="search">
             <SearchIcon />
         </IconButton>
-        <TextField className={classes.input} id="searchInput" fullWidth label="Buscar en helptutor" variant="outlined" color='primary' margin='none'/>
+        <TextField className={classes.input} id="searchInput" fullWidth label="Buscar en helptutor" variant="outlined" color='primary' size='small'/>
         </Paper>
     </Box>
   );

@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const PublicationCard = (props) => {
+const StudentPublicationCard = (props) => {
   const { publication, isStudent} = props
   const classes = useStyles();
   const [watch, setWatch] = useState(false)
@@ -119,4 +119,4 @@ const PublicationCard = (props) => {
   );
 }
 
-export default PublicationCard
+export default StudentPublicationCard

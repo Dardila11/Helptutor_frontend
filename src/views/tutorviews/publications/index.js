@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
-import { Box, CircularProgress, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
 
 import { getPublications } from 'src/redux/actions/publications'
 import { connect } from 'react-redux'
 import PublicationsViewSkeleton from 'src/components/skeletons/PublicationsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
-import PublicationFormView from './publicationForm'
-import StudentPublicationCard from 'src/components/studentpublicationCard'
+import TutorPublicationCard from 'src/components/tutorPublicationCard'
 import Page from 'src/components/Page'
 
 const useStyles = makeStyles((theme) => ({
@@ -24,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const StudentPublicationsView = (props) => {
+const TutorPublicationsView = (props) => {
   const classes = useStyles()
-  const {loadingPublications, getPublications, publications,creating} = props
+  const {loadingPublications, getPublications, publications} = props
   useEffect(()=>{
     getPublications()
   },
@@ -44,21 +43,15 @@ const StudentPublicationsView = (props) => {
             <>
                 <Box className={classes.title} textAlign='center'>
                     <Typography variant='h4'>
-                    MIS PUBLICACIONES
+                    PUBLICACIONES
                     </Typography>
                 </Box>
-                {creating? (
-                  <CircularProgress />
-                ):(                  
-                  <PublicationFormView/>
-                )}
                 <Box>
                         {publications.map((publication, index) => (
-                          <StudentPublicationCard
+                          <TutorPublicationCard
                             key={index}
                             id={publication.id}
-                            publication={publication}
-                            isStudent={true}/>
+                            publication={publication}/>
                         ))}
                 </Box>
             </>
@@ -71,10 +64,9 @@ const StudentPublicationsView = (props) => {
 
 const mapStateToProps = (state) => ({
   publications: state.publications.publications,
-  loadingPublications: state.publications.loadingPublications,
-  creating: state.publications.creating
+  loadingPublications: state.publications.loadingPublications
 })
 
 export default connect(mapStateToProps, {
   getPublications
-})(StudentPublicationsView)
+})(TutorPublicationsView)
