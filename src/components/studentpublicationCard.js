@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import { Avatar, Box, Dialog, Grid, IconButton, Paper } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import TutorSelectionView from 'src/views/studentviews/publications/tutorselection/tutorSelectionView';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Typography from '@material-ui/core/Typography'
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Paper } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit'
+import VisibilityIcon from '@material-ui/icons/Visibility'
+import TutorSelectionView from 'src/views/studentviews/publications/tutorselection/tutorSelectionView'
+import PublicationFormView from 'src/views/studentviews/publications/publicationForm'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,29 +44,32 @@ const useStyles = makeStyles((theme) => ({
 const StudentPublicationCard = (props) => {
   const { publication, isStudent} = props
   const classes = useStyles();
-  const [watch, setWatch] = useState(false)
+  const [watch, setWatch] = React.useState(false)
+  const [edit, setEdit] = React.useState(false)
+  const [deletep, setDelete] = React.useState(false)
+
   const handleWatch = () => {
     setWatch(true)
   }
-  const handleWatchClose = () => {
-    setWatch(false)
+  const handleEdit = () => {
+    setEdit(true)
   }
-  let gridValue = 10
+  const handleDelete = () => {
+    setDelete(true)
+  }
+  const handleClose = () => {
+    setWatch(false)
+    setEdit(false)
+    setDelete(false)
+  }
+  let gridValue = 12
   if(isStudent){
-    gridValue = 7
+    gridValue = 9
   }
   return (
     <Paper className={classes.paper} elevation={3}>
     <Card className={classes.root}>
       <Grid container >
-        <Grid item xs={2}>
-          <Box display='flex' flexDirection='column' alignItems='center' textAlign='center'>
-            <Avatar className={classes.cover} alt='user photo' src='/static/images/avatars/avatar_6.png'/>
-            {/*<Typography>
-                {student.user.first_name} {student.user.last_name}
-            </Typography>*/}
-          </Box>
-        </Grid>
         <Grid item xs={gridValue}>
           <Box className={classes.details}>
             <CardContent className={classes.content}>
@@ -90,27 +94,47 @@ const StudentPublicationCard = (props) => {
                 <IconButton color='primary' onClick={handleWatch}>
                     <VisibilityIcon/>
                 </IconButton>
-                <IconButton color='primary'>
+                <IconButton color='primary' onClick={handleEdit}>
                     <EditIcon />
                 </IconButton>   
-                <IconButton color='primary'>
+                <IconButton color='primary' onClick={handleDelete}>
                     <DeleteIcon />
                 </IconButton>
             </Box>
             </Box>
-            {watch? 
-            (
               <Dialog 
                 open={watch}
-                onClose={handleWatchClose}    
+                onClose={handleClose}    
                 aria-labelledby='tutorSelection-dialog-title'>
                   <TutorSelectionView />
               </Dialog>
-            )
-            :
-            (
-              <></>
-            )}
+              <Dialog 
+                open={edit}
+                onClose={handleClose}    
+                aria-labelledby='publications-dialog-title'>
+                  <PublicationFormView publication={publication}/>
+              </Dialog>
+              <Dialog 
+                open={deletep}
+                onClose={handleClose}    
+                aria-labelledby='tutorDeletePublication-dialog-title'>
+                  <DialogTitle align='center'>
+                    <Typography variant='h4'>
+                      Eliminar publicación
+                    </Typography>
+                  </DialogTitle>
+                  <DialogContent>
+                      ¿Estas seguro de eliminar la publicación <b>{publication.title}</b>?
+                  </DialogContent>
+                  <DialogActions>
+                      <Button variant='outlined' color='primary '>
+                        Cancelar
+                      </Button>
+                      <Button variant='contained' color='primary'>
+                        Eliminar
+                      </Button>
+                  </DialogActions>
+              </Dialog>
         </Grid>
         ):(<></>)}
       </Grid>

@@ -19,7 +19,6 @@ export const addAdvertisement = (data) => (dispatch, getState) => {
             dispatch(launchAlert('Anuncio publicado', 200))
         })
         .catch((err) => {
-            console.log(err.response)
             dispatch(
                 launchAlert('Error publicando el anuncio', err.response.status)
             )
@@ -40,9 +39,7 @@ export const getAdvertisements = () => (dispatch, getState) => {
 } 
 
 export const getAdvertisementAnswers = (idAdvertisement) => (dispatch, getState) => {
-    console.log('Advertisement action id: '+idAdvertisement)
     Api.getAdvertisementAnswers(idAdvertisement,getState).then((res) => {
-        console.log(res.data)
         dispatch({
             type: GET_ANSWERS,
             payload: res.data
@@ -55,10 +52,7 @@ export const getAdvertisementAnswers = (idAdvertisement) => (dispatch, getState)
 }
 
 export const getStudent = (id) => (dispatch, getState) => {
-    console.log('get student into action')
-    console.log(id)
     Api.getStudent(id, getState).then((res) => {
-        console.log(res.data)
         dispatch({
             type: GET_STUDENT_ADVERTISEMENT,
             payload: res.data

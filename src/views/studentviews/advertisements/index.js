@@ -61,7 +61,7 @@ const StudentAdvertisementsView = (props) => {
             <>
                 <Box className={classes.title} textAlign='center'>
                     <Typography variant='h4'>
-                    ANUNCIOS
+                    Anuncios
                     </Typography>
                 </Box>
                 {creating? (

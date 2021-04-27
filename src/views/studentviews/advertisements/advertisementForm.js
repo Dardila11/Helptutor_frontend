@@ -31,7 +31,7 @@ const AdvertisementFormView = (props) => {
         
                     <>
                         <DialogTitle id='publications-dialog-title' align='center'>
-                            <Typography> NUEVO ANUNCIO</Typography>
+                            <Typography variant='h4'> Nuevo anuncio</Typography>
                         </DialogTitle>
                         <DialogContent>
                             <Box

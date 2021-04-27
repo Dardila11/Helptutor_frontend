@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, Container, Dialog, DialogContent, DialogTitle, makeStyles, TextField, Typography } from '@material-ui/core'
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { Box, Button, Container, DialogContent, DialogTitle, makeStyles, TextField, Typography } from '@material-ui/core'
 import { Formik } from 'formik';
 import Validation from './formikValues'
 
@@ -8,11 +7,10 @@ import Validation from './formikValues'
 import { addPublication } from 'src/redux/actions/publications'
 
 import { connect } from 'react-redux'
+import { isUndefined } from 'lodash-es';
 
 const useStyles = makeStyles((theme) => ({
-    buttonContainer:{
-        width: 300
-    },
+    
     input: {
         color: '#005579'
     },
@@ -28,36 +26,15 @@ let initialValuesObj= {
 }
 
 const PublicationFormView = (props) => {
-    const {addPublication, student} = props
+    const {addPublication, student, publication} = props
     const [initialValues, setInitialValues] = useState(initialValuesObj)
-    const [open, setOpen] = useState(false)
     const classes = useStyles()
-
-    const handleOpen = () =>{
-        setInitialValues(initialValuesObj) //No es necesario
-        setOpen(true)
-    }
-
-    const handleClose = () =>{
-        setOpen(false)
-    }
+    const [edit, setEdit] = React.useState(false)
+    //if(isUndefined(publication)) setEdit(true)
     return (
-        <Box>
-            <Container className={classes.buttonContainer} >
-                <Button fullWidth variant='contained' color='primary' startIcon={<AddCircleIcon/>}
-                onClick={handleOpen}
-                > 
-                Agregar publicación 
-                </Button>
-            </Container>
-            <Dialog
-                open={open}
-                onClose={handleClose}    
-                aria-labelledby='publications-dialog-title'
-            >
                     <>
                         <DialogTitle id='publications-dialog-title' align='center'>
-                            <Typography> AGREGAR PUBLICACIÓN</Typography>
+                            <Typography> {true? ('Editar publicación'):('Agregar publicación')}</Typography>
                         </DialogTitle>
                         <DialogContent>
                             <Box
@@ -132,9 +109,7 @@ const PublicationFormView = (props) => {
 
                             </Box>
                         </DialogContent>
-                    </>                
-            </Dialog>
-        </Box>
+                    </>       
     )
 }
 

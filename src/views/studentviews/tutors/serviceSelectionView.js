@@ -18,13 +18,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Selecciona un tutor', 'Selecciona el horario', 'Pagar'];
+  return ['Información del tutor', 'Selecciona el horario', 'Pagar'];
 }
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return 'Selecciona el tutor'
+      return 'Información del tutor'
     case 1:
       return 'Selecciona el horario'
     case 2:
@@ -34,7 +34,7 @@ function getStepContent(step) {
   }
 }
 
-const TutorSelectionView = () => {
+const ServiceSelectionView = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
@@ -52,7 +52,7 @@ const TutorSelectionView = () => {
   return (
     <div className={classes.root}>
         <DialogTitle id='publications-dialog-title' align='center'>
-            <Typography className={classes.instructions} variant='h4'>{getStepContent(activeStep)}</Typography>
+            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
         </DialogTitle>
         <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
         <Grid container>         
@@ -127,4 +127,4 @@ const TutorSelectionView = () => {
   );
 }
 
-export default TutorSelectionView
+export default ServiceSelectionView

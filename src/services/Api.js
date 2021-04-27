@@ -171,6 +171,10 @@ const getStudent = (id, state) => {
   return https.get(`api/student/${id}/`, tokenConfig(state))
 }
 
+const getServices = (state) => {
+  return https.get('api/service/', tokenConfig(state))
+}
+
 const logConstants = {
   getCountries,
   getState,
@@ -190,6 +194,7 @@ const logConstants = {
   getAdvertisementAnswers,
   getStudent,
   getServicesTutor,
+  getServices,
   postTutor,
   postGoogleTutor,
   postGoogleStudent,

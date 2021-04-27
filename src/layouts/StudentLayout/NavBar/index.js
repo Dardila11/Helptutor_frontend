@@ -7,7 +7,6 @@ import {
 } from '@material-ui/core'
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -34,7 +33,7 @@ const StudentNavBar = () => {
       <Toolbar className={classes.toolbar}>        
       <RouterLink to='/estudiante/publicaciones'>
         <IconButton className={classes.options}>
-            <Typography variant='h4' >Publicaciones</Typography>
+            <Typography variant='h4' >Mis publicaciones</Typography>
             <LibraryBooksIcon className={classes.navicons} />
         </IconButton>
       </RouterLink>
@@ -50,12 +49,6 @@ const StudentNavBar = () => {
             <PeopleAltIcon className={classes.navicons}/>
         </IconButton>
       </RouterLink>
-      <RouterLink to='/estudiante/cuenta/perfil'>
-        <IconButton className={classes.options}>
-            <Typography variant='h4'>Perfil</Typography>
-            <AccountBoxIcon className={classes.navicons}/>
-        </IconButton>
-       </RouterLink>
       </Toolbar>
   )
 }

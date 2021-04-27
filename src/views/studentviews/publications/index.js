@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Box, CircularProgress, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Box, Button, CircularProgress, Container, Dialog, makeStyles, Paper, Typography } from '@material-ui/core'
 
 import { getPublications } from 'src/redux/actions/publications'
 import { connect } from 'react-redux'
@@ -8,12 +8,16 @@ import SearchBar from 'src/components/SearchBar'
 import PublicationFormView from './publicationForm'
 import StudentPublicationCard from 'src/components/studentpublicationCard'
 import Page from 'src/components/Page'
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
     borderRadius: '20px',
     width: 900
+  },
+  buttonContainer:{
+    width: 300
   },
   cardsContent: {
       margin: theme.spacing(2),
@@ -27,11 +31,20 @@ const useStyles = makeStyles((theme) => ({
 const StudentPublicationsView = (props) => {
   const classes = useStyles()
   const {loadingPublications, getPublications, publications,creating} = props
+  const [open, setOpen] = React.useState(false)
   useEffect(()=>{
     getPublications()
   },
   // eslint-disable-next-line react-hooks/exhaustive-deps
   [])
+
+  const handleOpen = () =>{
+      setOpen(true)
+  }
+
+  const handleClose = () =>{
+      setOpen(false)
+  }
 
   return (
     <Page title='Publicaciones'>
@@ -44,13 +57,27 @@ const StudentPublicationsView = (props) => {
             <>
                 <Box className={classes.title} textAlign='center'>
                     <Typography variant='h4'>
-                    MIS PUBLICACIONES
+                    Mis plublicaciones
                     </Typography>
                 </Box>
                 {creating? (
                   <CircularProgress />
-                ):(                  
-                  <PublicationFormView/>
+                ):(         
+                  <>         
+                  <Container className={classes.buttonContainer} >
+                      <Button variant='contained' color='primary' startIcon={<AddCircleIcon/>}
+                      onClick={handleOpen}
+                      > 
+                      Agregar publicación
+                      </Button>
+                  </Container>
+                  <Dialog
+                      open={open}
+                      onClose={handleClose}    
+                      aria-labelledby='publications-dialog-title'>                    
+                    <PublicationFormView/>
+                  </Dialog>
+                  </>
                 )}
                 <Box>
                         {publications.map((publication, index) => (

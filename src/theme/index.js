@@ -17,6 +17,9 @@ const theme = createMuiTheme({
     secondary: {
       main: '#8e9ea5'
     },
+    prices: {
+      main: '#00e676'
+    },
     text: {
       //primary: colors.blueGrey[900],
       primary: '#005579',

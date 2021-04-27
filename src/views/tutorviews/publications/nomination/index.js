@@ -23,9 +23,6 @@ let initialValuesObj= {
 const NominationView = (props) => {
     const classes = useStyles()
     const {publication, tutor} = props
-
-    console.log(publication.id)
-    console.log(tutor)
     return (
         
                     <>

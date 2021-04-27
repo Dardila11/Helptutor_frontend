@@ -30,8 +30,6 @@ const AnswerView = (props) => {
     const classes = useStyles()
 
     useEffect(()=>{
-        console.log("into answer dialog:")
-        console.log(advertisement.id)
         getAdvertisementAnswers(advertisement.id)
         getStudent(advertisement.student)
     },
@@ -76,7 +74,7 @@ const AnswerView = (props) => {
                                             </Grid>
                                             <Grid className={classes.answers} container>
                                                 {answers.map((answer, index) =>(
-                                                    <AnswerCard id={index} answer={answer}/>
+                                                    <AnswerCard id={answer.id} key={index} answer={answer}/>
                                                 ))}
                                             </Grid>
                                         </>
