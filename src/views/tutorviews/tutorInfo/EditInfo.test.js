@@ -37,7 +37,7 @@ afterEach(() => {
   cleanup()
 })
 
-/* beforeEach(() => {
+/* beforeEach(() => 
   /**
    * render our component with a initialState.
    * this render comes from our test-util.js
@@ -50,13 +50,6 @@ afterEach(() => {
     }
   })
 }) */
-
-const mockedUsedNavigate = jest.fn()
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockedUsedNavigate
-}))
-
 describe('TutorEditInfo View', () => {
   it('loading data', async () => {
     let loading = screen.getByRole('progressbar')
@@ -75,5 +68,11 @@ describe('TutorEditInfo View', () => {
     let email = await getByTestId('email')
     expect(email).toBeDisabled()
   })
+  it.todo('campos ingresados correctamente')
+  it.todo('campos incompletos')
+  it.todo('el campo correo no debe poder ser editado')
+  it.todo('el campo género, debe tener 3 opciones. Masculino, Femenino, Otro')
+
+
 })
 

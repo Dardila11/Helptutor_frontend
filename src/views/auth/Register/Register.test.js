@@ -38,7 +38,7 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockedUsedNavigate
 }))
 
-describe('RegisterView Test', () => {
+describe('RegisterView Tutor', () => {
   /* it('renders registerView form', () => {
     expect(screen.getByTestId('register-form')).toBeInTheDocument()
   }) */
@@ -144,4 +144,10 @@ describe('RegisterView Test', () => {
       expect(screen.getByText('Contraseñas no son iguales')).toBeInTheDocument()
     })
   })
+})
+
+describe('Register View - Estudiante', () => {
+  it.todo('el rol estudiante seleccionado')
+  it.todo('navega el view del estudiante')
+  
 })
