@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const responseGoogle = async (props, response, isUnicaucaEmail, role) => {
+  if(props.token===null){
   if (isUnicaucaEmail) {
     let jsonValues = {
       token: response.tokenId
@@ -56,7 +57,7 @@ const responseGoogle = async (props, response, isUnicaucaEmail, role) => {
     store.dispatch(
       launchAlert('El correo proporcionado no pertenece a la universidad del cauca', 1)
     )
-  }
+  }}
 }
 const LoginHooks = (props) => {
   let navigate = useNavigate()
@@ -116,7 +117,8 @@ const LoginHooks = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  token: state.auth.token
 })
 
 export default connect(mapStateToProps, {

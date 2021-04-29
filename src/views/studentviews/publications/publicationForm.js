@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Box, Button, Container, DialogContent, DialogTitle, makeStyles, TextField, Typography } from '@material-ui/core'
 import { Formik } from 'formik';
 import Validation from './formikValues'
@@ -7,7 +7,6 @@ import Validation from './formikValues'
 import { addPublication } from 'src/redux/actions/publications'
 
 import { connect } from 'react-redux'
-import { isUndefined } from 'lodash-es';
 
 const useStyles = makeStyles((theme) => ({
     
@@ -27,14 +26,18 @@ let initialValuesObj= {
 
 const PublicationFormView = (props) => {
     const {addPublication, student, publication} = props
-    const [initialValues, setInitialValues] = useState(initialValuesObj)
     const classes = useStyles()
-    const [edit, setEdit] = React.useState(false)
-    //if(isUndefined(publication)) setEdit(true)
+    let edit = false
+    let initialValues = {}
+    if(publication===null) initialValues = initialValuesObj
+    else {
+        initialValues = publication
+        edit = true
+    }
     return (
                     <>
                         <DialogTitle id='publications-dialog-title' align='center'>
-                            <Typography> {true? ('Editar publicación'):('Agregar publicación')}</Typography>
+                            <Typography> {edit? ('Editar publicación'):('Agregar publicación')} </Typography>
                         </DialogTitle>
                         <DialogContent>
                             <Box
@@ -99,7 +102,7 @@ const PublicationFormView = (props) => {
                                             fullWidth
                                             type='submit'
                                             variant='contained'>
-                                                Publicar
+                                                {edit? ('Actualizar'):('Agregar')}
                                             </Button>
                                         </form>
                                         )}

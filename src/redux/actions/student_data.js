@@ -1,10 +1,11 @@
 import Api from 'src/services/Api'
 
-import { GET_STUDENT, UPDATE_STUDENT } from '../types/types_student'
+import { GET_STUDENT, UPDATE_STUDENT, LOADING } from '../types/types_student'
 import { UPDATE_USER_INFORMATION } from '../types/types_auth'
 import { launchAlert } from './alerts'
 
 export const getStudentInfo = (id) => (dispatch, getState) => {
+  dispatch({type: LOADING})
   Api.getStudentInfo(id, getState)
       .then((res) => {
         dispatch({
@@ -13,6 +14,9 @@ export const getStudentInfo = (id) => (dispatch, getState) => {
         })
         dispatch({
           type: 'FINISHED_LOADING'
+        })
+        dispatch({
+          type: LOADING
         })
       })
       .catch((err) => {

@@ -75,7 +75,7 @@ const StudentPublicationsView = (props) => {
                       open={open}
                       onClose={handleClose}    
                       aria-labelledby='publications-dialog-title'>                    
-                    <PublicationFormView/>
+                    <PublicationFormView publication={null}/>
                   </Dialog>
                   </>
                 )}

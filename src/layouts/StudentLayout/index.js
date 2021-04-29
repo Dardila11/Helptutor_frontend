@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { makeStyles } from '@material-ui/core'
+import { makeStyles, Backdrop, Typography, CircularProgress, Box } from '@material-ui/core'
 import { Outlet } from 'react-router-dom'
 import StudentNavBar from '../StudentLayout/TopBar'
 
@@ -20,12 +20,16 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 auto',
     overflow: 'hidden',
     marginRight: theme.spacing(3)
-  }
+  },
+  backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      backgroundColor: theme.palette.common.white
+    },
 }))
 
 const StudentLayout = (props) => {
   const classes = useStyles()
-  const {getStudentInfo, user} = props
+  const {getStudentInfo, user, loading} = props
   useEffect(
     () => {
       getStudentInfo(user.id)
@@ -33,7 +37,15 @@ const StudentLayout = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [])
   return (
-    <div className={classes.root}>
+    loading ? (
+      <Backdrop className={classes.backdrop} open={true}>
+      <Box display='flex' flexDirection='column' alignItems='center'>
+        <Typography color='primary'>Cargando</Typography>
+        <CircularProgress color="primary" />
+        </Box>
+      </Backdrop>
+    ):(
+      <div className={classes.root}>
       <StudentNavBar />
       <div className={classes.contentContainer}>
         <div className={classes.content}>
@@ -41,11 +53,13 @@ const StudentLayout = (props) => {
         </div>
       </div>
     </div>
+    )
   )
 }
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  user: state.auth.user,
+  loading: state.studentInfo.isLoading
 })
 
 export default connect(mapStateToProps, {

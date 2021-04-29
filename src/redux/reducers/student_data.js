@@ -1,4 +1,4 @@
-import { GET_STUDENT, UPDATE_STUDENT } from 'src/redux/types/types_student'
+import { GET_STUDENT, UPDATE_STUDENT, LOADING } from 'src/redux/types/types_student'
 
 const userInfoData = {
   first_name: '',
@@ -32,6 +32,11 @@ const tutorInfo = (state = initialState, action) => {
         userInfo: student,
         isAuthenticated: true,
         student: data.id
+      }
+    case LOADING:
+      return {
+        ...state,
+        isLoading: !state.isLoading
       }
     case UPDATE_STUDENT:
       const data1 = action.payload
