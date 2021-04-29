@@ -1,4 +1,4 @@
-import { GET_TUTOR, UPDATE_TUTOR } from 'src/redux/types/types_tutor'
+import { GET_TUTOR, UPDATE_TUTOR, LOADING } from 'src/redux/types/types_tutor'
 
 const userInfoData = {
   first_name: '',
@@ -12,9 +12,8 @@ const userInfoData = {
 }
 
 const initialState = {
-  tutor: '',
-  isLoading: false,
-  requestInProgress: true,
+  tutor: null,
+  isLoading: true,
   userInfo: userInfoData
 }
 
@@ -38,6 +37,11 @@ const tutorInfo = (state = initialState, action) => {
         userInfo: tutorInfo,
         isAuthenticated: true
       }
+    case LOADING:
+      return {
+        ...state,
+        isLoading: false
+      }
     case UPDATE_TUTOR:
       const data1 = action.payload
       const tutorInfo1 = {
@@ -54,11 +58,6 @@ const tutorInfo = (state = initialState, action) => {
         ...state,
         userInfo: tutorInfo1,
         isAuthenticated: true
-      }
-    case 'FINISHED_LOADING':
-      return {
-        ...state,
-        requestInProgress: false
       }
     default:
       return state

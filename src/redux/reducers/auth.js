@@ -3,8 +3,6 @@ import {
   ADD_STUDENT,
   ADD_TUTOR_GOOGLE,
   ADD_STUDENT_GOOGLE,
-  UPDATE_TUTOR,
-  GET_TUTOR,
   USER_LOADING,
   USER_LOADED,
   LOGIN_SUCCESS,
@@ -14,26 +12,18 @@ import {
   ACTION_RUNNING,
   FINISHED_LOADING,
   ACTION_END,
-  UPDATE_USER_INFORMATION
+  UPDATE_USER_INFORMATION,
+  SELECT_ROLE
 } from 'src/redux/types/types_auth'
-
-const userInfoData = {
-  first_name: '',
-  last_name: '',
-  interest: '',
-  methodology: '',
-  skills: '',
-  sex: '',
-  birthday: '',
-  email: ''
-}
 
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: false,
   isLoading: false,
   isRunning: false,
-  userInfo: userInfoData,
+  isTutor: false,
+  isStudent: false,
+  roleSelected: null,
   user: {
     id: -1,
     first_name: '',
@@ -69,55 +59,11 @@ const auth = (state = initialState, action) => {
         user: payload,
         isAuthenticated: true
       }
-    case GET_TUTOR:
-      const tutorInfo = {
-        id: payload.user.id,
-        first_name: payload.user.first_name,
-        last_name: payload.user.last_name,
-        gender: payload.user.gender,
-        birthday: payload.user.birthday,
-        email: payload.user.email,
-        interest: payload.interest,
-        methodology: payload.methodology,
-        skills: payload.skills
-      }
-      return {
-        ...state,
-        userInfo: tutorInfo,
-        user: {
-          id: tutorInfo.id,
-          first_name: tutorInfo.first_name,
-          last_name: tutorInfo.last_name
-        },
-        isAuthenticated: true
-      }
     case ADD_STUDENT:
       localStorage.setItem('token', payload.token)
       return {
         ...state,
         user: payload,
-        isAuthenticated: true
-      }
-    case UPDATE_TUTOR:
-      const tutorInfo1 = {
-        id: payload.user.id,
-        first_name: payload.user.first_name,
-        last_name: payload.user.last_name,
-        gender: payload.user.gender,
-        birthday: payload.user.birthday,
-        email: payload.user.email,
-        interest: payload.interest,
-        methodology: payload.methodology,
-        skills: payload.skills
-      }
-      return {
-        ...state,
-        userInfo: tutorInfo1,
-        user: {
-          id: tutorInfo1.id,
-          first_name: tutorInfo1.first_name,
-          last_name: tutorInfo1.last_name
-        },
         isAuthenticated: true
       }
     case FINISHED_LOADING:
@@ -131,24 +77,45 @@ const auth = (state = initialState, action) => {
         isLoading: true
       }
     case USER_LOADED:
+      let boolTutor = (localStorage.getItem('isTutor') === 'true')
+      let boolStudent = (localStorage.getItem('isStudent') === 'true')
       return {
         ...state,
         isAuthenticated: true,
         isLoading: false,
-        user: payload
+        user: payload,
+        isStudent: boolStudent,
+        isTutor: boolTutor,
+        roleSelected: localStorage.getItem('role')
       }
     case LOGIN_SUCCESS:
+      console.log(payload)
+      let isStudent = false
+      let isTutor = false 
+      if(payload.roles[0]) isTutor=true
+      if(payload.roles[1]) isStudent=true
       localStorage.setItem('token', payload.token)
+      localStorage.setItem('isStudent',isStudent)
+      localStorage.setItem('isTutor', isTutor)
       return {
         ...state,
         ...payload,
         user: {
           id: payload.user.id,
           first_name: payload.user.first_name,
-          last_name: payload.user.last_name
+          last_name: payload.user.last_name,
+          photo: payload.user.photo
         },
         isAuthenticated: true,
-        isLoading: false
+        isLoading: false,
+        isStudent: isStudent,
+        isTutor: isTutor
+      }
+    case SELECT_ROLE:
+      localStorage.setItem('role', payload)
+      return {
+        ...state,
+        roleSelected: payload
       }
     case AUTH_ERROR:
     case LOGIN_FAIL:

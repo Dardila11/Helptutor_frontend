@@ -10,8 +10,7 @@ const userInfoData = {
 
 const initialState = {
   student: null,
-  isLoading: false,
-  requestInProgress: true,
+  isLoading: true,
   userInfo: userInfoData
 }
 
@@ -36,7 +35,7 @@ const tutorInfo = (state = initialState, action) => {
     case LOADING:
       return {
         ...state,
-        isLoading: !state.isLoading
+        isLoading: false
       }
     case UPDATE_STUDENT:
       const data1 = action.payload
@@ -51,11 +50,6 @@ const tutorInfo = (state = initialState, action) => {
         ...state,
         userInfo: student1,
         isAuthenticated: true
-      }
-    case 'FINISHED_LOADING':
-      return {
-        ...state,
-        requestInProgress: false
       }
     default:
       return state

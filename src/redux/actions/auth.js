@@ -16,7 +16,8 @@ import {
   LOGOUT_SUCCESS,
   ACTION_RUNNING,
   FINISHED_LOADING,
-  ACTION_END
+  ACTION_END,
+  SELECT_ROLE
 } from '../types/types_auth'
 
 export const updateTutor = (data) => (dispatch, getState) => {
@@ -154,7 +155,6 @@ export const loadUser = () => (dispatch, getState) => {
 
 export const login = (data) => (dispatch) => {
   dispatch({ type: ACTION_RUNNING })
-
   Api.login(data)
     .then((res) => {
       dispatch({
@@ -191,6 +191,13 @@ export const loginGoogle = (data) => (dispatch) => {
       })
       dispatch({ type: ACTION_END })
     })
+}
+
+export const selectRole = (role) => (dispatch) => {
+  dispatch({
+    type: SELECT_ROLE,
+    payload: role
+  })
 }
 
 export const logout = () => (dispatch, getState) => {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core'
+import { Backdrop, Box, CircularProgress, makeStyles, Typography } from '@material-ui/core'
 import TutorTopBar from './TopBar'
 
 import { getTutorInfo } from 'src/redux/actions/tutor_data'
@@ -20,12 +20,16 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 auto',
     overflow: 'hidden',
     marginRight: theme.spacing(3)
-  }
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: theme.palette.common.white
+  },
 }))
 
 const TutorLayout = (props) => {
   const classes = useStyles()
-  const {getTutorInfo, user} = props
+  const {getTutorInfo, user, loading} = props
   useEffect(
     () => {
       getTutorInfo(user.id)
@@ -34,6 +38,14 @@ const TutorLayout = (props) => {
     [])
 
   return (
+    loading ? (
+      <Backdrop className={classes.backdrop} open={true}>
+      <Box display='flex' flexDirection='column' alignItems='center'>
+        <Typography color='primary'>Cargando</Typography>
+        <CircularProgress color="primary" />
+        </Box>
+      </Backdrop>
+    ):(
     <div className={classes.root}>
       <TutorTopBar />  
         <div className={classes.contentContainer}>   
@@ -42,11 +54,12 @@ const TutorLayout = (props) => {
           </div>
         </div>
     </div>
-  )
+  ))
 }
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  user: state.auth.user,
+  loading: state.tutorInfo.isLoading
 })
 
 export default connect(mapStateToProps, {

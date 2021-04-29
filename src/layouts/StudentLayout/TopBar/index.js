@@ -88,6 +88,7 @@ const StudentTopBar = (props) => {
   const handleLogOut = () => {
     props.logout()
   }
+  
   return (
     <div className={classes.grow}>
       <Toolbar className={classes.toolbar} color="primary">

@@ -10,7 +10,8 @@ import StudentAccountLayout from 'src/layouts/StudentAccountLayout'
 import StudentLayout from 'src/layouts/StudentLayout/index'
 import TutorLayout from 'src/layouts/TutorLayout'
 import RegisterView from 'src/views/auth/Register/RegisterView'
-import LoginView from 'src/views/auth/Login'
+import LoginView from 'src/views/auth/Login/index'
+import SelectRoleView from 'src/views/auth/Login/selectRole'
 import NotFoundView from 'src/views/errors/NotFoundView'
 
 //TUTOR VIEWS
@@ -33,6 +34,7 @@ const Routing = () => {
       <Route path="/" element={<MainLayout />}>
         <Route path="login" element={<LoginView />} />
         <Route path="registrar" element={<RegisterView />} />
+        <Route path="seleccion-rol" element={<SelectRoleView/>} />
       </Route>
 
       <PrivateRoute path="/estudiante" element={<StudentLayout />}>

@@ -166,10 +166,6 @@ const getAdvertisementAnswers = (id, state) => {
   return https.get('/api/answer/',tokenConfig(state))
 }
 
-const getStudent = (id, state) => {
-  console.log("Get student api id: "+id)
-  return https.get(`api/student/${id}/`, tokenConfig(state))
-}
 
 const getServices = (state) => {
   return https.get('api/service/', tokenConfig(state))
@@ -192,7 +188,6 @@ const logConstants = {
   getOffers,
   getAdvertisements,
   getAdvertisementAnswers,
-  getStudent,
   getServicesTutor,
   getServices,
   postTutor,

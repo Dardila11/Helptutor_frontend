@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 //REDUX
-import { login } from 'src/redux/actions/auth'
+import { login, selectRole } from 'src/redux/actions/auth'
 import { connect } from 'react-redux'
 
 //COMPONENTS MATERIAL UI
@@ -55,12 +55,27 @@ const LoginView = (props) => {
 
   useEffect(
     () => {
-      if (props.isAuthenticated) {
-        navigate('/estudiante')
+      if (props.auth.isAuthenticated) {
+        if(props.auth.isStudent & props.auth.isTutor) {
+          console.log('Redirect to role view')
+          navigate('/seleccion-rol')
+          return
+        }
+        if(props.auth.isStudent){
+          console.log('Redirect to student view')
+          props.selectRole('student')
+          navigate('/estudiante')
+          return
+        }else{
+          console.log('Redirect to tutor view')
+          props.selectRole('tutor')
+          navigate('/tutor')
+          return
+        }
       }
       else navigate('/login')
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.isAuthenticated]
+    [props.auth.isAuthenticated]
   )
 
   return (
@@ -158,9 +173,10 @@ const LoginView = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  auth: state.auth
 })
 
 export default connect(mapStateToProps, {
+  selectRole,
   login
 })(LoginView)
