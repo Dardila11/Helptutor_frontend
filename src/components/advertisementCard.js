@@ -9,14 +9,6 @@ import { clearAnswers } from 'src/redux/actions/student/advertisements'
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    height: 120,
-    
-    margin: theme.spacing(1),
-    borderRadius: '20px',
-    border: '0px'
-  },
   details: {
   },
   content: {
@@ -27,7 +19,10 @@ const useStyles = makeStyles((theme) => ({
     height: 60
   },
   paper: {
+    display: 'flex',
+    height: 120,
     borderRadius: '20px',
+    margin: theme.spacing(1),
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3)
   },
@@ -63,7 +58,6 @@ const AdvertisementCard = (props) => {
   return (
     
     <Paper className={classes.paper} elevation={3}>
-    <Card className={classes.root}>
           <CardActionArea className={classes.cardAction} onClick={handleOpen}>
             <Grid container >
               <Grid item xs={2}>
@@ -93,7 +87,6 @@ const AdvertisementCard = (props) => {
             >
               <AnswerView id={advertisement.id} advertisement={advertisement} student={student}/>
             </Dialog>
-    </Card>
     </Paper>
   );
 }

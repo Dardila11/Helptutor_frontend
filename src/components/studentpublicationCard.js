@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     height: 120,
     margin: theme.spacing(1),
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
     borderRadius: '20px'
   },
   options: {
