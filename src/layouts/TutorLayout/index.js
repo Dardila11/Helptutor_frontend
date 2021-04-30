@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 import { Backdrop, Box, CircularProgress, makeStyles, Typography } from '@material-ui/core'
 import TutorTopBar from './TopBar'
 
-import { getTutorInfo } from 'src/redux/actions/tutor_data'
+import { getTutorInfo } from 'src/redux/actions/tutor/tutor_data'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({

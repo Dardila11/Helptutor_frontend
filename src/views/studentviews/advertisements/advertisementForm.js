@@ -6,7 +6,7 @@ import Validation from './formikValues'
 //REDUX
 
 import { connect } from 'react-redux'
-import { addAdvertisement } from 'src/redux/actions/advertisements';
+import { addAdvertisement } from 'src/redux/actions/student/advertisements';
 
 const useStyles = makeStyles((theme) => ({
 

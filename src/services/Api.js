@@ -131,6 +131,26 @@ const patchServiceTutor = (id, data) => {
   return https.patch('/api/service/'+id+'/', data)
 }
 
+const getNomination = (id, state) => {
+  return https.get('/api/nomination/'+id+'/', tokenConfig(state))
+}
+
+const getNominations = (state) => {
+  return https.get('/api/nomination/', tokenConfig(state))
+}
+
+const postNomination = (data, state) => {
+  return https.post('/api/nomination/', data, tokenConfig(state))
+}
+
+const patchNomination = (id,data, state) => {
+  return https.patch('/api/nomination/'+id+'/', data, tokenConfig(state))
+}
+
+const deleteNomination = (id, state) => {
+  return https.delete('/api/nomination/'+id+'/', tokenConfig(state))
+}
+
 /** ESTUDENT SERVICES */
 
 const postStudent = (data) => {
@@ -190,6 +210,8 @@ const logConstants = {
   getAdvertisementAnswers,
   getServicesTutor,
   getServices,
+  getNomination,
+  getNominations,
   postTutor,
   postGoogleTutor,
   postGoogleStudent,
@@ -198,10 +220,13 @@ const logConstants = {
   postStudent,
   postPublication,
   postAdvertisement,
+  postNomination,
   patchTutorKnowledgeAreas,
   patchServiceTutor,
+  patchNomination,
   deleteTutorKnowledgeArea,
   deleteServiceTutor,
+  deleteNomination,
   updateTutorInfo,
   updateStudentInfo,
   login,

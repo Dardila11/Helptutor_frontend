@@ -1,8 +1,8 @@
 import Api from 'src/services/Api'
 
-import { GET_TUTOR, UPDATE_TUTOR, LOADING } from '../types/types_tutor'
-import { UPDATE_USER_INFORMATION } from '../types/types_auth'
-import { launchAlert } from './alerts'
+import { GET_TUTOR, UPDATE_TUTOR, LOADING } from '../../types/types_tutor'
+import { UPDATE_USER_INFORMATION } from '../../types/types_auth'
+import { launchAlert } from '../alerts'
 
 export const getTutorInfo = (id) => (dispatch, getState) => {
   Api.getTutorInfo(id, getState)

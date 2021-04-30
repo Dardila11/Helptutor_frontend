@@ -3,7 +3,7 @@ import { makeStyles, Backdrop, Typography, CircularProgress, Box } from '@materi
 import { Outlet } from 'react-router-dom'
 import StudentNavBar from '../StudentLayout/TopBar'
 
-import { getStudentInfo } from 'src/redux/actions/student_data'
+import { getStudentInfo } from 'src/redux/actions/student/student_data'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({

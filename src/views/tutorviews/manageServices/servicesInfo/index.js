@@ -29,7 +29,7 @@ import {
   getSpecialitiesTutor,
   addServiceTutor,
   updateServiceTutor
-} from 'src/redux/actions/services'
+} from 'src/redux/actions/tutor/services'
 
 //UTILS
 import Validation from './formikValues'

@@ -17,7 +17,7 @@ import formikValues from './formikValues'
 import EditProfileViewSkeleton from 'src/components/skeletons/EditProfileViewSkeleton'
 
 //REDUX
-import { getStudentInfo, updateStudent } from 'src/redux/actions/student_data'
+import { getStudentInfo, updateStudent } from 'src/redux/actions/student/student_data'
 
 import { connect } from 'react-redux'
 

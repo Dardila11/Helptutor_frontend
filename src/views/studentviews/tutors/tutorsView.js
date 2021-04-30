@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
 
-import { getServices } from 'src/redux/actions/student_services'
+import { getServices } from 'src/redux/actions/student/student_services'
 import { connect } from 'react-redux'
 import PublicationsViewSkeleton from 'src/components/skeletons/PublicationsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'

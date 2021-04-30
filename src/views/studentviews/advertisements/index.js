@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Box, Button, CircularProgress, Dialog, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import { getAdvertisements } from 'src/redux/actions/advertisements'
+import { getAdvertisements } from 'src/redux/actions/student/advertisements'
 import { connect } from 'react-redux'
 import PublicationsViewSkeleton from 'src/components/skeletons/PublicationsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'

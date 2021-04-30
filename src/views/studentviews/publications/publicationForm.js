@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import Validation from './formikValues'
 
 //REDUX
-import { addPublication } from 'src/redux/actions/publications'
+import { addPublication } from 'src/redux/actions/student/student_publications'
 
 import { connect } from 'react-redux'
 

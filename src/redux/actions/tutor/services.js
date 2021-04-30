@@ -1,5 +1,5 @@
 import Api from 'src/services/Api'
-import { launchAlert } from './alerts'
+import { launchAlert } from '../alerts'
 
 import {
   LIST_SERVICES_TUTOR,
@@ -9,7 +9,7 @@ import {
   LIST_SPECIALITIES_TUTOR,
   SET_SERVICE_TUTOR,
   SET_IS_CREATE
-} from '../types/types_services'
+} from '../../types/types_services'
 
 export const getServicesTutor = (pk_tutor) => (dispatch, getState) => {
   let values = {

@@ -1,7 +1,7 @@
 import Api from 'src/services/Api'
 
 import { GET_SERVICES, LOADING_SERVICES } from 'src/redux/types/types_student_services'
-import { launchAlert } from './alerts'
+import { launchAlert } from '../alerts'
 
 export const getServices = () => (dispatch, getState) => {
     Api.getServices(getState)

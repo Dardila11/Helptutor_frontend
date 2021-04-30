@@ -3,7 +3,7 @@ import { Avatar, Box, DialogTitle, Grid, makeStyles, Typography } from '@materia
 import AnswerFormView from './answerForm'
 
 //REDUX
-import { getAdvertisementAnswers, getStudent } from 'src/redux/actions/advertisements'
+import { getAdvertisementAnswers, getStudent } from 'src/redux/actions/student/advertisements'
 import { connect } from 'react-redux'
 import AnswerCard from 'src/components/answerCard'
 import AdvertisementInfoViewSkeleton from 'src/components/skeletons/AdvertisementInfoViewSkeleton'

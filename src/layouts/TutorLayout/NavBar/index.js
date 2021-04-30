@@ -6,7 +6,6 @@ import {
   Typography
 } from '@material-ui/core'
 import ListAltIcon from '@material-ui/icons/ListAlt';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,12 +35,6 @@ const TutorNavBar = () => {
             <ListAltIcon className={classes.navicons}/>
         </IconButton>
       </RouterLink>
-      <RouterLink to='/tutor/cuenta/perfil'>
-        <IconButton className={classes.options}>
-            <Typography variant='h4'>Perfil</Typography>
-            <AccountBoxIcon className={classes.navicons}/>
-        </IconButton>
-       </RouterLink>
       </Toolbar>
   )
 }

@@ -20,7 +20,7 @@ import {
   deleteSpecialityTutor,
   setSpecialityTutor,
   setIsCreate
-} from 'src/redux/actions/knowledge_areas'
+} from 'src/redux/actions/tutor/knowledge_areas'
 
 const useStyles = makeStyles((theme) => ({
   root: {

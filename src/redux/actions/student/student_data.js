@@ -1,8 +1,8 @@
 import Api from 'src/services/Api'
 
-import { GET_STUDENT, UPDATE_STUDENT, LOADING } from '../types/types_student'
-import { UPDATE_USER_INFORMATION } from '../types/types_auth'
-import { launchAlert } from './alerts'
+import { GET_STUDENT, UPDATE_STUDENT, LOADING } from '../../types/types_student'
+import { UPDATE_USER_INFORMATION } from '../../types/types_auth'
+import { launchAlert } from '../alerts'
 
 export const getStudentInfo = (id) => (dispatch, getState) => {
   dispatch({type: LOADING})

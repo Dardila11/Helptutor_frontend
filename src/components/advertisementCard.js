@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { Avatar, Box, CardActionArea, Dialog, Grid, Paper } from '@material-ui/core';
 import AnswerView from 'src/views/studentviews/advertisements/answers/answer'
 
-import { clearAnswers } from 'src/redux/actions/advertisements'
+import { clearAnswers } from 'src/redux/actions/student/advertisements'
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({

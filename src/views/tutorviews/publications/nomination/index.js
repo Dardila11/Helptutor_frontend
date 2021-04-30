@@ -4,6 +4,7 @@ import { Box, Button, Container, DialogContent, DialogTitle, TextField, Typograp
 import { Formik } from 'formik';
 import Validation from './formikValues'
 import { connect } from 'react-redux';
+import { addNomination } from 'src/redux/actions/tutor/nominations'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +23,7 @@ let initialValuesObj= {
 
 const NominationView = (props) => {
     const classes = useStyles()
-    const {publication, tutor} = props
+    const {publication, tutor, addNomination, closeDialog} = props
     return (
         
                     <>
@@ -52,7 +53,8 @@ const NominationView = (props) => {
                                                 tutor: tutor
                                             })
                                             console.log(jsonValues)
-                                            //addAdvertisement(jsonValues)
+                                            addNomination(jsonValues)
+                                            closeDialog()
                                         }}>
                                         {({
                                             errors,
@@ -123,4 +125,5 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
+  addNomination
 })(NominationView)

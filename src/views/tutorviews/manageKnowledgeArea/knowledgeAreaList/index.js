@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import {
   getSpecialitiesTutor,
   setIsCreate
-} from '../../../../redux/actions/knowledge_areas'
+} from '../../../../redux/actions/tutor/knowledge_areas'
 import { connect } from 'react-redux'
 
 //COMPONENTS MATERAIL UI

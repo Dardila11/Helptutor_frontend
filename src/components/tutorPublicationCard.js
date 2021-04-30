@@ -80,7 +80,7 @@ const TutorPublicationCard = (props) => {
         open={open}
         onClose={handleClose}    
         aria-labelledby='tutorSelection-dialog-title'>
-          <NominationView publication={publication}/>
+          <NominationView publication={publication} closeDialog={handleClose}/>
       </Dialog>
     </Card>
     </Paper>

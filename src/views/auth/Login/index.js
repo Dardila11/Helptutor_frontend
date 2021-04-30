@@ -56,18 +56,15 @@ const LoginView = (props) => {
   useEffect(
     () => {
       if (props.auth.isAuthenticated) {
-        if(props.auth.isStudent & props.auth.isTutor) {
-          console.log('Redirect to role view')
+        if(props.auth.isStudent && props.auth.isTutor) {
           navigate('/seleccion-rol')
           return
         }
         if(props.auth.isStudent){
-          console.log('Redirect to student view')
           props.selectRole('student')
           navigate('/estudiante')
           return
         }else{
-          console.log('Redirect to tutor view')
           props.selectRole('tutor')
           navigate('/tutor')
           return

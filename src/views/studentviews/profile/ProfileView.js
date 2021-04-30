@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Card, Divider, makeStyles } from '@material-ui/core'
 
-import { getStudentInfo } from 'src/redux/actions/student_data'
+import { getStudentInfo } from 'src/redux/actions/student/student_data'
 import { connect } from 'react-redux'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 import Page from 'src/components/Page'
