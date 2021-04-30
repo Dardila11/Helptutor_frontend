@@ -79,15 +79,13 @@ const StudentPublicationsView = (props) => {
                   </Dialog>
                   </>
                 )}
-                <Box>
-                        {publications.map((publication, index) => (
-                          <StudentPublicationCard
-                            key={index}
-                            id={publication.id}
-                            publication={publication}
-                            isStudent={true}/>
-                        ))}
-                </Box>
+                {publications.map((publication, index) => (
+                  <StudentPublicationCard
+                    key={index}
+                    id={publication.id}
+                    publication={publication}
+                    isStudent={true}/>
+                ))}
             </>
         )}
         </Paper>

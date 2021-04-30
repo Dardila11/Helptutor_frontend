@@ -11,13 +11,6 @@ import TutorSelectionView from 'src/views/studentviews/publications/tutorselecti
 import PublicationFormView from 'src/views/studentviews/publications/publicationForm'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    height: 120,
-    
-    margin: theme.spacing(1),
-    borderRadius: '20px'
-  },
   details: {
     display: 'flex',
     flexDirection: 'column',
@@ -32,9 +25,10 @@ const useStyles = makeStyles((theme) => ({
     height: 60
   },
   paper: {
-    borderRadius: '20px',
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(3),
+    display: 'flex',
+    height: 120,
+    margin: theme.spacing(1),
+    borderRadius: '20px'
   },
   options: {
     marginTop: theme.spacing(2)
@@ -68,7 +62,6 @@ const StudentPublicationCard = (props) => {
   }
   return (
     <Paper className={classes.paper} elevation={3}>
-    <Card className={classes.root}>
       <Grid container >
         <Grid item xs={gridValue}>
           <Box className={classes.details}>
@@ -138,7 +131,6 @@ const StudentPublicationCard = (props) => {
         </Grid>
         ):(<></>)}
       </Grid>
-    </Card>
     </Paper>
   );
 }
