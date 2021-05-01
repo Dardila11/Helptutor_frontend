@@ -2,7 +2,7 @@ import Api from 'src/services/Api'
 import { launchAlert } from '../alerts'
 
 import {
-    ADD_ADVERTISEMENT, LIST_ADVERTISEMENTS, CREATING_ADVERTISEMENT, GET_ANSWERS, GET_STUDENT_ADVERTISEMENT  , CLEAR_ANSWERS, LOADING_ADVERTISEMENT
+    ADD_ADVERTISEMENT, LIST_ADVERTISEMENTS, CREATING_ADVERTISEMENT, GET_ANSWERS, ADD_ANSWER, GET_STUDENT_ADVERTISEMENT  , CLEAR_ANSWERS, LOADING_ADVERTISEMENT
 } from '../../types/types_advertisements'
 
 export const addAdvertisement = (data) => (dispatch, getState) => {
@@ -52,7 +52,7 @@ export const getAdvertisementAnswers = (idAdvertisement) => (dispatch, getState)
 }
 
 export const getStudent = (id) => (dispatch, getState) => {
-    Api.getStudent(id, getState).then((res) => {
+    Api.getStudentInfo(id, getState).then((res) => {
         dispatch({
             type: GET_STUDENT_ADVERTISEMENT,
             payload: res.data
@@ -64,6 +64,18 @@ export const getStudent = (id) => (dispatch, getState) => {
         dispatch(
             launchAlert('Error obteniendo estudiante', err.response.status)
         )
+    })
+}
+
+export const addAnswer = (data) => (dispatch, getState) => {
+    console.log(data)
+    Api.postAnswer(data,getState).then((res)=> {
+        dispatch({
+            type: ADD_ANSWER,
+            payload: res.data
+        })
+    }).catch((err)=>{
+        dispatch(launchAlert('Error comentando anuncio', err.response.status))
     })
 }
 

@@ -203,6 +203,10 @@ const getOfferNominations = (id,state) => {
   return https.get('api/nomination/', tokenConfig(state))
 }
 
+const postAnswer = (data,state) => {
+  return https.post('api/answer/', data, tokenConfig(state))
+}
+
 const logConstants = {
   getCountries,
   getState,
@@ -234,6 +238,7 @@ const logConstants = {
   postOffer,
   postAdvertisement,
   postNomination,
+  postAnswer,
   patchTutorKnowledgeAreas,
   patchServiceTutor,
   patchNomination,

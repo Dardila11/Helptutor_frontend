@@ -4,7 +4,7 @@ const getValues = (values) => {
   return {
     description: values.description,
     advertisement: values.advertisement,
-    student: values.student
+    user: values.user
   }
 }
 

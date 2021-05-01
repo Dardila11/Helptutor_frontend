@@ -49,7 +49,7 @@ const AnswerView = (props) => {
                                         <Grid item xs={2}>
                                         <Box display='flex' flexDirection='column' alignItems='center' textAlign='center'>
                                             <Avatar className={classes.cover} alt='user photo' src='/static/images/avatars/avatar_6.png'/>
-                                            <Typography>
+                                            <Typography variant='h6'>
                                                 <b>{studentAd.user.first_name} {studentAd.user.last_name}</b>
                                             </Typography>
                                         </Box>
@@ -63,7 +63,7 @@ const AnswerView = (props) => {
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <AnswerFormView />
+                                            <AnswerFormView advertisement={advertisement}/>
                                         </Grid>
                                         {answers.length > 0 ? 
                                         (<>

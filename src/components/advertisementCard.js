@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import { Avatar, Box, CardActionArea, Dialog, Grid, Paper } from '@material-ui/core';
 import AnswerView from 'src/views/studentviews/advertisements/answers/answer'
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
       borderTop: theme.spacing(2)
   },
   cardAction: {
-    border: 0
+    borderRadius: '20px'
   },
   userSpace: {
     display: 'flex',

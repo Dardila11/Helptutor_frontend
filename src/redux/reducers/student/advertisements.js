@@ -6,7 +6,8 @@ import {
     GET_ANSWERS,
     GET_STUDENT_ADVERTISEMENT,
     CLEAR_ANSWERS,
-    LOADING_ADVERTISEMENT
+    LOADING_ADVERTISEMENT,
+    ADD_ANSWER
 } from 'src/redux/types/types_advertisements'
 
 const initialValues = {
@@ -85,6 +86,14 @@ const advertisements = (state = initialState, action) => {
                 ...advertisement,
                 loading: false
             }
+            return{
+                ...state,
+                advertisement: advertisement
+            }
+        }
+        case ADD_ANSWER: {
+            let advertisement = state.advertisement
+            advertisement.answers = advertisement.answers.concat(action.payload)
             return{
                 ...state,
                 advertisement: advertisement

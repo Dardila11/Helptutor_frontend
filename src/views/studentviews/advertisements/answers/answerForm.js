@@ -5,7 +5,7 @@ import Validation from './formikValues'
 import SendIcon from '@material-ui/icons/Send';
 
 //REDUX
-
+import { addAnswer } from 'src/redux/actions/student/advertisements'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
@@ -19,12 +19,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 let initialValuesObj= {
-    title: '',
     description: ''
 }
 
 const AnswerFormView = (props) => {
-    const { student, advertisement} = props
+    const { user, advertisement, addAnswer} = props
     const classes = useStyles()
     return (
         <Box
@@ -33,14 +32,15 @@ const AnswerFormView = (props) => {
                     enableReinitialize = {true}
                     initialValues={initialValuesObj}
                     validationSchema={Validation.validation}
-                    onSubmit={(values) => {
+                    onSubmit={(values, {resetForm}) => {
                         let jsonValues = Validation.getValues({
                             ...values,
                             advertisement: advertisement.id,
-                            student: student
+                            user: user
                         })
                         console.log(jsonValues)
-                        //addPublication(jsonValues)
+                        addAnswer(jsonValues)
+                        resetForm({values: initialValuesObj})
                     }}>
                     {({
                         errors,
@@ -87,8 +87,9 @@ const AnswerFormView = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    student: state.studentInfo.student
+    user: state.auth.user.id
   })
   
   export default connect(mapStateToProps, {
+    addAnswer
   })(AnswerFormView)

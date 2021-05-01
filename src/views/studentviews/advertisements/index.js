@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, CircularProgress, Dialog, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Box, Button, CircularProgress, Dialog, DialogContent, DialogTitle, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { getAdvertisements } from 'src/redux/actions/student/advertisements'
@@ -36,6 +36,7 @@ const StudentAdvertisementsView = (props) => {
   const classes = useStyles()
   const {loadingAdvertisement, getAdvertisements, advertisements,creating} = props
   const [open, setOpen] = useState(false)
+  const [myAdsView, setMyAdsView] = useState(false)
 
   const handleOpen = () =>{
         setOpen(true)
@@ -43,6 +44,14 @@ const StudentAdvertisementsView = (props) => {
 
   const handleClose = () =>{
         setOpen(false)
+  }
+
+  const handleMyAdvertisements = () => {
+        setMyAdsView(true)
+  }
+
+  const handleMyAdvertisementsClose = () => {
+        setMyAdsView(false)
   }
 
   useEffect(()=>{
@@ -81,10 +90,18 @@ const StudentAdvertisementsView = (props) => {
                         </Grid>
                         <Grid item xs={6}>
                           <Button className={classes.button} variant='contained' color='primary' startIcon={<VisibilityIcon/>}
-                          onClick={handleOpen}
+                          onClick={handleMyAdvertisements}
                           > 
                           Ver mis anuncios
                           </Button>
+                          <Dialog open={myAdsView} onClose={handleMyAdvertisementsClose}>
+                              <DialogTitle>
+                                  Mis publicaciones
+                              </DialogTitle>
+                              <DialogContent>
+                                 
+                              </DialogContent>
+                          </Dialog>
                         </Grid>
                     </Grid>
                     <Dialog
