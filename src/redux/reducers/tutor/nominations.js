@@ -1,4 +1,4 @@
-import { ADD_NOMINATION, DELETE_NOMINATION, UPDATE_NOMINATION, GET_NOMINATION, GET_NOMINATIONS, LOADING, GET_PUBLICATIONS, JOIN } from 'src/redux/types/types_nomination'
+import { ADD_NOMINATION, DELETE_NOMINATION, UPDATE_NOMINATION, GET_NOMINATION, GET_NOMINATIONS, LOADING, GET_PUBLICATIONS } from 'src/redux/types/types_nomination'
 
 const initialState = {
     publications: [],
@@ -51,26 +51,6 @@ const nominations = (state =  initialState, action) => {
             return {
                 ...state,
                 publications: action.payload
-            }
-        case JOIN:
-            let publicationsj = state.publications
-            let nominationsj = state.nominations
-            for(const nom in nominationsj){
-                let res = publicationsj.filter((pub) => {
-                    if(nom.offer===pub.id){
-                        pub={
-                            ...pub,
-                            nomination: nom
-                        }
-                    }
-                    return pub
-                })
-                console.log(res)
-            }
-            console.log(publicationsj)
-            return {
-                ...state,
-                list: publicationsj
             }
         default:
             return state

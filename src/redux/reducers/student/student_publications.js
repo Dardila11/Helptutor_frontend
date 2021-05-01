@@ -2,7 +2,10 @@ import {
   LIST_PUBLICATIONS,
   ADD_PUBLICATION,
   SET_IS_CREATE,
-  CREATING
+  CREATING,
+  DELETE_PUBLICATION,
+  GET_NOMINATIONS,
+  UPDATE_PUBLICATION
 } from 'src/redux/types/types_publications'
 
 const initialValues = {
@@ -16,7 +19,8 @@ const initialState = {
     publication: initialValues,
     is_create: true,
     loadingPublications: true,
-    creating: false
+    creating: false,
+    nominations: []
 }
 
 const publications = (state = initialState, action) => {
@@ -42,6 +46,30 @@ const publications = (state = initialState, action) => {
                 return {
                 ...state, publication: state.publication, is_create: action.payload
                 }
+            }
+        case GET_NOMINATIONS:{
+            return {
+                ...state,
+                nominations: action.payload
+            }
+        }
+        case UPDATE_PUBLICATION:{
+            const publications = state.publications.map((item) => {
+                if (item.id === action.payload.id) return {...action.payload}
+                return item
+            })
+            return {
+                ...state,
+                is_create: false,
+                publications: publications
+            }
+        }
+        case DELETE_PUBLICATION:
+            return {
+                ...state,
+                services_tutor: state.services_tutor.filter(
+                    (item) => item.id !== action.payload.pk
+                )
             }
         case CREATING: {
             return{

@@ -1,18 +1,24 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Button, Container, DialogContent, DialogTitle, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Typography } from '@material-ui/core';
 import { Formik } from 'formik';
 import Validation from './formikValues'
 import { connect } from 'react-redux';
-import { addNomination } from 'src/redux/actions/tutor/nominations'
+import { addNomination, updateNomination, deleteNomination } from 'src/redux/actions/tutor/nominations'
+import { isUndefined } from 'lodash-es';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
   submit: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    margin: theme.spacing(1),
+    color: theme.palette.common.white
+  },
+  delete: {
+    margin:theme.spacing(1),
+    backgroundColor: '#ef5350',
+    color: theme.palette.common.white
   }
 }));
 
@@ -23,7 +29,23 @@ let initialValuesObj= {
 
 const NominationView = (props) => {
     const classes = useStyles()
-    const {publication, tutor, addNomination, closeDialog} = props
+    const {nomination,publication, tutor, addNomination, closeDialog, updateNomination, deleteNomination} = props
+    let opNomination = isUndefined(nomination)    
+    const [open, setOpen] = React.useState(false)
+
+    const handleDelete = () => {
+      setOpen(false)
+      closeDialog()
+      deleteNomination(nomination.id)
+    }
+
+    const handleOpen = () => {
+      setOpen(true)
+    }
+
+    const handleClose = () => {
+      setOpen(false)
+    }
     return (
         
                     <>
@@ -44,7 +66,7 @@ const NominationView = (props) => {
                                 <Container maxWidth='lg'>
                                     <Formik
                                         enableReinitialize = {true}
-                                        initialValues={initialValuesObj}
+                                        initialValues={opNomination? (initialValuesObj):(nomination)}
                                         validationSchema={Validation.validation}
                                         onSubmit={(values) => {
                                             let jsonValues = Validation.getValues({
@@ -52,8 +74,8 @@ const NominationView = (props) => {
                                                 offer: publication.id,
                                                 tutor: tutor
                                             })
-                                            console.log(jsonValues)
-                                            addNomination(jsonValues)
+                                            if(opNomination) addNomination(jsonValues)
+                                            else updateNomination(nomination.id,jsonValues)
                                             closeDialog()
                                         }}>
                                         {({
@@ -99,22 +121,69 @@ const NominationView = (props) => {
                                             InputProps={{
                                                 className: classes.input
                                             }}/>
-                                            <Button
-                                            className={classes.submit}
-                                            id='btn_nominate'
-                                            color='primary'
-                                            fullWidth
-                                            type='submit'
-                                            variant='contained'>
-                                                Postularme
-                                            </Button>
+                                            <Box display='flex' flexDirection='row'>
+                                              <Button
+                                              className={classes.submit}
+                                              id='btn_nominate'
+                                              color='primary'
+                                              fullWidth
+                                              type='submit'
+                                              variant='contained'>
+                                                  {opNomination ? ('Postularme'):('Actualizar')}
+                                              </Button>
+                                              {opNomination ? (<></>):(
+                                                <>
+                                                <Button
+                                                className={classes.delete}
+                                                id='btn_cancel_nominate'
+                                                color='primary'
+                                                fullWidth
+                                                onClick={handleOpen}                                                
+                                                variant='contained'>
+                                                    Eliminar
+                                                </Button>
+                                                </>
+                                              )}
+                                              <Button
+                                                className={classes.submit}
+                                                id='btn_cancel_nominate'
+                                                fullWidth
+                                                color='secondary'
+                                                onClick={closeDialog}
+                                                variant='contained'>
+                                                    Cancelar
+                                                </Button>
+                                            </Box>                                            
                                         </form>
                                         )}
 
                                     </Formik>
                                 </Container>
-
                             </Box>
+                            <Dialog
+                              open={open}
+                              onClose={handleClose}
+                              aria-labelledby="alert-dialog-title"
+                              aria-describedby="alert-dialog-description"
+                            >
+                              <DialogTitle id="alert-dialog-title">{"Advertencia"}</DialogTitle>
+                              <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                  ¿Estas seguro de eliminar esta postulacion?
+                                </DialogContentText>
+                              </DialogContent>
+                              <DialogActions>
+                                <Button onClick={handleClose} color="primary">
+                                  Cancelar
+                                </Button>
+                                <Button onClick={handleDelete} 
+                                  color="primary" 
+                                  variant='contained'
+                                  autoFocus>
+                                  Eliminar
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
                         </DialogContent>
                     </>  
   );
@@ -125,5 +194,7 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-  addNomination
+  addNomination,
+  updateNomination,
+  deleteNomination
 })(NominationView)
