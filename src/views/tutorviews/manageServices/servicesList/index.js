@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   },
   lateralView:{
     borderRadius: '20px'
+  },
+  button: {
+    textTransform: 'none'
   }
 }))
 
@@ -91,6 +94,7 @@ const ServicesListView = (props) => {
             
             <Container className={classes.actions}>
               <Button
+              className={classes.button}
               fullWidth
               color='primary'
               variant='contained'

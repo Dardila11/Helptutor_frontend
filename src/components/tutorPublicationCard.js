@@ -8,13 +8,6 @@ import NominationView from 'src/views/tutorviews/publications/nomination';
 import { isUndefined } from 'lodash-es';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    height: 120,
-    
-    margin: theme.spacing(1),
-    borderRadius: '20px'
-  },
   details: {
     display: 'flex',
     flexDirection: 'column',
@@ -29,7 +22,10 @@ const useStyles = makeStyles((theme) => ({
     height: 60
   },
   paper: {
+    display: 'flex',
+    height: 120,
     borderRadius: '20px',
+    margin: theme.spacing(1),
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
   },
@@ -51,7 +47,6 @@ const TutorPublicationCard = (props) => {
   }
   return (
     <Paper className={classes.paper} elevation={3}>
-    <Card className={classes.root}>
       <CardActionArea className={classes.cardAction} onClick={handleOpen}>
         <Grid container >
           <Grid item xs={2}>
@@ -91,7 +86,6 @@ const TutorPublicationCard = (props) => {
         aria-labelledby='tutorSelection-dialog-title'>
           <NominationView publication={publication} closeDialog={handleClose} nomination={nomination}/>
       </Dialog>
-    </Card>
     </Paper>
   );
 }
