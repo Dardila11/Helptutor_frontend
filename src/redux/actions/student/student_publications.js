@@ -4,11 +4,14 @@ import { launchAlert } from '../alerts'
 import {
   ADD_PUBLICATION,
   LIST_PUBLICATIONS,
-  CREATING
+  CREATING,
+  UPDATE_PUBLICATION,
+  DELETE_PUBLICATION,
+  GET_NOMINATIONS
 } from 'src/redux/types/types_publications'
 
 export const addPublication = (data) => (dispatch, getState) => {
-    const request = Api.postPublication(data,getState)
+    const request = Api.postOffer(data,getState)
     request
         .then((res) => {
             dispatch({
@@ -39,3 +42,38 @@ export const getPublications = () => (dispatch, getState) => {
         )
     })
 } 
+
+export const updatePublication = (id,data) => (dispatch, getState) => {
+    Api.patchOffer(id,data,getState).then((res)=>{
+        dispatch({
+            type: UPDATE_PUBLICATION,
+            payload: res.data
+        })
+        dispatch(launchAlert('Publicación actualizada',200))
+    }).catch((err)=>{
+        dispatch('Error actualizando publicación', err.response.status)
+    })
+}
+
+export const deletePublication = (id) => (dispatch, getState) => {
+    Api.deleteOffer(id,getState).then((res)=>{
+        dispatch({
+            type: DELETE_PUBLICATION,
+            payload: res.data
+        })
+        dispatch(launchAlert('Publicación eliminada', 200))
+    }).catch((err)=>{
+        dispatch(launchAlert('Error eliminando publicación', err.response.status))
+    })
+}
+
+export const getPublicationNominations = (id) => (dispatch, getState) => {
+    Api.getOfferNominations(id,getState).then((res)=>{
+        dispatch({
+            type: GET_NOMINATIONS,
+            payload: res.data
+        })
+    }).catch((err)=>{
+        dispatch('Error obteniendo postulaciones',err.response.status)
+    })
+}

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TutorPublicationsView = (props) => {
   const classes = useStyles()
-  const {loading, getPublications, getNominations, publications} = props
+  const {loading, getPublications, getNominations, publications, nominations} = props
   
   useEffect(()=>{
     getPublications()
@@ -53,7 +53,8 @@ const TutorPublicationsView = (props) => {
                           <TutorPublicationCard
                             key={index}
                             id={publication.id}
-                            publication={publication}/>
+                            publication={publication}
+                            nomination={nominations.filter(nom => nom.offer === publication.id)[0]}/>
                         ))}
                 </Box>
             </>

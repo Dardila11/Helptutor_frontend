@@ -1,7 +1,7 @@
 import Api from 'src/services/Api'
 import { launchAlert } from '../alerts'
 
-import {ADD_NOMINATION, GET_NOMINATION, GET_NOMINATIONS, DELETE_NOMINATION, UPDATE_NOMINATION, GET_PUBLICATIONS, JOIN, LOADING} from 'src/redux/types/types_nomination'
+import {ADD_NOMINATION, GET_NOMINATION, GET_NOMINATIONS, DELETE_NOMINATION, UPDATE_NOMINATION, GET_PUBLICATIONS, LOADING} from 'src/redux/types/types_nomination'
 
 export const getPublications = () => (dispatch, getState) => {
     Api.getOffers(getState).then((res) => (
@@ -48,9 +48,6 @@ export const getNominations = () => (dispatch, getState) => {
         dispatch({
             type: GET_NOMINATIONS,
             payload: res.data
-        })
-        dispatch({
-            type: JOIN
         })
         dispatch({
             type: LOADING

@@ -9,6 +9,8 @@ import EditIcon from '@material-ui/icons/Edit'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import TutorSelectionView from 'src/views/studentviews/publications/tutorselection/tutorSelectionView'
 import PublicationFormView from 'src/views/studentviews/publications/publicationForm'
+import { deletePublication } from 'src/redux/actions/student/student_publications'
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StudentPublicationCard = (props) => {
-  const { publication, isStudent} = props
+  const { publication, isStudent, deletePublication} = props
   const classes = useStyles();
   const [watch, setWatch] = React.useState(false)
   const [edit, setEdit] = React.useState(false)
@@ -54,8 +56,13 @@ const StudentPublicationCard = (props) => {
   const handleEdit = () => {
     setEdit(true)
   }
-  const handleDelete = () => {
+
+  const handleOpenDelete = () => {
     setDelete(true)
+  }
+  const handleDelete = () => {
+    deletePublication(publication.id)
+    setDelete(false)
   }
   const handleClose = () => {
     setWatch(false)
@@ -97,7 +104,7 @@ const StudentPublicationCard = (props) => {
                 <IconButton color='primary' onClick={handleEdit}>
                     <EditIcon />
                 </IconButton>   
-                <IconButton color='primary' onClick={handleDelete}>
+                <IconButton color='primary' onClick={handleOpenDelete}>
                     <DeleteIcon />
                 </IconButton>
             </Box>
@@ -105,8 +112,10 @@ const StudentPublicationCard = (props) => {
               <Dialog 
                 open={watch}
                 onClose={handleClose}    
+                maxWidth='md'
+                fullWidth={true}
                 aria-labelledby='tutorSelection-dialog-title'>
-                  <TutorSelectionView />
+                  <TutorSelectionView id={publication.id} key={publication.id} publication={publication}/>
               </Dialog>
               <Dialog 
                 open={edit}
@@ -127,10 +136,10 @@ const StudentPublicationCard = (props) => {
                       ¿Estas seguro de eliminar la publicación <b>{publication.title}</b>?
                   </DialogContent>
                   <DialogActions>
-                      <Button variant='outlined' color='primary '>
+                      <Button variant='outlined' color='primary' onClick={handleClose}>
                         Cancelar
                       </Button>
-                      <Button variant='contained' color='primary'>
+                      <Button variant='contained' color='primary' onClick={handleDelete}>
                         Eliminar
                       </Button>
                   </DialogActions>
@@ -143,4 +152,9 @@ const StudentPublicationCard = (props) => {
   );
 }
 
-export default StudentPublicationCard
+const mapStateToProps = (state) => ({
+})
+
+export default connect(mapStateToProps, {
+  deletePublication
+})(StudentPublicationCard)

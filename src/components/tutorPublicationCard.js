@@ -5,6 +5,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Avatar, Box, CardActionArea, Dialog, Grid, Paper } from '@material-ui/core';
 import NominationView from 'src/views/tutorviews/publications/nomination';
+import { isUndefined } from 'lodash-es';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TutorPublicationCard = (props) => {
-  const { publication} = props
+  const { publication, nomination} = props
+  let opNomination = isUndefined(nomination)
   const classes = useStyles();
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
@@ -60,7 +62,7 @@ const TutorPublicationCard = (props) => {
               </Typography>*/}
             </Box>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={opNomination? (10):(7)}>
             <Box className={classes.details}>
               <CardContent className={classes.content}>
                 <Typography component="h5" variant="h5">
@@ -72,15 +74,22 @@ const TutorPublicationCard = (props) => {
                   {publication.description}
                 </Typography>
               </CardContent>
-          </Box>
+            </Box>
           </Grid>
+          {opNomination? (<></>):(
+            <Grid item xs={3}>
+                <Typography color='textSecondary'>
+                    Ya te postulaste a esta publicación, haz click para editar o eliminar tu postulación
+                </Typography>
+            </Grid>
+          )}
         </Grid>
       </CardActionArea>
       <Dialog 
         open={open}
         onClose={handleClose}    
         aria-labelledby='tutorSelection-dialog-title'>
-          <NominationView publication={publication} closeDialog={handleClose}/>
+          <NominationView publication={publication} closeDialog={handleClose} nomination={nomination}/>
       </Dialog>
     </Card>
     </Paper>

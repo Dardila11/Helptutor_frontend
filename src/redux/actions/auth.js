@@ -164,7 +164,8 @@ export const login = (data) => (dispatch) => {
       dispatch({ type: ACTION_END })
     })
     .catch((err) => {
-      dispatch(launchAlert('Error iniciando sesión', err.response.status))
+      if(err.response.status===400) dispatch(launchAlert('El usuario o contraseña son incorrectos', 500))
+      else dispatch(launchAlert('Error iniciando sesión', err.response.status))
       dispatch({
         type: LOGIN_FAIL
       })

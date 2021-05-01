@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Box, DialogTitle, Grid, IconButton } from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import NominationsView from './nominations'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,14 +35,20 @@ function getStepContent(step) {
   }
 }
 
-const TutorSelectionView = () => {
+const TutorSelectionView = (props) => {
+  const {publication} = props
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 
-  const handleNext = () => {
+  const handleNomination = (tutor) => {
     if(activeStep<2) setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    console.log(tutor)
+  }
 
+  const handleNext = () => {
+
+    if(activeStep<2) setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
@@ -63,21 +70,9 @@ const TutorSelectionView = () => {
                         </IconButton>
                 ):(<></>)}
                 </Grid>
-                <Grid item xs={11}>
+                <Grid item xs={10}>
                     {activeStep===0 ? (
-                        <>
-                        <Typography>
-                            Aqui van los tutores que se ofertaron
-                        </Typography>
-                        <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        className={classes.button}
-                        >
-                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                        </Button>
-                        </>
+                        <NominationsView key={publication.id} id={publication.id} publication={publication} next={handleNomination}/>
                     ):(<></>)}
                     {activeStep===1 ? (
                         <>
@@ -109,6 +104,10 @@ const TutorSelectionView = () => {
                         </Button>
                         </>
                     ):(<></>)}
+                </Grid>
+                <Grid item xs={1}>
+                      <>
+                      </>
                 </Grid>
             </Grid>
             <Stepper activeStep={activeStep}>
