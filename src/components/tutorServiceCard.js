@@ -8,13 +8,6 @@ import { Rating } from '@material-ui/lab';
 import ServiceSelectionView from 'src/views/studentviews/tutors/serviceSelectionView'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    height: 120,
-    
-    margin: theme.spacing(1),
-    borderRadius: '20px'
-  },
   userSpace: {
     display: 'flex',
     flexDirection: 'column',
@@ -34,7 +27,10 @@ const useStyles = makeStyles((theme) => ({
     height: 60
   },
   paper: {
+    display: 'flex',
+    height: 120,
     borderRadius: '20px',
+    margin: theme.spacing(1),
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
   },
@@ -62,7 +58,6 @@ const TutorServiceCard = (props) => {
   }
   return (
     <Paper className={classes.paper} elevation={3}>
-    <Card className={classes.root}>
     <CardActionArea className={classes.cardAction} onClick={handleOpen}>
       <Grid container >
         <Grid item xs={2}>
@@ -104,7 +99,6 @@ const TutorServiceCard = (props) => {
         aria-labelledby='tutorSelection-dialog-title'>
           <ServiceSelectionView />
       </Dialog>
-    </Card>
     </Paper>
   );
 }

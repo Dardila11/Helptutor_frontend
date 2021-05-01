@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1)
   },
   button:{
-    width: 300
+    width: 300,
+    textTransform: 'none'
   },
   addAdButton:{
     float: 'right'

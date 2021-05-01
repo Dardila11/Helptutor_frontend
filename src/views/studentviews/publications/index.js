@@ -25,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
   },
   title:{
       margin: theme.spacing(1)
-  }
+  },
+  button:{
+    textTransform: 'none'
+  },
 }))
 
 const StudentPublicationsView = (props) => {
@@ -65,7 +68,7 @@ const StudentPublicationsView = (props) => {
                 ):(         
                   <>         
                   <Container className={classes.buttonContainer} >
-                      <Button variant='contained' color='primary' startIcon={<AddCircleIcon/>}
+                      <Button className={classes.button} variant='contained' color='primary' startIcon={<AddCircleIcon/>}
                       onClick={handleOpen}
                       > 
                       Agregar publicación
