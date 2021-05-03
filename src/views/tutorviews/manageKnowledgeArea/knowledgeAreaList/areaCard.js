@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
   },
   button:{
     borderRadius: '20px',
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    textTransform: 'none',
   }
 }))
 
@@ -68,7 +69,7 @@ const AreaCard = (props) => {
                 props.getSpecialities(props.my_area.knowledge_area.knowledge_area)
                 props.setSpecialityTutor(props.my_area)
               }}>
-              <Typography align="left" variant='h5'> {props.area.name}</Typography>
+              <Typography align="center" variant='h5'> {props.area.name}</Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>

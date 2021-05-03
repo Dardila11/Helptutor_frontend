@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
   },
   button:{
     borderRadius: '20px',
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    textTransform: 'none'
   }
 }))
 
@@ -67,7 +68,7 @@ const ServiceCard = (props) => {
               onClick={()=>{
                 props.setServiceTutor(props.service)
               }}>
-              <Typography align="left" variant='h5'> {props.service.title}</Typography>
+              <Typography align="center" variant='h5'> {props.service.title}</Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>

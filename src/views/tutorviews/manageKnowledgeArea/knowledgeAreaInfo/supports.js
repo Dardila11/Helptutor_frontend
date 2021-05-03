@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
   },
   actionsContainer:{
     marginTop: theme.spacing(2)
+  },
+  button: {
+    textTransform: 'none'
   }
 }))
 
@@ -59,6 +62,7 @@ let initialValues= {
 const SupportsView = (props) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
+  const [file, setFile] = useState(null);
 
   const handleOpen = () =>{
     setOpen(true)
@@ -72,14 +76,13 @@ const SupportsView = (props) => {
     setOpen(false)
   }
 
-  const [archivo, setArchivo] = useState(null);
   const uploadFile = e => {
-    setArchivo(e);
+    setFile(e);
     if (e.length > 0) {
       var name = e[0].name
       var nameSplit = name.split('.')
       var ext = nameSplit[nameSplit.length - 1]
-      if(ext==='pdf') setArchivo(e[0])
+      if(ext==='pdf') setFile(e[0])
     }
     else { document.getElementById("text-file").textContent = ""; }
   }
@@ -164,6 +167,7 @@ const SupportsView = (props) => {
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                                 name="year"
+                                
                                 value={values.year}
                                 variant="outlined"
                               />
@@ -171,7 +175,7 @@ const SupportsView = (props) => {
                                 <Typography>
                                   Certificado: 
                                 </Typography>
-                                <UploadPDF uploadFile={uploadFile} file={archivo}/>
+                                <UploadPDF uploadFile={uploadFile} file={file}/>
                                 {/*<input
                                   className={classes.input}
                                   accept="application/pdf"
@@ -182,7 +186,7 @@ const SupportsView = (props) => {
                                 />
                                 <label htmlFor="contained-button-file">                                
                                     <Button variant="contained" color="primary" component="span" endIcon={<PublishIcon/>}>
-                                      Subir archivo
+                                      Subir file
                                     </Button>
                                 </label>*/}
                               </Grid>
@@ -226,7 +230,7 @@ const SupportsView = (props) => {
       </Paper>
       </Grid>
     <Grid item xs={5}>
-      <Button variant="contained" color="primary" component="span" onClick={handleOpen} endIcon={<AddCircleIcon/>}>
+      <Button className={classes.button} variant="contained" color="primary" component="span" onClick={handleOpen} endIcon={<AddCircleIcon/>}>
       Agregar Soporte
       </Button>
     </Grid>
