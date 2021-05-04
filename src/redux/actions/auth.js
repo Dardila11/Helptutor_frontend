@@ -123,7 +123,10 @@ export const addStudentGoogle = (data) => (dispatch) => {
         dispatch(launchAlert('El estudiante ya existe', err.response.status))
       else
         dispatch(
-          launchAlert('Error registrando estudiante con google', err.response.status)
+          launchAlert(
+            'Error registrando estudiante con google',
+            err.response.status
+          )
         )
     })
 }
@@ -164,7 +167,8 @@ export const login = (data) => (dispatch) => {
       dispatch({ type: ACTION_END })
     })
     .catch((err) => {
-      if(err.response.status===400) dispatch(launchAlert('El usuario o contraseña son incorrectos', 500))
+      if (err.response.status === 400)
+        dispatch(launchAlert('El usuario o contraseña son incorrectos', 500))
       else dispatch(launchAlert('Error iniciando sesión', err.response.status))
       dispatch({
         type: LOGIN_FAIL

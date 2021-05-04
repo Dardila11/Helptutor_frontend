@@ -38,7 +38,10 @@ const NavBar = (props) => {
           src={props.user.photo}
         />
         <List>
-          <ListItem component={RouterLink} to="/estudiante/cuenta/perfil" button>
+          <ListItem
+            component={RouterLink}
+            to="/estudiante/cuenta/perfil"
+            button>
             <ListItemText primary="Ver Perfil" />
           </ListItem>
           <ListItem
@@ -57,5 +60,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user
 })
 
-export default connect(mapStateToProps, {
-})(NavBar)
+export default connect(mapStateToProps, {})(NavBar)

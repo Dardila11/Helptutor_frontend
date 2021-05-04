@@ -1,26 +1,19 @@
 import React from 'react'
-import {
-  makeStyles,
-  Toolbar,
-  IconButton,
-  Typography
-} from '@material-ui/core'
-import ListAltIcon from '@material-ui/icons/ListAlt';
-import { Link as RouterLink } from 'react-router-dom';
+import { makeStyles, Toolbar, IconButton, Typography } from '@material-ui/core'
+import ListAltIcon from '@material-ui/icons/ListAlt'
+import { Link as RouterLink } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    
-  },
-  toolbar:{
+  root: {},
+  toolbar: {
     alignItems: 'center',
     color: theme.palette.common.white
   },
-  navicons:{
+  navicons: {
     marginRight: theme.spacing(3),
     marginLeft: theme.spacing(1)
   },
-  options:{
+  options: {
     color: theme.palette.common.white
   }
 }))
@@ -28,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
 const TutorNavBar = () => {
   const classes = useStyles()
   return (
-      <Toolbar className={classes.toolbar}>
-      <RouterLink to='/tutor/publicaciones'>
+    <Toolbar className={classes.toolbar}>
+      <RouterLink to="/tutor/publicaciones">
         <IconButton className={classes.options}>
-            <Typography variant='h4' >Publicaciones</Typography>
-            <ListAltIcon className={classes.navicons}/>
+          <Typography variant="h4">Publicaciones</Typography>
+          <ListAltIcon className={classes.navicons} />
         </IconButton>
       </RouterLink>
-      </Toolbar>
+    </Toolbar>
   )
 }
 

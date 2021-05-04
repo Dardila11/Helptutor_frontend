@@ -1,22 +1,22 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { Box, DialogTitle, Grid, IconButton } from '@material-ui/core';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Stepper from '@material-ui/core/Stepper'
+import Step from '@material-ui/core/Step'
+import StepLabel from '@material-ui/core/StepLabel'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import { Box, DialogTitle, Grid, IconButton } from '@material-ui/core'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import NominationsView from './nominations'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: '100%'
   },
   button: {
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(1)
   }
-}));
+}))
 
 function getSteps() {
   return ['Selecciona un tutor', 'Información del tutor','Selecciona el horario', 'Pagar'];
@@ -33,15 +33,15 @@ function getStepContent(step) {
     case 3:
       return  'Pagar'
     default:
-      return '';
+      return ''
   }
 }
 
 const TutorSelectionView = (props) => {
-  const {publication} = props
-  const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const steps = getSteps();
+  const { publication } = props
+  const classes = useStyles()
+  const [activeStep, setActiveStep] = React.useState(0)
+  const steps = getSteps()
 
   const handleNomination = (tutor) => {
     if(activeStep<3) setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -54,9 +54,8 @@ const TutorSelectionView = (props) => {
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
+  }
 
   return (
     <div className={classes.root}>
@@ -140,7 +139,7 @@ const TutorSelectionView = (props) => {
             </Stepper>
         </Box>
     </div>
-  );
+  )
 }
 
 export default TutorSelectionView

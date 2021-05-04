@@ -1,9 +1,17 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import { Avatar, Box, CardActionArea, Container, Dialog, Grid, Paper } from '@material-ui/core';
-import { Rating } from '@material-ui/lab';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import CardContent from '@material-ui/core/CardContent'
+import Typography from '@material-ui/core/Typography'
+import {
+  Avatar,
+  Box,
+  CardActionArea,
+  Container,
+  Dialog,
+  Grid,
+  Paper
+} from '@material-ui/core'
+import { Rating } from '@material-ui/lab'
 import ServiceSelectionView from 'src/views/studentviews/tutors/serviceSelectionView'
 
 const useStyles = makeStyles((theme) => ({
@@ -16,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
   details: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   content: {
-    flex: '1 0 auto',
+    flex: '1 0 auto'
   },
   cover: {
     width: 60,
@@ -31,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '20px',
     margin: theme.spacing(1),
     marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(3),
+    marginRight: theme.spacing(3)
   },
   methodology: {
     marginTop: theme.spacing(1),
@@ -42,11 +50,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     textAlign: 'center'
   }
-}));
+}))
 
 const TutorServiceCard = (props) => {
   const { service } = props
-  const classes = useStyles();
+  const classes = useStyles()
   const [open, setOpen] = React.useState(false)
 
   const handleOpen = () => {
@@ -57,49 +65,51 @@ const TutorServiceCard = (props) => {
   }
   return (
     <Paper className={classes.paper} elevation={3}>
-    <CardActionArea className={classes.cardAction} onClick={handleOpen}>
-      <Grid container >
-        <Grid item xs={2}>
-          <Box className={classes.userSpace} >
-            <Avatar className={classes.cover} alt='user photo' src='/static/images/avatars/avatar_6.png'/>
-            <Typography><b>Username</b></Typography>
-            <Rating name="read-only" size='small'  value={4} readOnly />
-          </Box>
-        </Grid>
-        <Grid item xs={7}>
-          <Container className={classes.details}>
-            <CardContent className={classes.content}>
-              <Typography component="h5" variant="h5">
-                <Box fontWeight="fontWeightBold">
-                  {service.title}
-                </Box>
+      <CardActionArea className={classes.cardAction} onClick={handleOpen}>
+        <Grid container>
+          <Grid item xs={2}>
+            <Box className={classes.userSpace}>
+              <Avatar
+                className={classes.cover}
+                alt="user photo"
+                src="/static/images/avatars/avatar_6.png"
+              />
+              <Typography>
+                <b>Username</b>
               </Typography>
+              <Rating name="read-only" size="small" value={4} readOnly />
+            </Box>
+          </Grid>
+          <Grid item xs={7}>
+            <Container className={classes.details}>
+              <CardContent className={classes.content}>
+                <Typography component="h5" variant="h5">
+                  <Box fontWeight="fontWeightBold">{service.title}</Box>
+                </Typography>
+                <Typography variant="subtitle1" color="textSecondary">
+                  {service.description}
+                </Typography>
+              </CardContent>
+            </Container>
+          </Grid>
+          <Grid item xs={3}>
+            <Container className={classes.price}>
               <Typography variant="subtitle1" color="textSecondary">
-                {service.description}
-              </Typography>
-            </CardContent>
-        </Container>
-        </Grid>
-        <Grid item xs={3}>
-          <Container className={classes.price} >
-              <Typography variant='subtitle1' color='textSecondary'>
                 <b>Costo por hora</b>
               </Typography>
-              <Typography variant="h4" >
-                {service.price} $ 
-              </Typography>
-          </Container>
+              <Typography variant="h4">{service.price} $</Typography>
+            </Container>
+          </Grid>
         </Grid>
-      </Grid>
       </CardActionArea>
-      <Dialog 
+      <Dialog
         open={open}
-        onClose={handleClose}    
-        aria-labelledby='tutorSelection-dialog-title'>
-          <ServiceSelectionView />
+        onClose={handleClose}
+        aria-labelledby="tutorSelection-dialog-title">
+        <ServiceSelectionView />
       </Dialog>
     </Paper>
-  );
+  )
 }
 
 export default TutorServiceCard

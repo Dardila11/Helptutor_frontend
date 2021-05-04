@@ -67,7 +67,7 @@ const ServicesInfoView = (props) => {
   const classes = useStyles()
 
   const [initialValues, setInitialValues] = useState(initialValuesObj)
-  
+
   useEffect(
     () => {
       props.getSpecialitiesTutor(props.user.id)
@@ -184,11 +184,9 @@ const ServicesInfoView = (props) => {
                         value={values.description}
                         variant="outlined"
                       />
-                       <TextField
+                      <TextField
                         id="txt_price"
-                        error={Boolean(
-                          touched.price && errors.price
-                        )}
+                        error={Boolean(touched.price && errors.price)}
                         fullWidth
                         helperText={touched.price && errors.price}
                         label="Precio $"
@@ -225,7 +223,7 @@ const ServicesInfoView = (props) => {
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   service_tutor: state.services.service_tutor,
-  specialities : state.services.specialities_tutor,
+  specialities: state.services.specialities_tutor,
   is_create: state.services.is_create
 })
 

@@ -1,9 +1,9 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import { Box, TextField } from '@material-ui/core';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import IconButton from '@material-ui/core/IconButton'
+import SearchIcon from '@material-ui/icons/Search'
+import { Box, TextField } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,26 +18,34 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '20px'
   },
   principalContainer: {
-      margin: theme.spacing(1)
+    margin: theme.spacing(1)
   },
   icon: {
-      marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1)
   }
-}));
+}))
 
 const SearchBar = () => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
-    <Box className={classes.principalContainer}> 
-        <Paper component="form" className={classes.root}>
+    <Box className={classes.principalContainer}>
+      <Paper component="form" className={classes.root}>
         <IconButton className={classes.icon} type="submit" aria-label="search">
-            <SearchIcon />
+          <SearchIcon />
         </IconButton>
-        <TextField className={classes.input} id="searchInput" fullWidth label="Buscar en helptutor" variant="outlined" color='primary' size='small'/>
-        </Paper>
+        <TextField
+          className={classes.input}
+          id="searchInput"
+          fullWidth
+          label="Buscar en helptutor"
+          variant="outlined"
+          color="primary"
+          size="small"
+        />
+      </Paper>
     </Box>
-  );
+  )
 }
 
 export default SearchBar

@@ -5,7 +5,7 @@ import https from './ApiConfig'
 const getCountries = () => {
   return https.get('/api/country')
 }
-  
+
 const getState = () => {
   return https.get('/api/state')
 }
@@ -45,8 +45,12 @@ const getSupports = () => {
 }
 
 /** TUTOR KNOWLEDGE AREA */
-const postKnowledgeAreaTutor = (data,values) => {
-  return https.post('/api/knowledgearea_tutor/',data, tokenConfig(values.state))
+const postKnowledgeAreaTutor = (data, values) => {
+  return https.post(
+    '/api/knowledgearea_tutor/',
+    data,
+    tokenConfig(values.state)
+  )
 }
 
 const patchTutorKnowledgeAreas = (data, pk) => {
@@ -54,21 +58,21 @@ const patchTutorKnowledgeAreas = (data, pk) => {
 }
 
 const getTutorKnowledgeAreas = (idTutor) => {
-  return https.get('/api/tutor/'+idTutor+'/speciality/')
+  return https.get('/api/tutor/' + idTutor + '/speciality/')
 }
 
 const deleteTutorKnowledgeArea = (idArea) => {
-  return https.delete('/api/knowledgearea_tutor/'+idArea+'/')
+  return https.delete('/api/knowledgearea_tutor/' + idArea + '/')
 }
 
 /**Knowledge Area services */
 
 const getknowledgeAreas = () => {
   return https.get('/api/knowledgearea/')
-} 
+}
 
 const getKnowledgeArea = (id) => {
-  return https.get('/api/knowledgearea/'+id+'/')
+  return https.get('/api/knowledgearea/' + id + '/')
 }
 
 const getSubKnowledgeAreas = (idArea) => {
@@ -102,12 +106,12 @@ const tokenConfig = (getState) => {
 
   const config = {
     headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+      'Content-Type': 'application/json'
+    }
+  }
 
   if (token) {
-    config.headers['Authorization'] = 'Token '+token
+    config.headers['Authorization'] = 'Token ' + token
   }
 
   return config
@@ -124,15 +128,15 @@ const postServiceTutor = (data, values) => {
 }
 
 const deleteServiceTutor = (id) => {
-  return https.delete('/api/service/'+id+'/')
+  return https.delete('/api/service/' + id + '/')
 }
 
 const patchServiceTutor = (id, data) => {
-  return https.patch('/api/service/'+id+'/', data)
+  return https.patch('/api/service/' + id + '/', data)
 }
 
 const getNomination = (id, state) => {
-  return https.get('/api/nomination/'+id+'/', tokenConfig(state))
+  return https.get('/api/nomination/' + id + '/', tokenConfig(state))
 }
 
 const getNominations = (state) => {
@@ -143,12 +147,12 @@ const postNomination = (data, state) => {
   return https.post('/api/nomination/', data, tokenConfig(state))
 }
 
-const patchNomination = (id,data, state) => {
-  return https.patch('/api/nomination/'+id+'/', data, tokenConfig(state))
+const patchNomination = (id, data, state) => {
+  return https.patch('/api/nomination/' + id + '/', data, tokenConfig(state))
 }
 
 const deleteNomination = (id, state) => {
-  return https.delete('/api/nomination/'+id+'/', tokenConfig(state))
+  return https.delete('/api/nomination/' + id + '/', tokenConfig(state))
 }
 
 /** ESTUDENT SERVICES */
@@ -162,7 +166,7 @@ const updateStudentInfo = (data, state) => {
 }
 
 const postOffer = (data, state) => {
-  return https.post('/api/offer/', data , tokenConfig(state))
+  return https.post('/api/offer/', data, tokenConfig(state))
 }
 
 const getTutors = (state) => {
@@ -183,27 +187,26 @@ const getAdvertisements = (state) => {
 
 const getAdvertisementAnswers = (id, state) => {
   console.log(id)
-  return https.get('/api/answer/',tokenConfig(state))
+  return https.get('/api/answer/', tokenConfig(state))
 }
-
 
 const getServices = (state) => {
   return https.get('api/service/', tokenConfig(state))
 }
 
-const patchOffer = (id,data,state) => {
-  return https.patch('api/offer/'+id+'/', data, tokenConfig(state))
+const patchOffer = (id, data, state) => {
+  return https.patch('api/offer/' + id + '/', data, tokenConfig(state))
 }
 
-const deleteOffer = (id,state) => {
-  return https.delete('api/offer/'+id+'/', tokenConfig(state))
+const deleteOffer = (id, state) => {
+  return https.delete('api/offer/' + id + '/', tokenConfig(state))
 }
 
-const getOfferNominations = (id,state) => {
+const getOfferNominations = (id, state) => {
   return https.get('api/nomination/', tokenConfig(state))
 }
 
-const postAnswer = (data,state) => {
+const postAnswer = (data, state) => {
   return https.post('api/answer/', data, tokenConfig(state))
 }
 

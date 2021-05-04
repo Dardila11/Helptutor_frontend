@@ -6,8 +6,17 @@ import { getServicesTutor, setIsCreate } from 'src/redux/actions/tutor/services'
 import { connect } from 'react-redux'
 
 //COMPONENTS MATERAIL UI
-import { Button, Card, CircularProgress, Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import {
+  Button,
+  Card,
+  CircularProgress,
+  Container,
+  Grid,
+  makeStyles,
+  Paper,
+  Typography
+} from '@material-ui/core'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 //COMPONENTS
 import ServiceCard from './serviceCard'
@@ -23,11 +32,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBlockEnd: theme.spacing(2)
   },
-  actions:{
+  actions: {
     marginTop: theme.spacing(2),
     marginBlockEnd: theme.spacing(2)
   },
-  lateralView:{
+  lateralView: {
     borderRadius: '20px'
   },
   button: {
@@ -36,12 +45,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ServicesListView = (props) => {
-
   const { services_tutor, getServicesTutor } = props
   const [loading, setLoading] = useState(false)
   const classes = useStyles()
   let info = false
-  if (services_tutor.length>0) {
+  if (services_tutor.length > 0) {
     info = true
   } else {
     info = false
@@ -59,11 +67,11 @@ const ServicesListView = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
-  
+
   return (
     <>
       <Grid item xs={3}>
-        <Paper className={classes.lateralView} elevation={2} >
+        <Paper className={classes.lateralView} elevation={2}>
           <Card className={classes.lateralView}>
             <Typography
               className={classes.containerTitle}
@@ -73,33 +81,36 @@ const ServicesListView = (props) => {
             </Typography>
             {loading ? (
               <>
-              {info ? (
-                <>
-                  {services_tutor.map((service, index) => (
-                    <ServiceCard
-                      key={index}
-                      id={service.id}
-                      service={service}/>
-                  ))}
-                </>
-              ) : (
-                <>
-                  <Typography align='center'>No se encontraron servicios</Typography>
-                </>
-              )}
+                {info ? (
+                  <>
+                    {services_tutor.map((service, index) => (
+                      <ServiceCard
+                        key={index}
+                        id={service.id}
+                        service={service}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <Typography align="center">
+                      No se encontraron servicios
+                    </Typography>
+                  </>
+                )}
               </>
             ) : (
               <CircularProgress />
             )}
-            
+
             <Container className={classes.actions}>
               <Button
-              className={classes.button}
-              fullWidth
-              color='primary'
-              variant='contained'
-              endIcon={<AddCircleIcon />}
-              onClick={handleClick}>
+                className={classes.button}
+                fullWidth
+                color="primary"
+                variant="contained"
+                endIcon={<AddCircleIcon />}
+                onClick={handleClick}>
                 Agregar Servicio
               </Button>
             </Container>
@@ -111,9 +122,9 @@ const ServicesListView = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    services_tutor: state.services.services_tutor,
-    is_create: state.knowledge_areas.is_create,
-    user: state.auth.user
+  services_tutor: state.services.services_tutor,
+  is_create: state.knowledge_areas.is_create,
+  user: state.auth.user
 })
 
 export default connect(mapStateToProps, {

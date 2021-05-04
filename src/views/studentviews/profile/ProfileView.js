@@ -16,27 +16,31 @@ const useStyles = makeStyles((theme) => ({
 
 const StudentProfileView = (props) => {
   const classes = useStyles()
-  const {user, userInfo, requestInProgress, getStudentInfo} = props
+  const { user, userInfo, requestInProgress, getStudentInfo } = props
   useEffect(
     () => {
       getStudentInfo(user.id)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [])
+    []
+  )
 
   return (
-    <Page title='Perfil'>
-    <Card className= {classes.root}>
-      {requestInProgress? (
-        <ProfileViewSkeleton />
-      ):(
-        <>
-          <h1> {userInfo.first_name} {userInfo.last_name} </h1>
-          <h3> Estudiante </h3>
-          <Divider />
-        </>
-      )}
-    </Card>
+    <Page title="Perfil">
+      <Card className={classes.root}>
+        {requestInProgress ? (
+          <ProfileViewSkeleton />
+        ) : (
+          <>
+            <h1>
+              {' '}
+              {userInfo.first_name} {userInfo.last_name}{' '}
+            </h1>
+            <h3> Estudiante </h3>
+            <Divider />
+          </>
+        )}
+      </Card>
     </Page>
   )
 }

@@ -108,9 +108,7 @@ const RegisterView = ({ isAuthenticated, addTutor, addStudent }) => {
               } else if (studentSelect) {
                 addStudent(jsonValues)
               } else {
-                store.dispatch(
-                  launchAlert('Debes seleccionar un rol', 1)
-                )
+                store.dispatch(launchAlert('Debes seleccionar un rol', 1))
               }
             }}>
             {({
@@ -256,7 +254,10 @@ const RegisterView = ({ isAuthenticated, addTutor, addStudent }) => {
                   ó
                 </Box>
                 <Box width="sm">
-                  <LoginHooks tutorSelect={tutorSelect} studentSelect={studentSelect} />
+                  <LoginHooks
+                    tutorSelect={tutorSelect}
+                    studentSelect={studentSelect}
+                  />
                 </Box>
                 {/* <Box my={3}>
                   <SignInGoogle></SignInGoogle>

@@ -34,10 +34,10 @@ const useStyles = makeStyles((theme) => ({
     float: 'right',
     color: theme.palette.secondary
   },
-  button:{
+  button: {
     borderRadius: '20px',
     marginBottom: theme.spacing(1),
-    textTransform: 'none',
+    textTransform: 'none'
   }
 }))
 
@@ -50,10 +50,10 @@ const AreaCard = (props) => {
     props.deleteSpecialityTutor(props.idArea)
     props.setIsCreate(true)
   }
-  const handleOpen = () =>{
+  const handleOpen = () => {
     setOpen(true)
   }
-  const handleClose = () =>{
+  const handleClose = () => {
     setOpen(false)
   }
   return (
@@ -64,12 +64,17 @@ const AreaCard = (props) => {
             <Button
               className={classes.button}
               fullWidth={true}
-              variant='outlined'
-              onClick={()=>{
-                props.getSpecialities(props.my_area.knowledge_area.knowledge_area)
+              variant="outlined"
+              onClick={() => {
+                props.getSpecialities(
+                  props.my_area.knowledge_area.knowledge_area
+                )
                 props.setSpecialityTutor(props.my_area)
               }}>
-              <Typography align="center" variant='h5'> {props.area.name}</Typography>
+              <Typography align="center" variant="h5">
+                {' '}
+                {props.area.name}
+              </Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>
@@ -77,7 +82,7 @@ const AreaCard = (props) => {
               className={classes.button}
               id={props.area.id}
               key={props.area.id}
-              color='secondary'
+              color="secondary"
               onClick={handleOpen}>
               <DeleteIcon className={classes.delete} />
             </Button>
@@ -85,9 +90,8 @@ const AreaCard = (props) => {
               open={open}
               onClose={handleClose}
               aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">{"Advertencia"}</DialogTitle>
+              aria-describedby="alert-dialog-description">
+              <DialogTitle id="alert-dialog-title">{'Advertencia'}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
                   ¿Estas seguro de eliminar el area <b>{props.area.name}</b> ?
@@ -97,9 +101,10 @@ const AreaCard = (props) => {
                 <Button onClick={handleClose} color="primary">
                   Cancelar
                 </Button>
-                <Button onClick={handleDelete} 
-                  color="primary" 
-                  variant='contained'
+                <Button
+                  onClick={handleDelete}
+                  color="primary"
+                  variant="contained"
                   autoFocus>
                   Eliminar
                 </Button>
@@ -107,7 +112,7 @@ const AreaCard = (props) => {
             </Dialog>
           </Grid>
         </Grid>
-        </Container>
+      </Container>
     </>
   )
 }

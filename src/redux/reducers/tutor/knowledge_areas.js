@@ -10,11 +10,11 @@ import {
 } from 'src/redux/types/types_knowledge_areas'
 
 const initialValuesSpeciality = {
-    id: -1,
-    knowledge_area: -1,
-    speciality: -1,
-    tags: '',
-    description: ''
+  id: -1,
+  knowledge_area: -1,
+  speciality: -1,
+  tags: '',
+  description: ''
 }
 
 const initialState = {
@@ -79,16 +79,20 @@ const knowledge_area = (state = initialState, action) => {
         is_create: false
       }
     case SET_IS_CREATE:
-      if(action.payload){
+      if (action.payload) {
         return {
-          ...state, speciality_tutor: initialValuesSpeciality, is_create: action.payload
+          ...state,
+          speciality_tutor: initialValuesSpeciality,
+          is_create: action.payload
         }
-      }else{
+      } else {
         return {
-          ...state, speciality_tutor: speciality_tutor, is_create: action.payload
+          ...state,
+          speciality_tutor: speciality_tutor,
+          is_create: action.payload
         }
       }
-      
+
     //   case ACTION_RUNNING:
     //     return {
     //       ...state,

@@ -1,13 +1,10 @@
 import React from 'react'
-import {
-  Grid,
-  makeStyles
-} from '@material-ui/core'
+import { Grid, makeStyles } from '@material-ui/core'
 import Page from 'src/components/Page'
 import ServicesInfoView from './servicesInfo'
 import ServicesListView from './servicesList'
 
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,10 +31,10 @@ const ManageServicesView = (props) => {
     <>
       <Page className={classes.root} title="Gestionar areas de conocimiento">
         <Grid container spacing={2}>
-            <>
-              <ServicesListView />
-              <ServicesInfoView />
-            </>
+          <>
+            <ServicesListView />
+            <ServicesInfoView />
+          </>
         </Grid>
       </Page>
     </>
