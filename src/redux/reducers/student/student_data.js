@@ -5,7 +5,8 @@ const userInfoData = {
   last_name: '',
   sex: '',
   birthday: '',
-  email: ''
+  email: '',
+  interest: ''
 }
 
 const initialState = {
@@ -14,10 +15,10 @@ const initialState = {
   userInfo: userInfoData
 }
 
-const tutorInfo = (state = initialState, action) => {
+const studentInfo = (state = initialState, action) => {
+  const data = action.payload
   switch (action.type) {
     case GET_STUDENT:
-      const data = action.payload
       const student = {
         first_name: data.user.first_name,
         last_name: data.user.last_name,
@@ -38,13 +39,13 @@ const tutorInfo = (state = initialState, action) => {
         isLoading: false
       }
     case UPDATE_STUDENT:
-      const data1 = action.payload
       const student1 = {
-        first_name: data1.user.first_name,
-        last_name: data1.user.last_name,
-        gender: data1.user.gender,
-        birthday: data1.user.birthday,
-        email: data1.user.email
+        first_name: data.user.first_name,
+        last_name: data.user.last_name,
+        gender: data.user.gender,
+        birthday: data.user.birthday,
+        email: data.user.email,
+        interest: data.user.interest
       }
       return {
         ...state,
@@ -56,4 +57,4 @@ const tutorInfo = (state = initialState, action) => {
   }
 }
 
-export default tutorInfo
+export default studentInfo

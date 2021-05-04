@@ -5,7 +5,8 @@ let initialValues = {
   last_name: '',
   gender: 0,
   birthday: '',
-  email: ''
+  email: '',
+  interest: ''
 }
 
 const putValues = (values) => {
@@ -14,6 +15,7 @@ const putValues = (values) => {
   initialValues.gender = values.gender
   initialValues.birthday = values.birthday
   initialValues.email = values.email
+  initialValues.interest = values.interest
 }
 
 const getValues = (values) => {
@@ -24,7 +26,7 @@ const getValues = (values) => {
       email: values.email,
       gender: values.gender,
       birthday: values.birthday,
-      telephone: ''
+      interest: values.interest
     }
   }
 }
