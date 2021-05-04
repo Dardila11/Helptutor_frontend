@@ -34,22 +34,24 @@ const Routing = () => {
       <Route path="/" element={<MainLayout />}>
         <Route path="login" element={<LoginView />} />
         <Route path="registrar" element={<RegisterView />} />
-        <Route path="seleccion-rol" element={<SelectRoleView/>} />
+        <Route path="seleccion-rol" element={<SelectRoleView />} />
       </Route>
 
       <PrivateRoute path="/estudiante" element={<StudentLayout />}>
         <Route path="/" element={<StudentPublicationsView />} />
         <Route path="/publicaciones" element={<StudentPublicationsView />} />
-        <Route path="/tutores" element={<TutorsView />}/>
+        <Route path="/tutores" element={<TutorsView />} />
         <Route path="/anuncios" element={<StudentAdvertisementsView />} />
       </PrivateRoute>
 
-      <PrivateRoute path="/estudiante/cuenta" element={<StudentAccountLayout />}>
+      <PrivateRoute
+        path="/estudiante/cuenta"
+        element={<StudentAccountLayout />}>
         <Route path="/perfil" element={<StudentProfileView />} />
         <Route path="/informacion" element={<StudentEditInfoView />} />
       </PrivateRoute>
 
-      <PrivateRoute path="/tutor" element={<TutorLayout />} >
+      <PrivateRoute path="/tutor" element={<TutorLayout />}>
         <Route path="/" element={<TutorPublicationsView />} />
         <Route path="/publicaciones" element={<TutorPublicationsView />} />
       </PrivateRoute>
@@ -57,7 +59,7 @@ const Routing = () => {
       <PrivateRoute path="/tutor" element={<TutorAccountLayout />}>
         <Route path="/cuenta" element={<ProfileView />} />
         <Route path="/cuenta/perfil" element={<ProfileView />} />
-        <Route path="/cuenta/informacion" element={<EditInfoView />} />        
+        <Route path="/cuenta/informacion" element={<EditInfoView />} />
         <Route path="/cuenta/servicios" element={<ManageServicesView />} />
         <Route
           path="/cuenta/especialidades"

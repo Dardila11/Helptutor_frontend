@@ -1,10 +1,17 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import { Avatar, Box, CardActionArea, Container, Grid, Paper } from '@material-ui/core';
-import { Rating } from '@material-ui/lab';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Typography from '@material-ui/core/Typography'
+import {
+  Avatar,
+  Box,
+  CardActionArea,
+  Container,
+  Grid,
+  Paper
+} from '@material-ui/core'
+import { Rating } from '@material-ui/lab'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,10 +28,10 @@ const useStyles = makeStyles((theme) => ({
   },
   details: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   content: {
-    flex: '1 0 auto',
+    flex: '1 0 auto'
   },
   cover: {
     width: 40,
@@ -35,56 +42,60 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1)
   },
   methodology: {
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1)
   },
   price: {
     color: '#1ad41a',
     marginTop: theme.spacing(2),
     textAlign: 'center'
   }
-}));
+}))
 
 const NominationCard = (props) => {
   const { nomination, next } = props
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const handleSelect = () =>{
+  const handleSelect = () => {
     next(nomination)
   }
   return (
     <Paper className={classes.paper} elevation={3}>
-    <Card className={classes.root}>
-    <CardActionArea className={classes.cardAction} onClick={handleSelect}>
-      <Grid container >
-        <Grid item xs={6}>
-          <Box className={classes.userSpace} >
-            <Avatar className={classes.cover} alt='user photo' src='/static/images/avatars/avatar_6.png'/>
-            <Typography variant='h5'><b>Username</b></Typography>
-            <Rating name="read-only" size='small'  value={4} readOnly />
-          </Box>
-        </Grid>
-        <Grid item xs={2}>
-          <Container className={classes.price} >
-              <Typography variant='subtitle1' color='textSecondary'>
-                <b>Costo</b>
-              </Typography>
-              <Typography variant="h5" >
-                {nomination.price}$ 
-              </Typography>
-          </Container>
-        </Grid>
-        <Grid item xs={12}>
-            <CardContent className={classes.content}>
-              <Typography color="textSecondary" variant='h5'>
-                {nomination.description}
-              </Typography>
-            </CardContent>
-        </Grid>
-      </Grid>
-      </CardActionArea>
-    </Card>
+      <Card className={classes.root}>
+        <CardActionArea className={classes.cardAction} onClick={handleSelect}>
+          <Grid container>
+            <Grid item xs={6}>
+              <Box className={classes.userSpace}>
+                <Avatar
+                  className={classes.cover}
+                  alt="user photo"
+                  src="/static/images/avatars/avatar_6.png"
+                />
+                <Typography variant="h5">
+                  <b>Username</b>
+                </Typography>
+                <Rating name="read-only" size="small" value={4} readOnly />
+              </Box>
+            </Grid>
+            <Grid item xs={2}>
+              <Container className={classes.price}>
+                <Typography variant="subtitle1" color="textSecondary">
+                  <b>Costo</b>
+                </Typography>
+                <Typography variant="h5">{nomination.price}$</Typography>
+              </Container>
+            </Grid>
+            <Grid item xs={12}>
+              <CardContent className={classes.content}>
+                <Typography color="textSecondary" variant="h5">
+                  {nomination.description}
+                </Typography>
+              </CardContent>
+            </Grid>
+          </Grid>
+        </CardActionArea>
+      </Card>
     </Paper>
-  );
+  )
 }
 
 export default NominationCard

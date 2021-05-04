@@ -77,8 +77,8 @@ const auth = (state = initialState, action) => {
         isLoading: true
       }
     case USER_LOADED:
-      let boolTutor = (localStorage.getItem('isTutor') === 'true')
-      let boolStudent = (localStorage.getItem('isStudent') === 'true')
+      let boolTutor = localStorage.getItem('isTutor') === 'true'
+      let boolStudent = localStorage.getItem('isStudent') === 'true'
       return {
         ...state,
         isAuthenticated: true,
@@ -91,11 +91,11 @@ const auth = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       console.log(payload)
       let isStudent = false
-      let isTutor = false 
-      if(payload.roles[0]) isTutor=true
-      if(payload.roles[1]) isStudent=true
+      let isTutor = false
+      if (payload.roles[0]) isTutor = true
+      if (payload.roles[1]) isStudent = true
       localStorage.setItem('token', payload.token)
-      localStorage.setItem('isStudent',isStudent)
+      localStorage.setItem('isStudent', isStudent)
       localStorage.setItem('isTutor', isTutor)
       return {
         ...state,

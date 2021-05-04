@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
-import { Backdrop, Box, CircularProgress, makeStyles, Typography } from '@material-ui/core'
+import {
+  Backdrop,
+  Box,
+  CircularProgress,
+  makeStyles,
+  Typography
+} from '@material-ui/core'
 import TutorTopBar from './TopBar'
 
 import { getTutorInfo } from 'src/redux/actions/tutor/tutor_data'
@@ -14,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   contentContainer: {
     display: 'flex',
-    overflow: 'hidden'    
+    overflow: 'hidden'
   },
   content: {
     flex: '1 1 auto',
@@ -24,37 +30,37 @@ const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     backgroundColor: theme.palette.common.white
-  },
+  }
 }))
 
 const TutorLayout = (props) => {
   const classes = useStyles()
-  const {getTutorInfo, user, loading} = props
+  const { getTutorInfo, user, loading } = props
   useEffect(
     () => {
       getTutorInfo(user.id)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [])
+    []
+  )
 
-  return (
-    loading ? (
-      <Backdrop className={classes.backdrop} open={true}>
-      <Box display='flex' flexDirection='column' alignItems='center'>
-        <Typography color='primary'>Cargando</Typography>
+  return loading ? (
+    <Backdrop className={classes.backdrop} open={true}>
+      <Box display="flex" flexDirection="column" alignItems="center">
+        <Typography color="primary">Cargando</Typography>
         <CircularProgress color="primary" />
-        </Box>
-      </Backdrop>
-    ):(
+      </Box>
+    </Backdrop>
+  ) : (
     <div className={classes.root}>
-      <TutorTopBar />  
-        <div className={classes.contentContainer}>   
-          <div className={classes.content}>          
-            <Outlet />
-          </div>
+      <TutorTopBar />
+      <div className={classes.contentContainer}>
+        <div className={classes.content}>
+          <Outlet />
         </div>
+      </div>
     </div>
-  ))
+  )
 }
 
 const mapStateToProps = (state) => ({

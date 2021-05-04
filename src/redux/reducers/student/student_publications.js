@@ -9,77 +9,81 @@ import {
 } from 'src/redux/types/types_publications'
 
 const initialValues = {
-    title: '',
-    description: '',
-    user: -1
+  title: '',
+  description: '',
+  user: -1
 }
 
 const initialState = {
-    publications: [],
-    publication: initialValues,
-    is_create: true,
-    loadingPublications: true,
-    creating: false,
-    nominations: []
+  publications: [],
+  publication: initialValues,
+  is_create: true,
+  loadingPublications: true,
+  creating: false,
+  nominations: []
 }
 
 const publications = (state = initialState, action) => {
-    switch (action.type){
-        case LIST_PUBLICATIONS:
-            return {
-                ...state,
-                publications: action.payload,
-                loadingPublications: false,
-            }
-        case ADD_PUBLICATION:
-            return {
-                ...state,
-                publications: state.publications.concat(action.payload),
-                creating: false
-            }
-        case SET_IS_CREATE:
-            if(action.payload){
-                return {
-                ...state, publication: initialValues, is_create: action.payload
-                }
-            }else{
-                return {
-                ...state, publication: state.publication, is_create: action.payload
-                }
-            }
-        case GET_NOMINATIONS:{
-            return {
-                ...state,
-                nominations: action.payload
-            }
+  switch (action.type) {
+    case LIST_PUBLICATIONS:
+      return {
+        ...state,
+        publications: action.payload,
+        loadingPublications: false
+      }
+    case ADD_PUBLICATION:
+      return {
+        ...state,
+        publications: state.publications.concat(action.payload),
+        creating: false
+      }
+    case SET_IS_CREATE:
+      if (action.payload) {
+        return {
+          ...state,
+          publication: initialValues,
+          is_create: action.payload
         }
-        case UPDATE_PUBLICATION:{
-            const publications = state.publications.map((item) => {
-                if (item.id === action.payload.id) return {...action.payload}
-                return item
-            })
-            return {
-                ...state,
-                is_create: false,
-                publications: publications
-            }
+      } else {
+        return {
+          ...state,
+          publication: state.publication,
+          is_create: action.payload
         }
-        case DELETE_PUBLICATION:
-            return {
-                ...state,
-                services_tutor: state.services_tutor.filter(
-                    (item) => item.id !== action.payload.pk
-                )
-            }
-        case CREATING: {
-            return{
-                ...state,
-                creating: true
-            }
-        }
-        default:
-            return state
+      }
+    case GET_NOMINATIONS: {
+      return {
+        ...state,
+        nominations: action.payload
+      }
     }
+    case UPDATE_PUBLICATION: {
+      const publications = state.publications.map((item) => {
+        if (item.id === action.payload.id) return { ...action.payload }
+        return item
+      })
+      return {
+        ...state,
+        is_create: false,
+        publications: publications
+      }
+    }
+    case DELETE_PUBLICATION:
+      return {
+        ...state,
+        services_tutor: state.services_tutor.filter(
+          (item) => item.id !== action.payload.pk
+        )
+      }
+    case CREATING: {
+      return {
+        ...state,
+        creating: true
+      }
+    }
+    default:
+      return state
+  }
 }
 
 export default publications

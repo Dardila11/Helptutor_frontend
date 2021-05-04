@@ -16,7 +16,12 @@ export const getTutorInfo = (id) => (dispatch, getState) => {
       })
     })
     .catch((err) => {
-      dispatch(launchAlert('Error obteniedo información del tutor', err.response.status))
+      dispatch(
+        launchAlert(
+          'Error obteniedo información del tutor',
+          err.response.status
+        )
+      )
     })
 }
 

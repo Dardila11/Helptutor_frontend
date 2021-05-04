@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#ef5350',
     color: theme.palette.common.white,
     '&:hover': {
-      backgroundColor: '#cc2e2b',
+      backgroundColor: '#cc2e2b'
     }
   }
 }))
@@ -183,7 +183,7 @@ const NominationView = (props) => {
           onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description">
-          <DialogTitle id="alert-dialog-title">{"Advertencia"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{'Advertencia'}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               ¿Estas seguro de eliminar esta postulacion?

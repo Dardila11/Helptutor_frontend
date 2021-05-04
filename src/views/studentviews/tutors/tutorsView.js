@@ -15,49 +15,54 @@ const useStyles = makeStyles((theme) => ({
     width: 900
   },
   cardsContent: {
-      margin: theme.spacing(2),
-      borderRadius:'20px'
+    margin: theme.spacing(2),
+    borderRadius: '20px'
   },
-  title:{
-      margin: theme.spacing(1)
+  title: {
+    margin: theme.spacing(1)
   }
 }))
 
 const TutorsView = (props) => {
   const classes = useStyles()
-  const {loading, services, getServices} = props
+  const { loading, services, getServices } = props
 
-  useEffect(() => {
-    getServices()
+  useEffect(
+    () => {
+      getServices()
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [])   
+    []
+  )
   return (
-    <Page title='Tutores'>
-      <Box display='flex' flexDirection="column" justifyContent='center' alignItems='center'>
+    <Page title="Tutores">
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center">
         <SearchBar />
         <Paper elevation={3} className={classes.root}>
-        {loading? (
+          {loading ? (
             <PublicationsViewSkeleton />
-        ):(
+          ) : (
             <>
-                <Box className={classes.title} textAlign='center'>
-                    <Typography variant='h4'>
-                    Selecciona una asesoria
-                    </Typography>
-                </Box>
-                <Box>
-                        {services.map((service, index) => (
-                          <TutorServiceCard
-                            key={index}
-                            id={service.id}
-                            service={service}/>
-                        ))}
-                </Box>
+              <Box className={classes.title} textAlign="center">
+                <Typography variant="h4">Selecciona una asesoria</Typography>
+              </Box>
+              <Box>
+                {services.map((service, index) => (
+                  <TutorServiceCard
+                    key={index}
+                    id={service.id}
+                    service={service}
+                  />
+                ))}
+              </Box>
             </>
-        )}
+          )}
         </Paper>
-    </Box>
+      </Box>
     </Page>
   )
 }

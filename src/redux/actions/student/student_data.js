@@ -5,24 +5,24 @@ import { UPDATE_USER_INFORMATION } from '../../types/types_auth'
 import { launchAlert } from '../alerts'
 
 export const getStudentInfo = (id) => (dispatch, getState) => {
-  dispatch({type: LOADING})
+  dispatch({ type: LOADING })
   Api.getStudentInfo(id, getState)
-      .then((res) => {
-        dispatch({
-          type: GET_STUDENT,
-          payload: res.data
-        })
-        dispatch({
-          type: 'FINISHED_LOADING'
-        })
-        dispatch({
-          type: LOADING
-        })
+    .then((res) => {
+      dispatch({
+        type: GET_STUDENT,
+        payload: res.data
       })
-      .catch((err) => {
-        dispatch(launchAlert('Error obteniedo información ', err.response.status))
+      dispatch({
+        type: 'FINISHED_LOADING'
       })
-  }
+      dispatch({
+        type: LOADING
+      })
+    })
+    .catch((err) => {
+      dispatch(launchAlert('Error obteniedo información ', err.response.status))
+    })
+}
 
 export const updateStudent = (data) => (dispatch, getState) => {
   const request = Api.updateStudentInfo(data, getState)
@@ -33,13 +33,14 @@ export const updateStudent = (data) => (dispatch, getState) => {
         payload: res.data
       })
       dispatch({
-          type: UPDATE_USER_INFORMATION,
-          payload: res.data.user
+        type: UPDATE_USER_INFORMATION,
+        payload: res.data.user
       })
       dispatch(launchAlert('Información actualizada', 200))
     })
     .catch((err) => {
-      dispatch(launchAlert('Error actualizando el estudiante', err.response.status))
+      dispatch(
+        launchAlert('Error actualizando el estudiante', err.response.status)
+      )
     })
 }
-

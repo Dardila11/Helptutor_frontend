@@ -1,4 +1,8 @@
-import { GET_STUDENT, UPDATE_STUDENT, LOADING } from 'src/redux/types/types_student'
+import {
+  GET_STUDENT,
+  UPDATE_STUDENT,
+  LOADING
+} from 'src/redux/types/types_student'
 
 const userInfoData = {
   first_name: '',

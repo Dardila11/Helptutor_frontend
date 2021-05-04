@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBlockEnd: theme.spacing(2)
   },
-  lateralView:{
+  lateralView: {
     borderRadius: '20px'
   },
   button: {
@@ -73,7 +73,7 @@ const KnowledgeAreaListView = (props) => {
   return (
     <>
       <Grid item xs={3}>
-        <Paper className={classes.lateralView} elevation={2} >
+        <Paper className={classes.lateralView} elevation={2}>
           <Card className={classes.lateralView}>
             <Typography
               className={classes.containerTitle}

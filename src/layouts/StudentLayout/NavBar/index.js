@@ -1,28 +1,21 @@
 import React from 'react'
-import {
-  makeStyles,
-  Toolbar,
-  IconButton,
-  Typography
-} from '@material-ui/core'
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-import ListAltIcon from '@material-ui/icons/ListAlt';
-import { Link as RouterLink } from 'react-router-dom';
+import { makeStyles, Toolbar, IconButton, Typography } from '@material-ui/core'
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
+import ListAltIcon from '@material-ui/icons/ListAlt'
+import { Link as RouterLink } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    
-  },
-  toolbar:{
+  root: {},
+  toolbar: {
     alignItems: 'center',
     color: theme.palette.common.white
   },
-  navicons:{
+  navicons: {
     marginRight: theme.spacing(3),
     marginLeft: theme.spacing(1)
   },
-  options:{
+  options: {
     color: theme.palette.common.white
   }
 }))
@@ -30,26 +23,26 @@ const useStyles = makeStyles((theme) => ({
 const StudentNavBar = () => {
   const classes = useStyles()
   return (
-      <Toolbar className={classes.toolbar}>        
-      <RouterLink to='/estudiante/publicaciones'>
+    <Toolbar className={classes.toolbar}>
+      <RouterLink to="/estudiante/publicaciones">
         <IconButton className={classes.options}>
-            <Typography variant='h4' >Mis publicaciones</Typography>
-            <LibraryBooksIcon className={classes.navicons} />
+          <Typography variant="h4">Mis publicaciones</Typography>
+          <LibraryBooksIcon className={classes.navicons} />
         </IconButton>
       </RouterLink>
-      <RouterLink to='/estudiante/anuncios'>
+      <RouterLink to="/estudiante/anuncios">
         <IconButton className={classes.options}>
-            <Typography variant='h4' >Anuncios</Typography>
-            <ListAltIcon className={classes.navicons}/>
+          <Typography variant="h4">Anuncios</Typography>
+          <ListAltIcon className={classes.navicons} />
         </IconButton>
       </RouterLink>
-      <RouterLink to='/estudiante/tutores'>
+      <RouterLink to="/estudiante/tutores">
         <IconButton className={classes.options}>
-            <Typography variant='h4' >Tutores</Typography>
-            <PeopleAltIcon className={classes.navicons}/>
+          <Typography variant="h4">Tutores</Typography>
+          <PeopleAltIcon className={classes.navicons} />
         </IconButton>
       </RouterLink>
-      </Toolbar>
+    </Toolbar>
   )
 }
 

@@ -75,20 +75,20 @@ const useStyles = makeStyles((theme) => ({
 
 const StudentTopBar = (props) => {
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(null)
   }
 
   const handleLogOut = () => {
     props.logout()
   }
-  
+
   return (
     <div className={classes.grow}>
       <Toolbar className={classes.toolbar} color="primary">
@@ -109,49 +109,58 @@ const StudentTopBar = (props) => {
         <StudentNavBar />
         <div className={classes.grow} />
         <div className={classes.sectionDesktop}>
-            <div className={classes.userSection}>
-              <IconButton
-                className={classes.userSpace}
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                color="inherit"
-                onClick={handleClick}>
-                <Typography className={classes.userSpace} variant="h4">
-                  {props.user != null ? (
-                    <>
-                      {props.user.first_name} {props.user.last_name}
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </Typography>
-                <Avatar className={classes.coverAnswer} alt='user photo' src={props.user.photo}/>
-              </IconButton>
-              <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >                
-                <RouterLink to="/estudiante/cuenta/perfil"> 
-                  <MenuItem onClick={handleClose}> 
-                    <Typography color='primary'><b>Perfil</b></Typography>
-                  </MenuItem>
-                </RouterLink>
-                <RouterLink to="/estudiante/cuenta"> 
-                  <MenuItem onClick={handleClose}> 
-                    <Typography color='primary'><b>Cuenta</b></Typography>
-                  </MenuItem>
-                </RouterLink>
-                <Divider></Divider>
-                <MenuItem onClick={handleLogOut}>
-                  <Typography color='primary'><b>Salir</b></Typography>
-                  <ExitToAppIcon className={classes.exitIcon}/>
+          <div className={classes.userSection}>
+            <IconButton
+              className={classes.userSpace}
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              color="inherit"
+              onClick={handleClick}>
+              <Typography className={classes.userSpace} variant="h4">
+                {props.user != null ? (
+                  <>
+                    {props.user.first_name} {props.user.last_name}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </Typography>
+              <Avatar
+                className={classes.coverAnswer}
+                alt="user photo"
+                src={props.user.photo}
+              />
+            </IconButton>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}>
+              <RouterLink to="/estudiante/cuenta/perfil">
+                <MenuItem onClick={handleClose}>
+                  <Typography color="primary">
+                    <b>Perfil</b>
+                  </Typography>
                 </MenuItem>
-              </Menu>
-            </div>
+              </RouterLink>
+              <RouterLink to="/estudiante/cuenta">
+                <MenuItem onClick={handleClose}>
+                  <Typography color="primary">
+                    <b>Cuenta</b>
+                  </Typography>
+                </MenuItem>
+              </RouterLink>
+              <Divider></Divider>
+              <MenuItem onClick={handleLogOut}>
+                <Typography color="primary">
+                  <b>Salir</b>
+                </Typography>
+                <ExitToAppIcon className={classes.exitIcon} />
+              </MenuItem>
+            </Menu>
+          </div>
         </div>
       </Toolbar>
     </div>

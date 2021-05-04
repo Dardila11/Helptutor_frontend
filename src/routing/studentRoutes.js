@@ -14,20 +14,22 @@ import StudentPublicationsView from 'src/views/studentviews/publications/index'
 import TutorsView from 'src/views/studentviews/tutors/tutorsView'
 
 const StudentRoutes = () => {
-    return (
-        <>
-        <PrivateRoute path="/estudiante" element={<StudentLayout />}>
-            <Route path="/" element={<StudentPublicationsView />} />
-            <Route path="/publicaciones" element={<StudentPublicationsView />} />
-            <Route path="/tutores" element={<TutorsView />}/>
-        </PrivateRoute>
+  return (
+    <>
+      <PrivateRoute path="/estudiante" element={<StudentLayout />}>
+        <Route path="/" element={<StudentPublicationsView />} />
+        <Route path="/publicaciones" element={<StudentPublicationsView />} />
+        <Route path="/tutores" element={<TutorsView />} />
+      </PrivateRoute>
 
-        <PrivateRoute path="/estudiante/cuenta" element={<StudentAccountLayout />}>
-            <Route path="/perfil" element={<StudentProfileView />} />
-            <Route path="/informacion" element={<StudentEditInfoView />} />
-        </PrivateRoute>
-        </>
-    )
+      <PrivateRoute
+        path="/estudiante/cuenta"
+        element={<StudentAccountLayout />}>
+        <Route path="/perfil" element={<StudentProfileView />} />
+        <Route path="/informacion" element={<StudentEditInfoView />} />
+      </PrivateRoute>
+    </>
+  )
 }
 
 export default StudentRoutes

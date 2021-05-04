@@ -17,7 +17,10 @@ import formikValues from './formikValues'
 import EditProfileViewSkeleton from 'src/components/skeletons/EditProfileViewSkeleton'
 
 //REDUX
-import { getStudentInfo, updateStudent } from 'src/redux/actions/student/student_data'
+import {
+  getStudentInfo,
+  updateStudent
+} from 'src/redux/actions/student/student_data'
 
 import { connect } from 'react-redux'
 
@@ -57,7 +60,7 @@ const StudentEditInfoView = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
-  
+
   useEffect(() => {
     setLoading(requestInProgress)
   }, [requestInProgress])
@@ -69,11 +72,11 @@ const StudentEditInfoView = (props) => {
   const classes = useStyles()
   return (
     <Card className={classes.root}>
-    {loading? (
-      <>
-        <EditProfileViewSkeleton />
-      </>
-    ) : (
+      {loading ? (
+        <>
+          <EditProfileViewSkeleton />
+        </>
+      ) : (
         <Box display="flex" flexDirection="column" justifyContent="center">
           <Formik
             enableReinitialize
@@ -220,9 +223,10 @@ const StudentEditInfoView = (props) => {
               </form>
             )}
           </Formik>
-        </Box>)}
-      </Card>
-    )
+        </Box>
+      )}
+    </Card>
+  )
 }
 
 const mapStateToProps = (state) => ({
