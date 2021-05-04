@@ -29,7 +29,8 @@ const tutorInfo = (state = initialState, action) => {
         email: data.user.email,
         interest: data.interest,
         methodology: data.methodology,
-        skills: data.skills
+        skills: data.skills,
+        trajectory: data.trajectory
       }
       return {
         ...state,
