@@ -16,8 +16,8 @@ const NominationsView = (props) => {
             {nominations.map((nomination, index)=>(
                 <Grid item xs={4}>
                     <NominationCard 
-                        id={nomination.id} 
-                        key={index} 
+                        id={'nom_'+nomination.id} 
+                        key={nomination.id+'_'+index} 
                         nomination={nomination}
                         next={next}/>
                 </Grid>

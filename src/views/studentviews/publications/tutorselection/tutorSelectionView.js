@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Selecciona un tutor', 'Selecciona el horario', 'Pagar'];
+  return ['Selecciona un tutor', 'Información del tutor','Selecciona el horario', 'Pagar'];
 }
 
 function getStepContent(step) {
@@ -27,8 +27,10 @@ function getStepContent(step) {
     case 0:
       return 'Selecciona el tutor'
     case 1:
-      return 'Selecciona el horario'
+      return 'Información del tutor'
     case 2:
+      return 'Selecciona el horario'
+    case 3:
       return  'Pagar'
     default:
       return '';
@@ -42,13 +44,13 @@ const TutorSelectionView = (props) => {
   const steps = getSteps();
 
   const handleNomination = (tutor) => {
-    if(activeStep<2) setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if(activeStep<3) setActiveStep((prevActiveStep) => prevActiveStep + 1);
     console.log(tutor)
   }
 
   const handleNext = () => {
 
-    if(activeStep<2) setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if(activeStep<3) setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
@@ -77,6 +79,21 @@ const TutorSelectionView = (props) => {
                     {activeStep===1 ? (
                         <>
                         <Typography>
+                            Aqui se muestra la información del tutor
+                        </Typography>
+                        <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className={classes.button}
+                        >
+                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                        </Button>
+                        </>
+                    ):(<></>)}
+                    {activeStep===2 ?(
+                        <>
+                        <Typography>
                             Aqui se muestra el horario disponible del tutor
                         </Typography>
                         <Button
@@ -89,7 +106,7 @@ const TutorSelectionView = (props) => {
                         </Button>
                         </>
                     ):(<></>)}
-                    {activeStep===2 ? (
+                    {activeStep===3 ? (
                         <>
                         <Typography>
                             Aqui se muestra la informacion del servicio a contratar, y se pone un boton para redirigir al pago
