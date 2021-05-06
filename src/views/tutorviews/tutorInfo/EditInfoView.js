@@ -9,9 +9,9 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  LinearProgress
+  LinearProgress,
+  makeStyles
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
 import { Formik } from 'formik'
 import formikValues from './formikValues'
 
@@ -52,6 +52,7 @@ const EditInfoView = (props) => {
   useEffect(
     () => {
       getTutorInfo(props.user.id)
+      //getTutorInfo(35)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -108,6 +109,9 @@ const EditInfoView = (props) => {
                   name="first_name"
                   value={values.first_name}
                   variant="outlined"
+                  inputProps={{
+                    'data-testid': 'firstname'
+                  }}
                 />
                 <TextField
                   id="txt_lastname"
@@ -121,6 +125,9 @@ const EditInfoView = (props) => {
                   name="last_name"
                   value={values.last_name}
                   variant="outlined"
+                  inputProps={{
+                    'data-testid': 'lastname'
+                  }}
                 />
               </Box>
               <Box className={classes.inputs} display="flex">
@@ -137,7 +144,10 @@ const EditInfoView = (props) => {
                     value={values.gender}
                     name="gender"
                     onChange={handleChange}
-                    label="Género">
+                    label="Género"
+                    inputProps={{
+                      'data-testid': 'gender'
+                    }}>
                     <MenuItem key={3} value={3}>
                       --
                     </MenuItem>
@@ -168,6 +178,9 @@ const EditInfoView = (props) => {
                   InputLabelProps={{
                     shrink: true
                   }}
+                  inputProps={{
+                    'data-testid': 'birthday'
+                  }}
                 />
                 <TextField
                   id="txt_email"
@@ -183,6 +196,9 @@ const EditInfoView = (props) => {
                   type="email"
                   value={values.email}
                   variant="outlined"
+                  inputProps={{
+                    'data-testid': 'email'
+                  }}
                 />
               </Box>
               <Box className={classes.inputs} display="flex">
@@ -200,6 +216,9 @@ const EditInfoView = (props) => {
                   multiline={true}
                   rows={5}
                   variant="outlined"
+                  inputProps={{
+                    'data-testid': 'interests'
+                  }}
                 />
                 <TextField
                   id="txt_methodology"
@@ -215,6 +234,9 @@ const EditInfoView = (props) => {
                   multiline={true}
                   rows={5}
                   variant="outlined"
+                  inputProps={{
+                    'data-testid': 'methodology'
+                  }}
                 />
                 <TextField
                   id="txt_skills"
@@ -230,6 +252,9 @@ const EditInfoView = (props) => {
                   multiline={true}
                   rows={5}
                   variant="outlined"
+                  inputProps={{
+                    'data-testid': 'skills'
+                  }}
                 />
               </Box>
 
@@ -241,7 +266,8 @@ const EditInfoView = (props) => {
                   fullWidth
                   size="large"
                   type="submit"
-                  variant="contained">
+                  variant="contained"
+                  data-testid="btn-update">
                   Actualizar
                 </Button>
               </Box>

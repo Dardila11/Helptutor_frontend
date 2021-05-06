@@ -49,7 +49,7 @@ export const getTutorInfo = (id) => (dispatch, getState) => {
       })
     })
     .catch((err) => {
-      dispatch(launchAlert('Error registrando tutor', err.response.status))
+      dispatch(launchAlert('Error obteniendo información del tutor', '400'))
     })
 }
 export const addTutor = (data) => (dispatch) => {
@@ -60,7 +60,7 @@ export const addTutor = (data) => (dispatch) => {
         type: ADD_TUTOR,
         payload: res.data
       })
-      dispatch(launchAlert('Tutor registrado', 200))
+      dispatch(launchAlert('Registro exitoso', 200))
     })
     .catch((err) => {
       dispatch(launchAlert('Error registrando tutor', err.response.status))
