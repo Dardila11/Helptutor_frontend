@@ -8,7 +8,7 @@ import {
   getSpecialities,
   addSpecialityTutor,
   updateSpecialityTutor
-} from 'src/redux/actions/knowledge_areas'
+} from 'src/redux/actions/tutor/knowledge_areas'
 
 //COMPONENTS MATERIAL UI
 import {

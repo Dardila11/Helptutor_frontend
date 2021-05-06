@@ -1,5 +1,5 @@
 //REACT
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 //COMPONENTS
@@ -13,7 +13,7 @@ const responseGoogle = async (props, response) => {
   let jsonValues = {
     id_token: response.tokenId
   }
-  if(props.login) props.loginGoogle(jsonValues)
+  if (props.login) props.loginGoogle(jsonValues)
   else {
     props.addUserGoogle(jsonValues)
   }

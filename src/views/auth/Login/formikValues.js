@@ -25,7 +25,7 @@ const validation = Yup.object().shape({
     })
     .max(255)
     .required('Correo Electrónico es requerido'),
-  password: Yup.string().max(255).required('Contraseña es requerido'),
+  password: Yup.string().max(255).required('Contraseña es requerido')
 })
 
 const logConst = {

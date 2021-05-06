@@ -19,7 +19,7 @@ import {
   deleteServiceTutor,
   setServiceTutor,
   setIsCreate
-} from 'src/redux/actions/services'
+} from 'src/redux/actions/tutor/services'
 import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
@@ -34,25 +34,26 @@ const useStyles = makeStyles((theme) => ({
     float: 'right',
     color: theme.palette.secondary
   },
-  button:{
+  button: {
     borderRadius: '20px',
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    textTransform: 'none'
   }
 }))
 
 const ServiceCard = (props) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
-  
+
   const handleDelete = () => {
     setOpen(false)
     props.deleteServiceTutor(props.service.id)
     props.setIsCreate(true)
   }
-  const handleOpen = () =>{
+  const handleOpen = () => {
     setOpen(true)
   }
-  const handleClose = () =>{
+  const handleClose = () => {
     setOpen(false)
   }
   return (
@@ -63,11 +64,14 @@ const ServiceCard = (props) => {
             <Button
               className={classes.button}
               fullWidth={true}
-              variant='outlined'
-              onClick={()=>{
+              variant="outlined"
+              onClick={() => {
                 props.setServiceTutor(props.service)
               }}>
-              <Typography align="left" variant='h5'> {props.service.title}</Typography>
+              <Typography align="center" variant="h5">
+                {' '}
+                {props.service.title}
+              </Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>
@@ -75,7 +79,7 @@ const ServiceCard = (props) => {
               className={classes.button}
               id={props.service.id}
               key={props.service.id}
-              color='secondary'
+              color="secondary"
               onClick={handleOpen}>
               <DeleteIcon className={classes.delete} />
             </Button>
@@ -83,21 +87,22 @@ const ServiceCard = (props) => {
               open={open}
               onClose={handleClose}
               aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">{"Advertencia"}</DialogTitle>
+              aria-describedby="alert-dialog-description">
+              <DialogTitle id="alert-dialog-title">{'Advertencia'}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                  ¿Estas seguro de eliminar el servicio <b>{props.service.title}</b> ?
+                  ¿Estas seguro de eliminar el servicio{' '}
+                  <b>{props.service.title}</b> ?
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleClose} color="primary">
                   Cancelar
                 </Button>
-                <Button onClick={handleDelete} 
-                  color="primary" 
-                  variant='contained'
+                <Button
+                  onClick={handleDelete}
+                  color="primary"
+                  variant="contained"
                   autoFocus>
                   Eliminar
                 </Button>
@@ -105,7 +110,7 @@ const ServiceCard = (props) => {
             </Dialog>
           </Grid>
         </Grid>
-        </Container>
+      </Container>
     </>
   )
 }

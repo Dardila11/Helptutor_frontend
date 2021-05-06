@@ -52,10 +52,7 @@ const NavBar = () => {
             button>
             <ListItemText primary="Areas de conocimento" />
           </ListItem>
-          <ListItem
-            component={RouterLink}
-            to="/tutor/cuenta/servicios"
-            button>
+          <ListItem component={RouterLink} to="/tutor/cuenta/servicios" button>
             <ListItemText primary="Servicios" />
           </ListItem>
           <ListItem component={RouterLink} to="/tutor/cuenta" button>

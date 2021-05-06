@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { ThemeProvider } from '@material-ui/core'
 import GlobalStyles from './components/GlobalStyles'
 import theme from './theme'
@@ -18,17 +18,17 @@ import { loadUser } from './redux/actions/auth'
 
 const App = () => {
   useEffect(() => {
-    if(store.getState('auth').auth.token!=null)store.dispatch(loadUser()); 
-  });
+    if (store.getState('auth').auth.token != null) store.dispatch(loadUser())
+  })
 
   return (
     <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <GlobalStyles />
-          <ProgressAction />
-          <AlertComponent />
-          <Routing />
-        </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <ProgressAction />
+        <AlertComponent />
+        <Routing />
+      </ThemeProvider>
     </Provider>
   )
 }

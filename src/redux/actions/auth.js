@@ -16,8 +16,9 @@ import {
   LOGOUT_SUCCESS,
   ACTION_RUNNING,
   FINISHED_LOADING,
-  ACTION_END
-} from './types_auth'
+  ACTION_END,
+  SELECT_ROLE
+} from '../types/types_auth'
 
 export const updateTutor = (data) => (dispatch, getState) => {
   const request = Api.updateTutorInfo(data, getState)
@@ -122,7 +123,10 @@ export const addStudentGoogle = (data) => (dispatch) => {
         dispatch(launchAlert('El estudiante ya existe', err.response.status))
       else
         dispatch(
-          launchAlert('Error registrando estudiante con google', err.response.status)
+          launchAlert(
+            'Error registrando estudiante con google',
+            err.response.status
+          )
         )
     })
 }
@@ -134,8 +138,6 @@ export const loadUser = () => (dispatch, getState) => {
 
   Api.getUser(getState)
     .then((res) => {
-      console.log('loadUser')
-      console.log(res.data)
       dispatch({
         type: USER_LOADED,
         payload: res.data
@@ -156,7 +158,6 @@ export const loadUser = () => (dispatch, getState) => {
 
 export const login = (data) => (dispatch) => {
   dispatch({ type: ACTION_RUNNING })
-
   Api.login(data)
     .then((res) => {
       dispatch({
@@ -166,7 +167,9 @@ export const login = (data) => (dispatch) => {
       dispatch({ type: ACTION_END })
     })
     .catch((err) => {
-      dispatch(launchAlert('Error iniciando sesión', err.response.status))
+      if (err.response.status === 400)
+        dispatch(launchAlert('El usuario o contraseña son incorrectos', 500))
+      else dispatch(launchAlert('Error iniciando sesión', err.response.status))
       dispatch({
         type: LOGIN_FAIL
       })
@@ -193,6 +196,13 @@ export const loginGoogle = (data) => (dispatch) => {
       })
       dispatch({ type: ACTION_END })
     })
+}
+
+export const selectRole = (role) => (dispatch) => {
+  dispatch({
+    type: SELECT_ROLE,
+    payload: role
+  })
 }
 
 export const logout = () => (dispatch, getState) => {

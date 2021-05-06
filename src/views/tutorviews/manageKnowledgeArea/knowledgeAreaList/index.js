@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import {
   getSpecialitiesTutor,
   setIsCreate
-} from '../../../../redux/actions/knowledge_areas'
+} from '../../../../redux/actions/tutor/knowledge_areas'
 import { connect } from 'react-redux'
 
 //COMPONENTS MATERAIL UI
@@ -41,8 +41,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBlockEnd: theme.spacing(2)
   },
-  lateralView:{
+  lateralView: {
     borderRadius: '20px'
+  },
+  button: {
+    textTransform: 'none'
   }
 }))
 
@@ -70,7 +73,7 @@ const KnowledgeAreaListView = (props) => {
   return (
     <>
       <Grid item xs={3}>
-        <Paper className={classes.lateralView} elevation={2} >
+        <Paper className={classes.lateralView} elevation={2}>
           <Card className={classes.lateralView}>
             <Typography
               className={classes.containerTitle}
@@ -95,6 +98,7 @@ const KnowledgeAreaListView = (props) => {
             )}
             <Container className={classes.actions}>
               <Button
+                className={classes.button}
                 fullWidth={true}
                 color="primary"
                 variant="contained"

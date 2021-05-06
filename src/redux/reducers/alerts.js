@@ -1,4 +1,4 @@
-import { LAUNCHALERT } from 'src/redux/actions/types_alerts'
+import { LAUNCHALERT } from 'src/redux/types/types_alerts'
 
 const initialState = {
   msg: '',

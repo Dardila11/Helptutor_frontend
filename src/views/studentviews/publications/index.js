@@ -1,13 +1,23 @@
 import React, { useEffect } from 'react'
-import { Box, CircularProgress, makeStyles, Paper, Typography } from '@material-ui/core'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Dialog,
+  makeStyles,
+  Paper,
+  Typography
+} from '@material-ui/core'
 
-import { getPublications } from 'src/redux/actions/publications'
+import { getPublications } from 'src/redux/actions/student/student_publications'
 import { connect } from 'react-redux'
 import PublicationsViewSkeleton from 'src/components/skeletons/PublicationsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
 import PublicationFormView from './publicationForm'
-import PublicationCard from 'src/components/publicationCard'
+import StudentPublicationCard from 'src/components/studentpublicationCard'
 import Page from 'src/components/Page'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,55 +25,91 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '20px',
     width: 900
   },
-  cardsContent: {
-      margin: theme.spacing(2),
-      borderRadius:'20px'
+  buttonContainer: {
+    width: 300
   },
-  title:{
-      margin: theme.spacing(1)
+  cardsContent: {
+    margin: theme.spacing(2),
+    borderRadius: '20px'
+  },
+  title: {
+    margin: theme.spacing(1)
+  },
+  button: {
+    textTransform: 'none'
   }
 }))
 
 const StudentPublicationsView = (props) => {
   const classes = useStyles()
-  const {loadingPublications, getPublications, publications,creating} = props
-  useEffect(()=>{
-    getPublications()
-  },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  [])
+  const { loadingPublications, getPublications, publications, creating } = props
+  const [open, setOpen] = React.useState(false)
+  useEffect(
+    () => {
+      getPublications()
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   return (
-    <Page title='Publicaciones'>
-      <Box display='flex' flexDirection="column" justifyContent='center' alignItems='center'>
+    <Page title="Publicaciones">
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center">
         <SearchBar />
         <Paper elevation={3} className={classes.root}>
-        {loadingPublications? (
+          {loadingPublications ? (
             <PublicationsViewSkeleton />
-        ):(
+          ) : (
             <>
-                <Box className={classes.title} textAlign='center'>
-                    <Typography variant='h4'>
-                    MIS PUBLICACIONES
-                    </Typography>
-                </Box>
-                {creating? (
-                  <CircularProgress />
-                ):(                  
-                  <PublicationFormView/>
-                )}
-                <Box>
-                        {publications.map((publication, index) => (
-                          <PublicationCard
-                            key={index}
-                            id={publication.id}
-                            publication={publication}/>
-                        ))}
-                </Box>
+              <Box className={classes.title} textAlign="center">
+                <Typography variant="h4">Mis plublicaciones</Typography>
+              </Box>
+              {creating ? (
+                <CircularProgress />
+              ) : (
+                <>
+                  <Container className={classes.buttonContainer}>
+                    <Button
+                      className={classes.button}
+                      variant="contained"
+                      color="primary"
+                      startIcon={<AddCircleIcon />}
+                      onClick={handleOpen}>
+                      Agregar publicación
+                    </Button>
+                  </Container>
+                  <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="publications-dialog-title">
+                    <PublicationFormView publication={null} />
+                  </Dialog>
+                </>
+              )}
+              {publications.map((publication, index) => (
+                <StudentPublicationCard
+                  key={index}
+                  id={publication.id}
+                  publication={publication}
+                  isStudent={true}
+                />
+              ))}
             </>
-        )}
+          )}
         </Paper>
-    </Box>
+      </Box>
     </Page>
   )
 }

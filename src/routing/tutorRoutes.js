@@ -13,16 +13,18 @@ import ManageServicesView from 'src/views/tutorviews/manageServices'
 import ProfileView from 'src/views/tutorviews/profile/ProfileView'
 
 const TutorRoutes = () => {
-    return (
-            <PrivateRoute path="/tutor" element={<TutorAccountLayout />}>
-                <Route path="/cuenta" element={<ProfileView />} />
-                <Route path="/cuenta/perfil" element={<ProfileView />} />
-                <Route path="/cuenta/informacion" element={<EditInfoView />} />        
-                <Route path="/cuenta/servicios" element={<ManageServicesView />} />
-                <Route path="/cuenta/especialidades" element={<ManageKnowledgeAreaView />}
-                />
-            </PrivateRoute>
-    )
+  return (
+    <PrivateRoute path="/tutor" element={<TutorAccountLayout />}>
+      <Route path="/cuenta" element={<ProfileView />} />
+      <Route path="/cuenta/perfil" element={<ProfileView />} />
+      <Route path="/cuenta/informacion" element={<EditInfoView />} />
+      <Route path="/cuenta/servicios" element={<ManageServicesView />} />
+      <Route
+        path="/cuenta/especialidades"
+        element={<ManageKnowledgeAreaView />}
+      />
+    </PrivateRoute>
+  )
 }
 
 export default TutorRoutes

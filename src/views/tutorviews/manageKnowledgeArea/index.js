@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-
-
-  Grid,
-  makeStyles
-} from '@material-ui/core'
+import { Grid, makeStyles } from '@material-ui/core'
 import Page from 'src/components/Page'
 import KnowledgeAreaInfoView from './knowledgeAreaInfo'
 import KnowledgeAreaListView from './knowledgeAreaList'
@@ -25,8 +20,8 @@ const ManageKnowledgeAreaView = () => {
     <>
       <Page className={classes.root} title="Gestionar areas de conocimiento">
         <Grid container spacing={2}>
-              <KnowledgeAreaListView />
-              <KnowledgeAreaInfoView />
+          <KnowledgeAreaListView />
+          <KnowledgeAreaInfoView />
         </Grid>
       </Page>
     </>

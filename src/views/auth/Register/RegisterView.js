@@ -269,7 +269,10 @@ const RegisterView = ({ isAuthenticated, addTutor, addStudent }) => {
                   ó
                 </Box>
                 <Box width="sm">
-                  <LoginHooks tutorSelect={tutorSelect} studentSelect={studentSelect} />
+                  <LoginHooks
+                    tutorSelect={tutorSelect}
+                    studentSelect={studentSelect}
+                  />
                 </Box>
                 {/* <Box my={3}>
                   <SignInGoogle></SignInGoogle>
