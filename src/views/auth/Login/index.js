@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 //REDUX
-import { login } from 'src/redux/actions/auth'
+import { login, selectRole } from 'src/redux/actions/auth'
 import { connect } from 'react-redux'
 
 //COMPONENTS MATERIAL UI
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   text: {
     width: '270px'
   },
-  register:{
+  register: {
     marginTop: theme.spacing(2)
   }
 }))
@@ -55,10 +55,23 @@ const LoginView = (props) => {
 
   useEffect(
     () => {
-      if (props.isAuthenticated) navigate('/estudiante')
-      else navigate('/login')
+      if (props.auth.isAuthenticated) {
+        if (props.auth.isStudent && props.auth.isTutor) {
+          navigate('/seleccion-rol')
+          return
+        }
+        if (props.auth.isStudent) {
+          props.selectRole('student')
+          navigate('/estudiante')
+          return
+        } else {
+          props.selectRole('tutor')
+          navigate('/tutor')
+          return
+        }
+      } else navigate('/login')
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.isAuthenticated]
+    [props.auth.isAuthenticated]
   )
 
   return (
@@ -144,10 +157,10 @@ const LoginView = (props) => {
             )}
           </Formik>
         </Container>
-        <Container className={classes.register} align='center'>
+        <Container className={classes.register} align="center">
           <Typography>
-            ¿No tienes una cuenta?, 
-            <Link href='./registrar'>haz click aqui para registrate</Link>
+            ¿No tienes una cuenta?,
+            <Link href="./registrar">haz click aqui para registrate</Link>
           </Typography>
         </Container>
       </Box>
@@ -156,9 +169,10 @@ const LoginView = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  auth: state.auth
 })
 
 export default connect(mapStateToProps, {
+  selectRole,
   login
 })(LoginView)

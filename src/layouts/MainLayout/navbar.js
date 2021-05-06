@@ -98,12 +98,7 @@ const MainNavBar = () => {
       <AppBar position="static" color="primary">
         <Toolbar>
           <Button className={classes.button} variant="outlined" href="/">
-            <img
-              src={logo}
-              width="50"
-              alt="LogoImage"
-              >
-              </img>
+            <img src={logo} width="50" alt="LogoImage"></img>
             <Typography
               className={classes.title}
               variant="h2"
@@ -115,9 +110,7 @@ const MainNavBar = () => {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <RouterLink to="/registrar">
-              <Button
-                className={classes.button}
-                variant="outlined">
+              <Button className={classes.button} variant="outlined">
                 <span>
                   <b>Registrarme</b>
                 </span>
@@ -125,11 +118,11 @@ const MainNavBar = () => {
             </RouterLink>
             <div className={classes.separate}></div>
             <RouterLink to="/login">
-            <Button className={classes.button} variant="outlined">
-              <span>
-                <b>Iniciar Sesión</b>
-              </span>
-            </Button>
+              <Button className={classes.button} variant="outlined">
+                <span>
+                  <b>Iniciar Sesión</b>
+                </span>
+              </Button>
             </RouterLink>
           </div>
         </Toolbar>

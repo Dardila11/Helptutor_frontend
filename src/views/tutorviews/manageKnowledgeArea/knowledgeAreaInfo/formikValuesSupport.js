@@ -6,9 +6,9 @@ const getValues = (values) => {
     awarded_by: values.awarded_by,
     year: values.year,
     file: {
-        filename: values.file.name,
-        type: values.file.type,
-        size: `${values.file.size} bytes`
+      filename: values.file.name,
+      type: values.file.type,
+      size: `${values.file.size} bytes`
     },
     user: 12
   }

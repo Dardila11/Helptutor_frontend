@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   contentContainer: {
     display: 'flex',
     overflow: 'hidden',
-    margin: theme.spacing(1)    
+    margin: theme.spacing(1)
   },
   content: {
     flex: '1 1 auto',

@@ -1,13 +1,16 @@
 import { combineReducers } from 'redux'
 
 import auth from './auth'
-import services from './services'
-import tutorInfo from './tutor_data'
+import services from './tutor/services'
+import tutorInfo from './tutor/tutor_data'
 import alert from './alerts'
-import studentInfo from './student_data'
-import publications from './publications'
-import knowledge_areas from './knowledge_areas'
-import tutorsInfo from './tutors_data'
+import studentInfo from './student/student_data'
+import publications from './student/student_publications'
+import knowledge_areas from './tutor/knowledge_areas'
+import tutorsInfo from './student/tutors_data'
+import advertisements from './student/advertisements'
+import studentServices from './student/student_services'
+import nominations from './tutor/nominations'
 
 export default combineReducers({
   auth,
@@ -17,5 +20,8 @@ export default combineReducers({
   tutorInfo,
   studentInfo,
   publications,
-  tutorsInfo
+  tutorsInfo,
+  advertisements,
+  studentServices,
+  nominations
 })

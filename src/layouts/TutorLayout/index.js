@@ -1,46 +1,73 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core'
+import {
+  Backdrop,
+  Box,
+  CircularProgress,
+  makeStyles,
+  Typography
+} from '@material-ui/core'
 import TutorTopBar from './TopBar'
+
+import { getTutorInfo } from 'src/redux/actions/tutor/tutor_data'
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
     height: '100%',
-    overflow: 'hidden',
-    width: '100%'
-  },
-  wrapper: {
-    display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden',
-    paddingTop: 64,
-    [theme.breakpoints.up('lg')]: {
-      paddingLeft: 256
-    }
+    overflow: 'auto'
   },
   contentContainer: {
     display: 'flex',
-    flex: '1 1 auto',
     overflow: 'hidden'
   },
   content: {
     flex: '1 1 auto',
-    height: '100%',
-    overflow: 'auto'
+    overflow: 'hidden',
+    marginRight: theme.spacing(3)
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: theme.palette.common.white
   }
 }))
 
-export const TutorLayout = () => {
+const TutorLayout = (props) => {
   const classes = useStyles()
-  return (
+  const { getTutorInfo, user, loading } = props
+  useEffect(
+    () => {
+      getTutorInfo(user.id)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
+
+  return loading ? (
+    <Backdrop className={classes.backdrop} open={true}>
+      <Box display="flex" flexDirection="column" alignItems="center">
+        <Typography color="primary">Cargando</Typography>
+        <CircularProgress color="primary" />
+      </Box>
+    </Backdrop>
+  ) : (
     <div className={classes.root}>
-      <TutorTopBar />  
-        <div className={classes.contentContainer}>   
-          <div className={classes.content}>          
-            <Outlet />
-          </div>
+      <TutorTopBar />
+      <div className={classes.contentContainer}>
+        <div className={classes.content}>
+          <Outlet />
         </div>
+      </div>
     </div>
   )
 }
+
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+  loading: state.tutorInfo.isLoading
+})
+
+export default connect(mapStateToProps, {
+  getTutorInfo
+})(TutorLayout)

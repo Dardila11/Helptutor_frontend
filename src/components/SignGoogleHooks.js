@@ -4,7 +4,11 @@ import { useGoogleLogin } from 'react-google-login'
 import { Card, makeStyles } from '@material-ui/core'
 
 //REDUX
-import { addTutorGoogle, addStudentGoogle, loginGoogle } from '../redux/actions/auth'
+import {
+  addTutorGoogle,
+  addStudentGoogle,
+  loginGoogle
+} from '../redux/actions/auth'
 import { launchAlert } from '../redux/actions/alerts'
 import { connect } from 'react-redux'
 import store from '../redux/store.js'
@@ -43,27 +47,32 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const responseGoogle = async (props, response, isUnicaucaEmail, role) => {
-  if (isUnicaucaEmail) {
-    let jsonValues = {
-      token: response.tokenId
+  if (props.token === null) {
+    if (isUnicaucaEmail) {
+      let jsonValues = {
+        token: response.tokenId
+      }
+      if (props.login) props.loginGoogle(jsonValues)
+      else {
+        if (role === 'tutor') props.addTutorGoogle(jsonValues)
+        else props.addStudentGoogle(jsonValues)
+      }
+    } else {
+      store.dispatch(
+        launchAlert(
+          'El correo proporcionado no pertenece a la universidad del cauca',
+          1
+        )
+      )
     }
-    if (props.login) props.loginGoogle(jsonValues)
-    else {
-      if(role==='tutor')props.addTutorGoogle(jsonValues)
-      else props.addStudentGoogle(jsonValues)
-    }
-  } else {
-    store.dispatch(
-      launchAlert('El correo proporcionado no pertenece a la universidad del cauca', 1)
-    )
   }
 }
 const LoginHooks = (props) => {
   let navigate = useNavigate()
   const classes = useStyles()
   const { isAuthenticated, tutorSelect, studentSelect } = props
-  const hasRoleSelected = tutorSelect || studentSelect 
-  
+  const hasRoleSelected = tutorSelect || studentSelect
+
   const validateRole = () => {
     if (!hasRoleSelected && !props.login) {
       store.dispatch(
@@ -85,7 +94,7 @@ const LoginHooks = (props) => {
      */
     let userEmail = res.profileObj.email
     if (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co') {
-      if(tutorSelect)responseGoogle(props, res, true, 'tutor')
+      if (tutorSelect) responseGoogle(props, res, true, 'tutor')
       else responseGoogle(props, res, true, 'student')
     } else {
       responseGoogle(props, res, false)
@@ -116,7 +125,8 @@ const LoginHooks = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  token: state.auth.token
 })
 
 export default connect(mapStateToProps, {
