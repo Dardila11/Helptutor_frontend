@@ -18,7 +18,7 @@ import NotFoundView from 'src/views/errors/NotFoundView'
 import EditInfoView from 'src/views/tutorviews/tutorInfo/EditInfoView'
 import ManageKnowledgeAreaView from 'src/views/tutorviews/manageKnowledgeArea'
 import ManageServicesView from 'src/views/tutorviews/manageServices'
-import ProfileView from 'src/views/tutorviews/profile/ProfileView'
+import TutorProfileView from 'src/views/tutorviews/profile/ProfileView'
 import TutorPublicationsView from 'src/views/tutorviews/publications/index'
 
 //STUDENT VIEWS
@@ -57,8 +57,8 @@ const Routing = () => {
       </PrivateRoute>
 
       <PrivateRoute path="/tutor" element={<TutorAccountLayout />}>
-        <Route path="/cuenta" element={<ProfileView />} />
-        <Route path="/cuenta/perfil" element={<ProfileView />} />
+        <Route path="/cuenta" element={<TutorProfileView />} />
+        <Route path="/cuenta/perfil" element={<TutorProfileView />} />
         <Route path="/cuenta/informacion" element={<EditInfoView />} />
         <Route path="/cuenta/servicios" element={<ManageServicesView />} />
         <Route

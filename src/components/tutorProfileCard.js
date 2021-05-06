@@ -1,8 +1,7 @@
-import React, {useEffect} from 'react'
-import Page from 'src/components/Page'
+import React, { useEffect } from 'react'
 import { Avatar, Box, Card, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
 
-import { getTutorInfo } from 'src/redux/actions/tutor/tutor_data'
+import { getTutorSelectedInfo } from 'src/redux/actions/student/student_publications'
 import { connect } from 'react-redux'
 import { Rating } from '@material-ui/lab'
 import QualificationCard from 'src/components/QualificationCard'
@@ -35,19 +34,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const TutorProfileView = (props) => {
+const ProfileView = (props) => {
   const classes = useStyles()
-  const {user, getTutorInfo, tutor} = props
+  const {idTutor, getTutorSelectedInfo ,tutor} = props
+
+  console.log(idTutor+' into tutor Card')
 
   useEffect(
     () => {
-      getTutorInfo(user.id)
+      getTutorSelectedInfo(idTutor)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
+    [])
+    console.log(props)
   return (
-    <Page title='Perfil'>
     <Card className={classes.root}>
       <Box display="flex" flexDirection="column" justifyContent="center" >
           <Box className={classes.title} textAlign='center'>
@@ -118,7 +118,6 @@ const TutorProfileView = (props) => {
           </Box>
       </Box>
     </Card>
-    </Page>
   )
 }
 
@@ -136,10 +135,9 @@ function getAge(fecha) {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  tutor: state.tutorInfo.userInfo
+  tutor: state.publications.tutorInfo
 })
 
 export default connect(mapStateToProps, {
-  getTutorInfo,
-})(TutorProfileView)
+  getTutorSelectedInfo
+})(ProfileView)

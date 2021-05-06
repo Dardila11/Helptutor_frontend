@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import { Box, DialogTitle, Grid, IconButton } from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import NominationsView from './nominations'
+import ProfileView from 'src/components/tutorProfileCard'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,11 +42,13 @@ const TutorSelectionView = (props) => {
   const { publication } = props
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
+  const [idTutor, setIdTutor] = React.useState(null)
   const steps = getSteps()
 
   const handleNomination = (tutor) => {
     if(activeStep<3) setActiveStep((prevActiveStep) => prevActiveStep + 1);
     console.log(tutor)
+    setIdTutor(tutor.tutor)
   }
 
   const handleNext = () => {
@@ -77,16 +80,9 @@ const TutorSelectionView = (props) => {
                     ):(<></>)}
                     {activeStep===1 ? (
                         <>
-                        <Typography>
-                            Aqui se muestra la información del tutor
-                        </Typography>
-                        <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        className={classes.button}
-                        >
-                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                        <ProfileView idTutor={idTutor}/>
+                        <Button variant="contained" color="primary" onClick={handleNext} className={classes.button}>
+                          Siguiente
                         </Button>
                         </>
                     ):(<></>)}

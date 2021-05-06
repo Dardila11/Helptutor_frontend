@@ -7,7 +7,9 @@ import {
   CREATING,
   UPDATE_PUBLICATION,
   DELETE_PUBLICATION,
-  GET_NOMINATIONS
+  GET_NOMINATIONS,
+  GET_TUTOR,
+  LOADING
 } from 'src/redux/types/types_publications'
 
 export const addPublication = (data) => (dispatch, getState) => {
@@ -81,5 +83,27 @@ export const getPublicationNominations = (id) => (dispatch, getState) => {
     })
     .catch((err) => {
       dispatch('Error obteniendo postulaciones', err.response.status)
+    })
+}
+
+export const getTutorSelectedInfo = (id) => (dispatch, getState) => {
+  console.log('tutor function called')
+  Api.getTutorInfo(id, getState)
+    .then((res) => {
+      dispatch({
+        type: GET_TUTOR,
+        payload: res.data
+      })
+      dispatch({
+        type: LOADING
+      })
+    })
+    .catch((err) => {
+      dispatch(
+        launchAlert(
+          'Error obteniedo información del tutor',
+          err.response.status
+        )
+      )
     })
 }
