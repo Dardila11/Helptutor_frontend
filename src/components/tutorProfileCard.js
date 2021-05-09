@@ -5,6 +5,7 @@ import { getTutorSelectedInfo } from 'src/redux/actions/student/student_publicat
 import { connect } from 'react-redux'
 import { Rating } from '@material-ui/lab'
 import QualificationCard from 'src/components/QualificationCard'
+import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,23 +37,22 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileView = (props) => {
   const classes = useStyles()
-  const {idTutor, getTutorSelectedInfo ,tutor} = props
-
-  console.log(idTutor+' into tutor Card')
-
+  const {idTutor, getTutorSelectedInfo ,tutor, loading} = props
   useEffect(
     () => {
       getTutorSelectedInfo(idTutor)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [])
-    console.log(props)
   return (
     <Card className={classes.root}>
       <Box display="flex" flexDirection="column" justifyContent="center" >
-          <Box className={classes.title} textAlign='center'>
+      {loading ? (
+        <ProfileViewSkeleton></ProfileViewSkeleton>
+      ):(<>
+        <Box className={classes.title} textAlign='center'>
               <Typography variant='h3'>
-                <b>{tutor.first_name} {tutor.last_name}</b>
+                <b>{tutor.user.first_name} {tutor.user.last_name}</b>
               </Typography>
               <Typography variant='h4'>
                 Tutor
@@ -63,7 +63,7 @@ const ProfileView = (props) => {
             <Grid item xs={8}>
               <Box className={classes.principalInformation} display='flex' flexDirection='column'>
                 <Typography className={classes.contentPrincipal} variant='h4'>
-                  {getAge(tutor.birthday)} años
+                  {getAge(tutor.user.birthday)} años
                 </Typography>
                 <Typography  className={classes.contentPrincipal}variant='h4'>
                   {tutor.skills}
@@ -93,16 +93,21 @@ const ProfileView = (props) => {
                     {tutor.methodology}
                   </Typography>
               </Box>
-              <Box textAlign='center'>
-                <Typography variant='h4'>
-                  <b>Experiencia</b>
-                </Typography>
-              </Box>
-              <Box>
-                  <Typography align='justify'>
-                    {tutor.trajectory}
+              {tutor.trajectory==="" ? (
+                <></>
+              ):(<>
+                <Box textAlign='center'>
+                  <Typography variant='h4'>
+                    <b>Experiencia</b>
                   </Typography>
-              </Box>  
+                </Box>
+                <Box>
+                    <Typography align='justify'>
+                      {tutor.trajectory}
+                    </Typography>
+                </Box>  
+                </>
+              )}
             </Box>          
             <Box className={classes.divider}>
               <Divider orientation='vertical'/>
@@ -115,7 +120,9 @@ const ProfileView = (props) => {
               </Box>
                 <QualificationCard/>
             </Box>
-          </Box>
+          </Box></>
+      )}
+          
       </Box>
     </Card>
   )
@@ -135,7 +142,8 @@ function getAge(fecha) {
 }
 
 const mapStateToProps = (state) => ({
-  tutor: state.publications.tutorInfo
+  tutor: state.publications.tutorInfo,
+  loading: state.publications.loadingTutor
 })
 
 export default connect(mapStateToProps, {

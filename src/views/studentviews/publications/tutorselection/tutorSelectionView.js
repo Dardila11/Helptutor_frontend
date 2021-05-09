@@ -16,6 +16,12 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginRight: theme.spacing(1)
+  },
+  nextButton: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: theme.spacing(1)
   }
 }))
 
@@ -47,7 +53,6 @@ const TutorSelectionView = (props) => {
 
   const handleNomination = (tutor) => {
     if(activeStep<3) setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    console.log(tutor)
     setIdTutor(tutor.tutor)
   }
 
@@ -81,9 +86,11 @@ const TutorSelectionView = (props) => {
                     {activeStep===1 ? (
                         <>
                         <ProfileView idTutor={idTutor}/>
-                        <Button variant="contained" color="primary" onClick={handleNext} className={classes.button}>
-                          Siguiente
-                        </Button>
+                        <Box className={classes.nextButton}>
+                          <Button size='large' variant="contained" color="primary" onClick={handleNext} className={classes.button}>
+                            Siguiente
+                          </Button>
+                        </Box>
                         </>
                     ):(<></>)}
                     {activeStep===2 ?(

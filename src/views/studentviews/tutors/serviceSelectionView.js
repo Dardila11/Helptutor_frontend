@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { Box, DialogTitle, Grid, IconButton } from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import ProfileView from 'src/components/tutorProfileCard'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,6 +15,12 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginRight: theme.spacing(1)
+  },
+  nextButton: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: theme.spacing(1)
   }
 }))
 
@@ -34,9 +41,10 @@ function getStepContent(step) {
   }
 }
 
-const ServiceSelectionView = () => {
+const ServiceSelectionView = (props) => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
+  const { idTutor } = props
   const steps = getSteps()
 
   const handleNext = () => {
@@ -71,16 +79,14 @@ const ServiceSelectionView = () => {
           </Grid>
           <Grid item xs={11}>
             {activeStep === 0 ? (
-              <>
-                <Typography>Aqui van los tutores que se ofertaron</Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  className={classes.button}>
-                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                </Button>
-              </>
+             <>
+             <ProfileView idTutor={idTutor}/>
+             <Box className={classes.nextButton}>
+               <Button size='large' variant="contained" color="primary" onClick={handleNext} className={classes.button}>
+                 Siguiente
+               </Button>
+             </Box>
+             </>
             ) : (
               <></>
             )}

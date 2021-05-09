@@ -23,8 +23,8 @@ const initialState = {
   loadingPublications: true,
   creating: false,
   nominations: [],
-  tutorInfo: null,
-  isLoading: true
+  loadingTutor: true,
+  tutorInfo: {}
 }
 
 const publications = (state = initialState, action) => {
@@ -86,14 +86,16 @@ const publications = (state = initialState, action) => {
       }
     }
     case GET_TUTOR:
+      console.log(state.tutorInfo)
       return {
         ...state,
         tutorInfo: action.payload,
+        loadingTutor: false
       }
     case LOADING:
       return {
         ...state,
-        isLoading: false
+        loadingTutor: true
       }
     default:
       return state
