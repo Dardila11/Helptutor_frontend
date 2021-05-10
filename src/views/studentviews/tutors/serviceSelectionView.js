@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import { Box, DialogTitle, Grid, IconButton } from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import ProfileView from 'src/components/tutorProfileCard'
+import Schedule from 'src/components/Schedule/Schedule'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,26 +83,22 @@ const ServiceSelectionView = (props) => {
              <>
              <ProfileView idTutor={idTutor}/>
              <Box className={classes.nextButton}>
-               <Button size='large' variant="contained" color="primary" onClick={handleNext} className={classes.button}>
-                 Siguiente
-               </Button>
-             </Box>
+              <Button size='large' variant="contained" color="primary" onClick={handleNext} className={classes.button}>
+                Siguiente
+              </Button>
+            </Box>
              </>
             ) : (
               <></>
             )}
             {activeStep === 1 ? (
               <>
-                <Typography>
-                  Aqui se muestra el horario disponible del tutor
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  className={classes.button}>
-                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                </Button>
+                <Schedule />
+                <Box className={classes.nextButton}>
+                  <Button size='large' variant="contained" color="primary" onClick={handleNext} className={classes.button}>
+                    Siguiente
+                  </Button>
+                </Box>
               </>
             ) : (
               <></>
@@ -112,13 +109,11 @@ const ServiceSelectionView = (props) => {
                   Aqui se muestra la informacion del servicio a contratar, y se
                   pone un boton para redirigir al pago
                 </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  className={classes.button}>
-                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                </Button>
+                <Box className={classes.nextButton}>
+                  <Button size='large' variant="contained" color="primary" onClick={handleNext} className={classes.button}>
+                    Finalizar
+                  </Button>
+                </Box>
               </>
             ) : (
               <></>
