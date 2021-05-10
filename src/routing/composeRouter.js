@@ -27,6 +27,7 @@ import StudentEditInfoView from 'src/views/studentviews/studentInfo/EditInfoView
 import StudentPublicationsView from 'src/views/studentviews/publications/index'
 import TutorsView from 'src/views/studentviews/tutors/tutorsView'
 import StudentAdvertisementsView from 'src/views/studentviews/advertisements'
+import TutorScheduleView from 'src/views/tutorviews/schedule/TutorScheduleView'
 
 const Routing = () => {
   return (
@@ -61,10 +62,8 @@ const Routing = () => {
         <Route path="/cuenta/perfil" element={<TutorProfileView />} />
         <Route path="/cuenta/informacion" element={<EditInfoView />} />
         <Route path="/cuenta/servicios" element={<ManageServicesView />} />
-        <Route
-          path="/cuenta/especialidades"
-          element={<ManageKnowledgeAreaView />}
-        />
+        <Route path="/cuenta/especialidades" element={<ManageKnowledgeAreaView />} />
+        <Route path="/cuenta/horario" element={<TutorScheduleView />} />
       </PrivateRoute>
 
       <Route path="*" element={<NotFoundView />} />
