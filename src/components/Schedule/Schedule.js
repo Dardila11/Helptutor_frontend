@@ -7,25 +7,24 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '20px',
         width: 900
     },
-    content: {
-        marginLeft: theme.spacing(2),
-        overflow: 'auto'
+    listContainer: {
+        overflowY: 'auto',
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2)
     },
     slots: {
         height: 500,
         overflowY:'initial'
     },
-    title: {
-        margin: theme.spacing(2)
-    },
     slot: {
-        height: 30
+        height: 30,
+        backgroundColor: theme.palette.common.white
     },
-    franja: {
-        height: 30
+    listHead: {
+        marginBottom: theme.spacing(1)
     },
-    listContainer: {
-        overflowY: 'auto'
+    divider: {
+        backgroundColor: theme.palette.common.white
     }
 }))
 
@@ -33,7 +32,9 @@ const Schedule = () => {
     const classes = useStyles()
     let schedule = data
     function handleClick (e) {
-        console.log(e.target.slot)
+        console.log(JSON.parse(e.target.slot))
+        let element = document.getElementById(e.target.id)
+        element.style.backgroundColor= '#a5d6a7'
     }
     return(
         <Card className={classes.root} >
@@ -41,35 +42,38 @@ const Schedule = () => {
                     <GridList className={classes.slots} cellHeight={50} cols={7}>
                         {schedule.map((item) => (                  
                             <Box display='flex' flexDirection='column' textAlign='center'> 
-                                <Typography variant='h4'>
-                                    <b>{item.title}</b>
-                                </Typography>
+                                <Box className={classes.listHead}>
+                                    <Typography variant='h4'>
+                                        <b>{item.title}</b>
+                                    </Typography>
+                                </Box>
+
                             {item.slots.map((slot) => (         
                                 <>
                                     {item.id===99 ? (
                                         <>
-                                        <Divider light={true}/>
+                                        <Divider className={classes.divider}/>
                                         <Box>
-                                        <Paper className={classes.franja} elevation={3}>
+                                        <Paper className={classes.slot} elevation={3}>
                                             <Typography variant='h5'>
-                                                    {slot.start<=12 ? (slot.start):(slot.start-12)}{slot.start<12 ? ('am'):('pm')} 
-                                                    <b>--</b>
+                                                    {slot.start<=12 ? (slot.start):(slot.start-12)} {slot.start<12 ? ('am'):('pm')} 
+                                                    <b> - </b>
                                                     {slot.end<=12 ? (slot.end):(slot.end-12)} {slot.end<12 ? ('am'):('pm')}
                                             </Typography>
                                         </Paper>
                                         </Box>
-                                        <Divider light={true}/>  
+                                        <Divider className={classes.divider}/>  
                                         </>
                                     ):( <>
                                         <Divider />       
                                         <Box>
-                                                <CardActionArea className={classes.slot} slot={JSON.stringify({...slot, day: item.title})} onClick={handleClick}>
+                                                <CardActionArea className={classes.slot} id={item.title+':'+slot.start+':'+slot.end}slot={JSON.stringify({...slot, day: item.title})} onClick={handleClick} onChange={handleClick}>
                                                     <Typography variant='h4' color='secondary'>
                                                         
                                                     </Typography>
                                                 </CardActionArea>
                                         </Box>     
-                                        <Divider />   
+                                        <Divider className={classes.divider}/>   
                                         </>
                                     )}
                                     

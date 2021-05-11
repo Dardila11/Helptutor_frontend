@@ -56,7 +56,7 @@ const NavBar = () => {
             <ListItemText primary="Servicios" />
           </ListItem>
           <ListItem component={RouterLink} to="/tutor/cuenta/horario" button>
-            <ListItemText primary="Horarios" />
+            <ListItemText primary="Horario" />
           </ListItem>
         </List>
       </Grid>
