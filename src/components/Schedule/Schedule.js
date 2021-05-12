@@ -5,12 +5,11 @@ import data from './data.json'
 const useStyles = makeStyles((theme) => ({
     root:{
         borderRadius: '20px',
-        width: 900
     },
     listContainer: {
         overflowY: 'auto',
         marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(2)
+        marginBottom: theme.spacing(3)
     },
     slots: {
         height: 500,
@@ -21,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.common.white
     },
     listHead: {
-        marginBottom: theme.spacing(1)
+        marginBottom: theme.spacing(2)
     },
     divider: {
         backgroundColor: theme.palette.common.white
@@ -31,10 +30,23 @@ const useStyles = makeStyles((theme) => ({
 const Schedule = () => {
     const classes = useStyles()
     let schedule = data
+    let mySchedule = []
+
     function handleClick (e) {
-        console.log(JSON.parse(e.target.slot))
+        let slot = {...JSON.parse(e.target.slot), id: e.target.id}
         let element = document.getElementById(e.target.id)
-        element.style.backgroundColor= '#a5d6a7'
+        if(slot.isSelect) {
+            slot = {...slot,isSelect: false}
+            element.style.backgroundColor= '#ffff'
+            mySchedule = mySchedule.filter((item) => item.id!==slot.id)
+        }
+        else {
+            slot = {...slot,isSelect: true}
+            element.style.backgroundColor= '#a5d6a7'
+            mySchedule.push(slot)
+        }
+        element.slot = JSON.stringify(slot)
+        console.log(mySchedule)
     }
     return(
         <Card className={classes.root} >

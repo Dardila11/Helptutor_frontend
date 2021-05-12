@@ -1,32 +1,85 @@
-import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Box, Button, Card, Container, Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
 import React from 'react'
 import Page from 'src/components/Page'
 import Schedule from 'src/components/Schedule/Schedule'
+import SaveIcon from '@material-ui/icons/Save'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginBottom: theme.spacing(1),
-        width: 900,
         borderRadius: '20px'
     },
-    title: {
-        margin: theme.spacing(1)
+    containerTitle: {
+        marginTop: theme.spacing(2),
+        marginBlockEnd: theme.spacing(2)
+    },
+    actions: {
+        marginTop: theme.spacing(2),
+        marginBlockEnd: theme.spacing(2)
+    },
+    button: {
+        textTransform: 'none'
+    },
+    divider: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1)    
     }
 }))
 
 const TutorScheduleView = () => {
 
     const classes = useStyles()
+
+    function getDate () {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = dd + '/' + mm + '/' + yyyy;
+        return today
+    }
     return (
         <Page title='Horario'>
-            <Box display='flex' flexDirection='column' justifyContent='center' textAlign='center'>
-                <Paper className={classes.root} elevation={3}>
-                <Typography className={classes.title} variant='h3'>
-                    Mi horario
-                </Typography>
-                </Paper>
-            </Box>
-            <Schedule/>
+            <Grid container spacing={2}>
+                <Grid item xs={3}>
+                    <Paper className={classes.root} elevation={3}>
+                        <Card className={classes.root}>
+                            <Typography
+                                className={classes.containerTitle}
+                                variant="h4"
+                                align="center">
+                                Mi horario
+                            </Typography>
+                            <Container>
+                                <Box textAlign='justify'>
+                                    <Typography
+                                    align='center'>
+                                    <b>Fecha actual {getDate()}</b>
+                                    </Typography>
+                                    <Divider className={classes.divider}/>
+                                    <Typography>
+                                    Selecciona las franjas de tiempo que tienes disponibles para brindar tus clases
+                                    </Typography>
+                                </Box>
+                            </Container>
+                            <Container className={classes.actions}>
+                                <Button
+                                    className={classes.button}
+                                    fullWidth
+                                    color="primary"
+                                    variant="contained"
+                                    endIcon={<SaveIcon />}
+                                    >
+                                    Guardar horario
+                                </Button>
+                            </Container>
+                        </Card>
+                    </Paper>
+                </Grid>
+                <Grid item xs={9}>
+                    <Schedule/>
+                </Grid>
+            </Grid>
         </Page>
     )
 }
