@@ -11,6 +11,7 @@ import tutorsInfo from './student/tutors_data'
 import advertisements from './student/advertisements'
 import studentServices from './student/student_services'
 import nominations from './tutor/nominations'
+import schedule from './tutor/schedule'
 
 export default combineReducers({
   auth,
@@ -23,5 +24,6 @@ export default combineReducers({
   tutorsInfo,
   advertisements,
   studentServices,
-  nominations
+  nominations,
+  schedule
 })

@@ -210,6 +210,16 @@ const postAnswer = (data, state) => {
   return https.post('api/answer/', data, tokenConfig(state))
 }
 
+const getSchedule = (idTutor) => {
+  console.log('get schedule with id:'+idTutor)
+  //return https.post('api/tutor/'+idTutor+'/schedule', tokenConfig(state))
+}
+
+const postSchedule = (idTutor) => {
+  console.log('post schedule with id:'+idTutor)
+  //return https.post('api/tutor/'+idTutor+'/schedule', tokenConfig(state))
+}
+
 const logConstants = {
   getCountries,
   getState,
@@ -232,6 +242,7 @@ const logConstants = {
   getNomination,
   getNominations,
   getOfferNominations,
+  getSchedule,
   postTutor,
   postGoogleTutor,
   postGoogleStudent,
@@ -242,6 +253,7 @@ const logConstants = {
   postAdvertisement,
   postNomination,
   postAnswer,
+  postSchedule,
   patchTutorKnowledgeAreas,
   patchServiceTutor,
   patchNomination,

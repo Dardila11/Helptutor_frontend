@@ -3,6 +3,8 @@ import React from 'react'
 import Page from 'src/components/Page'
 import Schedule from 'src/components/Schedule/Schedule'
 import SaveIcon from '@material-ui/icons/Save'
+import { connect } from 'react-redux'
+import { saveSchedule } from 'src/redux/actions/tutor/schedule'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,19 +27,20 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const TutorScheduleView = () => {
-
+const TutorScheduleView = (props) => {
     const classes = useStyles()
+    const { saveSchedule, schedule } = props
+    const [ save, setSave ] = React.useState(false)
 
-    function getDate () {
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-
-        today = dd + '/' + mm + '/' + yyyy;
-        return today
+    const handleSave = () => {
+        setSave(true)
     }
+
+    const callbackSave = (mySchedule) => {
+        saveSchedule(mySchedule)
+        setSave(false)
+    }
+
     return (
         <Page title='Horario'>
             <Grid container spacing={2}>
@@ -58,7 +61,7 @@ const TutorScheduleView = () => {
                                     </Typography>
                                     <Divider className={classes.divider}/>
                                     <Typography>
-                                    Selecciona las franjas de tiempo que tienes disponibles para brindar tus clases
+                                    Selecciona las franjas de tiempo que tienes disponibles para dictar tus clases
                                     </Typography>
                                 </Box>
                             </Container>
@@ -69,6 +72,7 @@ const TutorScheduleView = () => {
                                     color="primary"
                                     variant="contained"
                                     endIcon={<SaveIcon />}
+                                    onClick={handleSave}
                                     >
                                     Guardar horario
                                 </Button>
@@ -77,11 +81,27 @@ const TutorScheduleView = () => {
                     </Paper>
                 </Grid>
                 <Grid item xs={9}>
-                    <Schedule/>
+                    <Schedule savedSchedule={schedule} save={save} callbackSave={callbackSave}/>
                 </Grid>
             </Grid>
         </Page>
     )
 }
 
-export default TutorScheduleView
+function getDate () {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = dd + '/' + mm + '/' + yyyy;
+    return today
+}
+
+const mapStateToProps = (state) => ({
+    schedule : state.schedule.schedule
+  })
+  
+  export default connect(mapStateToProps, {
+    saveSchedule
+  })(TutorScheduleView)

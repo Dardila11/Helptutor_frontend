@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Card, CardActionArea, Container, Divider, GridList, makeStyles, Paper, Typography } from '@material-ui/core'
 import data from './data.json'
 
@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     },
     listContainer: {
         overflowY: 'auto',
+        overflowX: 'auto',
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(3)
     },
@@ -27,33 +28,27 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Schedule = () => {
+const Schedule = (props) => {
     const classes = useStyles()
-    let schedule = data
-    let mySchedule = []
+    const { savedSchedule, save, callbackSave } = props
+    const [schedule, setSchedule] = React.useState([])
 
-    function handleClick (e) {
-        let slot = {...JSON.parse(e.target.slot), id: e.target.id}
-        let element = document.getElementById(e.target.id)
-        if(slot.isSelect) {
-            slot = {...slot,isSelect: false}
-            element.style.backgroundColor= '#ffff'
-            mySchedule = mySchedule.filter((item) => item.id!==slot.id)
-        }
-        else {
-            slot = {...slot,isSelect: true}
-            element.style.backgroundColor= '#a5d6a7'
-            mySchedule.push(slot)
-        }
-        element.slot = JSON.stringify(slot)
-        console.log(mySchedule)
+    if(savedSchedule.length > 0){
+        loadSchedule(savedSchedule)
     }
+
+    useEffect(()=>{
+        callbackSave(schedule)
+    },
+    // eslint-disable-next-line
+    [save])
+
     return(
         <Card className={classes.root} >
             <Container className={classes.listContainer}>
                     <GridList className={classes.slots} cellHeight={50} cols={7}>
-                        {schedule.map((item) => (                  
-                            <Box display='flex' flexDirection='column' textAlign='center'> 
+                        {data.map((item) => (                  
+                            <Box key={item.title} display='flex' flexDirection='column' textAlign='center'> 
                                 <Box className={classes.listHead}>
                                     <Typography variant='h4'>
                                         <b>{item.title}</b>
@@ -98,6 +93,32 @@ const Schedule = () => {
                 </Container>
         </Card>
     )
+
+function handleClick (e) {
+    let slot = {...JSON.parse(e.target.slot), id: e.target.id}
+    let element = document.getElementById(e.target.id)
+    let mySchedule = schedule
+    if(slot.isSelect) {
+        slot = {...slot,isSelect: false}
+        element.style.backgroundColor= '#ffff'
+        mySchedule = mySchedule.filter((item) => item.id!==slot.id)
+    }
+    else {
+        slot = {...slot,isSelect: true}
+        element.style.backgroundColor= '#a5d6a7'
+        mySchedule.push(slot)
+    }
+    element.slot = JSON.stringify(slot)
+    setSchedule(mySchedule)
+}
+
+function loadSchedule (savedSchedule) {
+    console.log(savedSchedule)
+    /*savedSchedule.forEach(slot => {
+        let element = document.getElementById(slot.day+':'+slot.start+':'+slot.end)
+        element.style.backgroundColor= '#a5d6a7'
+    });   */
+}
 }
 
 export default Schedule
