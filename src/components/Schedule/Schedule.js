@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Box, Card, CardActionArea, Container, Divider, GridList, makeStyles, Paper, Typography } from '@material-ui/core'
 import data from './data.json'
+import { isUndefined } from 'lodash-es'
+import { connect } from 'react-redux'
+import { addSlot, deleteSlot } from 'src/redux/actions/tutor/schedule'
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -16,9 +19,16 @@ const useStyles = makeStyles((theme) => ({
         height: 500,
         overflowY:'initial'
     },
+    franja: {
+        height: 30
+    },
     slot: {
         height: 30,
         backgroundColor: theme.palette.common.white
+    },
+    slotSelected: {
+        height:30,
+        backgroundColor: '#a5d6a7'
     },
     listHead: {
         marginBottom: theme.spacing(2)
@@ -30,18 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Schedule = (props) => {
     const classes = useStyles()
-    const { savedSchedule, save, callbackSave } = props
-    const [schedule, setSchedule] = React.useState([])
-
-    if(savedSchedule.length > 0){
-        loadSchedule(savedSchedule)
-    }
-
-    useEffect(()=>{
-        callbackSave(schedule)
-    },
-    // eslint-disable-next-line
-    [save])
+    const { addSlot, deleteSlot, savedSchedule} = props
 
     return(
         <Card className={classes.root} >
@@ -61,8 +60,8 @@ const Schedule = (props) => {
                                         <>
                                         <Divider className={classes.divider}/>
                                         <Box>
-                                        <Paper className={classes.slot} elevation={3}>
-                                            <Typography variant='h5'>
+                                        <Paper className={classes.franja} elevation={3}>
+                                            <Typography variant='h6'>
                                                     {slot.start<=12 ? (slot.start):(slot.start-12)} {slot.start<12 ? ('am'):('pm')} 
                                                     <b> - </b>
                                                     {slot.end<=12 ? (slot.end):(slot.end-12)} {slot.end<12 ? ('am'):('pm')}
@@ -74,11 +73,16 @@ const Schedule = (props) => {
                                     ):( <>
                                         <Divider />       
                                         <Box>
-                                                <CardActionArea className={classes.slot} id={item.title+':'+slot.start+':'+slot.end}slot={JSON.stringify({...slot, day: item.title})} onClick={handleClick} onChange={handleClick}>
-                                                    <Typography variant='h4' color='secondary'>
-                                                        
-                                                    </Typography>
-                                                </CardActionArea>
+                                        {savedSchedule.length > 0 ? (
+                                            <>
+                                                {drawSelectedSlot(item,slot,savedSchedule)}
+                                            </>
+                                        ):(
+                                            <CardActionArea className={classes.slot} 
+                                                id={item.title+':'+slot.start+':'+slot.end}
+                                                slot={JSON.stringify({...slot, day: item.title})} onClick={handleClick} onChange={handleClick}>
+                                            </CardActionArea>
+                                        )}
                                         </Box>     
                                         <Divider className={classes.divider}/>   
                                         </>
@@ -97,28 +101,47 @@ const Schedule = (props) => {
 function handleClick (e) {
     let slot = {...JSON.parse(e.target.slot), id: e.target.id}
     let element = document.getElementById(e.target.id)
-    let mySchedule = schedule
     if(slot.isSelect) {
         slot = {...slot,isSelect: false}
         element.style.backgroundColor= '#ffff'
-        mySchedule = mySchedule.filter((item) => item.id!==slot.id)
+        deleteSlot(slot)
     }
     else {
         slot = {...slot,isSelect: true}
         element.style.backgroundColor= '#a5d6a7'
-        mySchedule.push(slot)
+        addSlot(slot)
     }
     element.slot = JSON.stringify(slot)
-    setSchedule(mySchedule)
 }
 
-function loadSchedule (savedSchedule) {
-    console.log(savedSchedule)
-    /*savedSchedule.forEach(slot => {
-        let element = document.getElementById(slot.day+':'+slot.start+':'+slot.end)
-        element.style.backgroundColor= '#a5d6a7'
-    });   */
-}
+function drawSelectedSlot(item, slot, sche){
+    let id = item.title+':'+slot.start+':'+slot.end
+    let slotS = sche.filter((slots)=> slots.id===id)[0]
+    if(!isUndefined(slotS)){
+        console.log(slotS)
+        return(
+            <CardActionArea className={classes.slotSelected} 
+                id={id}
+                slot={JSON.stringify(slotS)} onClick={handleClick} onChange={handleClick}>
+            </CardActionArea>
+        )
+    }else{
+        return(
+            <CardActionArea className={classes.slot} 
+                id={item.title+':'+slot.start+':'+slot.end}
+                slot={JSON.stringify({...slot, day: item.title})} onClick={handleClick} onChange={handleClick}>
+            </CardActionArea>   
+        )
+    }
+    
 }
 
-export default Schedule
+}
+
+const mapStateToProps = (state) => ({    
+  })
+  
+  export default connect(mapStateToProps, {
+    addSlot,
+    deleteSlot
+  })(Schedule)

@@ -30,15 +30,9 @@ const useStyles = makeStyles((theme) => ({
 const TutorScheduleView = (props) => {
     const classes = useStyles()
     const { saveSchedule, schedule } = props
-    const [ save, setSave ] = React.useState(false)
 
     const handleSave = () => {
-        setSave(true)
-    }
-
-    const callbackSave = (mySchedule) => {
-        saveSchedule(mySchedule)
-        setSave(false)
+        saveSchedule(schedule)
     }
 
     return (
@@ -81,7 +75,7 @@ const TutorScheduleView = (props) => {
                     </Paper>
                 </Grid>
                 <Grid item xs={9}>
-                    <Schedule savedSchedule={schedule} save={save} callbackSave={callbackSave}/>
+                    <Schedule savedSchedule={schedule} />
                 </Grid>
             </Grid>
         </Page>
