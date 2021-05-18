@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import {
   Box,
+  Avatar,
   Typography,
   TextField,
   Button,
   Card,
+  Grid,
   FormControl,
   Select,
   MenuItem,
   InputLabel,
   LinearProgress,
-  makeStyles
+  makeStyles,
+  IconButton 
 } from '@material-ui/core'
+import Badge from '@material-ui/core/Badge';
+import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import { Formik } from 'formik'
 import formikValues from './formikValues'
 
@@ -28,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   selectControl: {
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   progress: {
     marginTop: theme.spacing(5),
@@ -36,11 +41,19 @@ const useStyles = makeStyles((theme) => ({
   },
   inputs: {
     '& > *': {
-      marginRight: theme.spacing(2)
+      marginRight: theme.spacing(1)
     },
     '& >:last-child': {
       marginRight: 0
     }
+  },
+  avatar: {
+    width: theme.spacing(15),
+    height: theme.spacing(15)
+  },
+  iconbutton: {
+    backgroundColor: '#1190CB',
+    color: '#ffff'
   }
 }))
 
@@ -96,181 +109,205 @@ const EditInfoView = (props) => {
                   INFORMACIÓN
                 </Typography>
               </Box>
-              <Box className={classes.inputs} display="flex">
-                <TextField
-                  id="txt_firstname"
-                  error={Boolean(touched.first_name && errors.first_name)}
-                  fullWidth
-                  helperText={touched.first_name && errors.first_name}
-                  label="Nombre"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  name="first_name"
-                  value={values.first_name}
-                  variant="outlined"
-                  inputProps={{
-                    'data-testid': 'firstname'
-                  }}
-                />
-                <TextField
-                  id="txt_lastname"
-                  error={Boolean(touched.last_name && errors.last_name)}
-                  fullWidth
-                  helperText={touched.last_name && errors.last_name}
-                  label="Apellido"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  name="last_name"
-                  value={values.last_name}
-                  variant="outlined"
-                  inputProps={{
-                    'data-testid': 'lastname'
-                  }}
-                />
-              </Box>
-              <Box className={classes.inputs} display="flex">
-                <FormControl
-                  variant="outlined"
-                  className={classes.selectControl}
-                  error={Boolean(touched.gender && errors.gender)}
-                  helpertext={touched.gender && errors.gender}
-                  fullWidth>
-                  <InputLabel id="select-gender-label"> Género </InputLabel>
-                  <Select
-                    labelId="select-gender-label"
-                    id="select_gender"
-                    value={values.gender}
-                    name="gender"
-                    onChange={handleChange}
-                    label="Género"
-                    inputProps={{
-                      'data-testid': 'gender'
-                    }}>
-                    <MenuItem key={3} value={3}>
-                      --
-                    </MenuItem>
-                    <MenuItem key={0} value={0}>
-                      Femenino
-                    </MenuItem>
-                    <MenuItem key={1} value={1}>
-                      Masculino
-                    </MenuItem>
-                    <MenuItem key={2} value={2}>
-                      Otro
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-                <TextField
-                  id="txt_birthday"
-                  error={Boolean(touched.birthday && errors.birthday)}
-                  fullWidth
-                  helperText={touched.birthday && errors.birthday}
-                  label="Fecha de Nacimiento"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="date"
-                  name="birthday"
-                  value={values.birthday}
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  inputProps={{
-                    'data-testid': 'birthday'
-                  }}
-                />
-                <TextField
-                  id="txt_email"
-                  error={Boolean(touched.email && errors.email)}
-                  fullWidth
-                  disabled
-                  helperText={touched.email && errors.email}
-                  label="Correo Electrónico"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  name="email"
-                  type="email"
-                  value={values.email}
-                  variant="outlined"
-                  inputProps={{
-                    'data-testid': 'email'
-                  }}
-                />
-              </Box>
-              <Box className={classes.inputs} display="flex">
-                <TextField
-                  id="txt_interests"
-                  error={Boolean(touched.interest && errors.interest)}
-                  fullWidth
-                  helperText={touched.interest && errors.interest}
-                  label="Mis intereses"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  name="interest"
-                  value={values.interest}
-                  multiline={true}
-                  rows={5}
-                  variant="outlined"
-                  inputProps={{
-                    'data-testid': 'interests'
-                  }}
-                />
-                <TextField
-                  id="txt_methodology"
-                  error={Boolean(touched.methodology && errors.methodology)}
-                  fullWidth
-                  helperText={touched.methodology && errors.methodology}
-                  label="Metodología"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  name="methodology"
-                  value={values.methodology}
-                  multiline={true}
-                  rows={5}
-                  variant="outlined"
-                  inputProps={{
-                    'data-testid': 'methodology'
-                  }}
-                />
-                <TextField
-                  id="txt_skills"
-                  error={Boolean(touched.skills && errors.skills)}
-                  fullWidth
-                  helperText={touched.skills && errors.skills}
-                  label="Habilidades"
-                  margin="normal"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  name="skills"
-                  value={values.skills}
-                  multiline={true}
-                  rows={5}
-                  variant="outlined"
-                  inputProps={{
-                    'data-testid': 'skills'
-                  }}
-                />
-              </Box>
-
-              <Box my={2}>
-                <Button
-                  id="btn_updateTutor"
-                  color="primary"
-                  //disabled={isSubmitting}
-                  fullWidth
-                  size="large"
-                  type="submit"
-                  variant="contained"
-                  data-testid="btn-update">
-                  Actualizar
-                </Button>
-              </Box>
+              <Grid container>
+                <Grid item xs={3}>
+                  <Box display="flex" flexDirection='row' justifyContent='center'>
+                    <IconButton >
+                      <Badge
+                        overlap="circle"
+                        badgeContent={<IconButton className={classes.iconbutton} variant='outlined' color='primary'><EditRoundedIcon fontSize='small'/></IconButton>}
+                      >
+                        <Avatar
+                          className={classes.avatar}
+                          alt="my-avatar"
+                          src="/static/images/avatars/avatar_6.png"
+                        />
+                      </Badge>
+                    </IconButton>
+                  </Box>
+                </Grid>
+                <Grid item xs={9}>
+                  <Box className={classes.inputs} display='flex' flexDirection='row'>
+                    <TextField
+                      id="txt_firstname"
+                      error={Boolean(touched.first_name && errors.first_name)}
+                      fullWidth
+                      helperText={touched.first_name && errors.first_name}
+                      label="Nombre"
+                      margin="normal"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      name="first_name"
+                      value={values.first_name}
+                      variant="outlined"
+                      inputProps={{
+                        'data-testid': 'firstname'
+                      }}
+                    />
+                    <TextField
+                      id="txt_lastname"
+                      error={Boolean(touched.last_name && errors.last_name)}
+                      fullWidth
+                      helperText={touched.last_name && errors.last_name}
+                      label="Apellido"
+                      margin="normal"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      name="last_name"
+                      value={values.last_name}
+                      variant="outlined"
+                      inputProps={{
+                        'data-testid': 'lastname'
+                      }}
+                    />
+                    </Box>
+                    <Box className={classes.inputs} display='flex' flexDirection='row'>
+                      <FormControl
+                        variant="outlined"
+                        className={classes.selectControl}
+                        error={Boolean(touched.gender && errors.gender)}
+                        helpertext={touched.gender && errors.gender}
+                        fullWidth
+                        >
+                        <InputLabel id="select-gender-label"> Género </InputLabel>
+                        <Select
+                          labelId="select-gender-label"
+                          id="select_gender"
+                          value={values.gender}
+                          name="gender"
+                          onChange={handleChange}
+                          label="Género"
+                          inputProps={{
+                            'data-testid': 'gender'
+                          }}>
+                          <MenuItem key={3} value={3}>
+                            --
+                          </MenuItem>
+                          <MenuItem key={0} value={0}>
+                            Femenino
+                          </MenuItem>
+                          <MenuItem key={1} value={1}>
+                            Masculino
+                          </MenuItem>
+                          <MenuItem key={2} value={2}>
+                            Otro
+                          </MenuItem>
+                        </Select>
+                      </FormControl>
+                      <TextField
+                        id="txt_birthday"
+                        className={classes.birthday}
+                        error={Boolean(touched.birthday && errors.birthday)}
+                        fullWidth
+                        helperText={touched.birthday && errors.birthday}
+                        label="Fecha de Nacimiento"
+                        margin="normal"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        type="date"
+                        name="birthday"
+                        value={values.birthday}
+                        variant="outlined"
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        inputProps={{
+                          'data-testid': 'birthday'
+                        }}
+                      />
+                      <TextField
+                        id="txt_email"
+                        error={Boolean(touched.email && errors.email)}
+                        fullWidth
+                        disabled
+                        helperText={touched.email && errors.email}
+                        label="Correo Electrónico"
+                        margin="normal"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        name="email"
+                        type="email"
+                        value={values.email}
+                        variant="outlined"
+                        inputProps={{
+                          'data-testid': 'email'
+                        }}
+                      />
+                    </Box>
+                </Grid>
+                <Grid item xs={12}>           
+                  <Box className={classes.inputs} display="flex">
+                    <TextField
+                      id="txt_interests"
+                      error={Boolean(touched.interest && errors.interest)}
+                      fullWidth
+                      helperText={touched.interest && errors.interest}
+                      label="Mis intereses"
+                      margin="normal"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      name="interest"
+                      value={values.interest}
+                      multiline={true}
+                      rows={5}
+                      variant="outlined"
+                      inputProps={{
+                        'data-testid': 'interests'
+                      }}
+                    />
+                    <TextField
+                      id="txt_methodology"
+                      error={Boolean(touched.methodology && errors.methodology)}
+                      fullWidth
+                      helperText={touched.methodology && errors.methodology}
+                      label="Metodología"
+                      margin="normal"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      name="methodology"
+                      value={values.methodology}
+                      multiline={true}
+                      rows={5}
+                      variant="outlined"
+                      inputProps={{
+                        'data-testid': 'methodology'
+                      }}
+                    />
+                    <TextField
+                      id="txt_skills"
+                      error={Boolean(touched.skills && errors.skills)}
+                      fullWidth
+                      helperText={touched.skills && errors.skills}
+                      label="Habilidades"
+                      margin="normal"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      name="skills"
+                      value={values.skills}
+                      multiline={true}
+                      rows={5}
+                      variant="outlined"
+                      inputProps={{
+                        'data-testid': 'skills'
+                      }}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box display='flex' justifyContent='center'>
+                    <Button
+                      id="btn_updateTutor"
+                      color="primary"
+                      //disabled={isSubmitting}
+                      size="large"
+                      type="submit"
+                      variant="contained"
+                      data-testid="btn-update">
+                      Actualizar
+                    </Button>
+                  </Box>
+              </Grid>
+              </Grid>
             </form>
           )}
         </Formik>
