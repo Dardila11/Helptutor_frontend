@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react'
-import Page from 'src/components/Page'
 import { Avatar, Box, Card, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
 
 import { getTutorInfo } from 'src/redux/actions/tutor/tutor_data'
@@ -47,7 +46,6 @@ const TutorProfileView = (props) => {
     []
   )
   return (
-    <Page title='Perfil'>
     <Card className={classes.root}>
       <Box display="flex" flexDirection="column" justifyContent="center" >
           <Box className={classes.title} textAlign='center'>
@@ -76,7 +74,9 @@ const TutorProfileView = (props) => {
             </Grid>
             <Grid item xs={4}>
               <Box display='flex' justifyContent='center'>
-                <Avatar className={classes.cover} alt="user photo" src="/static/images/avatars/avatar_6.png"/>
+                <Avatar className={classes.cover} alt="user photo" src={tutor.photo}>
+                {tutor.first_name[0]}
+                </Avatar>
               </Box>
             </Grid>
           </Grid>
@@ -118,7 +118,7 @@ const TutorProfileView = (props) => {
           </Box>
       </Box>
     </Card>
-    </Page>
+    
   )
 }
 

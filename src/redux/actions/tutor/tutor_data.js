@@ -25,10 +25,17 @@ export const getTutorInfo = (id) => (dispatch, getState) => {
     })
 }
 
-export const updateTutor = (data) => (dispatch, getState) => {
+export const updateTutor = (data, file) => (dispatch, getState) => {
+  if(file!==null) {
+    const fd = new FormData()
+    fd.append('photo', file, file.name)
+    data = {...data, photo: fd}
+  }  
+  console.log(data)
   const request = Api.updateTutorInfo(data, getState)
   request
     .then((res) => {
+      console.log(res)
       dispatch({
         type: UPDATE_TUTOR,
         payload: res.data

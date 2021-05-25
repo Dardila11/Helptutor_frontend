@@ -130,7 +130,9 @@ const TutorTopBar = (props) => {
                 className={classes.coverAnswer}
                 alt="user photo"
                 src={props.user.photo}
-              />
+              >
+                {props.user.first_name[0]}
+              </Avatar>
             </IconButton>
             <Menu
               id="simple-menu"

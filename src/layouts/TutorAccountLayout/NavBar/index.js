@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemText
 } from '@material-ui/core'
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -22,11 +23,12 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(55),
     marginLeft: theme.spacing(5),
     marginRight: theme.spacing(5),
-    borderRadius: '20px'
+    borderRadius: '20px',
+    overflow: 'initial'
   }
 }))
 
-const NavBar = () => {
+const NavBar = (props) => {
   const classes = useStyles()
   return (
     <Card className={classes.nav} xs={3}>
@@ -34,8 +36,10 @@ const NavBar = () => {
         <Avatar
           className={classes.avatar}
           alt="my-avatar"
-          src="/static/images/avatars/avatar_6.png"
-        />
+          src={props.user.photo}
+        >
+          {props.user.first_name[0]}
+        </Avatar>
         <List>
           <ListItem component={RouterLink} to="/tutor/cuenta/perfil" button>
             <ListItemText primary="Ver Perfil" />
@@ -64,4 +68,9 @@ const NavBar = () => {
   )
 }
 
-export default NavBar
+const mapStateToProps = (state) => ({
+  user: state.auth.user
+})
+
+export default connect(mapStateToProps, {
+})(NavBar)

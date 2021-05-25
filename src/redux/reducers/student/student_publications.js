@@ -86,7 +86,6 @@ const publications = (state = initialState, action) => {
       }
     }
     case GET_TUTOR:
-      console.log(state.tutorInfo)
       return {
         ...state,
         tutorInfo: action.payload,
