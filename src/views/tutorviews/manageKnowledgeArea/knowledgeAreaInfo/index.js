@@ -58,10 +58,6 @@ const useStyles = makeStyles((theme) => ({
   },
   infoView: {
     borderRadius: '20px'
-  },
-  button: {
-    background: theme.palette.button.primary,
-    color: theme.palette.common.white
   }
 }))
 
@@ -77,6 +73,7 @@ const KnowledgeAreaInfoView = (props) => {
   const classes = useStyles()
 
   const [initialValues, setInitialValues] = useState(initialValuesObj)
+  const [files, setFiles] = useState([])
 
   useEffect(
     () => {
@@ -93,7 +90,6 @@ const KnowledgeAreaInfoView = (props) => {
   useEffect(() => {
     setInitialValues(props.speciality_tutor)
   }, [props.speciality_tutor])
-
   return (
     <>
       <Grid item xs={9}>
@@ -240,14 +236,14 @@ const KnowledgeAreaInfoView = (props) => {
                         value={values.description}
                         variant="outlined"
                       />
-                      <SupportsView is_create={props.is_create} />
+                      <SupportsView files={files} setFiles={setFiles} />
                       <Box my={2} align="center">
                         <Button
                           id="btn_registerArea"
-                          className={classes.button}
                           type="submit"
                           endIcon={<SaveIcon />}
-                          variant="contained">
+                          variant="contained"
+                          color='primary'>
                           {props.is_create ? 'Guardar area' : 'Actualizar'}
                         </Button>
                       </Box>

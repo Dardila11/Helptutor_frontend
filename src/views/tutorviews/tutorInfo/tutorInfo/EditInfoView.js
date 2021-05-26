@@ -55,7 +55,9 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     width: theme.spacing(17),
-    height: theme.spacing(17)
+    height: theme.spacing(17),
+    color: theme.palette.getContrastText('#1769aa'),
+    backgroundColor: '#1769aa'
   },
   iconbutton: {
     backgroundColor: '#1190CB',
@@ -70,7 +72,6 @@ const EditInfoView = (props) => {
   const [loading, setLoading] = useState(true)
   const [preview, setPreview] = useState(null)
 
-  console.log(userInfo)
   useEffect(
     () => {
       getTutorInfo(props.user.id)
@@ -148,9 +149,11 @@ const EditInfoView = (props) => {
                                   id='avatarPhoto'
                                   className={classes.avatar}
                                   alt="my-avatar"
-                                  src={preview === null ? userInfo.photo : preview}
+                                  src={preview === null ? props.user.photo : preview}
                                 >
-                                  {userInfo.first_name[0]}
+                                  <Typography variant='h1'>
+                                    <b>{userInfo.first_name[0]}</b>
+                                  </Typography>
                                   </Avatar>
                               </Badge>
                             </IconButton>

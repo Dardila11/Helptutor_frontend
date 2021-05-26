@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core'
+import { makeStyles, Typography } from '@material-ui/core'
 import {
   Avatar,
   Card,
@@ -16,7 +16,9 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(18),
     height: theme.spacing(18),
     margin: theme.spacing(2),
-    marginLeft: theme.spacing(6)
+    marginLeft: theme.spacing(6),
+    color: theme.palette.getContrastText('#1769aa'),
+    backgroundColor: '#1769aa'
   },
   nav: {
     width: theme.spacing(30),
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(5),
     borderRadius: '20px',
     overflow: 'initial'
-  }
+  },
 }))
 
 const NavBar = (props) => {
@@ -38,7 +40,9 @@ const NavBar = (props) => {
           alt="my-avatar"
           src={props.user.photo}
         >
-          {props.user.first_name[0]}
+          <Typography variant='h1'>
+                    <b>{props.user.first_name[0]}</b>
+          </Typography>
         </Avatar>
         <List>
           <ListItem component={RouterLink} to="/tutor/cuenta/perfil" button>

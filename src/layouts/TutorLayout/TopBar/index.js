@@ -41,9 +41,11 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex'
     }
   },
-  coverAnswer: {
+  cover: {
     width: 30,
-    height: 30
+    height: 30,
+    color: theme.palette.getContrastText('#1769aa'),
+    backgroundColor: '#1769aa'
   },
   button: {
     border: '0px',
@@ -127,11 +129,11 @@ const TutorTopBar = (props) => {
                 )}
               </Typography>
               <Avatar
-                className={classes.coverAnswer}
+                className={classes.cover}
                 alt="user photo"
                 src={props.user.photo}
               >
-                {props.user.first_name[0]}
+                <b>{props.user.first_name[0]}</b>
               </Avatar>
             </IconButton>
             <Menu

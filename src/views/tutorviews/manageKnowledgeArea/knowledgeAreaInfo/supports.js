@@ -7,16 +7,24 @@ import {
   Button,
   Container,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
   makeStyles,
   Paper,
   TextField,
   Typography
 } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
-import UploadPDF from 'src/components/uploadFile'
+import PublishIcon from '@material-ui/icons/Publish'
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 //FOMIK
 import Validation from './formikValuesSupport'
@@ -44,7 +52,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2)
   },
   button: {
-    textTransform: 'none'
+    textTransform: 'none',    
+  },
+  supportItem: {
+    padding: '0px'
   }
 }))
 
@@ -61,44 +72,95 @@ let initialValues = {
 
 const SupportsView = (props) => {
   const classes = useStyles()
+  const { files, setFiles } = props
   const [open, setOpen] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
   const [file, setFile] = useState(null)
 
   const handleOpen = () => {
     setOpen(true)
   }
 
+  const handleOpenDelete = () => {
+    setOpenDelete(true)
+  }
+
+  const handleCloseDelete = () => {
+    setOpenDelete(false)
+  }
+
   const handleClose = () => {
     setOpen(false)
+    setFile(null)
   }
 
-  const handleSave = () => {
-    setOpen(false)
+  const fileSelectedHandler = (e) => {
+    setFile(e.target.files[0])
   }
 
-  const uploadFile = (e) => {
-    setFile(e)
-    if (e.length > 0) {
-      var name = e[0].name
-      var nameSplit = name.split('.')
-      var ext = nameSplit[nameSplit.length - 1]
-      if (ext === 'pdf') setFile(e[0])
-    } else {
-      document.getElementById('text-file').textContent = ''
-    }
+  const handleInput = () => {
+    const element = document.getElementById('fileInput')
+    element.click()
+  }
+
+  const handleEdit = () => {
+    setOpen(true)
   }
 
   return (
     <>
-      <Grid container spacing={2}>
-        <Grid item xs={7}>
           <Paper className={classes.root} elevation={3}>
-            <Typography className={classes.title} variant="h5">
-              Soportes
-            </Typography>
-            <Typography className={classes.title}>
-              No existen soportes para esta area
-            </Typography>
+          <Box display='flex' flexDirection='row' justifyContent='space-between' alignItems='center'>
+            <Box>
+              <Box textAlign='center'>
+                <Typography variant="h4">
+                  Soportes
+                </Typography>
+              </Box>                
+              {files.length > 0 ? (
+                 <List aria-label="main mailbox folders">                   
+                    {files.map((file) => (
+                      <ListItem key={file.title} className={classes.supportItem}>
+                        <PictureAsPdfIcon />
+                        <ListItemText primary={file.title} />
+                        <IconButton aria-label="editar soporte" component="span" onClick={handleEdit}>
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton aria-label="editar soporte" component="span" onClick={handleOpenDelete}>
+                          <DeleteIcon />
+                        </IconButton>
+                        <Dialog
+                        open={openDelete}
+                        onClose={handleCloseDelete}
+                        aria-labelledby="alert-dialog-title-delete"
+                        aria-describedby="alert-dialog-description-delete">
+                        <DialogTitle id="alert-dialog-title-delete" align="center">
+                          <Typography variant="h4">Eliminar soporte</Typography>
+                        </DialogTitle>
+                        <DialogContent>
+                          <Typography>
+                            Estas seguro de querer eliminar el soporte de {file.title}?
+                          </Typography>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button variant='contained' onClick={handleCloseDelete}>
+                            Cancelar
+                          </Button>
+                          <Button variant='contained' color='primary'>
+                            Eliminar
+                          </Button>
+                        </DialogActions>
+                        </Dialog>
+                      </ListItem>
+                      ))}
+                 </List>
+              ):(
+                <Typography>
+                  No has cargado soportes para esta area
+                </Typography>
+                )}
+            </Box>
+            
             <Dialog
               open={open}
               onClose={handleClose}
@@ -119,10 +181,10 @@ const SupportsView = (props) => {
                       validationSchema={Validation.validation}
                       onSubmit={(values) => {
                         let jsonValues = Validation.getValues(values)
-                        if (props.is_create) {
-                          console.log('post support:')
-                          console.log(jsonValues)
-                        } else console.log('put support')
+                        jsonValues = {...jsonValues,
+                                      file: file}
+                        setFiles(files.concat(jsonValues))
+                        setOpen(false)
                       }}>
                       {({
                         errors,
@@ -174,21 +236,22 @@ const SupportsView = (props) => {
                             variant="outlined"
                           />
                           <Grid className={classes.gridContainer}>
-                            <Typography>Certificado:</Typography>
-                            <UploadPDF uploadFile={uploadFile} file={file} />
-                            {/*<input
-                                  className={classes.input}
-                                  accept="application/pdf"
-                                  id="contained-button-file"
-                                  multiple
-                                  type="file"
-                                  onChange= {handleFile}
-                                />
-                                <label htmlFor="contained-button-file">                                
-                                    <Button variant="contained" color="primary" component="span" endIcon={<PublishIcon/>}>
-                                      Subir file
-                                    </Button>
-                                </label>*/}
+                            <Typography>Certificado:</Typography>                            
+                              <Box>
+                                <input style={{display: 'none'}} id='fileInput' accept="application/pdf" type='file' onChange={fileSelectedHandler} className={classes.input}/>
+                                <Button
+                                  variant='contained'
+                                  color='primary'
+                                  onClick={handleInput}
+                                  endIcon={<PublishIcon />}>
+                                    Subir certificado
+                                </Button>
+                              </Box>
+                              <Box>
+                                <Typography>
+                                  {file===null ? 'Aun no has seleccionado el archivo': file.name}
+                                </Typography>
+                              </Box>
                           </Grid>
                           <Grid
                             container
@@ -199,7 +262,6 @@ const SupportsView = (props) => {
                                 id="btn_Cancelar"
                                 color="primary"
                                 size="large"
-                                type="submit"
                                 fullWidth
                                 variant="outlined"
                                 onClick={handleClose}>
@@ -213,8 +275,7 @@ const SupportsView = (props) => {
                                 size="large"
                                 type="submit"
                                 fullWidth
-                                variant="contained"
-                                onClick={handleSave}>
+                                variant="contained">
                                 Guardar
                               </Button>
                             </Grid>
@@ -228,20 +289,18 @@ const SupportsView = (props) => {
                 </Box>
               </DialogContent>
             </Dialog>
+                <Box className={classes.button}>
+                  <Button
+                  variant="contained"
+                  color="primary"
+                  component="span"
+                  onClick={handleOpen}
+                  endIcon={<AddCircleIcon />}>
+                  Agregar Soporte
+                </Button>
+              </Box>
+            </Box>
           </Paper>
-        </Grid>
-        <Grid item xs={5}>
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            component="span"
-            onClick={handleOpen}
-            endIcon={<AddCircleIcon />}>
-            Agregar Soporte
-          </Button>
-        </Grid>
-      </Grid>
     </>
   )
 }

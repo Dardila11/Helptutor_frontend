@@ -18,7 +18,9 @@ const useStyles = makeStyles((theme) => ({
   cover: {
     width: 140,
     height: 140,
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
+    color: theme.palette.getContrastText('#1769aa'),
+    backgroundColor: '#1769aa'
   },
   principalInformation: {
     margin: theme.spacing(2)
@@ -30,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1)
   },
   divider: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(1)
   }
 }))
 
@@ -45,6 +47,7 @@ const TutorProfileView = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
+  console.log(tutor)
   return (
     <Card className={classes.root}>
       <Box display="flex" flexDirection="column" justifyContent="center" >
@@ -75,7 +78,9 @@ const TutorProfileView = (props) => {
             <Grid item xs={4}>
               <Box display='flex' justifyContent='center'>
                 <Avatar className={classes.cover} alt="user photo" src={tutor.photo}>
-                {tutor.first_name[0]}
+                  <Typography variant='h1'>
+                    <b>{tutor.first_name[0]}</b>
+                  </Typography>
                 </Avatar>
               </Box>
             </Grid>
@@ -83,6 +88,19 @@ const TutorProfileView = (props) => {
           <Divider/>
           <Box display='flex' flexDirection='row'>
             <Box className={classes.secondInformation}>
+            <Box textAlign='center'>
+                <Typography variant='h4'>
+                  <b>Intereses</b>
+                </Typography>
+              </Box>
+              <Box >
+                  <Typography align='justify'>
+                    {tutor.interest}
+                  </Typography>
+              </Box>
+              <Box className={classes.divider}>
+              <Divider />
+              </Box>
               <Box textAlign='center'>
                 <Typography variant='h4'>
                   <b>Metodologia</b>
@@ -93,6 +111,9 @@ const TutorProfileView = (props) => {
                     {tutor.methodology}
                   </Typography>
               </Box>
+              <Box className={classes.divider}>
+              <Divider />
+            </Box>
               <Box textAlign='center'>
                 <Typography variant='h4'>
                   <b>Experiencia</b>
@@ -107,12 +128,13 @@ const TutorProfileView = (props) => {
             <Box className={classes.divider}>
               <Divider orientation='vertical'/>
             </Box>
-            <Box className={classes.qualifications}>
+            <Box >
               <Box textAlign='center'>
                 <Typography variant='h4'>
                   <b>Reseñas</b>
                 </Typography>
               </Box>
+                <QualificationCard/>
                 <QualificationCard/>
             </Box>
           </Box>

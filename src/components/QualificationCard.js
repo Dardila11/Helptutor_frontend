@@ -3,7 +3,12 @@ import { Avatar, Box, Card, CardContent, makeStyles, Typography } from '@materia
 import { Rating } from '@material-ui/lab'
 
 const useStyles = makeStyles((theme) => ({
-    root:{},
+    root:{
+        padding: '4px'
+    },
+    content:{
+        paddingBottom: '0px'
+    },
     cover:{
         width: 30,
         height: 30
@@ -15,8 +20,8 @@ const QualificationCard = (props) => {
 
     const classes = useStyles()
     return (
-        <Card>
-            <CardContent>
+        <Card className={classes.root} elevation={3}>
+            <CardContent className={classes.root}>
                     <Box display='flex' flexDirection='row' alignItems='center' >
                         <Avatar className={classes.cover} alt="user photo" src="/static/images/avatars/avatar_6.png"/>
                         <Box>

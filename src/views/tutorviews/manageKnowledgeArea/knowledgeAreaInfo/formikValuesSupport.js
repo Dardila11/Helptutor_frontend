@@ -5,19 +5,14 @@ const getValues = (values) => {
     title: values.title,
     awarded_by: values.awarded_by,
     year: values.year,
-    file: {
-      filename: values.file.name,
-      type: values.file.type,
-      size: `${values.file.size} bytes`
-    },
     user: 12
   }
 }
 
 const validation = Yup.object().shape({
-  title: Yup.string().max(255),
-  awarded_by: Yup.string().max(255),
-  year: Yup.number().max(2021),
+  title: Yup.string().max(255).required('El titulo del certificado es obligatorio'),
+  awarded_by: Yup.string().max(255).required('La institución que otorgó el certificado es obligatoria'),
+  year: Yup.number().max(2021).required('El año en que fue expedido el certificado es obligatorio'),
   file: Yup.mixed().required()
 })
 

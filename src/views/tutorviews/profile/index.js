@@ -55,7 +55,7 @@ import {
                     <Box textAlign="justify">
                         <Divider className={classes.divider} />
                         <Typography>
-                        Actualiza tu información personal, recuerda que esta información es tu carta de presentación para los estudiantes
+                         Esta es la información es tu perfil publico, cuando un estudiante desee contratar tus servicios esta es la información que verán
                         </Typography>
                     </Box>
                     </Container>                
