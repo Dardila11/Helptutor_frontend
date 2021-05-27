@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  Container,
   Dialog,
   makeStyles,
   Paper,
@@ -23,10 +22,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
     borderRadius: '20px',
-    width: 900
-  },
-  buttonContainer: {
-    width: 300
+    width: 900,
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   cardsContent: {
     margin: theme.spacing(2),
@@ -62,53 +60,55 @@ const StudentPublicationsView = (props) => {
 
   return (
     <Page title="Publicaciones">
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center">
-        <SearchBar />
-        <Paper elevation={3} className={classes.root}>
-          {loadingPublications ? (
-            <PublicationsViewSkeleton />
-          ) : (
-            <>
-              <Box className={classes.title} textAlign="center">
-                <Typography variant="h4">Mis plublicaciones</Typography>
-              </Box>
-              {creating ? (
-                <CircularProgress />
-              ) : (
-                <>
-                  <Container className={classes.buttonContainer}>
-                    <Button
-                      className={classes.button}
-                      variant="contained"
-                      color="primary"
-                      startIcon={<AddCircleIcon />}
-                      onClick={handleOpen}>
-                      Agregar publicación
-                    </Button>
-                  </Container>
-                  <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="publications-dialog-title">
-                    <PublicationFormView publication={null} />
-                  </Dialog>
-                </>
-              )}
-              {publications.map((publication, index) => (
-                <StudentPublicationCard
-                  key={index}
-                  id={publication.id}
-                  publication={publication}
-                  isStudent={true}
-                />
-              ))}
-            </>
-          )}
-        </Paper>
+      <Box display='flex' flexDirection='row' justifyContent='center'>
+        <Box>
+          <SearchBar />
+        </Box>
+        <Box>
+          <Paper elevation={3} className={classes.root}>
+            {loadingPublications ? (
+              <PublicationsViewSkeleton />
+            ) : (
+              <>
+                <Box className={classes.title} textAlign="center">
+                  <Typography variant="h4">Mis plublicaciones</Typography>
+                </Box>
+                {creating ? (
+                  <CircularProgress />
+                ) : (
+                  <>
+                    <Box display='flex' flexDirection='row' justifyContent='center'>
+                      <Box>
+                        <Button
+                          className={classes.button}
+                          variant="contained"
+                          color="primary"
+                          startIcon={<AddCircleIcon />}
+                          onClick={handleOpen}>
+                          Agregar publicación
+                        </Button>
+                      </Box>
+                    </Box>
+                    <Dialog
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="publications-dialog-title">
+                      <PublicationFormView publication={null} />
+                    </Dialog>
+                  </>
+                )}
+                {publications.map((publication, index) => (
+                  <StudentPublicationCard
+                    key={index}
+                    id={publication.id}
+                    publication={publication}
+                    isStudent={true}
+                  />
+                ))}
+              </>
+            )}
+          </Paper>
+        </Box>
       </Box>
     </Page>
   )

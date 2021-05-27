@@ -12,7 +12,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
     borderRadius: '20px',
-    width: 900
+    width: 900,
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   cardsContent: {
     margin: theme.spacing(2),
@@ -36,32 +38,32 @@ const TutorsView = (props) => {
   )
   return (
     <Page title="Tutores">
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center">
-        <SearchBar />
-        <Paper elevation={3} className={classes.root}>
-          {loading ? (
-            <PublicationsViewSkeleton />
-          ) : (
-            <>
-              <Box className={classes.title} textAlign="center">
-                <Typography variant="h4">Selecciona una asesoria</Typography>
-              </Box>
-              <Box>
-                {services.map((service, index) => (
-                  <TutorServiceCard
-                    key={index}
-                    id={service.id}
-                    service={service}
-                  />
-                ))}
-              </Box>
-            </>
-          )}
-        </Paper>
+      <Box display='flex' flexDirection='row' justifyContent='center'>
+        <Box>
+          <SearchBar />
+        </Box>
+        <Box>
+          <Paper elevation={3} className={classes.root}>
+            {loading ? (
+              <PublicationsViewSkeleton />
+            ) : (
+              <>
+                <Box className={classes.title} textAlign="center">
+                  <Typography variant="h4">Selecciona una asesoria</Typography>
+                </Box>
+                <Box>
+                  {services.map((service, index) => (
+                    <TutorServiceCard
+                      key={index}
+                      id={service.id}
+                      service={service}
+                    />
+                  ))}
+                </Box>
+              </>
+            )}
+          </Paper>
+        </Box>
       </Box>
     </Page>
   )

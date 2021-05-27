@@ -9,7 +9,9 @@ import {
   Avatar,
   Menu,
   MenuItem,
-  Divider
+  Divider,
+  AppBar,
+  Box
 } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import TutorNavBar from 'src/layouts/TutorLayout/NavBar'
@@ -20,9 +22,6 @@ import { connect } from 'react-redux'
 import { logout } from 'src/redux/actions/auth'
 
 const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1
-  },
   menuButton: {
     marginRight: theme.spacing(1)
   },
@@ -34,12 +33,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: 'inherit'
-  },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex'
-    }
   },
   cover: {
     width: 30,
@@ -60,7 +53,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1)
   },
   toolbar: {
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
+    justifyContent: 'space-between'
   },
   img: {
     color: theme.palette.common.white
@@ -92,82 +86,86 @@ const TutorTopBar = (props) => {
   }
 
   return (
-    <div className={classes.grow}>
-      <Toolbar className={classes.toolbar} color="primary">
-        <Button className={classes.button} variant="outlined" href="/">
-          <img
-            className={classes.img}
-            src={logo}
-            width="50"
-            alt="LogoImage"></img>
-          <Typography
-            className={classes.title}
-            variant="h2"
-            color="initial"
-            noWrap>
-            HELPTUTOR
-          </Typography>
-        </Button>
-        <TutorNavBar />
-        <div className={classes.grow} />
-        <div className={classes.sectionDesktop}>
-          <div className={classes.userSection}>
-            <IconButton
-              className={classes.userSpace}
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-              onClick={handleClick}>
-              <Typography className={classes.userSpace} variant="h4">
-                {props.user != null ? (
-                  <>
-                    {props.user.first_name} {props.user.last_name}
-                  </>
-                ) : (
-                  <></>
-                )}
-              </Typography>
-              <Avatar
-                className={classes.cover}
-                alt="user photo"
-                src={props.user.photo}
-              >
-                <b>{props.user.first_name[0]}</b>
-              </Avatar>
-            </IconButton>
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}>
-              <RouterLink to="/tutor/cuenta/perfil">
-                <MenuItem onClick={handleClose}>
-                  <Typography color="primary">
-                    <b>Perfil</b>
-                  </Typography>
-                </MenuItem>
-              </RouterLink>
-              <RouterLink to="/tutor/cuenta">
-                <MenuItem onClick={handleClose}>
-                  <Typography color="primary">
-                    <b>Cuenta</b>
-                  </Typography>
-                </MenuItem>
-              </RouterLink>
-              <Divider></Divider>
-              <MenuItem onClick={handleLogOut}>
-                <Typography color="primary">
-                  <b>Salir</b>
+    <Box display='flex' flexDirection='column' justifyContent='center'>
+      <Box>
+        <AppBar position='static'>
+        <Toolbar className={classes.toolbar} >
+          <Button className={classes.button} variant="outlined" href="/">
+            <img
+              className={classes.img}
+              src={logo}
+              width="50"
+              alt="LogoImage"></img>
+            <Typography
+              className={classes.title}
+              variant="h2"
+              color="initial"
+              noWrap>
+              HELPTUTOR
+            </Typography>
+          </Button>
+          <div className={classes.grow} />
+            <div className={classes.userSection}>
+              <IconButton
+                className={classes.userSpace}
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                color="inherit"
+                onClick={handleClick}>
+                <Typography className={classes.userSpace} variant="h4">
+                  {props.user != null ? (
+                    <>
+                      {props.user.first_name} {props.user.last_name}
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </Typography>
-                <ExitToAppIcon className={classes.exitIcon} />
-              </MenuItem>
-            </Menu>
+                <Avatar
+                  className={classes.cover}
+                  alt="user photo"
+                  src={props.user.photo}
+                >
+                  <b>{props.user.first_name[0]}</b>
+                </Avatar>
+              </IconButton>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}>
+                <RouterLink to="/tutor/cuenta/perfil">
+                  <MenuItem onClick={handleClose}>
+                    <Typography color="primary">
+                      <b>Perfil</b>
+                    </Typography>
+                  </MenuItem>
+                </RouterLink>
+                <RouterLink to="/tutor/cuenta">
+                  <MenuItem onClick={handleClose}>
+                    <Typography color="primary">
+                      <b>Cuenta</b>
+                    </Typography>
+                  </MenuItem>
+                </RouterLink>
+                <Divider></Divider>
+                <MenuItem onClick={handleLogOut}>
+                  <Typography color="primary">
+                    <b>Salir</b>
+                  </Typography>
+                  <ExitToAppIcon className={classes.exitIcon} />
+                </MenuItem>
+              </Menu>
           </div>
-        </div>
-      </Toolbar>
-    </div>
+        </Toolbar>
+        </AppBar>
+      </Box>
+      <Box>
+        <TutorNavBar />
+      </Box>
+    </Box>
   )
 }
 

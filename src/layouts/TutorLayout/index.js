@@ -43,7 +43,6 @@ const TutorLayout = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
-
   return loading ? (
     <Backdrop className={classes.backdrop} open={true}>
       <Box display="flex" flexDirection="column" alignItems="center">

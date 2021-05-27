@@ -25,7 +25,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
     borderRadius: '20px',
-    width: 900
+    width: 900,
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   cardsContent: {
     margin: theme.spacing(2),
@@ -36,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     width: 300,
+    backgroundColor: theme.palette.primary.main  ,
     textTransform: 'none'
   },
   addAdButton: {
@@ -80,77 +83,77 @@ const StudentAdvertisementsView = (props) => {
 
   return (
     <Page title="Anuncios">
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center">
-        <SearchBar />
-        <Paper elevation={3} className={classes.root}>
-          {loadingAdvertisement ? (
-            <PublicationsViewSkeleton />
-          ) : (
-            <>
-              <Box className={classes.title} textAlign="center">
-                <Typography variant="h4">Anuncios</Typography>
-              </Box>
-              {creating ? (
-                <CircularProgress />
-              ) : (
-                <>
-                  <Grid
-                    container
-                    spacing={4}
-                    className={classes.buttonContainer}>
-                    <Grid item xs={6}>
-                      <Box className={classes.addAdButton}>
-                        <Button
-                          className={classes.button}
-                          variant="contained"
-                          color="primary"
-                          startIcon={<AddCircleIcon />}
-                          onClick={handleOpen}>
-                          Agregar anuncio
-                        </Button>
-                      </Box>
+      <Box display='flex' flexDirection='row' justifyContent='center'>
+        <Box>
+          <SearchBar />
+        </Box>
+        <Box>
+          <Paper elevation={3} className={classes.root}>
+            {loadingAdvertisement ? (
+              <PublicationsViewSkeleton />
+            ) : (
+              <>
+                <Box className={classes.title} textAlign="center">
+                  <Typography variant="h4">Anuncios</Typography>
+                </Box>
+                {creating ? (
+                  <CircularProgress />
+                ) : (
+                  <>
+                    <Grid
+                      container
+                      spacing={4}
+                      className={classes.buttonContainer}>
+                      <Grid item xs={6}>
+                        <Box className={classes.addAdButton}>
+                            <Button
+                              className={classes.button}
+                              variant="contained"
+                              color="primary"
+                              startIcon={<AddCircleIcon />}
+                              onClick={handleOpen}>
+                              Agregar anuncio
+                            </Button>
+                        </Box>
+                      </Grid>
+                      <Grid item xs={6}>
+                          <Button
+                            className={classes.button}
+                            variant="contained"
+                            color="primary"
+                            startIcon={<VisibilityIcon />}
+                            onClick={handleMyAdvertisements}>
+                            Ver mis anuncios
+                          </Button>
+                        <Dialog
+                          open={myAdsView}
+                          onClose={handleMyAdvertisementsClose}>
+                          <DialogTitle>Mis publicaciones</DialogTitle>
+                          <DialogContent></DialogContent>
+                        </Dialog>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={6}>
-                      <Button
-                        className={classes.button}
-                        variant="contained"
-                        color="primary"
-                        startIcon={<VisibilityIcon />}
-                        onClick={handleMyAdvertisements}>
-                        Ver mis anuncios
-                      </Button>
-                      <Dialog
-                        open={myAdsView}
-                        onClose={handleMyAdvertisementsClose}>
-                        <DialogTitle>Mis publicaciones</DialogTitle>
-                        <DialogContent></DialogContent>
-                      </Dialog>
-                    </Grid>
-                  </Grid>
-                  <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="publications-dialog-title">
-                    <AdvertisementFormView />
-                  </Dialog>
-                </>
-              )}
-              <Box>
-                {advertisements.map((advertisement, index) => (
-                  <AdvertisementCard
-                    key={index}
-                    id={advertisement.id}
-                    advertisement={advertisement}
-                  />
-                ))}
-              </Box>
-            </>
-          )}
-        </Paper>
+                    <Dialog
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="publications-dialog-title">
+                      <AdvertisementFormView />
+                    </Dialog>
+                  </>
+                )}
+                <Box>
+                  {advertisements.map((advertisement, index) => (
+                    <AdvertisementCard
+                      key={index}
+                      id={advertisement.id}
+                      advertisement={advertisement}
+                    />
+                  ))}
+                </Box>
+              </>
+            )}
+          </Paper>
+        </Box>
       </Box>
     </Page>
   )

@@ -92,7 +92,14 @@ const KnowledgeAreaInfoView = (props) => {
 
   useEffect(() => {
     setInitialValues(props.speciality_tutor)
+    setTxtTags(props.speciality_tutor.tags)
+    initialTags(props.speciality_tutor.tags)
   }, [props.speciality_tutor])
+
+  const initialTags = (initial) => {
+    setTags(initial.split(','))
+    setTxtTags(initial)
+  }
 
   const createTags = (e) => {
     setTags(e.target.value.split(','))

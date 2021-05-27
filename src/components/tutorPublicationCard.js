@@ -6,12 +6,14 @@ import {
   Avatar,
   Box,
   CardActionArea,
+  Chip,
   Dialog,
   Grid,
   Paper
 } from '@material-ui/core'
 import NominationView from 'src/views/tutorviews/publications/nomination'
 import { isUndefined } from 'lodash-es'
+import DoneIcon from '@material-ui/icons/Done';
 
 const useStyles = makeStyles((theme) => ({
   details: {
@@ -87,10 +89,7 @@ const TutorPublicationCard = (props) => {
             <></>
           ) : (
             <Grid item xs={3}>
-              <Typography color="textSecondary">
-                Ya te postulaste a esta publicación, haz click para editar o
-                eliminar tu postulación
-              </Typography>
+              <Chip label={<Typography>Ya te postulaste</Typography>} color='primary' icon={<DoneIcon />} clickable/>
             </Grid>
           )}
         </Grid>

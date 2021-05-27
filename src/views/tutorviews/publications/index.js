@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Box, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
 
 import {
   getPublications,
@@ -15,14 +15,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
     borderRadius: '20px',
-    width: 900
+    width: 1000
   },
   cardsContent: {
     margin: theme.spacing(2),
     borderRadius: '20px'
   },
   title: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(2)
   }
 }))
 
@@ -47,38 +47,38 @@ const TutorPublicationsView = (props) => {
 
   return (
     <Page title="Publicaciones">
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center">
-        <SearchBar />
-        <Paper elevation={3} className={classes.root}>
-          {loading ? (
-            <PublicationsViewSkeleton />
-          ) : (
-            <>
-              <Box className={classes.title} textAlign="center">
-                <Typography variant="h4">PUBLICACIONES</Typography>
-              </Box>
-              <Box>
-                {publications.map((publication, index) => (
-                  <TutorPublicationCard
-                    key={index}
-                    id={publication.id}
-                    publication={publication}
-                    nomination={
-                      nominations.filter(
-                        (nom) => nom.offer === publication.id
-                      )[0]
-                    }
-                  />
-                ))}
-              </Box>
-            </>
-          )}
-        </Paper>
-      </Box>
+      <Grid container>
+        <Grid item xs={3}>
+          <SearchBar />
+        </Grid>
+        <Grid item xs={9}>
+          <Paper elevation={3} className={classes.root}>
+            {loading ? (
+              <PublicationsViewSkeleton />
+            ) : (
+              <>
+                <Box className={classes.title} textAlign="center">
+                  <Typography variant="h4">PUBLICACIONES</Typography>
+                </Box>
+                <Box>
+                  {publications.map((publication, index) => (
+                    <TutorPublicationCard
+                      key={index}
+                      id={publication.id}
+                      publication={publication}
+                      nomination={
+                        nominations.filter(
+                          (nom) => nom.offer === publication.id
+                        )[0]
+                      }
+                    />
+                  ))}
+                </Box>
+              </>
+            )}
+          </Paper>
+        </Grid>
+      </Grid>
     </Page>
   )
 }

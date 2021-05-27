@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
-import {
-  makeStyles,
-  Backdrop,
-  Typography,
-  CircularProgress,
-  Box
-} from '@material-ui/core'
 import { Outlet } from 'react-router-dom'
-import StudentNavBar from '../StudentLayout/TopBar'
+import {
+  Backdrop,
+  Box,
+  CircularProgress,
+  makeStyles,
+  Typography
+} from '@material-ui/core'
+import StudentTopBar from './TopBar'
 
 import { getStudentInfo } from 'src/redux/actions/student/student_data'
 import { connect } from 'react-redux'
@@ -52,7 +52,7 @@ const StudentLayout = (props) => {
     </Backdrop>
   ) : (
     <div className={classes.root}>
-      <StudentNavBar />
+      <StudentTopBar />
       <div className={classes.contentContainer}>
         <div className={classes.content}>
           <Outlet />
