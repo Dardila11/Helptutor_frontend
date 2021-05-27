@@ -76,7 +76,6 @@ export const getStudent = (id) => (dispatch, getState) => {
 }
 
 export const addAnswer = (data) => (dispatch, getState) => {
-  console.log(data)
   Api.postAnswer(data, getState)
     .then((res) => {
       dispatch({

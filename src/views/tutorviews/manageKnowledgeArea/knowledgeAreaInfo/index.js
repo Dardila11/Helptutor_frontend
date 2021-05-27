@@ -15,6 +15,7 @@ import {
   Box,
   Button,
   Card,
+  Chip,
   Container,
   FormControl,
   FormHelperText,
@@ -31,7 +32,7 @@ import {
 import SaveIcon from '@material-ui/icons/Save'
 
 //COMPONENTS
-import SupportsView from './supports'
+import CertificateView from './certificates/certificate'
 
 import { Formik } from 'formik'
 
@@ -73,7 +74,9 @@ const KnowledgeAreaInfoView = (props) => {
   const classes = useStyles()
 
   const [initialValues, setInitialValues] = useState(initialValuesObj)
-  const [files, setFiles] = useState([])
+
+  const [tags,setTags] = useState([])
+  const [txtTags, setTxtTags] = useState(null)
 
   useEffect(
     () => {
@@ -90,6 +93,20 @@ const KnowledgeAreaInfoView = (props) => {
   useEffect(() => {
     setInitialValues(props.speciality_tutor)
   }, [props.speciality_tutor])
+
+  const createTags = (e) => {
+    setTags(e.target.value.split(','))
+    setTxtTags(e.target.value)
+  }
+
+  const deleteTag = (tag) => {
+    let str =''
+    tags.forEach( item => (
+      item !== tag ? str += item+',' : <></>
+    ))
+    setTags(tags.filter( item => item!==tag))
+    setTxtTags(str)
+  }
   return (
     <>
       <Grid item xs={9}>
@@ -205,22 +222,34 @@ const KnowledgeAreaInfoView = (props) => {
                           </FormHelperText>
                         )}
                       </FormControl>
-                      <TextField
-                        id="txt_tags"
-                        error={Boolean(touched.tags && errors.tags)}
-                        fullWidth
-                        helperText={touched.tags && errors.tags}
-                        label="Etiquetas, describa palabras clave separadas por coma(,)"
-                        margin="normal"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        name="tags"
-                        value={values.tags}
-                        variant="outlined"
-                        InputProps={{
-                          className: classes.input
-                        }}
-                      />
+                      <Box>
+                        <TextField
+                          id="txt_tags"
+                          error={Boolean(touched.tags && errors.tags)}
+                          fullWidth
+                          helperText={touched.tags && errors.tags}
+                          label="Etiquetas, describa palabras clave separadas por coma(,)"
+                          margin="normal"
+                          onBlur={handleBlur}
+                          onChange={e => {handleChange(e);createTags(e)} }
+                          on
+                          name="tags"
+                          value={txtTags===null? values.tags : txtTags}
+                          variant="outlined"
+                          InputProps={{
+                            className: classes.input
+                          }}
+                        />
+                        {tags.map((tag,index) => (
+                          <>
+                            {tag!==''? 
+                            <Chip index={index} label={tag} onDelete={e => {
+                              deleteTag(tag)
+                            }} color="primary" />
+                            : <></>}
+                          </>
+                        ))}
+                      </Box>
                       <TextField
                         id="txt_description"
                         error={Boolean(
@@ -236,7 +265,7 @@ const KnowledgeAreaInfoView = (props) => {
                         value={values.description}
                         variant="outlined"
                       />
-                      <SupportsView files={files} setFiles={setFiles} />
+                      <CertificateView />
                       <Box my={2} align="center">
                         <Button
                           id="btn_registerArea"

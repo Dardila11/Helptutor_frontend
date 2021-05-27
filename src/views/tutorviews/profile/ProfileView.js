@@ -47,7 +47,6 @@ const TutorProfileView = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
-  console.log(tutor)
   return (
     <Card className={classes.root}>
       <Box display="flex" flexDirection="column" justifyContent="center" >

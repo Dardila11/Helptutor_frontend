@@ -87,11 +87,8 @@ export const getPublicationNominations = (id) => (dispatch, getState) => {
 }
 
 export const getTutorSelectedInfo = (id) => (dispatch, getState) => {
-  console.log('tutor function called with id: '+id)
   Api.getTutorInfo(id, getState)
     .then((res) => {
-      console.log('tutor getted: ')
-      console.log(res.data)
       dispatch({
         type: LOADING
       })

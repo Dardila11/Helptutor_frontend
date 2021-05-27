@@ -36,7 +36,6 @@ const AnswerFormView = (props) => {
             advertisement: advertisement.id,
             user: user
           })
-          console.log(jsonValues)
           addAnswer(jsonValues)
           resetForm({ values: initialValuesObj })
         }}>

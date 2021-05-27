@@ -40,7 +40,7 @@ const postGoogleStudent = (data) => {
   return https.post('/api/student/google/', data)
 }
 
-const getSupports = () => {
+const getCertificate = () => {
   return https.get('/api/certificate')
 }
 
@@ -231,7 +231,7 @@ const logConstants = {
   getknowledgeAreas,
   getKnowledgeArea,
   getSubKnowledgeAreas,
-  getSupports,
+  getCertificate,
   getTutorKnowledgeAreas,
   getTutors,
   getOffers,

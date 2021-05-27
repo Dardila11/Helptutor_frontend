@@ -31,11 +31,9 @@ export const updateTutor = (data, file) => (dispatch, getState) => {
     fd.append('photo', file, file.name)
     data = {...data, photo: fd}
   }  
-  console.log(data)
   const request = Api.updateTutorInfo(data, getState)
   request
     .then((res) => {
-      console.log(res)
       dispatch({
         type: UPDATE_TUTOR,
         payload: res.data

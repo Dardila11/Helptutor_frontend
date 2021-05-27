@@ -27,7 +27,6 @@ export const getPublications = () => (dispatch, getState) => {
 }
 
 export const addNomination = (data) => (dispatch, getState) => {
-  console.log('add nomination action')
   Api.postNomination(data, getState)
     .then((res) => {
       dispatch({

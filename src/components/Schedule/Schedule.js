@@ -132,7 +132,6 @@ const Schedule = (props) => {
     let id = item.title + ':' + slot.start + ':' + slot.end
     let slotS = sche.filter((slots) => slots.id === id)[0]
     if (!isUndefined(slotS)) {
-      console.log(slotS)
       return (
         <CardActionArea
           className={classes.slotSelected}
