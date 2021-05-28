@@ -13,6 +13,7 @@ import AnswerView from 'src/views/studentviews/advertisements/answers/answer'
 
 import { clearAnswers } from 'src/redux/actions/student/advertisements'
 import { connect } from 'react-redux'
+import { isUndefined } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   details: {},
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const AdvertisementCard = (props) => {
-  const { advertisement, clearAnswers, student } = props
+  const { advertisement, clearAnswers, student, isSearch, query } = props
   const [open, setOpen] = useState(false)
   const classes = useStyles()
   const idDialog = 'advertisement' + advertisement.id + '-dialog-title'
@@ -60,6 +61,18 @@ const AdvertisementCard = (props) => {
     setOpen(false)
     clearAnswers()
   }
+
+  const getHighlightedText = (text) => {
+    // Split on highlight term and include term into parts, ignore case
+    const parts = text.split(new RegExp(`(${query})`, 'gi'))
+    return <span> { parts.map((part, i) => 
+        <span key={i} 
+          style={part.toLowerCase() === query.toLowerCase() ? { fontWeight: 'bold', color: '#2979ff' } : {} }
+        >
+            { part }
+        </span>)
+    } </span>
+}
   return (
     <Paper className={classes.paper} elevation={3}>
       <CardActionArea className={classes.cardAction} onClick={handleOpen}>
@@ -79,10 +92,12 @@ const AdvertisementCard = (props) => {
           <Grid item xs={10}>
             <Box className={classes.details}>
               <Typography component="h5" variant="h5">
-                <Box fontWeight="fontWeightBold">{advertisement.title}</Box>
+                <Box fontWeight="fontWeightBold">
+                  {isSearch && !isUndefined(query)? getHighlightedText(advertisement.title): advertisement.title}
+                  </Box>
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {advertisement.description}
+                {isSearch? getHighlightedText(advertisement.description): advertisement.description}
               </Typography>
             </Box>
           </Grid>

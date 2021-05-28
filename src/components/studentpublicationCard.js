@@ -20,6 +20,7 @@ import TutorSelectionView from 'src/views/studentviews/publications/tutorselecti
 import PublicationFormView from 'src/views/studentviews/publications/publicationForm'
 import { deletePublication } from 'src/redux/actions/student/student_publications'
 import { connect } from 'react-redux'
+import { isUndefined } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   details: {
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const StudentPublicationCard = (props) => {
-  const { publication, isStudent, deletePublication } = props
+  const { publication, isStudent, deletePublication, isSearch, query } = props
   const classes = useStyles()
   const [watch, setWatch] = React.useState(false)
   const [edit, setEdit] = React.useState(false)
@@ -78,6 +79,19 @@ const StudentPublicationCard = (props) => {
   if (isStudent) {
     gridValue = 9
   }
+
+  const getHighlightedText = (text) => {
+    // Split on highlight term and include term into parts, ignore case
+    const parts = text.split(new RegExp(`(${query})`, 'gi'))
+    return <span> { parts.map((part, i) => 
+        <span key={i} 
+          style={part.toLowerCase() === query.toLowerCase() ? { fontWeight: 'bold', color: '#2979ff' } : {} }
+        >
+            { part }
+        </span>)
+    } </span>
+}
+
   return (
     <Paper className={classes.paper} elevation={3}>
       <Grid container>
@@ -85,10 +99,12 @@ const StudentPublicationCard = (props) => {
           <Box className={classes.details}>
             <CardContent className={classes.content}>
               <Typography component="h5" variant="h5">
-                <Box fontWeight="fontWeightBold">{publication.title}</Box>
+                <Box fontWeight="fontWeightBold">
+                {isSearch && !isUndefined(query)? getHighlightedText(publication.title): publication.title}
+                  </Box>
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {publication.description}
+              {isSearch && !isUndefined(query)? getHighlightedText(publication.title): publication.title}
               </Typography>
             </CardContent>
           </Box>

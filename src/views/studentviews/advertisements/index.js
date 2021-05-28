@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
   },
   addAdButton: {
     float: 'right'
+  },
+  nofindbox: {
+    margin: theme.spacing(2)
   }
 }))
 
@@ -56,6 +59,8 @@ const StudentAdvertisementsView = (props) => {
   } = props
   const [open, setOpen] = useState(false)
   const [myAdsView, setMyAdsView] = useState(false)
+  const [query, setQuery] = useState('')
+  const [listFilter, setListFilter] = useState(null)
 
   const handleOpen = () => {
     setOpen(true)
@@ -80,12 +85,20 @@ const StudentAdvertisementsView = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
+  useEffect(
+    () => {
+      if(query==='') setListFilter(null)
+      else setListFilter(advertisements.filter(ad => ad.title.toLowerCase().includes(query.toLowerCase()) || ad.description.toLowerCase().includes(query.toLowerCase())))
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [query]
+  )  
 
   return (
     <Page title="Anuncios">
       <Box display='flex' flexDirection='row' justifyContent='center'>
         <Box>
-          <SearchBar />
+          <SearchBar option={'anuncios'} list={advertisements} setQuery={setQuery}/>
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
@@ -142,13 +155,40 @@ const StudentAdvertisementsView = (props) => {
                   </>
                 )}
                 <Box>
-                  {advertisements.map((advertisement, index) => (
-                    <AdvertisementCard
-                      key={index}
-                      id={advertisement.id}
-                      advertisement={advertisement}
-                    />
-                  ))}
+                  {listFilter===null? (
+                    <>
+                    {advertisements.map((advertisement, index) => (
+                        <AdvertisementCard
+                          key={index}
+                          id={advertisement.id}
+                          advertisement={advertisement}
+                          isSearch={false}
+                        />
+                    ))}
+                    </>
+                  ):(
+                    <>
+                    {listFilter.length > 0 ? (
+                      <>
+                      {listFilter.map((advertisement, index) => (
+                        <AdvertisementCard
+                          key={index}
+                          id={advertisement.id}
+                          advertisement={advertisement}
+                          isSearch={true}
+                          query={query}
+                        />
+                      ))}
+                      </>
+                    ):(
+                      <Box className={classes.nofindbox} textAlign='center'>
+                          <Typography>
+                            No se encontraron anuncios que contengan "{query}"
+                          </Typography>
+                      </Box>
+                    )}
+                    </>
+                  )}                  
                 </Box>
               </>
             )}

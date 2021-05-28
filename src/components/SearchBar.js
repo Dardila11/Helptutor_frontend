@@ -21,9 +21,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const SearchBar = (option) => {
+const SearchBar = (props) => {
   const classes = useStyles()
+  const { option, setQuery } = props
 
+  const handleSearch = (e) => {
+    setQuery(e.target.value)
+  }
   return (
     <Paper component="form" className={classes.root}>
       <Box className={classes.principalContainer} display='flex' flexDirection='column'>
@@ -31,10 +35,11 @@ const SearchBar = (option) => {
             <TextField
               className={classes.input}
               id="searchInput"
-              label="Buscar en helptutor"
+              label={"Buscar en helptutor"}
               variant="outlined"
               color="primary"
               size="small"
+              onChange={handleSearch}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -41,7 +41,9 @@ const useStyles = makeStyles((theme) => ({
 const StudentPublicationsView = (props) => {
   const classes = useStyles()
   const { loadingPublications, getPublications, publications, creating } = props
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const [listFilter, setListFilter] = useState(null)
   useEffect(
     () => {
       getPublications()
@@ -58,11 +60,20 @@ const StudentPublicationsView = (props) => {
     setOpen(false)
   }
 
+  useEffect(
+    () => {
+      if(query==='') setListFilter(null)
+      else setListFilter(publications.filter(pub => pub.title.toLowerCase().includes(query.toLowerCase()) || pub.description.toLowerCase().includes(query.toLowerCase())))
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [query]
+  )  
+
   return (
     <Page title="Publicaciones">
       <Box display='flex' flexDirection='row' justifyContent='center'>
         <Box>
-          <SearchBar />
+          <SearchBar option={'anuncios'} list={publications} setQuery={setQuery}/>
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
@@ -97,14 +108,42 @@ const StudentPublicationsView = (props) => {
                     </Dialog>
                   </>
                 )}
-                {publications.map((publication, index) => (
+                {listFilter===null? (
+                    <>
+                    {publications.map((publication, index) => (
                   <StudentPublicationCard
                     key={index}
                     id={publication.id}
                     publication={publication}
                     isStudent={true}
+                    isSearch={false}
                   />
                 ))}
+                    </>
+                  ):(
+                    <>
+                    {listFilter.length > 0 ? (
+                      <>
+                      {listFilter.map((publication, index) => (
+                        <StudentPublicationCard
+                        key={index}
+                        id={publication.id}
+                        publication={publication}
+                        isStudent={true}
+                        isSearch={true}
+                        query={query}
+                      />
+                      ))}
+                      </>
+                    ):(
+                      <Box className={classes.nofindbox} textAlign='center'>
+                          <Typography>
+                            No se encontraron publicaciones que contengan "{query}"
+                          </Typography>
+                      </Box>
+                    )}
+                    </>
+                  )}       
               </>
             )}
           </Paper>

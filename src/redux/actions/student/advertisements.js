@@ -11,6 +11,7 @@ import {
   CLEAR_ANSWERS,
   LOADING_ADVERTISEMENT
 } from '../../types/types_advertisements'
+import { isUndefined } from 'lodash-es'
 
 export const addAdvertisement = (data) => (dispatch, getState) => {
   const request = Api.postAdvertisement(data, getState)
@@ -39,7 +40,8 @@ export const getAdvertisements = () => (dispatch, getState) => {
       })
     )
     .catch((err) => {
-      dispatch(launchAlert('Error obteniedo anuncios', err.response.status))
+      if(isUndefined(err.response)) dispatch(launchAlert('Se perdió la conexión a internet', 500))
+      else dispatch(launchAlert('Error obteniedo anuncios', err.response.status))
     })
 }
 
