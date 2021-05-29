@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
 
 import { getServices } from 'src/redux/actions/student/student_services'
@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
 const TutorsView = (props) => {
   const classes = useStyles()
   const { loading, services, getServices } = props
+  const [query, setQuery] = useState('')
+  const [listFilter, setListFilter] = useState(null)
+  const [filter, setFilter] = useState({label: '', value: 0})
 
   useEffect(
     () => {
@@ -36,11 +39,41 @@ const TutorsView = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
+
+  useEffect(
+    () => {
+      if(query==='') setListFilter(null)
+      else setListFilter(services.filter(serv => serv.title.toLowerCase().includes(query.toLowerCase()) || serv.description.toLowerCase().includes(query.toLowerCase())))
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [query]
+  )  
+
+  useEffect(() => {
+    filters(filter)
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [filter])
+
+  function filters(filt) {
+    switch (filt.label) {
+      case 'cost':
+        if(filt.value!==0){
+          if(!listFilter===null)setListFilter(listFilter.filter(serv => serv.price <= filt.value))
+          else setListFilter(services.filter(serv => serv.price <= filt.value))
+        }
+        break;
+    
+      default:
+        break;
+    }
+  }
+
   return (
     <Page title="Tutores">
       <Box display='flex' flexDirection='row' justifyContent='center'>
         <Box>
-          <SearchBar />
+          <SearchBar option={'servicios'} list={services} setQuery={setQuery} setFilter={setFilter}/>
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
@@ -49,16 +82,45 @@ const TutorsView = (props) => {
             ) : (
               <>
                 <Box className={classes.title} textAlign="center">
-                  <Typography variant="h4">Selecciona una asesoria</Typography>
+                  <Typography variant="h4">Asesorias</Typography>
                 </Box>
                 <Box>
-                  {services.map((service, index) => (
-                    <TutorServiceCard
-                      key={index}
-                      id={service.id}
-                      service={service}
-                    />
-                  ))}
+                {listFilter===null? (
+                    <>
+                    {services.map((service, index) => (
+                  <TutorServiceCard
+                    key={index}
+                    id={service.id}
+                    service={service}
+                    isStudent={true}
+                    isSearch={false}
+                  />
+                ))}
+                    </>
+                  ):(
+                    <>
+                    {listFilter.length > 0 ? (
+                      <>
+                      {listFilter.map((service, index) => (
+                        <TutorServiceCard
+                        key={index}
+                        id={service.id}
+                        service={service}
+                        isStudent={true}
+                        isSearch={true}
+                        query={query}
+                      />
+                      ))}
+                      </>
+                    ):(
+                      <Box className={classes.nofindbox} textAlign='center'>
+                          <Typography>
+                            No se encontraron servicios que contengan "{query}"
+                          </Typography>
+                      </Box>
+                    )}
+                    </>
+                  )}       
                 </Box>
               </>
             )}

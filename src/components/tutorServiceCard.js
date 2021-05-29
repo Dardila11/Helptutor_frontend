@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
 import ServiceSelectionView from 'src/views/studentviews/tutors/serviceSelectionView'
+import { isUndefined } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   userSpace: {
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const TutorServiceCard = (props) => {
-  const { service } = props
+  const { service, isSearch, query } = props
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
 
@@ -63,6 +64,19 @@ const TutorServiceCard = (props) => {
   const handleClose = () => {
     setOpen(false)
   }
+
+  const getHighlightedText = (text) => {
+    // Split on highlight term and include term into parts, ignore case
+    const parts = text.split(new RegExp(`(${query})`, 'gi'))
+    return <span> { parts.map((part, i) => 
+        <span key={i} 
+          style={part.toLowerCase() === query.toLowerCase() ? { fontWeight: 'bold', color: '#2979ff' } : {} }
+        >
+            { part }
+        </span>)
+    } </span>
+  }
+
   return (
     <Paper className={classes.paper} elevation={3}>
       <CardActionArea className={classes.cardAction} onClick={handleOpen}>
@@ -84,10 +98,12 @@ const TutorServiceCard = (props) => {
             <Container className={classes.details}>
               <CardContent className={classes.content}>
                 <Typography component="h5" variant="h5">
-                  <Box fontWeight="fontWeightBold">{service.title}</Box>
+                  <Box fontWeight="fontWeightBold">
+                  {isSearch && !isUndefined(query)? getHighlightedText(service.title): service.title}
+                    </Box>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                  {service.description}
+                {isSearch && !isUndefined(query)? getHighlightedText(service.description): service.description}
                 </Typography>
               </CardContent>
             </Container>

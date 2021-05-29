@@ -73,7 +73,7 @@ const StudentPublicationsView = (props) => {
     <Page title="Publicaciones">
       <Box display='flex' flexDirection='row' justifyContent='center'>
         <Box>
-          <SearchBar option={'anuncios'} list={publications} setQuery={setQuery}/>
+          <SearchBar option={'publicaciones'} list={publications} setQuery={setQuery}/>
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
