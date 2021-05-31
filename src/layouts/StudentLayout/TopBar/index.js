@@ -136,13 +136,6 @@ const StudentTopBar = (props) => {
                   keepMounted
                   open={Boolean(anchorEl)}
                   onClose={handleClose}>
-                  <RouterLink to="/estudiante/cuenta/perfil">
-                    <MenuItem onClick={handleClose}>
-                      <Typography color="primary">
-                        <b>Perfil</b>
-                      </Typography>
-                    </MenuItem>
-                  </RouterLink>
                   <RouterLink to="/estudiante/cuenta">
                     <MenuItem onClick={handleClose}>
                       <Typography color="primary">
@@ -150,6 +143,15 @@ const StudentTopBar = (props) => {
                       </Typography>
                     </MenuItem>
                   </RouterLink>
+                  {(props.isStudent && props.isTutor)? (
+                  <RouterLink to="/seleccion-rol">
+                  <MenuItem onClick={handleClose}>
+                    <Typography color="primary">
+                      <b>Cambiar de rol</b>
+                    </Typography>
+                  </MenuItem>
+                </RouterLink>
+                  ): <></>}
                   <Divider></Divider>
                   <MenuItem onClick={handleLogOut}>
                     <Typography color="primary">
@@ -171,7 +173,9 @@ const StudentTopBar = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  user: state.auth.user
+  user: state.auth.user,
+  isStudent: state.auth.isStudent,
+  isTutor: state.auth.isTutor
 })
 
 export default connect(mapStateToProps, {

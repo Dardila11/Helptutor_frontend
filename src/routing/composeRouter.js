@@ -28,6 +28,7 @@ import StudentPublicationsView from 'src/views/studentviews/publications/index'
 import TutorsView from 'src/views/studentviews/tutors/tutorsView'
 import StudentAdvertisementsView from 'src/views/studentviews/advertisements'
 import TutorScheduleView from 'src/views/tutorviews/schedule/TutorScheduleView'
+import Dashboard from 'src/views/statics/dashboard'
 
 const Routing = () => {
   return (
@@ -36,6 +37,7 @@ const Routing = () => {
         <Route path="login" element={<LoginView />} />
         <Route path="registrar" element={<RegisterView />} />
         <Route path="seleccion-rol" element={<SelectRoleView />} />
+        <Route path="/" element={<Dashboard />}/>
       </Route>
 
       <PrivateRoute path="/estudiante" element={<StudentLayout />}>

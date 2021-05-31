@@ -4,22 +4,19 @@ import { makeStyles } from '@material-ui/core'
 import MainNavBar from './navbar'
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
-  wrapper: {
-    display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden',
-    paddingTop: 64
+  root: {
+    backgroundColor: theme.palette.background.dark,
+    height: '100%',
+    overflow: 'auto'
   },
   contentContainer: {
     display: 'flex',
-    flex: '1 1 auto',
     overflow: 'hidden'
   },
   content: {
     flex: '1 1 auto',
-    height: '100%',
-    overflow: 'auto'
+    overflow: 'hidden',
+    marginRight: theme.spacing(3)
   }
 }))
 
@@ -27,13 +24,10 @@ export const MainLayout = () => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      {/* TopBar */}
       <MainNavBar />
-      <div className={classes.wrapper}>
-        <div className={classes.contentContainer}>
-          <div className={classes.content}>
-            <Outlet />
-          </div>
+      <div className={classes.contentContainer}>
+        <div className={classes.content}>
+          <Outlet />
         </div>
       </div>
     </div>

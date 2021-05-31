@@ -14,6 +14,7 @@ import {
   Box
 } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import HelpIcon from '@material-ui/icons/Help';
 import TutorNavBar from 'src/layouts/TutorLayout/NavBar'
 import logo from 'src/layouts/TutorLayout/logo.svg'
 
@@ -64,8 +65,14 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     color: theme.palette.common.white
   },
-  exitIcon: {
+  icon: {
     marginLeft: theme.spacing(1)
+  },
+  role: {
+    marginRight: theme.spacing(2)
+  },
+  menuItem: {
+    justifyContent: 'space-between'
   }
 }))
 
@@ -104,8 +111,7 @@ const TutorTopBar = (props) => {
               HELPTUTOR
             </Typography>
           </Button>
-          <div className={classes.grow} />
-            <div className={classes.userSection}>
+            <Box>
               <IconButton
                 className={classes.userSpace}
                 aria-label="account of current user"
@@ -136,13 +142,6 @@ const TutorTopBar = (props) => {
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}>
-                <RouterLink to="/tutor/cuenta/perfil">
-                  <MenuItem onClick={handleClose}>
-                    <Typography color="primary">
-                      <b>Perfil</b>
-                    </Typography>
-                  </MenuItem>
-                </RouterLink>
                 <RouterLink to="/tutor/cuenta">
                   <MenuItem onClick={handleClose}>
                     <Typography color="primary">
@@ -150,15 +149,32 @@ const TutorTopBar = (props) => {
                     </Typography>
                   </MenuItem>
                 </RouterLink>
+                {(props.isStudent && props.isTutor)? (
+                  <RouterLink to="/seleccion-rol">
+                  <MenuItem onClick={handleClose}>
+                    <Typography color="primary">
+                      <b>Cambiar de rol</b>
+                    </Typography>
+                  </MenuItem>
+                </RouterLink>
+                  ): <></>}
                 <Divider></Divider>
-                <MenuItem onClick={handleLogOut}>
-                  <Typography color="primary">
-                    <b>Salir</b>
-                  </Typography>
-                  <ExitToAppIcon className={classes.exitIcon} />
+                <RouterLink to="/como-funciona">
+                  <MenuItem className={classes.menuItem} onClick={handleClose}>
+                    <Typography color="primary">
+                      <b>Como funciona</b>
+                    </Typography>
+                    <HelpIcon className={classes.icon}/>
+                  </MenuItem>
+                </RouterLink>
+                <MenuItem className={classes.menuItem} onClick={handleLogOut}>
+                    <Typography color="primary">
+                      <b>Salir</b>
+                    </Typography>
+                    <ExitToAppIcon className={classes.icon} />
                 </MenuItem>
               </Menu>
-          </div>
+          </Box>
         </Toolbar>
         </AppBar>
       </Box>
@@ -171,7 +187,9 @@ const TutorTopBar = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  user: state.auth.user
+  user: state.auth.user,
+  isStudent: state.auth.isStudent,
+  isTutor: state.auth.isTutor
 })
 
 export default connect(mapStateToProps, {
