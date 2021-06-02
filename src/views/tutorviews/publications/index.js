@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Box, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
 
 import {
   getPublications,
@@ -35,6 +35,8 @@ const TutorPublicationsView = (props) => {
     publications,
     nominations
   } = props
+  const [query, setQuery] = useState('')
+  const [listFilter, setListFilter] = useState(null)
 
   useEffect(
     () => {
@@ -45,13 +47,22 @@ const TutorPublicationsView = (props) => {
     []
   )
 
+  useEffect(
+    () => {
+      if(query==='') setListFilter(null)
+      else setListFilter(publications.filter(pub => pub.title.toLowerCase().includes(query.toLowerCase()) || pub.description.toLowerCase().includes(query.toLowerCase())))
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [query]
+  ) 
+
   return (
     <Page title="Publicaciones">
-      <Grid container>
-        <Grid item xs={3}>
-          <SearchBar />
-        </Grid>
-        <Grid item xs={9}>
+      <Box display='flex' flexDirection='row' justifyContent='center'>
+        <Box sm={12}>
+          <SearchBar option={'publicaciones'} list={publications} setQuery={setQuery}/>
+        </Box>
+        <Box>
           <Paper elevation={3} className={classes.root}>
             {loading ? (
               <PublicationsViewSkeleton />
@@ -61,24 +72,58 @@ const TutorPublicationsView = (props) => {
                   <Typography variant="h4">PUBLICACIONES</Typography>
                 </Box>
                 <Box>
-                  {publications.map((publication, index) => (
+                {listFilter===null? (
+                    <>
+                    {publications.map((publication, index) => (
                     <TutorPublicationCard
-                      key={index}
-                      id={publication.id}
-                      publication={publication}
-                      nomination={
-                        nominations.filter(
-                          (nom) => nom.offer === publication.id
-                        )[0]
-                      }
-                    />
-                  ))}
+                    key={index}
+                    id={publication.id}
+                    publication={publication}
+                    nomination={
+                      nominations.filter(
+                        (nom) => nom.offer === publication.id
+                      )[0]
+                    }
+                    isStudent={false}
+                    isSearch={false}
+                />
+                ))}
+                    </>
+                  ):(
+                    <>
+                    {listFilter.length > 0 ? (
+                      <>
+                      {listFilter.map((publication, index) => (
+                        <TutorPublicationCard
+                        key={index}
+                        id={publication.id}
+                        publication={publication}
+                        nomination={
+                          nominations.filter(
+                            (nom) => nom.offer === publication.id
+                          )[0]
+                        }
+                        isStudent={false}
+                        isSearch={true}
+                        query={query}
+                      />
+                      ))}
+                      </>
+                    ):(
+                      <Box className={classes.nofindbox} textAlign='center'>
+                          <Typography>
+                            No se encontraron publicaciones que contengan "{query}"
+                          </Typography>
+                      </Box>
+                    )}
+                    </>
+                  )}  
                 </Box>
               </>
             )}
           </Paper>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Page>
   )
 }

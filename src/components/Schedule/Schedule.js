@@ -90,7 +90,7 @@ const Schedule = (props) => {
                     <>
                       <Divider />
                       <Box>
-                        {savedSchedule.length > 0 ? (
+                        {(!isUndefined(savedSchedule) && savedSchedule.length > 0) ? (
                           <>{drawSelectedSlot(item, slot, savedSchedule)}</>
                         ) : (
                           <CardActionArea

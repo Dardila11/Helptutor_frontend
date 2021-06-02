@@ -104,7 +104,7 @@ const StudentPublicationCard = (props) => {
                   </Box>
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-              {isSearch && !isUndefined(query)? getHighlightedText(publication.title): publication.title}
+              {isSearch && !isUndefined(query)? getHighlightedText(publication.description): publication.description}
               </Typography>
             </CardContent>
           </Box>

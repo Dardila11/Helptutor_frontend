@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import {
   Box,
   Button,
+  Card,
   Container,
   Link,
   makeStyles,
@@ -30,7 +31,6 @@ import Validation from './formikValues'
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
-    height: '100%',
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3)
   },
@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
   },
   register: {
     marginTop: theme.spacing(2)
+  },
+  card:{
+    padding: theme.spacing(4)
   }
 }))
 
@@ -78,9 +81,9 @@ const LoginView = (props) => {
     <Page className={classes.root} title="Login">
       <Box
         display="flex"
-        flexDirection="column"
-        height="100%"
+        flexDirection="row"
         justifyContent="center">
+        <Card className={classes.card}>
         <Container maxWidth="sm">
           <Formik
             initialValues={Validation.initialValues}
@@ -163,6 +166,7 @@ const LoginView = (props) => {
             <Link href="./registrar">haz click aqui para registrate</Link>
           </Typography>
         </Container>
+        </Card>
       </Box>
     </Page>
   )

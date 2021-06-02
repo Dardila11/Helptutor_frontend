@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const TutorPublicationCard = (props) => {
-  const { publication, nomination } = props
+  const { publication, nomination, isSearch, query } = props
   let opNomination = isUndefined(nomination)
   const classes = useStyles()
   const [open, setOpen] = useState(false)
@@ -53,6 +53,18 @@ const TutorPublicationCard = (props) => {
   const handleClose = () => {
     setOpen(false)
   }
+
+  const getHighlightedText = (text) => {
+    // Split on highlight term and include term into parts, ignore case
+    const parts = text.split(new RegExp(`(${query})`, 'gi'))
+    return <span> { parts.map((part, i) => 
+        <span key={i} 
+          style={part.toLowerCase() === query.toLowerCase() ? { fontWeight: 'bold', color: '#2979ff' } : {} }
+        >
+            { part }
+        </span>)
+    } </span>
+}
   return (
     <Paper className={classes.paper} elevation={3}>
       <CardActionArea className={classes.cardAction} onClick={handleOpen}>
@@ -77,10 +89,12 @@ const TutorPublicationCard = (props) => {
             <Box className={classes.details}>
               <CardContent className={classes.content}>
                 <Typography component="h5" variant="h5">
-                  <Box fontWeight="fontWeightBold">{publication.title}</Box>
+                  <Box fontWeight="fontWeightBold">
+                  {isSearch && !isUndefined(query)? getHighlightedText(publication.title): publication.title}
+                    </Box>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                  {publication.description}
+                  {isSearch && !isUndefined(query)? getHighlightedText(publication.description): publication.description}
                 </Typography>
               </CardContent>
             </Box>

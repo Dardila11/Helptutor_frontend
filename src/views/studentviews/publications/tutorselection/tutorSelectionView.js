@@ -111,7 +111,7 @@ const TutorSelectionView = (props) => {
                         </Typography>
                         <Box className={classes.nextButton}>
                           <Button size='large' variant="contained" color="primary" onClick={handleNext} className={classes.button}>
-                            Finalizar
+                            Ir al pago
                           </Button>
                         </Box>
                         </>

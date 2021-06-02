@@ -18,7 +18,8 @@ import {
   makeStyles,
   TextField,
   Typography,
-  Dialog
+  Dialog,
+  Card
 } from '@material-ui/core'
 
 //COMPONENTS
@@ -53,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
   terms: {
     textDecoration: 'underline',
     cursor: 'pointer'
+  },
+  card:{
+    padding: theme.spacing(3)
   }
 }))
 
@@ -93,9 +97,9 @@ const RegisterView = ({ isAuthenticated, addTutor, addStudent }) => {
     <Page className={classes.root} title="Register">
       <Box
         display="flex"
-        flexDirection="column"
-        height="100%"
+        flexDirection="row"
         justifyContent="center">
+          <Card className={classes.card}>
         <Container maxWidth="sm">
           <Formik
             initialValues={Validation.initialValues}
@@ -281,6 +285,7 @@ const RegisterView = ({ isAuthenticated, addTutor, addStudent }) => {
             )}
           </Formik>
         </Container>
+        </Card>
       </Box>
     </Page>
   )
