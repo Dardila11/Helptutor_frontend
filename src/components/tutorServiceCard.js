@@ -124,7 +124,7 @@ const TutorServiceCard = (props) => {
         maxWidth="md"
         fullWidth={true}
         aria-labelledby="tutorSelection-dialog-title">
-        <ServiceSelectionView idTutor={service.tutor}/>
+        <ServiceSelectionView idTutor={service.tutor} service={service}/>
       </Dialog>
     </Paper>
   )

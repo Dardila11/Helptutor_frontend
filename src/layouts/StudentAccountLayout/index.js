@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
   contentContainer: {
     display: 'flex',
+    flexDirection: 'row',
     overflow: 'hidden',
     margin: theme.spacing(1)
   },

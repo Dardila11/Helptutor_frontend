@@ -5,7 +5,7 @@ import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { Avatar, Box, DialogTitle, Grid, IconButton } from '@material-ui/core'
+import { Avatar, Box, Card, DialogTitle, Grid, IconButton } from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import NominationsView from './nominations'
 import ProfileView from 'src/components/tutorProfileCard'
@@ -29,12 +29,20 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'center',
     margin: theme.spacing(2),
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: theme.spacing(1)
   },
   cover: {
     width: 80,
     height: 80,
-    margin: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(3)
+  },
+  card:{
+    margin: theme.spacing(1),
+    borderRadius: '20px'
   }
 }))
 
@@ -150,24 +158,26 @@ const TutorSelectionView = (props) => {
                                 Información del servicio a contratar
                             </Typography>
                           </Box>
-                          <Box className={classes.contractInformation}>
-                            <Box display='flex' justifyContent='center'>
-                              <Avatar className={classes.cover} alt="user photo" src="/static/images/avatars/avatar_6.png"/>
-                            </Box>
-                            <Box>
-                              <Typography>
-                                <b>Tutor</b> : {contract.tutor.user.first_name} {contract.tutor.user.last_name}
-                              </Typography>
-                              <Typography>
-                                <b>Precio</b> : {contract.nomination.price}
-                              </Typography>
-                              <Typography>
-                                <b>Franja</b>: {contract.slot.day} de {contract.slot.start <= 12 ? contract.slot.start : contract.slot.start - 12}{' '}
-                                {contract.slot.start < 12 ? 'am' : 'pm'} a {contract.slot.end <= 12 ? contract.slot.end : contract.slot.end - 12}{' '}
-                                {contract.slot.end < 12 ? 'am' : 'pm'}
-                              </Typography>
-                            </Box>
-                          </Box>
+                            <Card className={classes.card} elevation={3}>
+                            <Box className={classes.contractInformation}>
+                              <Box display='flex' justifyContent='center'>
+                                <Avatar className={classes.cover} alt="user photo" src="/static/images/avatars/avatar_6.png"/>
+                              </Box>
+                              <Box>
+                                <Typography>
+                                  <b>Tutor:</b> {contract.tutor.user.first_name} {contract.tutor.user.last_name}
+                                </Typography>
+                                <Typography>
+                                  <b>Precio:</b> {contract.nomination.price}$
+                                </Typography>
+                                <Typography>
+                                  <b>Franja:</b> {contract.slot.day} de {contract.slot.start <= 12 ? contract.slot.start : contract.slot.start - 12}{' '}
+                                  {contract.slot.start < 12 ? 'am' : 'pm'} a {contract.slot.end <= 12 ? contract.slot.end : contract.slot.end - 12}{' '}
+                                  {contract.slot.end < 12 ? 'am' : 'pm'}
+                                </Typography>
+                              </Box>
+                              </Box>
+                            </Card>                          
                         </Box>
                         <Box className={classes.nextButton}>
                           

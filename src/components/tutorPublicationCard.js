@@ -24,8 +24,6 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 0 auto'
   },
   cover: {
-    marginLeft: theme.spacing(3),
-    marginTop: theme.spacing(3),
     width: 60,
     height: 60
   },
@@ -39,6 +37,13 @@ const useStyles = makeStyles((theme) => ({
   },
   options: {
     marginTop: theme.spacing(2)
+  },
+  userSpace: {
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center',
+    alignItems: 'center',
+    marginTop: theme.spacing(1)
   }
 }))
 
@@ -69,20 +74,16 @@ const TutorPublicationCard = (props) => {
     <Paper className={classes.paper} elevation={3}>
       <CardActionArea className={classes.cardAction} onClick={handleOpen}>
         <Grid container>
-          <Grid item xs={2}>
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              textAlign="center">
+        <Grid item xs={2}>
+            <Box className={classes.userSpace}>
               <Avatar
                 className={classes.cover}
                 alt="user photo"
                 src="/static/images/avatars/avatar_6.png"
               />
-              {/*<Typography>
-                  {student.user.first_name} {student.user.last_name}
-              </Typography>*/}
+              <Typography>
+                <b>Username</b>
+              </Typography>
             </Box>
           </Grid>
           <Grid item xs={opNomination ? 10 : 7}>

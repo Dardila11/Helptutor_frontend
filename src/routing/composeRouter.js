@@ -23,7 +23,7 @@ import TutorPublicationsView from 'src/views/tutorviews/publications/index'
 
 //STUDENT VIEWS
 import StudentProfileView from 'src/views/studentviews/profile/ProfileView'
-import StudentEditInfoView from 'src/views/studentviews/studentInfo/EditInfoView'
+import StudentEditInfoView from 'src/views/studentviews/studentInfo'
 import StudentPublicationsView from 'src/views/studentviews/publications/index'
 import TutorsView from 'src/views/studentviews/tutors/tutorsView'
 import StudentAdvertisementsView from 'src/views/studentviews/advertisements'

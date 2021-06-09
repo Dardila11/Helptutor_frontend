@@ -1,6 +1,7 @@
 import React from 'react'
 import { makeStyles, Toolbar, Typography, Button, createMuiTheme, MuiThemeProvider } from '@material-ui/core'
 import ListAltIcon from '@material-ui/icons/ListAlt'
+import ClassIcon from '@material-ui/icons/Class'
 import { Link as RouterLink } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
@@ -28,26 +29,27 @@ const theme = createMuiTheme({
   }
 })
 
-const navOptions = [
-  {
-    title: 'Publicaciones',
-    link: '/tutor/publicaciones'
-  },
-  {
-    title: 'Clases',
-    link: '/tutor/publicaciones'
-  }
-]
-
 const TutorNavBar = () => {
   const classes = useStyles()
+  const navOptions = [
+    {
+      title: 'Publicaciones',
+      link: '/tutor/publicaciones',
+      icon: <ListAltIcon className={classes.primaryColor}/>
+    },
+    {
+      title: 'Clases',
+      link: '/tutor/publicaciones',
+      icon: <ClassIcon className={classes.primaryColor} />
+    }
+  ]
   return (
     <Toolbar className={classes.toolbar} color="primary" variant="dense">
       {navOptions.map((element, index) => (
           <RouterLink key={index} to={element.link}>
             <MuiThemeProvider theme={theme}>
               <Button className={classes.button} >
-                <ListAltIcon className={classes.primaryColor}/>
+                {element.icon}
                 <Typography variant='h6' className={classes.primaryColor}>{element.title}</Typography>
               </Button>
             </MuiThemeProvider>

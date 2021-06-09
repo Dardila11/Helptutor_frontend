@@ -3,6 +3,7 @@ import { makeStyles, Toolbar, Typography, Button, createMuiTheme, MuiThemeProvid
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt' 
 import ListAltIcon from '@material-ui/icons/ListAlt'
+import ClassIcon from '@material-ui/icons/Class'
 import { Link as RouterLink } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +49,11 @@ const StudentNavBar = () => {
       title: 'Tutores',
       link: '/estudiante/tutores',
       icon: <PeopleAltIcon className={classes.primaryColor}/>
+    },
+    {
+      title: 'Mis clases',
+      link: '/estudiante/publicaciones',
+      icon: <ClassIcon className={classes.primaryColor}/>
     }
   ]
 

@@ -15,14 +15,16 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
     borderRadius: '20px',
-    width: 1000
+    width: 900,
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   cardsContent: {
     margin: theme.spacing(2),
     borderRadius: '20px'
   },
   title: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(1)
   }
 }))
 
@@ -69,7 +71,7 @@ const TutorPublicationsView = (props) => {
             ) : (
               <>
                 <Box className={classes.title} textAlign="center">
-                  <Typography variant="h4">PUBLICACIONES</Typography>
+                  <Typography variant="h4">Publicaciones</Typography>
                 </Box>
                 <Box>
                 {listFilter===null? (

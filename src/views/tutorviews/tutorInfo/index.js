@@ -1,3 +1,4 @@
+import React from 'react'
 import {
     Box,
     Card,
@@ -8,7 +9,6 @@ import {
     Paper,
     Typography
   } from '@material-ui/core'
-  import React from 'react'
   import Page from 'src/components/Page'
   import EditInfoView from './tutorInfo/EditInfoView'
   
