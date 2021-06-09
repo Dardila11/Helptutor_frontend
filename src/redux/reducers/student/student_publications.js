@@ -7,7 +7,8 @@ import {
   GET_NOMINATIONS,
   UPDATE_PUBLICATION,
   GET_TUTOR,
-  LOADING
+  LOADING,
+  LOADING_NOMINATIONS
 } from 'src/redux/types/types_publications'
 
 const initialValues = {
@@ -24,7 +25,8 @@ const initialState = {
   creating: false,
   nominations: [],
   loadingTutor: true,
-  tutorInfo: {}
+  tutorInfo: {},
+  loadingNominations: true
 }
 
 const publications = (state = initialState, action) => {
@@ -95,6 +97,11 @@ const publications = (state = initialState, action) => {
       return {
         ...state,
         loadingTutor: true
+      }
+    case LOADING_NOMINATIONS:
+      return {
+        ...state,
+        loadingNominations: false
       }
     default:
       return state

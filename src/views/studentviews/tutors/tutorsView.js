@@ -3,7 +3,7 @@ import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
 
 import { getServices } from 'src/redux/actions/student/student_services'
 import { connect } from 'react-redux'
-import PublicationsViewSkeleton from 'src/components/skeletons/PublicationsViewSkeleton'
+import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
 import TutorServiceCard from 'src/components/tutorServiceCard'
 import Page from 'src/components/Page'
@@ -78,7 +78,7 @@ const TutorsView = (props) => {
         <Box>
           <Paper elevation={3} className={classes.root}>
             {loading ? (
-              <PublicationsViewSkeleton />
+              <CardsViewSkeleton />
             ) : (
               <>
                 <Box className={classes.title} textAlign="center">

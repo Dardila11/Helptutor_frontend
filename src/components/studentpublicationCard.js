@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import {
+  Badge,
   Box,
   Button,
   Dialog,
@@ -120,9 +121,11 @@ const StudentPublicationCard = (props) => {
                 <b>Opciones</b>
               </Typography>
               <Box spacing={3}>
-                <IconButton color="primary" onClick={handleWatch}>
-                  <VisibilityIcon />
-                </IconButton>
+                  <IconButton color="primary" onClick={handleWatch}>
+                    <Badge badgeContent={4} color="primary">
+                    <VisibilityIcon />
+                    </Badge>
+                  </IconButton>
                 <IconButton color="primary" onClick={handleEdit}>
                   <EditIcon />
                 </IconButton>

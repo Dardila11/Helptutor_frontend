@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Avatar, Box, Card, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
+import { Avatar, Box, Button, Card, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
 
 import { getTutorSelectedInfo } from 'src/redux/actions/student/student_publications'
 import { connect } from 'react-redux'
@@ -32,23 +32,33 @@ const useStyles = makeStyles((theme) => ({
   },
   divider: {
     margin: theme.spacing(2)
+  },
+  nextButton: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: theme.spacing(1)
   }
 }))
 
 const ProfileView = (props) => {
   const classes = useStyles()
-  const {idTutor, getTutorSelectedInfo ,tutor, loading} = props
+  const {idTutor, getTutorSelectedInfo ,tutor, loading, next} = props
   useEffect(
     () => {
       getTutorSelectedInfo(idTutor)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [])
+  const handleClick = () => {
+    next(tutor)
+  }
   return (
+    <>
     <Card className={classes.root}>
       <Box display="flex" flexDirection="column" justifyContent="center" >
       {loading ? (
-        <ProfileViewSkeleton></ProfileViewSkeleton>
+        <ProfileViewSkeleton/>
       ):(<>
         <Box className={classes.title} textAlign='center'>
               <Typography variant='h3'>
@@ -125,6 +135,13 @@ const ProfileView = (props) => {
           
       </Box>
     </Card>
+    
+    <Box className={classes.nextButton}>
+    <Button size='large' variant="contained" color="primary" onClick={handleClick} className={classes.button}>
+      Siguiente
+    </Button>
+  </Box>
+  </>
   )
 }
 

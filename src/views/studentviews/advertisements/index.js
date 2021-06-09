@@ -15,11 +15,11 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import { getAdvertisements } from 'src/redux/actions/student/advertisements'
 import { connect } from 'react-redux'
-import PublicationsViewSkeleton from 'src/components/skeletons/PublicationsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
 import AdvertisementFormView from './advertisementForm'
 import Page from 'src/components/Page'
 import AdvertisementCard from 'src/components/advertisementCard'
+import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -103,7 +103,7 @@ const StudentAdvertisementsView = (props) => {
         <Box>
           <Paper elevation={3} className={classes.root}>
             {loadingAdvertisement ? (
-              <PublicationsViewSkeleton />
+              <CardsViewSkeleton type='advetisements'/>
             ) : (
               <>
                 <Box className={classes.title} textAlign="center">

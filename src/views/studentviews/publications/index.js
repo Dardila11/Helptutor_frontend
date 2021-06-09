@@ -11,7 +11,7 @@ import {
 
 import { getPublications } from 'src/redux/actions/student/student_publications'
 import { connect } from 'react-redux'
-import PublicationsViewSkeleton from 'src/components/skeletons/PublicationsViewSkeleton'
+import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
 import PublicationFormView from './publicationForm'
 import StudentPublicationCard from 'src/components/studentpublicationCard'
@@ -78,7 +78,7 @@ const StudentPublicationsView = (props) => {
         <Box>
           <Paper elevation={3} className={classes.root}>
             {loadingPublications ? (
-              <PublicationsViewSkeleton />
+              <CardsViewSkeleton type='publications'/>
             ) : (
               <>
                 <Box className={classes.title} textAlign="center">

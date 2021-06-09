@@ -9,7 +9,8 @@ import {
   DELETE_PUBLICATION,
   GET_NOMINATIONS,
   GET_TUTOR,
-  LOADING
+  LOADING,
+  LOADING_NOMINATIONS
 } from 'src/redux/types/types_publications'
 
 export const addPublication = (data) => (dispatch, getState) => {
@@ -79,6 +80,9 @@ export const getPublicationNominations = (id) => (dispatch, getState) => {
       dispatch({
         type: GET_NOMINATIONS,
         payload: res.data
+      })
+      dispatch({
+        type: LOADING_NOMINATIONS
       })
     })
     .catch((err) => {

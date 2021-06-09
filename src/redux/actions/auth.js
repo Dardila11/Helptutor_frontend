@@ -19,6 +19,7 @@ import {
   ACTION_END,
   SELECT_ROLE
 } from '../types/types_auth'
+import { isUndefined } from 'lodash-es'
 
 export const updateTutor = (data) => (dispatch, getState) => {
   const request = Api.updateTutorInfo(data, getState)
@@ -144,15 +145,18 @@ export const loadUser = () => (dispatch, getState) => {
       })
     })
     .catch((err) => {
-      dispatch(
-        launchAlert(
-          'Error obteniedo información del usuario',
-          err.response.status
+      if(isUndefined(err.response.status)) dispatch(launchAlert('No estas conectado a internet', 500))
+      else{
+        dispatch(
+          launchAlert(
+            'Error obteniedo información del usuario',
+            err.response.status
+          )
         )
-      )
-      dispatch({
-        type: AUTH_ERROR
-      })
+        dispatch({
+          type: AUTH_ERROR
+        })
+      } 
     })
 }
 
@@ -167,13 +171,15 @@ export const login = (data) => (dispatch) => {
       dispatch({ type: ACTION_END })
     })
     .catch((err) => {
+      if(isUndefined(err.response.status)) dispatch(launchAlert('No estas conectado a internet', 500))
+      else{
       if (err.response.status === 400)
         dispatch(launchAlert('El usuario o contraseña son incorrectos', 500))
       else dispatch(launchAlert('Error iniciando sesión', err.response.status))
       dispatch({
         type: LOGIN_FAIL
       })
-      dispatch({ type: ACTION_END })
+      dispatch({ type: ACTION_END })}
     })
 }
 
@@ -188,13 +194,15 @@ export const loginGoogle = (data) => (dispatch) => {
       dispatch({ type: ACTION_END })
     })
     .catch((err) => {
+      if(isUndefined(err.response.status)) dispatch(launchAlert('No estas conectado a internet', 500))
+      else{
       dispatch(
         launchAlert('Error iniciando sesión con google', err.response.status)
       )
       dispatch({
         type: LOGIN_FAIL
       })
-      dispatch({ type: ACTION_END })
+      dispatch({ type: ACTION_END })}
     })
 }
 

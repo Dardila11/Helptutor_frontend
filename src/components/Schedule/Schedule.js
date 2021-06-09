@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3)
   },
   slots: {
-    height: 500,
+    height: 450,
     overflowY: 'initial'
   },
   franja: {
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Schedule = (props) => {
   const classes = useStyles()
-  const { addSlot, deleteSlot, savedSchedule } = props
+  const { addSlot, deleteSlot, savedSchedule, next } = props
 
   return (
     <Card className={classes.root}>
@@ -114,18 +114,19 @@ const Schedule = (props) => {
   )
 
   function handleClick(e) {
-    let slot = { ...JSON.parse(e.target.slot), id: e.target.id }
-    let element = document.getElementById(e.target.id)
-    if (slot.isSelect) {
-      slot = { ...slot, isSelect: false }
-      element.style.backgroundColor = '#ffff'
-      deleteSlot(slot)
-    } else {
-      slot = { ...slot, isSelect: true }
-      element.style.backgroundColor = '#a5d6a7'
-      addSlot(slot)
-    }
-    element.slot = JSON.stringify(slot)
+      let slot = { ...JSON.parse(e.target.slot), id: e.target.id }
+      let element = document.getElementById(e.target.id)
+      if (slot.isSelect) {
+        slot = { ...slot, isSelect: false }
+        element.style.backgroundColor = '#ffff'
+        deleteSlot(slot)
+      } else {
+        slot = { ...slot, isSelect: true }
+        element.style.backgroundColor = '#a5d6a7'
+        addSlot(slot)
+      }
+      element.slot = JSON.stringify(slot)
+      if(!isUndefined(next)) next(slot)
   }
 
   function drawSelectedSlot(item, slot, sche) {
