@@ -4,7 +4,7 @@ import { Avatar, Box, Button, Card, Divider, Grid, makeStyles, Typography } from
 import { getTutorSelectedInfo } from 'src/redux/actions/student/student_publications'
 import { connect } from 'react-redux'
 import { Rating } from '@material-ui/lab'
-import QualificationCard from 'src/components/QualificationCard'
+import QualificationCard from 'src/components/cards/QualificationCard'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 
 const useStyles = makeStyles((theme) => ({

@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import { Avatar, Box, Card, DialogTitle, Grid, IconButton } from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import NominationsView from './nominations'
-import ProfileView from 'src/components/tutorProfileCard'
+import ProfileView from 'src/components/cards/tutorProfileCard'
 import Schedule from 'src/components/Schedule/Schedule'
 
 const useStyles = makeStyles((theme) => ({

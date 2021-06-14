@@ -4,7 +4,7 @@ import { Avatar, Box, Card, Divider, Grid, makeStyles, Typography } from '@mater
 import { getTutorInfo } from 'src/redux/actions/tutor/tutor_data'
 import { connect } from 'react-redux'
 import { Rating } from '@material-ui/lab'
-import QualificationCard from 'src/components/QualificationCard'
+import QualificationCard from 'src/components/cards/QualificationCard'
 
 const useStyles = makeStyles((theme) => ({
   root: {

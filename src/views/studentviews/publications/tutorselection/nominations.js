@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
 import { getPublicationNominations } from 'src/redux/actions/student/student_publications'
 import { connect } from 'react-redux'
-import NominationCard from 'src/components/NominationCard'
+import NominationCard from 'src/components/cards/NominationCard'
 import NominationCardSkeleton from 'src/components/skeletons/NominationCardSkeleton'
 
 const NominationsView = (props) => {

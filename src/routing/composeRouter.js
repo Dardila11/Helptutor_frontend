@@ -28,6 +28,7 @@ import StudentPublicationsView from 'src/views/studentviews/publications/index'
 import TutorsView from 'src/views/studentviews/tutors/tutorsView'
 import StudentAdvertisementsView from 'src/views/studentviews/advertisements'
 import TutorScheduleView from 'src/views/tutorviews/schedule/TutorScheduleView'
+import StudentConsultanciesView from 'src/views/studentviews/consultancies/consultanciesView'
 import Dashboard from 'src/views/statics/dashboard'
 
 const Routing = () => {
@@ -45,6 +46,7 @@ const Routing = () => {
         <Route path="/publicaciones" element={<StudentPublicationsView />} />
         <Route path="/tutores" element={<TutorsView />} />
         <Route path="/anuncios" element={<StudentAdvertisementsView />} />
+        <Route path="/asesorias" element={<StudentConsultanciesView />} />
       </PrivateRoute>
 
       <PrivateRoute

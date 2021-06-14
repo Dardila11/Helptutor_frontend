@@ -17,7 +17,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 import { connect } from 'react-redux'
 
 //components
-import CertificateCard from 'src/components/CertificateCard'
+import CertificateCard from 'src/components/cards/CertificateCard'
 import CertificateDialog from './certificateDialog'
 
 //styles

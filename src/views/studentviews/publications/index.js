@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
 import PublicationFormView from './publicationForm'
-import StudentPublicationCard from 'src/components/studentpublicationCard'
+import StudentPublicationCard from 'src/components/cards/studentpublicationCard'
 import Page from 'src/components/Page'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 

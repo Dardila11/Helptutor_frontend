@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
 
-import {
-  getPublications,
-  getNominations
-} from 'src/redux/actions/tutor/nominations'
 import { connect } from 'react-redux'
 import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
-import TutorPublicationCard from 'src/components/cards/tutorPublicationCard'
+import TutorServiceCard from 'src/components/cards/tutorServiceCard'
 import Page from 'src/components/Page'
 
 const useStyles = makeStyles((theme) => ({
@@ -28,84 +24,82 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const TutorPublicationsView = (props) => {
+const StudentConsultanciesView = (props) => {
   const classes = useStyles()
-  const {
-    loading,
-    getPublications,
-    getNominations,
-    publications,
-    nominations
-  } = props
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
+  const [filter, setFilter] = useState({label: '', value: 0})
+  const loading = false
 
-  useEffect(
-    () => {
-      getPublications()
-      getNominations()
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
+  const consultancies = [{ title: 'Mi class' ,tutor:'my tutor', slot: {day: 'lunes', start: 12, end: 13}, link: 'classLink' }]
 
   useEffect(
     () => {
       if(query==='') setListFilter(null)
-      else setListFilter(publications.filter(pub => pub.title.toLowerCase().includes(query.toLowerCase()) || pub.description.toLowerCase().includes(query.toLowerCase())))
+      else setListFilter(consultancies.filter(cons => cons.title.toLowerCase().includes(query.toLowerCase()) || cons.description.toLowerCase().includes(query.toLowerCase())))
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [query]
-  ) 
+  )  
+
+  useEffect(() => {
+    filters(filter)
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [filter])
+
+  function filters(filt) {
+    switch (filt.label) {
+      case 'cost':
+        if(filt.value!==0){
+          if(!listFilter===null)setListFilter(listFilter.filter(serv => serv.price <= filt.value))
+          else setListFilter(consultancies.filter(serv => serv.price <= filt.value))
+        }
+        break;
+    
+      default:
+        break;
+    }
+  }
 
   return (
-    <Page title="Publicaciones">
+    <Page title="Asesorias">
       <Box display='flex' flexDirection='row' justifyContent='center'>
-        <Box sm={12}>
-          <SearchBar option={'publicaciones'} list={publications} setQuery={setQuery}/>
+        <Box>
+          <SearchBar option={'asesorias'} list={consultancies} setQuery={setQuery} setFilter={setFilter}/>
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
             {loading ? (
-              <CardsViewSkeleton type='publications' />
+              <CardsViewSkeleton />
             ) : (
               <>
                 <Box className={classes.title} textAlign="center">
-                  <Typography variant="h4">Publicaciones</Typography>
+                  <Typography variant="h4">Asesorias</Typography>
                 </Box>
                 <Box>
                 {listFilter===null? (
                     <>
-                    {publications.map((publication, index) => (
-                    <TutorPublicationCard
+                    {consultancies.map((service, index) => (
+                  <TutorServiceCard
                     key={index}
-                    id={publication.id}
-                    publication={publication}
-                    nomination={
-                      nominations.filter(
-                        (nom) => nom.offer === publication.id
-                      )[0]
-                    }
-                    isStudent={false}
+                    id={service.id}
+                    service={service}
+                    isStudent={true}
                     isSearch={false}
-                />
+                  />
                 ))}
                     </>
                   ):(
                     <>
                     {listFilter.length > 0 ? (
                       <>
-                      {listFilter.map((publication, index) => (
-                        <TutorPublicationCard
+                      {listFilter.map((service, index) => (
+                        <TutorServiceCard
                         key={index}
-                        id={publication.id}
-                        publication={publication}
-                        nomination={
-                          nominations.filter(
-                            (nom) => nom.offer === publication.id
-                          )[0]
-                        }
-                        isStudent={false}
+                        id={service.id}
+                        service={service}
+                        isStudent={true}
                         isSearch={true}
                         query={query}
                       />
@@ -114,12 +108,12 @@ const TutorPublicationsView = (props) => {
                     ):(
                       <Box className={classes.nofindbox} textAlign='center'>
                           <Typography>
-                            No se encontraron publicaciones que contengan "{query}"
+                            No se encontraron servicios que contengan "{query}"
                           </Typography>
                       </Box>
                     )}
                     </>
-                  )}  
+                  )}       
                 </Box>
               </>
             )}
@@ -131,12 +125,7 @@ const TutorPublicationsView = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  publications: state.nominations.publications,
-  nominations: state.nominations.nominations,
-  loading: state.nominations.loading
 })
 
 export default connect(mapStateToProps, {
-  getPublications,
-  getNominations
-})(TutorPublicationsView)
+})(StudentConsultanciesView)

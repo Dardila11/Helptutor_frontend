@@ -17,7 +17,11 @@ const useStyles = makeStyles((theme) => ({
     width: 10
   },
   button:{
-    width: 200
+    width: 250
+  },
+  optionSelected: {
+    width: 250,
+    borderBottom: '4px solid #bbdefb',
   }
 }))
 
@@ -31,14 +35,18 @@ const theme = createMuiTheme({
 
 const TutorNavBar = () => {
   const classes = useStyles()
+  const [selected, setSelected ] = React.useState(1)
+
   const navOptions = [
     {
+      id: 1,
       title: 'Publicaciones',
       link: '/tutor/publicaciones',
       icon: <ListAltIcon className={classes.primaryColor}/>
     },
     {
-      title: 'Clases',
+      id:2,
+      title: 'Asesorias',
       link: '/tutor/publicaciones',
       icon: <ClassIcon className={classes.primaryColor} />
     }
@@ -46,9 +54,9 @@ const TutorNavBar = () => {
   return (
     <Toolbar className={classes.toolbar} color="primary" variant="dense">
       {navOptions.map((element, index) => (
-          <RouterLink key={index} to={element.link}>
+          <RouterLink key={index} to={element.link} onClick={ () => {setSelected(element.id)}}>
             <MuiThemeProvider theme={theme}>
-              <Button className={classes.button} >
+              <Button className={element.id===selected? classes.optionSelected : classes.button} >
                 {element.icon}
                 <Typography variant='h6' className={classes.primaryColor}>{element.title}</Typography>
               </Button>

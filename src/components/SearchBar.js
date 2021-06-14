@@ -105,7 +105,7 @@ const SearchBar = (props) => {
             <TextField
               className={classes.input}
               id="searchInput"
-              label={"Buscar en helptutor"}
+              label={"Buscar"}
               variant="outlined"
               color="primary"
               size="small"

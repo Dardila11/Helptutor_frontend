@@ -18,7 +18,7 @@ import { connect } from 'react-redux'
 import SearchBar from 'src/components/SearchBar'
 import AdvertisementFormView from './advertisementForm'
 import Page from 'src/components/Page'
-import AdvertisementCard from 'src/components/advertisementCard'
+import AdvertisementCard from 'src/components/cards/advertisementCard'
 import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 
 const useStyles = makeStyles((theme) => ({

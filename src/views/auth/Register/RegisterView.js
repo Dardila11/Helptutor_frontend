@@ -24,7 +24,7 @@ import {
 
 //COMPONENTS
 import Page from '../../../components/Page'
-import RoleCard from '../../../components/RoleCard'
+import RoleCard from 'src/components/cards/RoleCard'
 
 import { Formik } from 'formik'
 

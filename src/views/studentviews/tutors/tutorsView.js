@@ -5,7 +5,7 @@ import { getServices } from 'src/redux/actions/student/student_services'
 import { connect } from 'react-redux'
 import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
-import TutorServiceCard from 'src/components/tutorServiceCard'
+import TutorServiceCard from 'src/components/cards/tutorServiceCard'
 import Page from 'src/components/Page'
 
 const useStyles = makeStyles((theme) => ({
@@ -82,7 +82,7 @@ const TutorsView = (props) => {
             ) : (
               <>
                 <Box className={classes.title} textAlign="center">
-                  <Typography variant="h4">Asesorias</Typography>
+                  <Typography variant="h4">Servicios ofertados</Typography>
                 </Box>
                 <Box>
                 {listFilter===null? (

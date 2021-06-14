@@ -15,7 +15,7 @@ import {
   getStudent
 } from 'src/redux/actions/student/advertisements'
 import { connect } from 'react-redux'
-import AnswerCard from 'src/components/answerCard'
+import AnswerCard from 'src/components/cards/answerCard'
 import AdvertisementInfoViewSkeleton from 'src/components/skeletons/AdvertisementInfoViewSkeleton'
 
 const useStyles = makeStyles((theme) => ({
