@@ -4,7 +4,7 @@ import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
 import { connect } from 'react-redux'
 import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
-import TutorServiceCard from 'src/components/cards/tutorServiceCard'
+import ConsultancieCard from 'src/components/cards/consultancieCard'
 import Page from 'src/components/Page'
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +31,7 @@ const StudentConsultanciesView = (props) => {
   const [filter, setFilter] = useState({label: '', value: 0})
   const loading = false
 
-  const consultancies = [{ title: 'Mi class' ,tutor:'my tutor', slot: {day: 'lunes', start: 12, end: 13}, link: 'classLink' }]
+  const consultancies = [{ id: 1, title: 'Clase de electromagnetismo' ,tutor:'Alexander Villaquiran', slot: {day: 'lunes', start: 12, end: 13}, link: 'https://meet.google.com/php-knjy-mke' }]
 
   useEffect(
     () => {
@@ -80,11 +80,11 @@ const StudentConsultanciesView = (props) => {
                 <Box>
                 {listFilter===null? (
                     <>
-                    {consultancies.map((service, index) => (
-                  <TutorServiceCard
+                    {consultancies.map((consultancie, index) => (
+                  <ConsultancieCard
                     key={index}
-                    id={service.id}
-                    service={service}
+                    id={consultancie.id}
+                    consultancie={consultancie}
                     isStudent={true}
                     isSearch={false}
                   />
@@ -94,11 +94,11 @@ const StudentConsultanciesView = (props) => {
                     <>
                     {listFilter.length > 0 ? (
                       <>
-                      {listFilter.map((service, index) => (
-                        <TutorServiceCard
+                      {listFilter.map((consultancie, index) => (
+                        <ConsultancieCard
                         key={index}
-                        id={service.id}
-                        service={service}
+                        id={consultancie.id}
+                        consultancie={consultancie}
                         isStudent={true}
                         isSearch={true}
                         query={query}
@@ -108,7 +108,7 @@ const StudentConsultanciesView = (props) => {
                     ):(
                       <Box className={classes.nofindbox} textAlign='center'>
                           <Typography>
-                            No se encontraron servicios que contengan "{query}"
+                            No se encontraron asesorias que contengan "{query}"
                           </Typography>
                       </Box>
                     )}

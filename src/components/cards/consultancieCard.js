@@ -5,14 +5,14 @@ import Typography from '@material-ui/core/Typography'
 import {
   Avatar,
   Box,
-  CardActionArea,
   Container,
-  Dialog,
   Grid,
-  Paper
+  Paper,
+  IconButton,
 } from '@material-ui/core'
-import { Rating } from '@material-ui/lab'
+import ChatIcon from '@material-ui/icons/Chat';
 import { isUndefined } from 'lodash-es'
+import Videocam from '@material-ui/icons/Videocam'
 
 const useStyles = makeStyles((theme) => ({
   userSpace: {
@@ -49,20 +49,15 @@ const useStyles = makeStyles((theme) => ({
     color: '#1ad41a',
     marginTop: theme.spacing(2),
     textAlign: 'center'
+  },
+  options: {
+    marginTop: theme.spacing(2)
   }
 }))
 
-const TutorServiceCard = (props) => {
-  const { service, isSearch, query } = props
+const ConsultancieCard = (props) => {
+  const { consultancie, isSearch, query } = props
   const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
-  const handleClose = () => {
-    setOpen(false)
-  }
 
   const getHighlightedText = (text) => {
     // Split on highlight term and include term into parts, ignore case
@@ -76,9 +71,13 @@ const TutorServiceCard = (props) => {
     } </span>
   }
 
+  const openInNewTab = (url) => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
+  
   return (
     <Paper className={classes.paper} elevation={3}>
-      <CardActionArea className={classes.cardAction} onClick={handleOpen}>
         <Grid container>
           <Grid item xs={2}>
             <Box className={classes.userSpace}>
@@ -87,10 +86,9 @@ const TutorServiceCard = (props) => {
                 alt="user photo"
                 src="/static/images/avatars/avatar_6.png"
               />
-              <Typography>
-                <b>Username</b>
+              <Typography variant='h5'>
+                <b>{consultancie.tutor}</b>
               </Typography>
-              <Rating name="read-only" size="small" value={4} readOnly />
             </Box>
           </Grid>
           <Grid item xs={7}>
@@ -98,34 +96,39 @@ const TutorServiceCard = (props) => {
               <CardContent className={classes.content}>
                 <Typography component="h5" variant="h5">
                   <Box fontWeight="fontWeightBold">
-                  {isSearch && !isUndefined(query)? getHighlightedText(service.title): service.title}
+                  {isSearch && !isUndefined(query)? getHighlightedText(consultancie.title): consultancie.title}
                     </Box>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                {isSearch && !isUndefined(query)? getHighlightedText(service.description): service.description}
+                {consultancie.slot.day} de {consultancie.slot.start <= 12 ? consultancie.slot.start : consultancie.slot.start - 12}{' '}
+                                  {consultancie.slot.start < 12 ? 'am' : 'pm'} a {consultancie.slot.end <= 12 ? consultancie.slot.end : consultancie.slot.end - 12}{' '}
+                                  {consultancie.slot.end < 12 ? 'am' : 'pm'}
                 </Typography>
               </CardContent>
             </Container>
           </Grid>
-          <Grid item xs={3}>
-            <Container className={classes.price}>
-              <Typography variant="subtitle1" color="textSecondary">
-                <b>Costo por hora</b>
+          <Grid className={classes.options} item xs={3}>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              textAlign="center">
+              <Typography color="textSecondary">
+                <b>Opciones</b>
               </Typography>
-              <Typography variant="h4">{service.price} $</Typography>
-            </Container>
+              <Box spacing={3}>
+                  <IconButton color="primary" onClick={() => openInNewTab(consultancie.link)}>
+                    <Videocam />
+                  </IconButton>
+                <IconButton color="primary" >
+                  <ChatIcon />
+                </IconButton>
+              </Box>
+            </Box>
           </Grid>
         </Grid>
-      </CardActionArea>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        maxWidth="md"
-        fullWidth={true}
-        aria-labelledby="tutorSelection-dialog-title">
-      </Dialog>
     </Paper>
   )
 }
 
-export default TutorServiceCard
+export default ConsultancieCard
