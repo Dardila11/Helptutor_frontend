@@ -29,6 +29,12 @@ import TutorsView from 'src/views/studentviews/tutors/tutorsView'
 import StudentAdvertisementsView from 'src/views/studentviews/advertisements'
 import TutorScheduleView from 'src/views/tutorviews/schedule/TutorScheduleView'
 import StudentConsultanciesView from 'src/views/studentviews/consultancies/consultanciesView'
+
+//MEETINGS
+import MeetingLayout from 'src/layouts/MeetingLayout'
+import MeetView from 'src/views/meet/MeetView'
+
+//STATICS
 import Dashboard from 'src/views/statics/dashboard'
 
 const Routing = () => {
@@ -70,6 +76,9 @@ const Routing = () => {
         <Route path="/cuenta/horario" element={<TutorScheduleView />} />
       </PrivateRoute>
 
+      <PrivateRoute path="/meet" element={<MeetingLayout />} >
+        <Route path="/" element={<MeetView />} />
+      </PrivateRoute>
       <Route path="*" element={<NotFoundView />} />
     </Routes>
   )

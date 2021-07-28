@@ -13,6 +13,7 @@ import {
 import ChatIcon from '@material-ui/icons/Chat';
 import { isUndefined } from 'lodash-es'
 import Videocam from '@material-ui/icons/Videocam'
+import { useNavigate } from 'react-router'
 
 const useStyles = makeStyles((theme) => ({
   userSpace: {
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ConsultancieCard = (props) => {
   const { consultancie, isSearch, query } = props
+  const navigate = useNavigate()
   const classes = useStyles()
 
   const getHighlightedText = (text) => {
@@ -72,8 +74,9 @@ const ConsultancieCard = (props) => {
   }
 
   const openInNewTab = (url) => {
-    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
-    if (newWindow) newWindow.opener = null
+    navigate("/meet")
+    /*const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null*/
   }
   
   return (
