@@ -1,10 +1,10 @@
 import { Box, makeStyles } from '@material-ui/core'
 import React from 'react'
+import { connect } from 'react-redux'
 import MeetNofifications from 'src/components/meet/notifications'
 import MeetOptions from 'src/components/meet/options'
 import MeetVideo from 'src/components/meet/video'
 import { ContextProvider } from 'src/SocketContext'
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,12 +15,13 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 
-const MeetView = () => {
+const MeetView = (props) => {
     const classes = useStyles()
+    const { user } = props
     return (
         <ContextProvider>
             <Box className={classes.root}>
-                <MeetVideo />
+                <MeetVideo user={user}/>
                 <MeetOptions>
                     <MeetNofifications/>
                 </MeetOptions>
@@ -28,5 +29,9 @@ const MeetView = () => {
         </ContextProvider>
     )
 }
+const mapStateToProps = (state) => ({
+    user: state.auth.user
+})
 
-export default MeetView
+export default connect(mapStateToProps, {
+})(MeetView)

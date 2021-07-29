@@ -4,7 +4,7 @@ import Peer from 'simple-peer';
 
 const SocketContext = createContext();
 
-const socket = io('http://localhost:5000');
+const socket = io('https://helptutor.herokuapp.com/');
 
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -13,7 +13,7 @@ const ContextProvider = ({ children }) => {
   const [name, setName] = useState('');
   const [call, setCall] = useState({});
   const [me, setMe] = useState('');
-  const [error, setError] = useState(null)
+  const [error, setError] = useState({err: false, msg: ''})
 
   const myVideo = useRef();
   const userVideo = useRef();
@@ -26,7 +26,7 @@ const ContextProvider = ({ children }) => {
 
         myVideo.current.srcObject = currentStream;
       }).catch((err)=> {
-        setError(err)
+        setError({err: true, msg: err})
       });
 
     socket.on('me', (id) => setMe(id));
