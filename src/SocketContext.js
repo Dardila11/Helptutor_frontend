@@ -4,7 +4,7 @@ import Peer from 'simple-peer';
 
 const SocketContext = createContext();
 
-const socket = io('https://helptutor.herokuapp.com/');
+const socket = io('http://localhost:5000/');
 
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -27,10 +27,10 @@ const ContextProvider = ({ children }) => {
         myVideo.current.srcObject = currentStream;
       }).catch((err)=> {
         setError({err: true, msg: err})
+        console.log(err)
       });
 
     socket.on('me', (id) => setMe(id));
-
     socket.on('callUser', ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
@@ -76,9 +76,10 @@ const ContextProvider = ({ children }) => {
 
   const leaveCall = () => {
     setCallEnded(true);
-
     connectionRef.current.destroy();
-
+    socket.emit('end', socket.id)
+    console.log(socket)
+    console.log("Ending call")
     window.history.back();
   };
 
