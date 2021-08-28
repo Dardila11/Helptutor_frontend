@@ -88,7 +88,7 @@ const StudentTopBar = (props) => {
   return (
     <Box display='flex' flexDirection='column' justifyContent='center'>
       <Box>
-        <AppBar position='static'>
+        <AppBar position='absolute'>
           <Toolbar className={classes.toolbar} >
             <Button className={classes.button} variant="outlined" href="/">
               <img

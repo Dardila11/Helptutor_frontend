@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     margin: theme.spacing(1)
   },
+  topbarContainer: {
+    marginTop: theme.spacing(8)
+  },
   content: {
     flex: '1 1 auto',
     overflow: 'hidden',
@@ -27,7 +30,9 @@ const StudentAccountLayout = () => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
+      <div className={classes.topbarContainer}>
       <StudentNavBar />
+      </div>
       <div className={classes.contentContainer}>
         <NavBar />
         <div className={classes.content}>

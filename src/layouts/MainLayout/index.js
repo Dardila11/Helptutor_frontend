@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flex: '1 1 auto',
     overflow: 'hidden',
-    marginRight: theme.spacing(3)
+    marginRight: theme.spacing(3),
+    marginTop: theme.spacing(8)
   }
 }))
 

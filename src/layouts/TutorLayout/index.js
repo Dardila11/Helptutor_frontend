@@ -25,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flex: '1 1 auto',
     overflow: 'hidden',
-    marginRight: theme.spacing(3)
+    marginRight: theme.spacing(3),
+  },
+  topbarContainer: {
+    marginTop: theme.spacing(8)
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
@@ -52,7 +55,9 @@ const TutorLayout = (props) => {
     </Backdrop>
   ) : (
     <div className={classes.root}>
+      <div className={classes.topbarContainer}>
       <TutorTopBar />
+      </div>
       <div className={classes.contentContainer}>
         <div className={classes.content}>
           <Outlet />

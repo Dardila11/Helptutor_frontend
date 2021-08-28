@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     overflow: 'auto'
   },
+  topbarContainer: {
+    marginTop: theme.spacing(8)
+  },
   contentContainer: {
     display: 'flex',
     overflow: 'hidden'
@@ -52,7 +55,9 @@ const StudentLayout = (props) => {
     </Backdrop>
   ) : (
     <div className={classes.root}>
+      <div className={classes.topbarContainer}>
       <StudentTopBar />
+      </div>
       <div className={classes.contentContainer}>
         <div className={classes.content}>
           <Outlet />
