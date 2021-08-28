@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const MeetVideo = (props) => {
-    const { name, callAccepted, myVideo, userVideo, callEnded, stream, call, error } = useContext(SocketContext);
+    const { callAccepted, myVideo, userVideo, callEnded, stream, call, error } = useContext(SocketContext);
     const {user} = props
     const classes = useStyles();
     return (
