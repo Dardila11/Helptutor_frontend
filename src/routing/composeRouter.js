@@ -35,7 +35,7 @@ import MeetingLayout from 'src/layouts/MeetingLayout'
 import MeetView from 'src/views/meet/MeetView'
 
 //STATICS
-import Dashboard from 'src/views/statics/dashboard'
+import LandingPage from 'src/views/statics/LandingPage'
 
 const Routing = () => {
   return (
@@ -44,7 +44,7 @@ const Routing = () => {
         <Route path="login" element={<LoginView />} />
         <Route path="registrar" element={<RegisterView />} />
         <Route path="seleccion-rol" element={<SelectRoleView />} />
-        <Route path="/" element={<Dashboard />}/>
+        <Route path="/" element={<LandingPage />}/>
       </Route>
 
       <PrivateRoute path="/estudiante" element={<StudentLayout />}>

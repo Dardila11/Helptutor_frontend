@@ -1,0 +1,42 @@
+.sec3--container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.steps {
+  display: flex;
+  flex-direction: row;
+}
+
+.step--box {
+  width: 250px;
+  height: 200px;
+  margin: 10px;
+  text-align: end;
+}
+
+.step--box img {
+  width: 450px;
+  height: 250px;
+  text-align: center;
+}
+.step {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  border-radius: 100%;
+  background-color: #0091C6;
+  width: 80px;
+  height: 80px;
+}
+
+.step span {
+  font-size: 2rem;
+  color: white;
+}
+
