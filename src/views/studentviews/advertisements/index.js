@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import {
   Box,
-  Button,
   CircularProgress,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Grid,
   makeStyles,
   Paper,
   Typography
 } from '@material-ui/core'
-import AddCircleIcon from '@material-ui/icons/AddCircle'
-import VisibilityIcon from '@material-ui/icons/Visibility'
 import { getAdvertisements } from 'src/redux/actions/student/advertisements'
 import { connect } from 'react-redux'
 import SearchBar from 'src/components/SearchBar'
@@ -37,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1)
   },
   button: {
-    width: 300,
     backgroundColor: theme.palette.primary.main  ,
     textTransform: 'none'
   },
@@ -106,52 +98,13 @@ const StudentAdvertisementsView = (props) => {
               <CardsViewSkeleton type='advetisements'/>
             ) : (
               <>
-                <Box className={classes.title} textAlign="center">
-                  <Typography variant="h4">Anuncios</Typography>
-                </Box>
                 {creating ? (
                   <CircularProgress />
                 ) : (
                   <>
-                    <Grid
-                      container
-                      spacing={4}
-                      className={classes.buttonContainer}>
-                      <Grid item xs={6}>
-                        <Box className={classes.addAdButton}>
-                            <Button
-                              className={classes.button}
-                              variant="contained"
-                              color="primary"
-                              startIcon={<AddCircleIcon />}
-                              onClick={handleOpen}>
-                              Agregar anuncio
-                            </Button>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={6}>
-                          <Button
-                            className={classes.button}
-                            variant="contained"
-                            color="primary"
-                            startIcon={<VisibilityIcon />}
-                            onClick={handleMyAdvertisements}>
-                            Ver mis anuncios
-                          </Button>
-                        <Dialog
-                          open={myAdsView}
-                          onClose={handleMyAdvertisementsClose}>
-                          <DialogTitle>Mis publicaciones</DialogTitle>
-                          <DialogContent></DialogContent>
-                        </Dialog>
-                      </Grid>
-                    </Grid>
-                    <Dialog
-                      open={open}
-                      onClose={handleClose}
-                      aria-labelledby="publications-dialog-title">
+                    <Box display='flex' flexDirection='column' justifyContent='center'>
                       <AdvertisementFormView />
-                    </Dialog>
+                      </Box>
                   </>
                 )}
                 <Box>

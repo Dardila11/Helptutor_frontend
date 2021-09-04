@@ -16,19 +16,24 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
     height: '100%',
-    overflow: 'auto'
+    overflow: 'auto',
+    backgroundImage: `url(https://i.redd.it/ihfnlpbze7o01.jpg)`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat'
   },
   topbarContainer: {
     marginTop: theme.spacing(8)
   },
   contentContainer: {
     display: 'flex',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    
   },
   content: {
     flex: '1 1 auto',
     overflow: 'hidden',
-    marginRight: theme.spacing(3)
+    marginRight: theme.spacing(3)    
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
