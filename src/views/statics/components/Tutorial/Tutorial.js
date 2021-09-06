@@ -1,9 +1,11 @@
 import React from 'react'
 
-/* import Classes from './images/iloveimg50/classes.png'
-import Publications from './images/iloveimg50/publications.png'
-import Schedule from './images/iloveimg50/schedule.png'
-import Tutors from './images/iloveimg50/tutors.png' */
+import Tutors from './images/tutors.png'
+import Horario from './images/horario.png'
+import Publicaciones from './images/publicaciones.png'
+import Virtual from './images/virtual.png'
+
+
 import './style.css'
 
 const Tutorial = () => {
@@ -29,7 +31,7 @@ const Tutorial = () => {
               <span>1</span>
             </div>
             <div className="step--box">
-              {/* <img src={Classes} alt="classes" /> */}
+              <img src={Tutors} alt="tutors" />
             </div>
           </div>
           <div className="steps step2">
@@ -44,7 +46,7 @@ const Tutorial = () => {
               <span>2</span>
             </div>
             <div className="step--box">
-              {/* <img src={Schedule} alt="schedule" /> */}
+              <img src={Horario} alt="schedule" />
             </div>
           </div>
           <div className="steps step3">
@@ -60,7 +62,7 @@ const Tutorial = () => {
               <span>3</span>
             </div>
             <div className="step--box">
-              {/* <img src={Publications} alt="publications" /> */}
+              <img src={Virtual} alt="virtual" />
             </div>
           </div>
           <div className="steps step4">
@@ -76,7 +78,7 @@ const Tutorial = () => {
               <span>4</span>
             </div>
             <div className="step--box">
-              {/* <img src={Tutors} alt="tutors" /> */}
+              <img src={Publicaciones} alt="publications" />
             </div>
           </div>
         </div>
