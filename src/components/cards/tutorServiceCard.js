@@ -123,8 +123,9 @@ const TutorServiceCard = (props) => {
         onClose={handleClose}
         maxWidth="md"
         fullWidth={true}
+        scroll="paper"
         aria-labelledby="tutorSelection-dialog-title">
-        <ServiceSelectionView idTutor={service.tutor} service={service}/>
+        <ServiceSelectionView onClose={handleClose} idTutor={service.tutor} service={service}/>
       </Dialog>
     </Paper>
   )

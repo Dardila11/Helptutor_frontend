@@ -5,18 +5,14 @@ import Tutorial from './components/Tutorial/Tutorial';
 import Footer from './components/Footer/Footer'
 
 import './style.css'
+import Intro from './components/Intro/Intro';
 
 const LandingPage = () => {
   return (
     <>
       <main className="root">
         <section className="sec1" id="sec1">
-          <h2 className="sec1-h1">Tutorias especializadas en linea</h2>
-          <p className="sec1--p">
-            Si necesitas conocimiento en algún tema en especifico, nuestra
-            plataforma HelpTutor es nuestra solución a tus problemas. Te lo
-            mostramos a continuación!
-          </p>
+          <Intro/>
         </section>
         <section className="sec2" id="sec2">
           <Features/>

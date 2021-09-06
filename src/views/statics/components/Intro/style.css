@@ -1,0 +1,24 @@
+.sec1--container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+	padding-left: 20px ;
+  width: 100vw;
+  height: 100vh;
+  background: url('/src/views/statics/components/Intro/student2.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.sec1--h2 {
+  color: #005676;
+  font-weight: bold;
+  text-align: center;
+}
+
+.sec1--p {
+	width: 30vw;
+  font-size: 1.2rem;
+}

@@ -5,7 +5,14 @@ import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { Avatar, Box, Card, DialogTitle, Grid, IconButton } from '@material-ui/core'
+import {
+  Avatar,
+  Box,
+  Card,
+  DialogTitle,
+  Grid,
+  IconButton
+} from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import NominationsView from './nominations'
 import ProfileView from 'src/components/cards/tutorProfileCard'
@@ -40,14 +47,19 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(3)
   },
-  card:{
+  card: {
     margin: theme.spacing(1),
     borderRadius: '20px'
   }
 }))
 
 function getSteps() {
-  return ['Selecciona un tutor', 'Información del tutor','Selecciona franja', 'Resumen'];
+  return [
+    'Selecciona un tutor',
+    'Información del tutor',
+    'Selecciona franja',
+    'Resumen'
+  ]
 }
 
 function getStepContent(step) {
@@ -59,7 +71,7 @@ function getStepContent(step) {
     case 2:
       return 'Selecciona franja'
     case 3:
-      return  'Resumen'
+      return 'Resumen'
     default:
       return ''
   }
@@ -68,13 +80,13 @@ function getStepContent(step) {
 const TutorSelectionView = (props) => {
   const { publication } = props
   const classes = useStyles()
-  const [ contract, setContract ] = React.useState({})
+  const [contract, setContract] = React.useState({})
   const [activeStep, setActiveStep] = React.useState(0)
   const [idTutor, setIdTutor] = React.useState(null)
   const steps = getSteps()
 
   const handleNext = () => {
-    if(activeStep<3) setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep < 3) setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
 
   const handleBack = () => {
@@ -82,18 +94,18 @@ const TutorSelectionView = (props) => {
   }
 
   const handleNomination = (nomination) => {
-    setContract({...contract, nomination: nomination})
+    setContract({ ...contract, nomination: nomination })
     setIdTutor(nomination.tutor)
     handleNext()
   }
 
   const handleTutor = (tutor) => {
-    setContract({...contract, tutor: tutor})
+    setContract({ ...contract, tutor: tutor })
     handleNext()
-  }  
+  }
 
   const handleSchedule = (slot) => {
-    setContract({...contract, slot: slot})
+    setContract({ ...contract, slot: slot })
     handleNext()
   }
 
@@ -124,103 +136,163 @@ const TutorSelectionView = (props) => {
 
   return (
     <div className={classes.root}>
-        <DialogTitle id='publications-dialog-title' align='center'>
-            <Typography className={classes.instructions} variant='h4'>{getStepContent(activeStep)}</Typography>
-        </DialogTitle>
-        <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
-        <Grid container>         
-                <Grid item xs={1}>
-                {activeStep>0?(                    
-                        <IconButton onClick={handleBack}>
-                            <ArrowBackIosIcon/>
-                        </IconButton>
-                ):(<></>)}
-                </Grid>
-                <Grid item xs={10}>
-                    {activeStep===0 ? (
-                        <NominationsView key={publication.id} id={publication.id} publication={publication} next={handleNomination}/>
-                    ):(<></>)}
-                    {activeStep===1 ? (
-                        <>
-                        <ProfileView idTutor={idTutor} next={handleTutor}/>
-                        </>
-                    ):(<></>)}
-                    {activeStep===2 ?(
-                        <>
-                        <Schedule next={handleSchedule}/>
-                        </>
-                    ):(<></>)}
-                    {activeStep===3 ? (
-                        <>
-                        <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
-                          <Box>
-                            <Typography variant='h4' textAlign='center'>
-                                Información del servicio a contratar
-                            </Typography>
-                          </Box>
-                            <Card className={classes.card} elevation={3}>
-                            <Box className={classes.contractInformation}>
-                              <Box display='flex' justifyContent='center'>
-                                <Avatar className={classes.cover} alt="user photo" src="/static/images/avatars/avatar_6.png"/>
-                              </Box>
-                              <Box>
-                                <Typography>
-                                  <b>Tutor:</b> {contract.tutor.user.first_name} {contract.tutor.user.last_name}
-                                </Typography>
-                                <Typography>
-                                  <b>Precio:</b> {contract.nomination.price}$
-                                </Typography>
-                                <Typography>
-                                  <b>Franja:</b> {contract.slot.day} de {contract.slot.start <= 12 ? contract.slot.start : contract.slot.start - 12}{' '}
-                                  {contract.slot.start < 12 ? 'am' : 'pm'} a {contract.slot.end <= 12 ? contract.slot.end : contract.slot.end - 12}{' '}
-                                  {contract.slot.end < 12 ? 'am' : 'pm'}
-                                </Typography>
-                              </Box>
-                              </Box>
-                            </Card>                          
-                        </Box>
-                        <Box className={classes.nextButton}>
-                          
-                          <form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu">
-                            <input name="merchantId"    type="hidden"  value={508029}   />
-                            <input name="accountId"     type="hidden"  value={512321} />
-                            <input name='ApiLogin'      type='hidden'  value="pRRXKOl8ikMmt9u"/>
-                            <input name="description"   type="hidden"  value="Test PAYU"  />
-                            <input name="referenceCode" type="hidden"  value="TestPayU" />
-                            <input name="amount"        type="hidden"  value={3}  />
-                            <input name="tax"           type="hidden"  value={0}  />
-                            <input name="taxReturnBase" type="hidden"  value={0} />
-                            <input name="currency"      type="hidden"  value="COP" />
-                            <input name="signature"     type="hidden"  value="ba9ffa71559580175585e45ce70b6c37"  />
-                            <input name="test"          type="hidden"  value="1" />
-                            <input name="buyerEmail"    type="hidden"  value="test@test.com" />
-                            <input name="responseUrl"    type="hidden"  value="http://www.test.com/response" />
-                            <input name="confirmationUrl"    type="hidden"  value="http://www.test.com/confirmation" />
-                            <Button variant='contained' color='primary' type='submit'>
-                                Ir al pago
-                            </Button>
-                          </form>
-                        </Box>
-                        </>
-                    ):(<></>)}
-                </Grid>
-                <Grid item xs={1}>
-                      <>
-                      </>
-                </Grid>
-            </Grid>
-            <Stepper activeStep={activeStep}>
-                {steps.map((label, index) => {
-                const stepProps = {};
-                const labelProps = {};
-                return (
-                    <Step key={label} {...stepProps}>
-                    <StepLabel {...labelProps}>{label}</StepLabel>
-                    </Step>
-                );
-                })}
-            </Stepper>
-        </Box>
+      <DialogTitle id="publications-dialog-title" align="center">
+        <Typography className={classes.instructions} variant="h4">
+          {getStepContent(activeStep)}
+        </Typography>
+      </DialogTitle>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center">
+        <Grid container>
+          <Grid item xs={1}>
+            {activeStep > 0 ? (
+              <IconButton onClick={handleBack}>
+                <ArrowBackIosIcon />
+              </IconButton>
+            ) : (
+              <></>
+            )}
+          </Grid>
+          <Grid item xs={10}>
+            {activeStep === 0 ? (
+              <NominationsView
+                key={publication.id}
+                id={publication.id}
+                publication={publication}
+                next={handleNomination}
+              />
+            ) : (
+              <></>
+            )}
+            {activeStep === 1 ? (
+              <>
+                <ProfileView idTutor={idTutor} next={handleTutor} />
+              </>
+            ) : (
+              <></>
+            )}
+            {activeStep === 2 ? (
+              <>
+                <Schedule next={handleSchedule} />
+              </>
+            ) : (
+              <></>
+            )}
+            {activeStep === 3 ? (
+              <>
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="center">
+                  <Box>
+                    <Typography variant="h4" textAlign="center">
+                      Información del servicio a contratar
+                    </Typography>
+                  </Box>
+                  <Card className={classes.card} elevation={3}>
+                    <Box className={classes.contractInformation}>
+                      <Box display="flex" justifyContent="center">
+                        <Avatar
+                          className={classes.cover}
+                          alt="user photo"
+                          src="/static/images/avatars/avatar_6.png"
+                        />
+                      </Box>
+                      <Box>
+                        <Typography>
+                          <b>Tutor:</b> {contract.tutor.user.first_name}{' '}
+                          {contract.tutor.user.last_name}
+                        </Typography>
+                        <Typography>
+                          <b>Precio:</b> {contract.nomination.price}$
+                        </Typography>
+                        <Typography>
+                          <b>Franja:</b> {contract.slot.day} de{' '}
+                          {contract.slot.start <= 12
+                            ? contract.slot.start
+                            : contract.slot.start - 12}{' '}
+                          {contract.slot.start < 12 ? 'am' : 'pm'} a{' '}
+                          {contract.slot.end <= 12
+                            ? contract.slot.end
+                            : contract.slot.end - 12}{' '}
+                          {contract.slot.end < 12 ? 'am' : 'pm'}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Card>
+                </Box>
+                <Box className={classes.nextButton}>
+                  <form
+                    method="post"
+                    action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu">
+                    <input name="merchantId" type="hidden" value={508029} />
+                    <input name="accountId" type="hidden" value={512321} />
+                    <input
+                      name="ApiLogin"
+                      type="hidden"
+                      value="pRRXKOl8ikMmt9u"
+                    />
+                    <input name="description" type="hidden" value="Test PAYU" />
+                    <input
+                      name="referenceCode"
+                      type="hidden"
+                      value="TestPayU"
+                    />
+                    <input name="amount" type="hidden" value={3} />
+                    <input name="tax" type="hidden" value={0} />
+                    <input name="taxReturnBase" type="hidden" value={0} />
+                    <input name="currency" type="hidden" value="COP" />
+                    <input
+                      name="signature"
+                      type="hidden"
+                      value="ba9ffa71559580175585e45ce70b6c37"
+                    />
+                    <input name="test" type="hidden" value="1" />
+                    <input
+                      name="buyerEmail"
+                      type="hidden"
+                      value="test@test.com"
+                    />
+                    <input
+                      name="responseUrl"
+                      type="hidden"
+                      value="http://www.test.com/response"
+                    />
+                    <input
+                      name="confirmationUrl"
+                      type="hidden"
+                      value="http://www.test.com/confirmation"
+                    />
+                    <Button variant="contained" color="primary" type="submit">
+                      Ir al pago
+                    </Button>
+                  </form>
+                </Box>
+              </>
+            ) : (
+              <></>
+            )}
+          </Grid>
+          <Grid item xs={1}>
+            <></>
+          </Grid>
+        </Grid>
+        <Stepper activeStep={activeStep}>
+          {steps.map((label, index) => {
+            const stepProps = {}
+            const labelProps = {}
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
+            )
+          })}
+        </Stepper>
+      </Box>
     </div>
   )
 }
