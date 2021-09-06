@@ -8,9 +8,10 @@ const getValues = (values) => {
   }
 }
 
-const validation = Yup.object().shape({
-  title: Yup.string().max(255),
-  description: Yup.string().max(255)
+const validation = 
+Yup.object().shape({
+  title: Yup.string().max(255).required("El anuncio debe tener un titulo"),
+  description: Yup.string().max(255).required("El anuncio debe tener una descripción")
 })
 
 const logConst = {

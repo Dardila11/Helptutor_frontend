@@ -16,6 +16,7 @@ import {
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import StudentNavBar from 'src/layouts/StudentLayout/NavBar'
 import logo from 'src/layouts/TutorLayout/logo.svg'
+import ScrollArrow from 'src/components/ScrollArrow'
 
 /* Redux */
 import { connect } from 'react-redux'
@@ -163,6 +164,7 @@ const StudentTopBar = (props) => {
               </div>
           </Toolbar>
           </AppBar>
+          <ScrollArrow />
       </Box>
       <Box>
         <StudentNavBar />
