@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
@@ -20,6 +20,10 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import CloseIcon from '@material-ui/icons/Close'
 import ProfileView from 'src/components/cards/tutorProfileCard'
 import Schedule from 'src/components/Schedule/Schedule'
+import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
+
+import { getTutorSelectedInfo } from 'src/redux/actions/student/student_publications'
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,8 +85,16 @@ const ServiceSelectionView = (props) => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   const [contract, setContract] = React.useState({})
-  const { idTutor, service } = props
+  const { idTutor, service, loading, tutor } = props
   const steps = getSteps()
+
+  useEffect(
+    () => {
+      props.getTutorSelectedInfo(idTutor)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
 
   const handleNext = () => {
     if (activeStep < 2) setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -109,7 +121,6 @@ const ServiceSelectionView = (props) => {
         align="center"
         onClose={props.onClose}>
         <Box display="flex" alignItems="center">
-          {/* Should be placed back arrow */}
           {activeStep === 0 ? (
             <></>
           ) : (
@@ -138,7 +149,11 @@ const ServiceSelectionView = (props) => {
               <Grid item xs={1}></Grid>
               <Grid item xs={10}>
                 {activeStep === 0 ? (
-                  <ProfileView idTutor={idTutor} next={handleTutor} />
+                  loading ? (
+                    <ProfileViewSkeleton/>
+                  ) : (
+                    <ProfileView tutor={tutor} /* idTutor={idTutor} next={handleTutor} */ />
+                  )
                 ) : (
                   <></>
                 )}
@@ -254,20 +269,43 @@ const ServiceSelectionView = (props) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions classes={{ root: classes.centerStepper }}>
-        <Stepper activeStep={activeStep}>
-          {steps.map((label, index) => {
-            const stepProps = {}
-            const labelProps = {}
-            return (
-              <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
-              </Step>
-            )
-          })}
-        </Stepper>
+        <Box display="flex" flexDirection="column">
+          {activeStep != 1 ? (
+            <Box className={classes.nextButton}>
+            <Button
+              size="large"
+              variant="contained"
+              color="primary"
+              onClick={() => handleTutor(tutor)}
+              className={classes.button}>
+              {activeStep == 0 ? 'Siguiente' : 'Ir al pago'}
+            </Button>
+          </Box>
+          ) : (
+            <></>
+          )}
+          <Stepper activeStep={activeStep}>
+            {steps.map((label, index) => {
+              const stepProps = {}
+              const labelProps = {}
+              return (
+                <Step key={label} {...stepProps}>
+                  <StepLabel {...labelProps}>{label}</StepLabel>
+                </Step>
+              )
+            })}
+          </Stepper>
+        </Box>
       </DialogActions>
     </>
   )
 }
 
-export default ServiceSelectionView
+const mapStateToProps = (state) => ({
+  tutor: state.publications.tutorInfo,
+  loading: state.publications.loadingTutor
+})
+
+export default connect(mapStateToProps, {
+  getTutorSelectedInfo
+})(ServiceSelectionView)

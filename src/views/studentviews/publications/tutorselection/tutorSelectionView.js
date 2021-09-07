@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
@@ -21,6 +21,10 @@ import CloseIcon from '@material-ui/icons/Close'
 import NominationsView from './nominations'
 import ProfileView from 'src/components/cards/tutorProfileCard'
 import Schedule from 'src/components/Schedule/Schedule'
+import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
+
+import { getTutorSelectedInfo } from 'src/redux/actions/student/student_publications'
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,6 +96,17 @@ const TutorSelectionView = (props) => {
   const [activeStep, setActiveStep] = React.useState(0)
   const [idTutor, setIdTutor] = React.useState(null)
   const steps = getSteps()
+  const { loading, tutor } = props
+
+  useEffect(
+    () => {
+      if (idTutor != null) {
+        props.getTutorSelectedInfo(idTutor)
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [idTutor]
+  )
 
   const handleNext = () => {
     if (activeStep < 3) setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -149,7 +164,6 @@ const TutorSelectionView = (props) => {
         align="center"
         onClose={props.onClose}>
         <Box display="flex" alignItems="center">
-          {/* Should be placed back arrow */}
           {activeStep === 0 ? (
             <></>
           ) : (
@@ -188,19 +202,15 @@ const TutorSelectionView = (props) => {
                   <></>
                 )}
                 {activeStep === 1 ? (
-                  <>
-                    <ProfileView idTutor={idTutor} next={handleTutor} />
-                  </>
+                  loading ? (
+                    <ProfileViewSkeleton />
+                  ) : (
+                    <ProfileView tutor={tutor} />
+                  )
                 ) : (
                   <></>
                 )}
-                {activeStep === 2 ? (
-                  <>
-                    <Schedule next={handleSchedule} />
-                  </>
-                ) : (
-                  <></>
-                )}
+                {activeStep === 2 ? <Schedule next={handleSchedule} /> : <></>}
                 {activeStep === 3 ? (
                   <>
                     <Box
@@ -312,20 +322,43 @@ const TutorSelectionView = (props) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions classes={{ root: classes.centerStepper }}>
-        <Stepper activeStep={activeStep}>
-          {steps.map((label, index) => {
-            const stepProps = {}
-            const labelProps = {}
-            return (
-              <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
-              </Step>
-            )
-          })}
-        </Stepper>
+        <Box display="flex" flexDirection="column">
+          {activeStep != 0 && activeStep != 2 ? (
+            <Box className={classes.nextButton}>
+              <Button
+                size="large"
+                variant="contained"
+                color="primary"
+                onClick={() => handleTutor(tutor)}
+                className={classes.button}>
+                {activeStep == 1  ? 'Siguiente' : 'Ir al pago'}
+              </Button>
+            </Box>
+          ) : (
+            <></>
+          )}
+          <Stepper activeStep={activeStep}>
+            {steps.map((label, index) => {
+              const stepProps = {}
+              const labelProps = {}
+              return (
+                <Step key={label} {...stepProps}>
+                  <StepLabel {...labelProps}>{label}</StepLabel>
+                </Step>
+              )
+            })}
+          </Stepper>
+        </Box>
       </DialogActions>
     </>
   )
 }
 
-export default TutorSelectionView
+const mapStateToProps = (state) => ({
+  tutor: state.publications.tutorInfo,
+  loading: state.publications.loadingTutor
+})
+
+export default connect(mapStateToProps, {
+  getTutorSelectedInfo
+})(TutorSelectionView)
