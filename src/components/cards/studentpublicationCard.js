@@ -154,17 +154,12 @@ const StudentPublicationCard = (props) => {
               scroll="paper"
               fullWidth={true}
               aria-labelledby="tutorSelection-dialog-title">
-              <Box
-                display="flex"
-                flexDirection="column"
-                justifyContent="center">
-                <TutorSelectionView
+              <TutorSelectionView
                   onClose={handleClose}
                   id={publication.id}
                   key={publication.id}
                   publication={publication}
                 />
-              </Box>
             </Dialog>
             <Dialog
               open={edit}
