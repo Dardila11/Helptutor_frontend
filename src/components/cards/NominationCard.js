@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     borderRadius: '20px',
-    height: 200
+    height: 200,
+    width: 250
   },
   userSpace: {
     display: 'flex',
