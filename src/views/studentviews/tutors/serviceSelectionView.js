@@ -109,6 +109,14 @@ const ServiceSelectionView = (props) => {
         align="center"
         onClose={props.onClose}>
         <Box display="flex" alignItems="center">
+          {/* Should be placed back arrow */}
+          {activeStep === 0 ? (
+            <></>
+          ) : (
+            <IconButton onClick={handleBack}>
+              <ArrowBackIosIcon />
+            </IconButton>
+          )}
           <Box flexGrow={1}>
             <Typography variant="h3" className={classes.instructions}>
               {getStepContent(activeStep)}
@@ -127,30 +135,14 @@ const ServiceSelectionView = (props) => {
             justifyContent="center"
             alignItems="center">
             <Grid container>
-              <Grid item xs={1}>
-                {activeStep > 0 ? (
-                  <IconButton onClick={handleBack}>
-                    <ArrowBackIosIcon />
-                  </IconButton>
-                ) : (
-                  <></>
-                )}
-              </Grid>
+              <Grid item xs={1}></Grid>
               <Grid item xs={10}>
                 {activeStep === 0 ? (
-                  <>
-                    <ProfileView idTutor={idTutor} next={handleTutor} />
-                  </>
+                  <ProfileView idTutor={idTutor} next={handleTutor} />
                 ) : (
                   <></>
                 )}
-                {activeStep === 1 ? (
-                  <>
-                    <Schedule next={handleSchedule} />
-                  </>
-                ) : (
-                  <></>
-                )}
+                {activeStep === 1 ? <Schedule next={handleSchedule} /> : <></>}
                 {activeStep === 2 ? (
                   <>
                     <Box
