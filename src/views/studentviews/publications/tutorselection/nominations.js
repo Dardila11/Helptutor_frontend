@@ -15,7 +15,7 @@ const NominationsView = (props) => {
     [])
     //DO LOADING AND SKELETON
     return(
-        <Grid container>
+        <Grid container spacing="3">
           {loading? <NominationCardSkeleton /> :
           <>
             {nominations.map((nomination, index)=>(

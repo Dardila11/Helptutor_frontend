@@ -84,14 +84,23 @@ const StudentPublicationCard = (props) => {
   const getHighlightedText = (text) => {
     // Split on highlight term and include term into parts, ignore case
     const parts = text.split(new RegExp(`(${query})`, 'gi'))
-    return <span> { parts.map((part, i) => 
-        <span key={i} 
-          style={part.toLowerCase() === query.toLowerCase() ? { fontWeight: 'bold', color: '#2979ff' } : {} }
-        >
-            { part }
-        </span>)
-    } </span>
-}
+    return (
+      <span>
+        {' '}
+        {parts.map((part, i) => (
+          <span
+            key={i}
+            style={
+              part.toLowerCase() === query.toLowerCase()
+                ? { fontWeight: 'bold', color: '#2979ff' }
+                : {}
+            }>
+            {part}
+          </span>
+        ))}{' '}
+      </span>
+    )
+  }
 
   return (
     <Paper className={classes.paper} elevation={3}>
@@ -101,11 +110,15 @@ const StudentPublicationCard = (props) => {
             <CardContent className={classes.content}>
               <Typography component="h5" variant="h5">
                 <Box fontWeight="fontWeightBold">
-                {isSearch && !isUndefined(query)? getHighlightedText(publication.title): publication.title}
-                  </Box>
+                  {isSearch && !isUndefined(query)
+                    ? getHighlightedText(publication.title)
+                    : publication.title}
+                </Box>
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-              {isSearch && !isUndefined(query)? getHighlightedText(publication.description): publication.description}
+                {isSearch && !isUndefined(query)
+                  ? getHighlightedText(publication.description)
+                  : publication.description}
               </Typography>
             </CardContent>
           </Box>
@@ -121,11 +134,11 @@ const StudentPublicationCard = (props) => {
                 <b>Opciones</b>
               </Typography>
               <Box spacing={3}>
-                  <IconButton color="primary" onClick={handleWatch}>
-                    <Badge badgeContent={4} color="primary">
+                <IconButton color="primary" onClick={handleWatch}>
+                  <Badge badgeContent={4} color="primary">
                     <VisibilityIcon />
-                    </Badge>
-                  </IconButton>
+                  </Badge>
+                </IconButton>
                 <IconButton color="primary" onClick={handleEdit}>
                   <EditIcon />
                 </IconButton>
@@ -138,21 +151,21 @@ const StudentPublicationCard = (props) => {
               open={watch}
               onClose={handleClose}
               maxWidth="md"
+              scroll="paper"
               fullWidth={true}
               aria-labelledby="tutorSelection-dialog-title">
-                <Box display='flex' flexDirection='column' justifyContent='center'>
               <TutorSelectionView
-                id={publication.id}
-                key={publication.id}
-                publication={publication}
-              />
-              </Box>
+                  onClose={handleClose}
+                  id={publication.id}
+                  key={publication.id}
+                  publication={publication}
+                />
             </Dialog>
             <Dialog
               open={edit}
               onClose={handleClose}
               aria-labelledby="publications-dialog-title">
-              <PublicationFormView publication={publication} />
+              <PublicationFormView onClose={handleClose} publication={publication} />
             </Dialog>
             <Dialog
               open={deletep}
