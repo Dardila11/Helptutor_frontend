@@ -117,6 +117,17 @@ const tokenConfig = (getState) => {
   return config
 }
 
+const addToken = (token) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  config.headers['Authorization'] = 'Token ' + token
+  
+  return config
+}
+
 /** TUTOR SERVICES */
 
 const getServicesTutor = (values) => {
@@ -194,6 +205,10 @@ const getServices = (state) => {
   return https.get('api/service/', tokenConfig(state))
 }
 
+const getServicesNew = (token) => {
+  return https.get('api/service', addToken(token))
+}
+
 const patchOffer = (id, data, state) => {
   return https.patch('api/offer/' + id + '/', data, tokenConfig(state))
 }
@@ -239,6 +254,7 @@ const logConstants = {
   getAdvertisementAnswers,
   getServicesTutor,
   getServices,
+  getServicesNew,
   getNomination,
   getNominations,
   getOfferNominations,

@@ -15,6 +15,11 @@ import { Provider } from 'react-redux'
 import store from './redux/store'
 
 import { loadUser } from './redux/actions/auth'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
+
+
+const queryClient = new QueryClient()
 
 const App = () => {
   useEffect(() => {
@@ -22,6 +27,7 @@ const App = () => {
   })
 
   return (
+    <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <GlobalStyles />
@@ -30,6 +36,8 @@ const App = () => {
         <Routing />
       </ThemeProvider>
     </Provider>
+    <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   )
 }
 
