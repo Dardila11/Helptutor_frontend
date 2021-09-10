@@ -6,7 +6,7 @@ import SearchBar from 'src/components/SearchBar'
 import TutorServiceCard from 'src/components/cards/tutorServiceCard'
 import Page from 'src/components/Page'
 
-import useFetchTutors from 'src/hooks/useFetchTutors'
+import useTutorsServices from 'src/hooks/useTutorsServices'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,14 +30,14 @@ const TutorsView = () => {
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
   const [filter, setFilter] = useState({ label: '', value: 0 })
-  const queryFetchTutors = useFetchTutors()
+  const {data, status, isLoading, error} = useTutorsServices()
 
   useEffect(
     () => {
       if (query === '') setListFilter(null)
       else
         setListFilter(
-          queryFetchTutors.data.filter(
+          data.filter(
             (serv) =>
               serv.title.toLowerCase().includes(query.toLowerCase()) ||
               serv.description.toLowerCase().includes(query.toLowerCase())
@@ -64,7 +64,7 @@ const TutorsView = () => {
             setListFilter(listFilter.filter((serv) => serv.price <= filt.value))
           else
             setListFilter(
-              queryFetchTutors.data.filter((serv) => serv.price <= filt.value)
+              data.filter((serv) => serv.price <= filt.value)
             )
         }
         break
@@ -80,16 +80,16 @@ const TutorsView = () => {
         <Box>
           <SearchBar
             option={'servicios'}
-            list={queryFetchTutors.data}
+            list={data}
             setQuery={setQuery}
             setFilter={setFilter}
           />
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
-            {queryFetchTutors.isLoading ? (
+            {isLoading ? (
               <CardsViewSkeleton />
-            ) : queryFetchTutors.status === 'success' ? (
+            ) : status === 'success' ? (
               <>
                 <Box className={classes.title} textAlign="center">
                   <Typography variant="h4">Servicios ofertados</Typography>
@@ -97,7 +97,7 @@ const TutorsView = () => {
                 <Box>
                   {listFilter === null ? (
                     <>
-                      {queryFetchTutors.data.map((service, index) => (
+                      {data.map((service, index) => (
                         <TutorServiceCard
                           key={index}
                           id={service.id}
@@ -134,7 +134,11 @@ const TutorsView = () => {
                 </Box>
               </>
             ) : (
-              <></>
+              <>
+              <Box paddingLeft="10px">
+              <Typography> {error.message}</Typography>
+              </Box>
+              </>
             )}
           </Paper>
         </Box>
