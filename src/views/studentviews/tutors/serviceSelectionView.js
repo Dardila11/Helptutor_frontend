@@ -270,7 +270,7 @@ const ServiceSelectionView = (props) => {
       </DialogContent>
       <DialogActions classes={{ root: classes.centerStepper }}>
         <Box display="flex" flexDirection="column">
-          {activeStep != 1 ? (
+          {activeStep !== 1 ? (
             <Box className={classes.nextButton}>
             <Button
               size="large"
@@ -278,7 +278,7 @@ const ServiceSelectionView = (props) => {
               color="primary"
               onClick={() => handleTutor(tutor)}
               className={classes.button}>
-              {activeStep == 0 ? 'Siguiente' : 'Ir al pago'}
+              {activeStep === 0 ? 'Siguiente' : 'Ir al pago'}
             </Button>
           </Box>
           ) : (

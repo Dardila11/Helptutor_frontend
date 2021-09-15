@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Container,
-  DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,

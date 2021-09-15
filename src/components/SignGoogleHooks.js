@@ -12,6 +12,7 @@ import {
 import { launchAlert } from '../redux/actions/alerts'
 import { connect } from 'react-redux'
 import store from '../redux/store.js'
+import { loginUser, useAuthDispatch } from 'src/context' 
 const clientId =
   '581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com'
 
@@ -46,13 +47,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const responseGoogle = async (props, response, isUnicaucaEmail, role) => {
+const responseGoogle = async (props, response, isUnicaucaEmail, role,dispatch,navigate) => {
   if (props.token === null) {
     if (isUnicaucaEmail) {
       let jsonValues = {
         token: response.tokenId
       }
-      if (props.login) props.loginGoogle(jsonValues)
+      if (props.login){ 
+        let payload = jsonValues
+        try {
+            let response = await loginUser(dispatch, payload) //loginUser action makes the request and handles all the neccessary state changes
+            if (!response.user) return
+            if(response.roles[0] && response.roles[1]) navigate('/seleccion-rol')
+            if(response.roles[0] && !response.roles[1]) navigate('/tutor')
+            if(!response.roles[0] && response.roles[1]) navigate('/estudiante')
+        } catch (error) {
+            console.log(error)
+        }
+      }
       else {
         if (role === 'tutor') props.addTutorGoogle(jsonValues)
         else props.addStudentGoogle(jsonValues)
@@ -68,6 +80,7 @@ const responseGoogle = async (props, response, isUnicaucaEmail, role) => {
   }
 }
 const LoginHooks = (props) => {
+  const dispatch = useAuthDispatch() //get the dispatch method from the useDispatch custom hook
   let navigate = useNavigate()
   const classes = useStyles()
   const { isAuthenticated, tutorSelect, studentSelect } = props
@@ -94,8 +107,8 @@ const LoginHooks = (props) => {
      */
     let userEmail = res.profileObj.email
     if (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co') {
-      if (tutorSelect) responseGoogle(props, res, true, 'tutor')
-      else responseGoogle(props, res, true, 'student')
+      if (tutorSelect) responseGoogle(props, res, true, 'tutor',dispatch,navigate)
+      else responseGoogle(props, res, true, 'student',dispatch,navigate)
     } else {
       responseGoogle(props, res, false)
     }

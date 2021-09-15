@@ -18,9 +18,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import TutorNavBar from 'src/layouts/TutorLayout/NavBar'
 import logo from 'src/layouts/TutorLayout/logo.svg'
 
-/* Redux */
-import { connect } from 'react-redux'
-import { logout } from 'src/redux/actions/auth'
+import { logout, useAuthDispatch } from 'src/context' 
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -77,6 +75,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const TutorTopBar = (props) => {
+  const { userInfo } = props
+  console.log(userInfo.user)
+  const dispatch = useAuthDispatch()
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -88,8 +89,8 @@ const TutorTopBar = (props) => {
     setAnchorEl(null)
   }
 
-  const handleLogOut = () => {
-    props.logout()
+  async function handleLogOut () {
+    await logout(dispatch)
   }
 
   return (
@@ -120,9 +121,9 @@ const TutorTopBar = (props) => {
                 color="inherit"
                 onClick={handleClick}>
                 <Typography className={classes.userSpace} variant="h4">
-                  {props.user != null ? (
+                  {userInfo.user != null ? (
                     <>
-                      {props.user.first_name} {props.user.last_name}
+                      {userInfo.user.first_name} {userInfo.user.last_name}
                     </>
                   ) : (
                     <></>
@@ -131,9 +132,9 @@ const TutorTopBar = (props) => {
                 <Avatar
                   className={classes.cover}
                   alt="user photo"
-                  src={props.user.photo}
+                  src={userInfo.user.photo}
                 >
-                  <b>{props.user.first_name[0]}</b>
+                  <b>{userInfo.user.first_name[0]}</b>
                 </Avatar>
               </IconButton>
               <Menu
@@ -149,7 +150,7 @@ const TutorTopBar = (props) => {
                     </Typography>
                   </MenuItem>
                 </RouterLink>
-                {(props.isStudent && props.isTutor)? (
+                {/*(props.isStudent && props.isTutor)? (
                   <RouterLink to="/seleccion-rol">
                   <MenuItem onClick={handleClose}>
                     <Typography color="primary">
@@ -157,7 +158,7 @@ const TutorTopBar = (props) => {
                     </Typography>
                   </MenuItem>
                 </RouterLink>
-                  ): <></>}
+                ): <></>*/}
                 <Divider></Divider>
                 <RouterLink to="/como-funciona">
                   <MenuItem className={classes.menuItem} onClick={handleClose}>
@@ -185,13 +186,4 @@ const TutorTopBar = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  user: state.auth.user,
-  isStudent: state.auth.isStudent,
-  isTutor: state.auth.isTutor
-})
-
-export default connect(mapStateToProps, {
-  logout
-})(TutorTopBar)
+export default TutorTopBar

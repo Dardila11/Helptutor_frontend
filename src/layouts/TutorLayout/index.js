@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Outlet } from 'react-router-dom'
 import {
   Backdrop,
@@ -9,8 +9,8 @@ import {
 } from '@material-ui/core'
 import TutorTopBar from './TopBar'
 
-import { getTutorInfo } from 'src/redux/actions/tutor/tutor_data'
-import { connect } from 'react-redux'
+import useTutorInfo from 'src/hooks/TutorHooks/useTutorInfo'
+import { useAuthState } from 'src/context'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,17 +36,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const TutorLayout = (props) => {
+const TutorLayout = () => {
   const classes = useStyles()
-  const { getTutorInfo, user, loading } = props
-  useEffect(
-    () => {
-      getTutorInfo(user.id)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-  return loading ? (
+  const user = useAuthState()
+  const {data, isLoading} = useTutorInfo(user.user.id)
+  return isLoading ? ( 
     <Backdrop className={classes.backdrop} open={true}>
       <Box display="flex" flexDirection="column" alignItems="center">
         <Typography color="primary">Cargando</Typography>
@@ -56,7 +50,7 @@ const TutorLayout = (props) => {
   ) : (
     <div className={classes.root}>
       <div className={classes.topbarContainer}>
-      <TutorTopBar />
+      <TutorTopBar userInfo={data}/>
       </div>
       <div className={classes.contentContainer}>
         <div className={classes.content}>
@@ -67,11 +61,4 @@ const TutorLayout = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  loading: state.tutorInfo.isLoading
-})
-
-export default connect(mapStateToProps, {
-  getTutorInfo
-})(TutorLayout)
+export default TutorLayout
