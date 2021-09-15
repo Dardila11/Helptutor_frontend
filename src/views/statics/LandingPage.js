@@ -1,11 +1,11 @@
 import React from 'react'
 
+import Intro from './components/Intro/Intro';
 import Features from './components/Features/Features';
 import Tutorial from './components/Tutorial/Tutorial';
 import Footer from './components/Footer/Footer'
 
 import './style.css'
-import Intro from './components/Intro/Intro';
 
 const LandingPage = () => {
   return (

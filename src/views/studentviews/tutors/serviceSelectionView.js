@@ -22,6 +22,8 @@ import ProfileView from 'src/components/cards/tutorProfileCard'
 import Schedule from 'src/components/Schedule/Schedule'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 
+import useTutorInfo from 'src/hooks/useTutorInfo'
+
 import { getTutorSelectedInfo } from 'src/redux/actions/student/student_publications'
 import { connect } from 'react-redux'
 
@@ -85,16 +87,18 @@ const ServiceSelectionView = (props) => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   const [contract, setContract] = React.useState({})
-  const { idTutor, service, loading, tutor } = props
+  const { idTutor, service  } = props
   const steps = getSteps()
+  const queryUseTutorInfo = useTutorInfo(idTutor)
+  console.log(queryUseTutorInfo)
 
-  useEffect(
+  /* useEffect(
     () => {
       props.getTutorSelectedInfo(idTutor)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
-  )
+  ) */
 
   const handleNext = () => {
     if (activeStep < 2) setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -149,10 +153,10 @@ const ServiceSelectionView = (props) => {
               <Grid item xs={1}></Grid>
               <Grid item xs={10}>
                 {activeStep === 0 ? (
-                  loading ? (
+                  queryUseTutorInfo.isLoading ? (
                     <ProfileViewSkeleton/>
                   ) : (
-                    <ProfileView tutor={tutor} /* idTutor={idTutor} next={handleTutor} */ />
+                    <ProfileView tutor={queryUseTutorInfo.data} /* idTutor={idTutor} next={handleTutor} */ />
                   )
                 ) : (
                   <></>
@@ -276,7 +280,7 @@ const ServiceSelectionView = (props) => {
               size="large"
               variant="contained"
               color="primary"
-              onClick={() => handleTutor(tutor)}
+              onClick={() => handleTutor(queryUseTutorInfo.data)}
               className={classes.button}>
               {activeStep == 0 ? 'Siguiente' : 'Ir al pago'}
             </Button>
@@ -301,11 +305,4 @@ const ServiceSelectionView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  tutor: state.publications.tutorInfo,
-  loading: state.publications.loadingTutor
-})
-
-export default connect(mapStateToProps, {
-  getTutorSelectedInfo
-})(ServiceSelectionView)
+export default ServiceSelectionView

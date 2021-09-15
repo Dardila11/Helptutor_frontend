@@ -97,6 +97,11 @@ const getTutorInfo = (id, state) => {
   return https.get(`/api/tutor/${id}/`, tokenConfig(state))
 }
 
+const getTutorInfoNew = (id, token) => {
+  return https.get(`/api/tutor/${id}/`, addToken(token))
+}
+
+
 const getStudentInfo = (id, state) => {
   return https.get(`/api/student/${id}/`, tokenConfig(state))
 }
@@ -242,6 +247,7 @@ const logConstants = {
   getUniversity,
   getUser,
   getTutorInfo,
+  getTutorInfoNew,
   getStudentInfo,
   getknowledgeAreas,
   getKnowledgeArea,
