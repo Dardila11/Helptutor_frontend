@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
-
-import {
-  getPublications,
-  getNominations
-} from 'src/redux/actions/tutor/nominations'
-import { connect } from 'react-redux'
 import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
 import TutorPublicationCard from 'src/components/cards/tutorPublicationCard'
@@ -30,24 +24,11 @@ const useStyles = makeStyles((theme) => ({
 
 const TutorPublicationsView = (props) => {
   const classes = useStyles()
-  const {
-    loading,
-    getPublications,
-    getNominations,
-    publications,
-    nominations
-  } = props
+  const loading = true
+  const publications = []
+  const nominations = []
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
-
-  useEffect(
-    () => {
-      getPublications()
-      getNominations()
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
 
   useEffect(
     () => {
@@ -130,13 +111,4 @@ const TutorPublicationsView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  publications: state.nominations.publications,
-  nominations: state.nominations.nominations,
-  loading: state.nominations.loading
-})
-
-export default connect(mapStateToProps, {
-  getPublications,
-  getNominations
-})(TutorPublicationsView)
+export default TutorPublicationsView

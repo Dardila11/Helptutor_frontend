@@ -14,9 +14,6 @@ import {
   Typography
 } from '@material-ui/core'
 
-//REDUX
-import { connect } from 'react-redux'
-import { selectRole } from 'src/redux/actions/auth'
 import Page from 'src/components/Page'
 
 const useStyles = makeStyles((theme) => ({
@@ -37,16 +34,13 @@ const useStyles = makeStyles((theme) => ({
 
 const SelectRoleView = (props) => {
   const classes = useStyles()
-  const { selectRole } = props
   const navigate = useNavigate()
 
   const handleTutor = () => {
-    selectRole('tutor')
     navigate('/tutor')
   }
 
   const handleStudent = () => {
-    selectRole('student')
     navigate('/estudiante')
   }
   return (
@@ -88,8 +82,4 @@ const SelectRoleView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({})
-
-export default connect(mapStateToProps, {
-  selectRole
-})(SelectRoleView)
+export default SelectRoleView

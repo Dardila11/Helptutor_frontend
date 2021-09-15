@@ -323,7 +323,7 @@ const TutorSelectionView = (props) => {
       </DialogContent>
       <DialogActions classes={{ root: classes.centerStepper }}>
         <Box display="flex" flexDirection="column">
-          {activeStep != 0 && activeStep != 2 ? (
+          {activeStep !== 0 && activeStep !== 2 ? (
             <Box className={classes.nextButton}>
               <Button
                 size="large"
@@ -331,7 +331,7 @@ const TutorSelectionView = (props) => {
                 color="primary"
                 onClick={() => handleTutor(tutor)}
                 className={classes.button}>
-                {activeStep == 1  ? 'Siguiente' : 'Ir al pago'}
+                {activeStep === 1  ? 'Siguiente' : 'Ir al pago'}
               </Button>
             </Box>
           ) : (

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 import PrivateRoute from './privateRoute'
 
@@ -37,17 +37,20 @@ import MeetView from 'src/views/meet/MeetView'
 //STATICS
 import LandingPage from 'src/views/statics/LandingPage'
 
+import { useAuthState } from 'src/context'
+
 const Routing = () => {
+  const user = useAuthState()
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route path="login" element={<LoginView />} />
         <Route path="registrar" element={<RegisterView />} />
-        <Route path="seleccion-rol" element={<SelectRoleView />} />
+        <Route path="seleccion-rol" element={!Boolean(user.token)? <Navigate to="/login" />:<SelectRoleView />} />
         <Route path="/" element={<LandingPage />}/>
       </Route>
 
-      <PrivateRoute path="/estudiante" element={<StudentLayout />}>
+      <PrivateRoute path="/estudiante" element={!Boolean(user.token)? <Navigate to="/login" />:<StudentLayout />}>
         <Route path="/" element={<StudentPublicationsView />} />
         <Route path="/publicaciones" element={<StudentPublicationsView />} />
         <Route path="/tutores" element={<TutorsView />} />
@@ -57,17 +60,17 @@ const Routing = () => {
 
       <PrivateRoute
         path="/estudiante/cuenta"
-        element={<StudentAccountLayout />}>
+        element={!Boolean(user.token)? <Navigate to="/login" />:<StudentAccountLayout />}>
         <Route path="/perfil" element={<StudentProfileView />} />
         <Route path="/informacion" element={<StudentEditInfoView />} />
       </PrivateRoute>
 
-      <PrivateRoute path="/tutor" element={<TutorLayout />}>
+      <PrivateRoute path="/tutor" element={!Boolean(user.token)? <Navigate to="/login" />:<TutorLayout />}>
         <Route path="/" element={<TutorPublicationsView />} />
         <Route path="/publicaciones" element={<TutorPublicationsView />} />
       </PrivateRoute>
 
-      <PrivateRoute path="/tutor" element={<TutorAccountLayout />}>
+      <PrivateRoute path="/tutor" element={!Boolean(user.token)? <Navigate to="/login" />:<TutorAccountLayout />}>
         <Route path="/cuenta" element={<TutorInfoView />} />
         <Route path="/cuenta/perfil" element={<TutorInfoView />} />
         <Route path="/cuenta/informacion" element={<TutorEditInfoView />} />
@@ -76,7 +79,7 @@ const Routing = () => {
         <Route path="/cuenta/horario" element={<TutorScheduleView />} />
       </PrivateRoute>
 
-      <PrivateRoute path="/meet" element={<MeetingLayout />} >
+      <PrivateRoute path="/meet" element={!Boolean(user.token)? <Navigate to="/login" />:<MeetingLayout />} >
         <Route path="/" element={<MeetView />} />
       </PrivateRoute>
       <Route path="*" element={<NotFoundView />} />

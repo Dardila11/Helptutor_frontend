@@ -49,12 +49,12 @@ const StudentAdvertisementsView = (props) => {
     advertisements,
     creating
   } = props
-  const [open, setOpen] = useState(false)
-  const [myAdsView, setMyAdsView] = useState(false)
+  //const [open, setOpen] = useState(false)
+  //const [myAdsView, setMyAdsView] = useState(false)
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
 
-  const handleOpen = () => {
+  /*const handleOpen = () => {
     setOpen(true)
   }
 
@@ -68,7 +68,7 @@ const StudentAdvertisementsView = (props) => {
 
   const handleMyAdvertisementsClose = () => {
     setMyAdsView(false)
-  }
+  }*/
 
   useEffect(
     () => {
