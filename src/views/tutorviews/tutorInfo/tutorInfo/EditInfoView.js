@@ -20,11 +20,8 @@ import Badge from '@material-ui/core/Badge';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import { Formik } from 'formik'
 import formikValues from './formikValues'
-
-//REDUX
-import { getTutorInfo, updateTutor } from 'src/redux/actions/tutor/tutor_data'
-
-import { connect } from 'react-redux'
+import useTutorInfo from 'src/hooks/TutorHooks/useTutorInfo'
+import { useAuthState } from 'src/context/context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,27 +63,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const EditInfoView = (props) => {
-  const { updateTutor, getTutorInfo, userInfo, requestInProgress } = props
-  const [file, setFile] = React.useState(null)
-  const [initialInfo, setInitialInfo] = useState(formikValues.initialValues)
-  const [loading, setLoading] = useState(true)
+  const [file, setFile] = useState(null)
   const [preview, setPreview] = useState(null)
-
-  useEffect(
-    () => {
-      getTutorInfo(props.user.id)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-
+  const user = useAuthState().user
+  const {data, isLoading} = useTutorInfo(user.id)
+  
   useEffect(() => {
-    setLoading(requestInProgress)
-  }, [requestInProgress])
-
-  useEffect(() => {
-    setInitialInfo(userInfo)
-  }, [userInfo])
+    formikValues.putValues(data)
+  }, [data])
 
   const fileSelectedHandler = (e) => {
     setFile(e.target.files[0])
@@ -106,7 +90,7 @@ const EditInfoView = (props) => {
   }
 
   const classes = useStyles()
-  return loading ? (
+  return isLoading ? (
     <>
       <LinearProgress />
     </>
@@ -116,11 +100,13 @@ const EditInfoView = (props) => {
           <Box display="flex" flexDirection="column" justifyContent="center">
             <Formik
               enableReinitialize
-              initialValues={initialInfo}
-              //validationSchema={formikValues.validation}
+              initialValues={formikValues.initialValues}
+              validationSchema={formikValues.validation}
               onSubmit={(values) => {
                 let jsonValues = formikValues.getValues(values)
-                updateTutor(jsonValues, file)
+                console.log(jsonValues)
+                console.log(file)
+                //updateTutor(jsonValues, file)
               }}>
               {({
                 errors,
@@ -149,10 +135,10 @@ const EditInfoView = (props) => {
                                   id='avatarPhoto'
                                   className={classes.avatar}
                                   alt="my-avatar"
-                                  src={preview === null ? props.user.photo : preview}
+                                  src={preview === null ? user.photo : preview}
                                 >
                                   <Typography variant='h1'>
-                                    <b>{userInfo.first_name[0]}</b>
+                                    <b>{user.first_name[0]}</b>
                                   </Typography>
                                   </Avatar>
                               </Badge>
@@ -368,13 +354,4 @@ const EditInfoView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  userInfo: state.tutorInfo.userInfo,
-  requestInProgress: state.tutorInfo.requestInProgress
-})
-
-export default connect(mapStateToProps, {
-  getTutorInfo,
-  updateTutor
-})(EditInfoView)
+export default EditInfoView

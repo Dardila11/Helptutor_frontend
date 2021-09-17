@@ -1,10 +1,11 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { Avatar, Box, Card, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
 
-import { getTutorInfo } from 'src/redux/actions/tutor/tutor_data'
-import { connect } from 'react-redux'
 import { Rating } from '@material-ui/lab'
 import QualificationCard from 'src/components/cards/QualificationCard'
+import useTutorInfo from 'src/hooks/TutorHooks/useTutorInfo'
+import { useAuthState } from 'src/context/context';
+import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,23 +37,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const TutorProfileView = (props) => {
+const TutorProfileView = () => {
   const classes = useStyles()
-  const {user, getTutorInfo, tutor} = props
+  const user = useAuthState().user  
+  const {data, isLoading} = useTutorInfo(user.id)
+  const tutor = data
 
-  useEffect(
-    () => {
-      getTutorInfo(user.id)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
   return (
-    <Card className={classes.root}>
+    isLoading? (
+      <ProfileViewSkeleton/>
+    ):(<Card className={classes.root}>
       <Box display="flex" flexDirection="column" justifyContent="center" >
           <Box className={classes.title} textAlign='center'>
               <Typography variant='h3'>
-                <b>{tutor.first_name} {tutor.last_name}</b>
+                <b>{tutor.user.first_name} {tutor.user.last_name}</b>
               </Typography>
               <Typography variant='h4'>
                 Tutor
@@ -63,12 +61,12 @@ const TutorProfileView = (props) => {
             <Grid item xs={8}>
               <Box className={classes.principalInformation} display='flex' flexDirection='column'>
                 <Typography className={classes.contentPrincipal} variant='h4'>
-                  {getAge(tutor.birthday)} años
+                  {tutor.user.birthday? getAge(tutor.user.birthday): ""} años
                 </Typography>
                 <Typography  className={classes.contentPrincipal}variant='h4'>
                   {tutor.skills}
                 </Typography>
-                <Rating value={4} size='large' readOnly/>
+                <Rating value={tutor.score} size='large' readOnly/>
                 <Typography className={classes.contentPrincipal} variant='h4'>
                   Promedio: 4.5 de 23 calificaciones
                 </Typography>
@@ -76,9 +74,9 @@ const TutorProfileView = (props) => {
             </Grid>
             <Grid item xs={4}>
               <Box display='flex' justifyContent='center'>
-                <Avatar className={classes.cover} alt="user photo" src={tutor.photo}>
+                <Avatar className={classes.cover} alt="user photo" src={tutor.user.photo}>
                   <Typography variant='h1'>
-                    <b>{tutor.first_name[0]}</b>
+                    <b>{tutor.user.first_name[0]}</b>
                   </Typography>
                 </Avatar>
               </Box>
@@ -94,7 +92,7 @@ const TutorProfileView = (props) => {
               </Box>
               <Box >
                   <Typography align='justify'>
-                    {tutor.interest}
+                    {tutor.interest? tutor.interest:""}
                   </Typography>
               </Box>
               <Box className={classes.divider}>
@@ -107,7 +105,7 @@ const TutorProfileView = (props) => {
               </Box>
               <Box >
                   <Typography align='justify'>
-                    {tutor.methodology}
+                    {tutor.methodology? tutor.methodology: ""}
                   </Typography>
               </Box>
               <Box className={classes.divider}>
@@ -120,7 +118,7 @@ const TutorProfileView = (props) => {
               </Box>
               <Box>
                   <Typography align='justify'>
-                    {tutor.trajectory}
+                    {tutor.trajectory? tutor.trajectory: ""}
                   </Typography>
               </Box>  
             </Box>          
@@ -138,8 +136,7 @@ const TutorProfileView = (props) => {
             </Box>
           </Box>
       </Box>
-    </Card>
-    
+    </Card>)   
   )
 }
 
@@ -156,11 +153,5 @@ function getAge(fecha) {
   return edad;
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  tutor: state.tutorInfo.userInfo
-})
 
-export default connect(mapStateToProps, {
-  getTutorInfo,
-})(TutorProfileView)
+export default TutorProfileView

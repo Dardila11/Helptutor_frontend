@@ -13,14 +13,15 @@ let initialValues = {
 }
 
 const putValues = (values) => {
-  initialValues.first_name = values.first_name
-  initialValues.last_name = values.last_name
+  console.log(values)
+  initialValues.first_name = values.user.first_name
+  initialValues.last_name = values.user.last_name
   initialValues.interest = values.interest
   initialValues.methodology = values.methodology
   initialValues.skills = values.skills
   initialValues.gender = values.gender
-  initialValues.birthday = values.birthday
-  initialValues.email = values.email
+  initialValues.birthday = values.user.birthday
+  initialValues.email = values.user.email
   initialValues.trajectory = values.trajectory
 }
 

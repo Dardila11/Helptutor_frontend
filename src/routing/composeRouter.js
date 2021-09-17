@@ -50,7 +50,7 @@ const Routing = () => {
         <Route path="/" element={<LandingPage />}/>
       </Route>
 
-      <PrivateRoute path="/estudiante" element={!Boolean(user.token)? <Navigate to="/login" />:<StudentLayout />}>
+      <PrivateRoute path="/estudiante" loading={user.loading} element={!Boolean(user.token)? <Navigate to="/login" />:<StudentLayout />}>
         <Route path="/" element={<StudentPublicationsView />} />
         <Route path="/publicaciones" element={<StudentPublicationsView />} />
         <Route path="/tutores" element={<TutorsView />} />
@@ -58,19 +58,17 @@ const Routing = () => {
         <Route path="/asesorias" element={<StudentConsultanciesView />} />
       </PrivateRoute>
 
-      <PrivateRoute
-        path="/estudiante/cuenta"
-        element={!Boolean(user.token)? <Navigate to="/login" />:<StudentAccountLayout />}>
+      <PrivateRoute path="/estudiante/cuenta" loading={user.loading} element={!Boolean(user.token)? <Navigate to="/login" />:<StudentAccountLayout />}>
         <Route path="/perfil" element={<StudentProfileView />} />
         <Route path="/informacion" element={<StudentEditInfoView />} />
       </PrivateRoute>
 
-      <PrivateRoute path="/tutor" loading={user.loading} element={<TutorLayout />}>
+      <PrivateRoute path="/tutor" loading={user.loading} element={!Boolean(user.token)? <Navigate to="/login" />:<TutorLayout />}>
         <Route path="/" element={<TutorPublicationsView />} />
         <Route path="/publicaciones" element={<TutorPublicationsView />} />
       </PrivateRoute>
 
-      <PrivateRoute path="/tutor" element={<TutorAccountLayout />}>
+      <PrivateRoute path="/tutor" loading={user.loading} element={!Boolean(user.token)? <Navigate to="/login" />:<TutorAccountLayout />}>
         <Route path="/cuenta" element={<TutorInfoView />} />
         <Route path="/cuenta/perfil" element={<TutorInfoView />} />
         <Route path="/cuenta/informacion" element={<TutorEditInfoView />} />
