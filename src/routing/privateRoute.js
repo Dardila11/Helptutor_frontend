@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
-import { Route, useNavigate } from 'react-router-dom'
-import { connect } from 'react-redux'
+import React from 'react'
+import { Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {
   Backdrop,
@@ -17,15 +16,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const PrivateRoute = ({ auth, children, ...rest }) => {
+const PrivateRoute = ({ loading, children, ...rest }) => {
   const classes = useStyles()
-  const navigate = useNavigate()
 
-  useEffect(() => {
-    if (!auth.isAuthenticated) navigate('/login')
-  })
-
-  return auth.isLoading ? (
+  return loading? (
     <Backdrop className={classes.backdrop} open={true}>
       <Box display="flex" flexDirection="column" alignItems="center">
         <Typography color="primary">Cargando</Typography>
@@ -41,8 +35,4 @@ PrivateRoute.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-const mapStateToProps = (state) => ({
-  auth: state.auth
-})
-
-export default connect(mapStateToProps)(PrivateRoute)
+export default PrivateRoute

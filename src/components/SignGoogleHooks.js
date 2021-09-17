@@ -1,17 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGoogleLogin } from 'react-google-login'
 import { Card, makeStyles } from '@material-ui/core'
 
-//REDUX
-import {
-  addTutorGoogle,
-  addStudentGoogle,
-  loginGoogle
-} from '../redux/actions/auth'
-import { launchAlert } from '../redux/actions/alerts'
-import { connect } from 'react-redux'
-import store from '../redux/store.js'
 import { loginUser, useAuthDispatch } from 'src/context' 
 const clientId =
   '581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com'
@@ -47,13 +38,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const responseGoogle = async (props, response, isUnicaucaEmail, role,dispatch,navigate) => {
-  if (props.token === null) {
+const responseGoogle = async (login,response, isUnicaucaEmail, role,dispatch,navigate) => {
     if (isUnicaucaEmail) {
       let jsonValues = {
         token: response.tokenId
       }
-      if (props.login){ 
+      if (login){ 
         let payload = jsonValues
         try {
             let response = await loginUser(dispatch, payload) //loginUser action makes the request and handles all the neccessary state changes
@@ -65,41 +55,29 @@ const responseGoogle = async (props, response, isUnicaucaEmail, role,dispatch,na
             console.log(error)
         }
       }
-      else {
+      /*else {
         if (role === 'tutor') props.addTutorGoogle(jsonValues)
         else props.addStudentGoogle(jsonValues)
-      }
+      }*/
     } else {
-      store.dispatch(
-        launchAlert(
-          'El correo proporcionado no pertenece a la universidad del cauca',
-          1
-        )
-      )
+      console.log("error")
     }
   }
-}
-const LoginHooks = (props) => {
+
+const LoginHooks = ({login, tutorSelect, studentSelect}) => {
   const dispatch = useAuthDispatch() //get the dispatch method from the useDispatch custom hook
   let navigate = useNavigate()
   const classes = useStyles()
-  const { isAuthenticated, tutorSelect, studentSelect } = props
   const hasRoleSelected = tutorSelect || studentSelect
 
   const validateRole = () => {
-    if (!hasRoleSelected && !props.login) {
-      store.dispatch(
-        launchAlert('Debes seleccionar un rol para registrarte', 1)
-      )
+    if (!hasRoleSelected && !login) {
+      console.log("No has seleccionado el rol")
     } else {
       signIn()
     }
   }
 
-  useEffect(() => {
-    if (isAuthenticated) navigate('/tutor/cuenta')
-    // eslint-disable-next-line
-  }, [isAuthenticated])
 
   const onSuccess = (res) => {
     /*
@@ -107,15 +85,16 @@ const LoginHooks = (props) => {
      */
     let userEmail = res.profileObj.email
     if (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co') {
-      if (tutorSelect) responseGoogle(props, res, true, 'tutor',dispatch,navigate)
-      else responseGoogle(props, res, true, 'student',dispatch,navigate)
+      if (tutorSelect) responseGoogle(login, res, true, 'tutor',dispatch,navigate)
+      else responseGoogle(login, res, true, 'student',dispatch,navigate)
     } else {
-      responseGoogle(props, res, false)
+      responseGoogle(login, res, false)
     }
   }
 
   const onFailure = (res) => {
-    responseGoogle(props, res)
+    console.log("login error")
+    console.log(res)
   }
 
   const { signIn } = useGoogleLogin({
@@ -131,19 +110,11 @@ const LoginHooks = (props) => {
     <Card onClick={validateRole} className={classes.button}>
       <img src="icons/google.svg" alt="google login" className={classes.icon} />
       <span className={classes.buttonText}>
-        {props.login ? 'Iniciar Sesión con Google' : 'Registrarme con Google'}
+        {login ? 'Iniciar Sesión con Google' : 'Registrarme con Google'}
       </span>
     </Card>
   )
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  token: state.auth.token
-})
 
-export default connect(mapStateToProps, {
-  addTutorGoogle,
-  addStudentGoogle,
-  loginGoogle
-})(LoginHooks)
+export default LoginHooks

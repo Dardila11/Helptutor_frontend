@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink , useNavigate} from 'react-router-dom'
 import {
   Toolbar,
   Typography,
@@ -10,13 +10,17 @@ import {
   Menu,
   MenuItem,
   Divider,
-  AppBar,
-  Box
+  AppBar,  
+  Backdrop,
+  Box,
+  CircularProgress,
 } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import HelpIcon from '@material-ui/icons/Help';
 import TutorNavBar from 'src/layouts/TutorLayout/NavBar'
 import logo from 'src/layouts/TutorLayout/logo.svg'
+
+import { useAuthState } from 'src/context/context';
 
 import { logout, useAuthDispatch } from 'src/context' 
 
@@ -74,9 +78,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const TutorTopBar = (props) => {
-  const { userInfo } = props
-  console.log(userInfo.user)
+const TutorTopBar = () => {
+  const navigate = useNavigate()
+  const user = useAuthState()
   const dispatch = useAuthDispatch()
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -90,11 +94,21 @@ const TutorTopBar = (props) => {
   }
 
   async function handleLogOut () {
+    navigate('/login')
     await logout(dispatch)
   }
 
-  return (
-    <Box display='flex' flexDirection='column' justifyContent='center'>
+  return (     
+    <>
+    {false? ( 
+      <Backdrop className={classes.backdrop} open={true}>
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Typography color="primary">Cargando</Typography>
+          <CircularProgress color="primary" />
+        </Box>
+      </Backdrop>
+    ) : (
+      <Box display='flex' flexDirection='column' justifyContent='center'>
       <Box>
         <AppBar position='absolute'>
         <Toolbar className={classes.toolbar} >
@@ -121,9 +135,9 @@ const TutorTopBar = (props) => {
                 color="inherit"
                 onClick={handleClick}>
                 <Typography className={classes.userSpace} variant="h4">
-                  {userInfo.user != null ? (
+                  {user.user !== "" ? (
                     <>
-                      {userInfo.user.first_name} {userInfo.user.last_name}
+                      {user.user.first_name} {user.user.last_name}
                     </>
                   ) : (
                     <></>
@@ -132,9 +146,9 @@ const TutorTopBar = (props) => {
                 <Avatar
                   className={classes.cover}
                   alt="user photo"
-                  src={userInfo.user.photo}
+                  src={user.user.photo}
                 >
-                  <b>{userInfo.user.first_name[0]}</b>
+                  <b>{user.user.first_name[0]}</b>
                 </Avatar>
               </IconButton>
               <Menu
@@ -185,5 +199,7 @@ const TutorTopBar = (props) => {
     </Box>
   )
 }
+</>
+  )}
 
 export default TutorTopBar

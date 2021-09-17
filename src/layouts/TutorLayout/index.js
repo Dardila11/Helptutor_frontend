@@ -1,16 +1,9 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import {
-  Backdrop,
-  Box,
-  CircularProgress,
-  makeStyles,
-  Typography
+  makeStyles
 } from '@material-ui/core'
 import TutorTopBar from './TopBar'
-
-import useTutorInfo from 'src/hooks/TutorHooks/useTutorInfo'
-import { useAuthState } from 'src/context'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,26 +31,17 @@ const useStyles = makeStyles((theme) => ({
 
 const TutorLayout = () => {
   const classes = useStyles()
-  const user = useAuthState()
-  const {data, isLoading} = useTutorInfo(user.user.id)
-  return isLoading ? ( 
-    <Backdrop className={classes.backdrop} open={true}>
-      <Box display="flex" flexDirection="column" alignItems="center">
-        <Typography color="primary">Cargando</Typography>
-        <CircularProgress color="primary" />
-      </Box>
-    </Backdrop>
-  ) : (
-    <div className={classes.root}>
-      <div className={classes.topbarContainer}>
-      <TutorTopBar userInfo={data}/>
-      </div>
-      <div className={classes.contentContainer}>
-        <div className={classes.content}>
-          <Outlet />
+  return (
+          <div className={classes.root}>
+            <div className={classes.topbarContainer}>
+            <TutorTopBar/>
+            </div>
+            <div className={classes.contentContainer}>
+              <div className={classes.content}>
+                <Outlet />
+              </div>
+            </div>
         </div>
-      </div>
-    </div>
   )
 }
 

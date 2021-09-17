@@ -29,7 +29,7 @@ const TutorPublicationsView = (props) => {
   const nominations = []
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
-
+  console.log("in publications")
   useEffect(
     () => {
       if(query==='') setListFilter(null)

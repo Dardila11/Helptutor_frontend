@@ -65,12 +65,12 @@ const Routing = () => {
         <Route path="/informacion" element={<StudentEditInfoView />} />
       </PrivateRoute>
 
-      <PrivateRoute path="/tutor" element={!Boolean(user.token)? <Navigate to="/login" />:<TutorLayout />}>
+      <PrivateRoute path="/tutor" loading={user.loading} element={<TutorLayout />}>
         <Route path="/" element={<TutorPublicationsView />} />
         <Route path="/publicaciones" element={<TutorPublicationsView />} />
       </PrivateRoute>
 
-      <PrivateRoute path="/tutor" element={!Boolean(user.token)? <Navigate to="/login" />:<TutorAccountLayout />}>
+      <PrivateRoute path="/tutor" element={<TutorAccountLayout />}>
         <Route path="/cuenta" element={<TutorInfoView />} />
         <Route path="/cuenta/perfil" element={<TutorInfoView />} />
         <Route path="/cuenta/informacion" element={<TutorEditInfoView />} />

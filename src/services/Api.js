@@ -1,5 +1,18 @@
 import https from './ApiConfig'
 
+
+/* token header */
+const AuthHeader = () => {
+  const token = JSON.parse(localStorage.getItem("currentUser")).token
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  config.headers['Authorization'] = 'Token ' + token
+
+  return config
+}
 /* Location Services*/
 
 const getCountries = () => {
@@ -93,8 +106,8 @@ const logout = (values) => {
   return https.post('api/auth/logout', null, tokenConfig(values.state))
 }
 
-const getTutorInfo = (id, state) => {
-  return https.get(`/api/tutor/${id}/`, tokenConfig(state))
+const getTutorInfo = (id) => {
+  return https.get(`/api/tutor/${id}/`, AuthHeader())
 }
 
 const getStudentInfo = (id, state) => {
