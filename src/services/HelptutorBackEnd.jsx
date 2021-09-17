@@ -52,6 +52,7 @@ const AuthHeader = () => {
 }
 
 function handleResponse(response) {
+  console.log(response)
   if (response.status !== 200 && response.status !== 201) {
     return Promise.reject(response.response);
   }

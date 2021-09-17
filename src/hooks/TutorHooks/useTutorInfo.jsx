@@ -1,10 +1,8 @@
 import { useQuery } from 'react-query'
-import { helpTutorBackEnd } from 'src/services/HelptutorBackEnd'
+import Api from 'src/services/Api'
 
-const fetchTutorServices = (id) => {
-  const data = helpTutorBackEnd.get('/tutor/'+id+'/')
-  console.log(data)
-  return data
+const fetchTutorServices =  async (id) => {
+  return Api.getTutorInfo(id).then(res => res.data)
 }
 
 const useTutorInfo = (id) => {
