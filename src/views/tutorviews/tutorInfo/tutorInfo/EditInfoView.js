@@ -129,7 +129,7 @@ const EditInfoView = (props) => {
                           <IconButton style={{paddingTop: 0}}onClick={handleInput}>
                               <Badge
                                 overlap="circle"
-                                badgeContent={<IconButton className={classes.iconbutton} variant='outlined' color='primary'><EditRoundedIcon fontSize='small'/></IconButton>}
+                                badgeContent={<EditRoundedIcon color='primary' fontSize='large'/>}
                               >
                                 <Avatar
                                   id='avatarPhoto'
