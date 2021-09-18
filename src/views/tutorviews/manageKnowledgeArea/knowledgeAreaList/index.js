@@ -1,12 +1,5 @@
 //REACT
-import React, { useEffect } from 'react'
-
-//REDUX
-import {
-  getSpecialitiesTutor,
-  setIsCreate
-} from '../../../../redux/actions/tutor/knowledge_areas'
-import { connect } from 'react-redux'
+import React from 'react'
 
 //COMPONENTS MATERAIL UI
 import {
@@ -23,8 +16,8 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 //COMPONENTS
 import AreaCard from './areaCard'
 
-//UTILS
-import { isUndefined } from 'lodash-es'
+import { useAuthState } from 'src/context'
+import useTutorKnowledgeAreas from 'src/hooks/TutorHooks/useTutorKnowledgeArea'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -49,27 +42,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const KnowledgeAreaListView = (props) => {
-  const { specialities_tutor, getSpecialitiesTutor } = props
+const KnowledgeAreaListView = ({handleSelect}) => {
+  const user = useAuthState().user
+  const { data, loading } = useTutorKnowledgeAreas(user.id)
+  console.log(user)
   const classes = useStyles()
-  let info = false
-  if (isUndefined(specialities_tutor)) {
-    info = false
-  } else {
-    info = true
-  }
+  const specialities_tutor= data
 
-  const handleClick = (e) => {
-    props.setIsCreate(true)
-  }
-
-  useEffect(
-    () => {
-      getSpecialitiesTutor(props.user.id)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
   return (
     <>
       <Grid item xs={3}>
@@ -81,7 +60,7 @@ const KnowledgeAreaListView = (props) => {
               align="center">
               Áreas de conocimiento
             </Typography>
-            {info ? (
+            {loading ? (
               <>
                 {specialities_tutor.map((area, index) => (
                   <AreaCard
@@ -103,7 +82,7 @@ const KnowledgeAreaListView = (props) => {
                 color="primary"
                 variant="contained"
                 endIcon={<AddCircleIcon />}
-                onClick={handleClick}>
+                onClick={handleSelect}>
                 Agregar Area
               </Button>
             </Container>
@@ -114,13 +93,4 @@ const KnowledgeAreaListView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  specialities_tutor: state.knowledge_areas.specialities_tutor,
-  is_create: state.knowledge_areas.is_create,
-  user: state.auth.user
-})
-
-export default connect(mapStateToProps, {
-  getSpecialitiesTutor,
-  setIsCreate
-})(KnowledgeAreaListView)
+export default KnowledgeAreaListView

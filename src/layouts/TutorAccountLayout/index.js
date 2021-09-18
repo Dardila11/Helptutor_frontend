@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core'
 import { Outlet } from 'react-router-dom'
 import TutorTopBar from 'src/layouts/TutorLayout/TopBar'
 import NavBar from './NavBar'
+import { ToastContainer } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +40,7 @@ const TutorAccountLayout = () => {
           <Outlet />
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={5000} closeOnClick pauseOnFocusLoss draggable pauseOnHover/>
     </div>
   )
 }

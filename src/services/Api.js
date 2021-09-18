@@ -71,7 +71,7 @@ const patchTutorKnowledgeAreas = (data, pk) => {
 }
 
 const getTutorKnowledgeAreas = (idTutor) => {
-  return https.get('/api/tutor/' + idTutor + '/speciality/')
+  return https.get('/api/tutor/' + idTutor + '/knowledgeareas/', AuthHeader())
 }
 
 const deleteTutorKnowledgeArea = (idArea) => {

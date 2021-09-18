@@ -2,6 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
 import MainNavBar from './navbar'
+import { ToastContainer } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +31,7 @@ export const MainLayout = () => {
           <Outlet />
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={5000} closeOnClick pauseOnFocusLoss draggable pauseOnHover/>
     </div>
   )
 }

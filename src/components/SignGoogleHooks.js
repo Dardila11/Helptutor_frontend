@@ -4,6 +4,7 @@ import { useGoogleLogin } from 'react-google-login'
 import { Card, makeStyles } from '@material-ui/core'
 
 import { loginUser, useAuthDispatch } from 'src/context' 
+import { toast } from 'react-toastify'
 const clientId =
   '581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com'
 
@@ -51,6 +52,7 @@ const responseGoogle = async (login,response, isUnicaucaEmail, role,dispatch,nav
             if(response.roles[0] && response.roles[1]) navigate('/seleccion-rol')
             if(response.roles[0] && !response.roles[1]) navigate('/tutor')
             if(!response.roles[0] && response.roles[1]) navigate('/estudiante')
+            toast.success("Bienvenido "+response.user.first_name)
         } catch (error) {
             console.log(error)
         }
