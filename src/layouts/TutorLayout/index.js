@@ -4,6 +4,7 @@ import {
   makeStyles
 } from '@material-ui/core'
 import TutorTopBar from './TopBar'
+import { ToastContainer } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,6 +42,7 @@ const TutorLayout = () => {
                 <Outlet />
               </div>
             </div>
+            <ToastContainer position="top-right" autoClose={5000} closeOnClick pauseOnFocusLoss draggable pauseOnHover/>
         </div>
   )
 }

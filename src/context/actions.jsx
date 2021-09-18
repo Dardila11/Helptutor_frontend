@@ -13,7 +13,7 @@ export async function loginUser(dispatch, loginPayload) {
     let data = await response.json();
     if (data.user) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: data });
-      localStorage.setItem('currentUser', JSON.stringify(data));
+      localStorage.setItem('currentUser', JSON.stringify(data));      
       return data
     }
  

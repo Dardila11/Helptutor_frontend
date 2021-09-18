@@ -4,6 +4,7 @@ import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
 import TutorPublicationCard from 'src/components/cards/tutorPublicationCard'
 import Page from 'src/components/Page'
+import useOffers from 'src/hooks/TutorHooks/useOffers'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,12 +25,10 @@ const useStyles = makeStyles((theme) => ({
 
 const TutorPublicationsView = (props) => {
   const classes = useStyles()
-  const loading = true
-  const publications = []
-  const nominations = []
+  const { data, isLoading } = useOffers()
+  const publications = data
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
-  console.log("in publications")
   useEffect(
     () => {
       if(query==='') setListFilter(null)
@@ -47,7 +46,7 @@ const TutorPublicationsView = (props) => {
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
-            {loading ? (
+            {isLoading ? (
               <CardsViewSkeleton type='publications' />
             ) : (
               <>
@@ -62,11 +61,6 @@ const TutorPublicationsView = (props) => {
                     key={index}
                     id={publication.id}
                     publication={publication}
-                    nomination={
-                      nominations.filter(
-                        (nom) => nom.offer === publication.id
-                      )[0]
-                    }
                     isStudent={false}
                     isSearch={false}
                 />
@@ -81,11 +75,6 @@ const TutorPublicationsView = (props) => {
                         key={index}
                         id={publication.id}
                         publication={publication}
-                        nomination={
-                          nominations.filter(
-                            (nom) => nom.offer === publication.id
-                          )[0]
-                        }
                         isStudent={false}
                         isSearch={true}
                         query={query}

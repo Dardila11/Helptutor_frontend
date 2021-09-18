@@ -17,6 +17,7 @@ import store from './redux/store'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { AuthProvider } from './context'
+import 'react-toastify/dist/ReactToastify.min.css';
 
 
 const queryClient = new QueryClient()

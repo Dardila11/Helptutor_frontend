@@ -13,7 +13,6 @@ let initialValues = {
 }
 
 const putValues = (values) => {
-  console.log(values)
   initialValues.first_name = values.user.first_name
   initialValues.last_name = values.user.last_name
   initialValues.interest = values.interest

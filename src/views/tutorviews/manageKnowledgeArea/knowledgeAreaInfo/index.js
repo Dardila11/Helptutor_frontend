@@ -1,14 +1,5 @@
 //REACT
-import React, { useEffect, useState } from 'react'
-
-//REDUX
-import { connect } from 'react-redux'
-import {
-  getKnowledgeAreas,
-  getSpecialities,
-  addSpecialityTutor,
-  updateSpecialityTutor
-} from 'src/redux/actions/tutor/knowledge_areas'
+import React, { useState } from 'react'
 
 //COMPONENTS MATERIAL UI
 import {
@@ -38,6 +29,9 @@ import { Formik } from 'formik'
 
 //UTILS
 import Validation from './formikValues'
+
+import useKnowledgeAreas from 'src/hooks/useKnowledgeAreas'
+//import useSpecialities from 'src/hooks/useSpecialities'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -72,34 +66,20 @@ let initialValuesObj = {
 
 const KnowledgeAreaInfoView = (props) => {
   const classes = useStyles()
-
-  const [initialValues, setInitialValues] = useState(initialValuesObj)
+  const { data, isLoading } = useKnowledgeAreas()
+  const knowledgeAreas = data
 
   const [tags,setTags] = useState([])
   const [txtTags, setTxtTags] = useState(null)
 
-  useEffect(
-    () => {
-      props.getKnowledgeAreas()
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-
   const handleSelect = (e) => {
-    props.getSpecialities(e.target.value)
+   console.log(e.target.value)
   }
 
-  useEffect(() => {
-    setInitialValues(props.speciality_tutor)
-    setTxtTags(props.speciality_tutor.tags)
-    initialTags(props.speciality_tutor.tags)
-  }, [props.speciality_tutor])
-
-  const initialTags = (initial) => {
+  /*const initialTags = (initial) => {
     setTags(initial.split(','))
     setTxtTags(initial)
-  }
+  }*/
 
   const createTags = (e) => {
     setTags(e.target.value.split(','))
@@ -131,9 +111,10 @@ const KnowledgeAreaInfoView = (props) => {
               height="100%"
               justifyContent="center">
               <Container maxWidth="sm">
-                <Formik
+                {isLoading? "Cargando" :(
+                  <Formik
                   enableReinitialize={true}
-                  initialValues={initialValues}
+                  initialValues={initialValuesObj}
                   validationSchema={Validation.validation}
                   onSubmit={(values) => {
                     let jsonValues = Validation.getValues({
@@ -183,7 +164,7 @@ const KnowledgeAreaInfoView = (props) => {
                           <MenuItem value={-1}>
                             <em>---</em>
                           </MenuItem>
-                          {props.knowledge_areas.map((area, index) => (
+                          {knowledgeAreas.map((area, index) => (
                             <MenuItem key={index} value={area.id}>
                               {area.name}
                             </MenuItem>
@@ -217,7 +198,7 @@ const KnowledgeAreaInfoView = (props) => {
                           <MenuItem value={-1}>
                             <em>---</em>
                           </MenuItem>
-                          {props.specialities.map((subarea, index) => (
+                          {[].map((subarea, index) => (
                             <MenuItem key={index} value={subarea.id}>
                               {subarea.name}
                             </MenuItem>
@@ -287,6 +268,7 @@ const KnowledgeAreaInfoView = (props) => {
                     </form>
                   )}
                 </Formik>
+                )}
               </Container>
             </Box>
           </Card>
@@ -296,17 +278,4 @@ const KnowledgeAreaInfoView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  knowledge_areas: state.knowledge_areas.knowledge_areas,
-  specialities: state.knowledge_areas.specialities,
-  speciality_tutor: state.knowledge_areas.speciality_tutor,
-  is_create: state.knowledge_areas.is_create,
-  user: state.auth.user
-})
-
-export default connect(mapStateToProps, {
-  getKnowledgeAreas,
-  getSpecialities,
-  addSpecialityTutor,
-  updateSpecialityTutor
-})(KnowledgeAreaInfoView)
+export default KnowledgeAreaInfoView
