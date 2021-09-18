@@ -2,7 +2,7 @@ import { useQuery } from 'react-query'
 import Api from 'src/services/Api'
 
 const fetchKnowledgeAreas =  async () => {
-  return Api.getKnowledgeAreas().then(res => res.data).ca
+  return Api.getknowledgeAreas().then(res => res.data)
 }
 
 const useKnowledgeAreas = () => {

@@ -1,9 +1,5 @@
 //REACT
-import React, { useEffect, useState } from 'react'
-
-//REDUX
-import { getServicesTutor, setIsCreate } from 'src/redux/actions/tutor/services'
-import { connect } from 'react-redux'
+import React from 'react'
 
 //COMPONENTS MATERAIL UI
 import {
@@ -20,6 +16,8 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 //COMPONENTS
 import ServiceCard from './serviceCard'
+
+import useTutorServices from 'src/hooks/TutorHooks/useTutorServices'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -44,29 +42,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ServicesListView = (props) => {
-  const { services_tutor, getServicesTutor } = props
-  const [loading, setLoading] = useState(false)
+const ServicesListView = () => {
+  const {data, isLoading } = useTutorServices()
   const classes = useStyles()
-  let info = false
-  if (services_tutor.length > 0) {
-    info = true
-  } else {
-    info = false
-  }
-
-  const handleClick = (e) => {
-    props.setIsCreate(true)
-  }
-
-  useEffect(
-    () => {
-      getServicesTutor()
-      setLoading(true)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
 
   return (
     <>
@@ -79,11 +57,11 @@ const ServicesListView = (props) => {
               align="center">
               Servicios
             </Typography>
-            {loading ? (
+            {isLoading ? (
               <>
-                {info ? (
+                {data.length>0 ? (
                   <>
-                    {services_tutor.map((service, index) => (
+                    {data.map((service, index) => (
                       <ServiceCard
                         key={index}
                         id={service.id}
@@ -110,7 +88,7 @@ const ServicesListView = (props) => {
                 color="primary"
                 variant="contained"
                 endIcon={<AddCircleIcon />}
-                onClick={handleClick}>
+                onClick={()=>{}}>
                 Agregar Servicio
               </Button>
             </Container>
@@ -121,13 +99,4 @@ const ServicesListView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  services_tutor: state.services.services_tutor,
-  is_create: state.knowledge_areas.is_create,
-  user: state.auth.user
-})
-
-export default connect(mapStateToProps, {
-  getServicesTutor,
-  setIsCreate
-})(ServicesListView)
+export default ServicesListView

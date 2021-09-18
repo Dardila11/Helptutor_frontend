@@ -1,5 +1,5 @@
 //REACT
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 //COMPONENTS MATERIAL UI
 import {
@@ -31,6 +31,7 @@ import { Formik } from 'formik'
 import Validation from './formikValues'
 
 import useKnowledgeAreas from 'src/hooks/useKnowledgeAreas'
+//import useSpecialities from 'src/hooks/useSpecialities'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -65,27 +66,20 @@ let initialValuesObj = {
 
 const KnowledgeAreaInfoView = (props) => {
   const classes = useStyles()
-  const { data } = useKnowledgeAreas()
-  let knowledgeAreas = data
-  const [initialValues, setInitialValues] = useState(initialValuesObj)
+  const { data, isLoading } = useKnowledgeAreas()
+  const knowledgeAreas = data
 
   const [tags,setTags] = useState([])
   const [txtTags, setTxtTags] = useState(null)
 
   const handleSelect = (e) => {
-    console.log("getting specialities")
+   console.log(e.target.value)
   }
 
-  useEffect(() => {
-    setInitialValues(props.speciality_tutor)
-    setTxtTags(props.speciality_tutor.tags)
-    initialTags(props.speciality_tutor.tags)
-  }, [props.speciality_tutor])
-
-  const initialTags = (initial) => {
+  /*const initialTags = (initial) => {
     setTags(initial.split(','))
     setTxtTags(initial)
-  }
+  }*/
 
   const createTags = (e) => {
     setTags(e.target.value.split(','))
@@ -117,9 +111,10 @@ const KnowledgeAreaInfoView = (props) => {
               height="100%"
               justifyContent="center">
               <Container maxWidth="sm">
-                <Formik
+                {isLoading? "Cargando" :(
+                  <Formik
                   enableReinitialize={true}
-                  initialValues={initialValues}
+                  initialValues={initialValuesObj}
                   validationSchema={Validation.validation}
                   onSubmit={(values) => {
                     let jsonValues = Validation.getValues({
@@ -203,7 +198,7 @@ const KnowledgeAreaInfoView = (props) => {
                           <MenuItem value={-1}>
                             <em>---</em>
                           </MenuItem>
-                          {props.specialities.map((subarea, index) => (
+                          {[].map((subarea, index) => (
                             <MenuItem key={index} value={subarea.id}>
                               {subarea.name}
                             </MenuItem>
@@ -273,6 +268,7 @@ const KnowledgeAreaInfoView = (props) => {
                     </form>
                   )}
                 </Formik>
+                )}
               </Container>
             </Box>
           </Card>

@@ -197,8 +197,8 @@ const getTutors = (state) => {
   return https.get('api/tutor/', tokenConfig(state))
 }
 
-const getOffers = (state) => {
-  return https.get('api/offer/', tokenConfig(state))
+const getOffers = () => {
+  return https.get('api/offer/', AuthHeader())
 }
 
 const postAdvertisement = (data, state) => {

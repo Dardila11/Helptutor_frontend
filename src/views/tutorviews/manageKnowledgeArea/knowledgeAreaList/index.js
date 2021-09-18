@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const KnowledgeAreaListView = ({handleSelect}) => {
   const user = useAuthState().user
-  const { data, loading } = useTutorKnowledgeAreas(user.id)
+  const { data, isLoading } = useTutorKnowledgeAreas(user.id)
   const classes = useStyles()
   const specialities_tutor= data
 
@@ -59,7 +59,7 @@ const KnowledgeAreaListView = ({handleSelect}) => {
               align="center">
               Áreas de conocimiento
             </Typography>
-            {!loading ? (
+            {!isLoading ? (
               <>
                 {specialities_tutor.map((area, index) => (
                   <AreaCard
