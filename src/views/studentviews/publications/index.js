@@ -9,14 +9,14 @@ import {
   Typography
 } from '@material-ui/core'
 
-import { getPublications } from 'src/redux/actions/student/student_publications'
-import { connect } from 'react-redux'
 import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
 import PublicationFormView from './publicationForm'
 import StudentPublicationCard from 'src/components/cards/studentpublicationCard'
 import Page from 'src/components/Page'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
+
+import usePublications from 'src/hooks/usePublications'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,17 +40,12 @@ const useStyles = makeStyles((theme) => ({
 
 const StudentPublicationsView = (props) => {
   const classes = useStyles()
-  const { loadingPublications, getPublications, publications, creating } = props
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
-  useEffect(
-    () => {
-      getPublications()
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
+
+  const { data, status } = usePublications()
+
 
   const handleOpen = () => {
     setOpen(true)
@@ -62,89 +57,109 @@ const StudentPublicationsView = (props) => {
 
   useEffect(
     () => {
-      if(query==='') setListFilter(null)
-      else setListFilter(publications.filter(pub => pub.title.toLowerCase().includes(query.toLowerCase()) || pub.description.toLowerCase().includes(query.toLowerCase())))
+      if (query === '') setListFilter(null)
+      else
+        setListFilter(
+          data.filter(
+            (pub) =>
+              pub.title.toLowerCase().includes(query.toLowerCase()) ||
+              pub.description.toLowerCase().includes(query.toLowerCase())
+          )
+        )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [query]
-  )  
+  )
 
   return (
     <Page title="Publicaciones">
-      <Box display='flex' flexDirection='row' justifyContent='center'>
+      <Box display="flex" flexDirection="row" justifyContent="center">
         <Box>
-          <SearchBar option={'publicaciones'} list={publications} setQuery={setQuery}/>
+          <SearchBar option={'publicaciones'} list={data} setQuery={setQuery} />
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
-            {loadingPublications ? (
-              <CardsViewSkeleton type='publications'/>
-            ) : (
-              <>
+            {status === 'success' ? (
+              data.length === 0 ? (
                 <Box className={classes.title} textAlign="center">
-                  <Typography variant="h4">Mis plublicaciones</Typography>
+                  <Typography variant="h5">No hay publicaciones</Typography>
                 </Box>
-                {creating ? (
-                  <CircularProgress />
-                ) : (
-                  <>
-                    <Box display='flex' flexDirection='row' justifyContent='center'>
-                      <Box>
-                        <Button
-                          className={classes.button}
-                          variant="contained"
-                          color="primary"
-                          startIcon={<AddCircleIcon />}
-                          onClick={handleOpen}>
-                          Agregar publicación
-                        </Button>
+              ) : (
+                <>
+                  <Box className={classes.title} textAlign="center">
+                    <Typography variant="h4">Mis plublicaciones</Typography>
+                  </Box>
+                  {/* {creating ? (
+                    <CircularProgress />
+                  ) : (
+                    <>
+                      <Box
+                        display="flex"
+                        flexDirection="row"
+                        justifyContent="center">
+                        <Box>
+                          <Button
+                            className={classes.button}
+                            variant="contained"
+                            color="primary"
+                            startIcon={<AddCircleIcon />}
+                            onClick={handleOpen}>
+                            Agregar publicación
+                          </Button>
+                        </Box>
                       </Box>
-                    </Box>
-                    <Dialog
-                      open={open}
-                      onClose={handleClose}
-                      aria-labelledby="publications-dialog-title">
-                      <PublicationFormView onClose={handleClose}  publication={null} />
-                    </Dialog>
-                  </>
-                )}
-                {listFilter===null? (
-                    <>
-                    {publications.map((publication, index) => (
-                  <StudentPublicationCard
-                    key={index}
-                    id={publication.id}
-                    publication={publication}
-                    isStudent={true}
-                    isSearch={false}
-                  />
-                ))}
+                      <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="publications-dialog-title">
+                        <PublicationFormView
+                          onClose={handleClose}
+                          publication={null}
+                        />
+                      </Dialog>
                     </>
-                  ):(
+                  )} */}
+                  {listFilter === null ? (
                     <>
-                    {listFilter.length > 0 ? (
-                      <>
-                      {listFilter.map((publication, index) => (
+                      {data.map((publication, index) => (
                         <StudentPublicationCard
-                        key={index}
-                        id={publication.id}
-                        publication={publication}
-                        isStudent={true}
-                        isSearch={true}
-                        query={query}
-                      />
+                          key={index}
+                          id={publication.id}
+                          publication={publication}
+                          isStudent={true}
+                          isSearch={false}
+                        />
                       ))}
-                      </>
-                    ):(
-                      <Box className={classes.nofindbox} textAlign='center'>
-                          <Typography>
-                            No se encontraron publicaciones que contengan "{query}"
-                          </Typography>
-                      </Box>
-                    )}
                     </>
-                  )}       
-              </>
+                  ) : (
+                    <>
+                      {listFilter.length > 0 ? (
+                        <>
+                          {listFilter.map((publication, index) => (
+                            <StudentPublicationCard
+                              key={index}
+                              id={publication.id}
+                              publication={publication}
+                              isStudent={true}
+                              isSearch={true}
+                              query={query}
+                            />
+                          ))}
+                        </>
+                      ) : (
+                        <Box className={classes.nofindbox} textAlign="center">
+                          <Typography>
+                            No se encontraron publicaciones que contengan "
+                            {query}"
+                          </Typography>
+                        </Box>
+                      )}
+                    </>
+                  )}
+                </>
+              )
+            ) : (
+              <CardsViewSkeleton type="publications" />
             )}
           </Paper>
         </Box>
@@ -153,12 +168,4 @@ const StudentPublicationsView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  publications: state.publications.publications,
-  loadingPublications: state.publications.loadingPublications,
-  creating: state.publications.creating
-})
-
-export default connect(mapStateToProps, {
-  getPublications
-})(StudentPublicationsView)
+export default StudentPublicationsView

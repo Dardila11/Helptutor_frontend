@@ -30,7 +30,7 @@ const TutorsView = () => {
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
   const [filter, setFilter] = useState({ label: '', value: 0 })
-  const {data, status, isLoading, error} = useTutorsServices()
+  const { data, status, isLoading, error } = useTutorsServices()
 
   useEffect(
     () => {
@@ -62,10 +62,7 @@ const TutorsView = () => {
         if (filt.value !== 0) {
           if (!listFilter === null)
             setListFilter(listFilter.filter((serv) => serv.price <= filt.value))
-          else
-            setListFilter(
-              data.filter((serv) => serv.price <= filt.value)
-            )
+          else setListFilter(data.filter((serv) => serv.price <= filt.value))
         }
         break
 
@@ -91,53 +88,64 @@ const TutorsView = () => {
               <CardsViewSkeleton />
             ) : status === 'success' ? (
               <>
-                <Box className={classes.title} textAlign="center">
-                  <Typography variant="h4">Servicios ofertados</Typography>
-                </Box>
-                <Box>
-                  {listFilter === null ? (
-                    <>
-                      {data.map((service, index) => (
-                        <TutorServiceCard
-                          key={index}
-                          id={service.id}
-                          service={service}
-                          isStudent={true}
-                          isSearch={false}
-                        />
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      {listFilter.length > 0 ? (
+                {data.length === 0 ? (
+                  <Box className={classes.title} textAlign="center">
+                    <Typography variant="h5">No hay servicios</Typography>
+                  </Box>
+                ) : (
+                  <>
+                    <Box className={classes.title} textAlign="center">
+                      <Typography variant="h4">Servicios ofertados</Typography>
+                    </Box>
+                    <Box>
+                      {listFilter === null ? (
                         <>
-                          {listFilter.map((service, index) => (
+                          {data.map((service, index) => (
                             <TutorServiceCard
                               key={index}
                               id={service.id}
                               service={service}
                               isStudent={true}
-                              isSearch={true}
-                              query={query}
+                              isSearch={false}
                             />
                           ))}
                         </>
                       ) : (
-                        <Box className={classes.nofindbox} textAlign="center">
-                          <Typography>
-                            No se encontraron servicios que contengan "{query}"
-                          </Typography>
-                        </Box>
+                        <>
+                          {listFilter.length > 0 ? (
+                            <>
+                              {listFilter.map((service, index) => (
+                                <TutorServiceCard
+                                  key={index}
+                                  id={service.id}
+                                  service={service}
+                                  isStudent={true}
+                                  isSearch={true}
+                                  query={query}
+                                />
+                              ))}
+                            </>
+                          ) : (
+                            <Box
+                              className={classes.nofindbox}
+                              textAlign="center">
+                              <Typography>
+                                No se encontraron servicios que contengan "
+                                {query}"
+                              </Typography>
+                            </Box>
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                </Box>
+                    </Box>
+                  </>
+                )}
               </>
             ) : (
               <>
-              <Box paddingLeft="10px">
-              <Typography> {error.message}</Typography>
-              </Box>
+                <Box paddingLeft="10px">
+                  <Typography> {error.message}</Typography>
+                </Box>
               </>
             )}
           </Paper>

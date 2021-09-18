@@ -202,16 +202,16 @@ const getTutors = (state) => {
   return https.get('api/tutor/', tokenConfig(state))
 }
 
-const getOffers = (state) => {
-  return https.get('api/offer/', tokenConfig(state))
+const getOffers = () => {
+  return https.get('api/offer/', AuthHeader())
 }
 
 const postAdvertisement = (data, state) => {
   return https.post('api/advertisement/', data, tokenConfig(state))
 }
 
-const getAdvertisements = (state) => {
-  return https.get('/api/advertisement/', tokenConfig(state))
+const getAdvertisements = () => {
+  return https.get('/api/advertisement/', AuthHeader())
 }
 
 const getAdvertisementAnswers = (id, state) => {
@@ -219,12 +219,8 @@ const getAdvertisementAnswers = (id, state) => {
   return https.get('/api/answer/', tokenConfig(state))
 }
 
-const getServices = (state) => {
-  return https.get('api/service/', tokenConfig(state))
-}
-
-const getServicesNew = (token) => {
-  return https.get('api/service', addToken(token))
+const getServices = () => {
+  return https.get('api/service/', AuthHeader())
 }
 
 const patchOffer = (id, data, state) => {
@@ -273,7 +269,6 @@ const logConstants = {
   getAdvertisementAnswers,
   getServicesTutor,
   getServices,
-  getServicesNew,
   getNomination,
   getNominations,
   getOfferNominations,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import {
   Toolbar,
   Typography,
@@ -18,9 +18,8 @@ import StudentNavBar from 'src/layouts/StudentLayout/NavBar'
 import logo from 'src/layouts/TutorLayout/logo.svg'
 import ScrollArrow from 'src/components/ScrollArrow'
 
-/* Redux */
-import { connect } from 'react-redux'
-import { logout } from 'src/redux/actions/auth'
+import { useAuthState} from 'src/context/context'
+import { logout, useAuthDispatch } from 'src/context'
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -70,7 +69,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const StudentTopBar = (props) => {
+const StudentTopBar = () => {
+  const navigate = useNavigate()
+  const user = useAuthState()
+  const dispatch = useAuthDispatch()
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
 
@@ -82,8 +84,9 @@ const StudentTopBar = (props) => {
     setAnchorEl(null)
   }
 
-  const handleLogOut = () => {
-    props.logout()
+  const handleLogOut = async () => {
+    navigate('/login')
+    await logout(dispatch)
   }
 
   return (
@@ -115,9 +118,9 @@ const StudentTopBar = (props) => {
                   color="inherit"
                   onClick={handleClick}>
                   <Typography className={classes.userSpace} variant="h4">
-                    {props.user != null ? (
+                    {user.user != null ? (
                       <>
-                        {props.user.first_name} {props.user.last_name}
+                        {user.user.first_name} {user.user.last_name}
                       </>
                     ) : (
                       <></>
@@ -126,9 +129,9 @@ const StudentTopBar = (props) => {
                   <Avatar
                   className={classes.cover}
                   alt="user photo"
-                  src={props.user.photo}
+                  src={user.user.photo}
                 >
-                  <b>{props.user.first_name[0]}</b>
+                  <b>{user.user.first_name[0]}</b>
                 </Avatar>
                 </IconButton>
                 <Menu
@@ -144,7 +147,7 @@ const StudentTopBar = (props) => {
                       </Typography>
                     </MenuItem>
                   </RouterLink>
-                  {(props.isStudent && props.isTutor)? (
+                  {/* {(user.isStudent && user.isTutor)? (
                   <RouterLink to="/seleccion-rol">
                   <MenuItem onClick={handleClose}>
                     <Typography color="primary">
@@ -152,7 +155,7 @@ const StudentTopBar = (props) => {
                     </Typography>
                   </MenuItem>
                 </RouterLink>
-                  ): <></>}
+                  ): <></>} */}
                   <Divider></Divider>
                   <MenuItem onClick={handleLogOut}>
                     <Typography color="primary">
@@ -173,13 +176,4 @@ const StudentTopBar = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  user: state.auth.user,
-  isStudent: state.auth.isStudent,
-  isTutor: state.auth.isTutor
-})
-
-export default connect(mapStateToProps, {
-  logout
-})(StudentTopBar)
+export default StudentTopBar
