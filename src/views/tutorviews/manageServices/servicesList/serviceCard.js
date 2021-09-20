@@ -13,15 +13,6 @@ import {
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 
-//REDUX
-import {
-  getSpecialitiesTutor,
-  deleteServiceTutor,
-  setServiceTutor,
-  setIsCreate
-} from 'src/redux/actions/tutor/services'
-import { connect } from 'react-redux'
-
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(2),
@@ -41,14 +32,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ServiceCard = (props) => {
+const ServiceCard = ({service, handleSelect}) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
   const handleDelete = () => {
     setOpen(false)
-    props.deleteServiceTutor(props.service.id)
-    props.setIsCreate(true)
+    //TODO DELETE
   }
   const handleOpen = () => {
     setOpen(true)
@@ -66,19 +56,19 @@ const ServiceCard = (props) => {
               fullWidth={true}
               variant="outlined"
               onClick={() => {
-                props.setServiceTutor(props.service)
+                handleSelect(service)
               }}>
               <Typography align="center" variant="h5">
                 {' '}
-                {props.service.title}
+                {service.title}
               </Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>
             <Button
               className={classes.button}
-              id={props.service.id}
-              key={props.service.id}
+              id={service.id}
+              key={service.id}
               color="secondary"
               onClick={handleOpen}>
               <DeleteIcon className={classes.delete} />
@@ -92,7 +82,7 @@ const ServiceCard = (props) => {
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
                   ¿Estas seguro de eliminar el servicio{' '}
-                  <b>{props.service.title}</b> ?
+                  <b>{service.title}</b> ?
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -115,13 +105,4 @@ const ServiceCard = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  specialities_tutor: state.knowledge_areas.specialities_tutor
-})
-
-export default connect(mapStateToProps, {
-  deleteServiceTutor,
-  setServiceTutor,
-  getSpecialitiesTutor,
-  setIsCreate
-})(ServiceCard)
+export default ServiceCard

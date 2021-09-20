@@ -148,8 +148,8 @@ const addToken = (token) => {
 
 /** TUTOR SERVICES */
 
-const getServicesTutor = (values) => {
-  return https.get('/api/tutor/services/', tokenConfig(values.state))
+const getTutorServices = (id) => {
+  return https.get('/api/tutor/'+5+'/service/', AuthHeader())
 }
 
 const postServiceTutor = (data, values) => {
@@ -203,7 +203,7 @@ const getTutors = (state) => {
 }
 
 const getOffers = () => {
-  return https.get('api/offer/', AuthHeader())
+  return https.get('api/tutor/offer/', AuthHeader())
 }
 
 const postAdvertisement = (data, state) => {
@@ -267,7 +267,7 @@ const logConstants = {
   getOffers,
   getAdvertisements,
   getAdvertisementAnswers,
-  getServicesTutor,
+  getTutorServices,
   getServices,
   getNomination,
   getNominations,

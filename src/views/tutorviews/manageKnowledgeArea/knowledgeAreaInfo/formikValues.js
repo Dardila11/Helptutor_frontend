@@ -1,5 +1,20 @@
 import * as Yup from 'yup'
 
+let initialValues = {
+    tags:"",
+    description: "",
+    knowledge_area: -1,
+    user: 0,
+    speciality: -1
+}
+
+const putValues = (values) => {
+    initialValues.tags = values.tags
+    initialValues.description = values.description
+    initialValues.knowledge_area = values.knowledge_area.id
+    initialValues.user = values.user
+}
+
 const getValues = (values) => {
   return {
     tags: values.tags,
@@ -17,8 +32,10 @@ const validation = Yup.object().shape({
 })
 
 const logConst = {
+  initialValues,
   getValues,
-  validation
+  validation,
+  putValues
 }
 
 export default logConst

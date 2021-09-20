@@ -13,15 +13,6 @@ import {
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 
-//REDUX
-import { connect } from 'react-redux'
-import {
-  getSpecialities,
-  deleteSpecialityTutor,
-  setSpecialityTutor,
-  setIsCreate
-} from 'src/redux/actions/tutor/knowledge_areas'
-
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(2),
@@ -42,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const AreaCard = (props) => {
+  const {handleSelect, my_area} = props
   const classes = useStyles()
   const [open, setOpen] = useState(false)
-
+  
   const handleDelete = () => {
     setOpen(false)
-    props.deleteSpecialityTutor(props.idArea)
-    props.setIsCreate(true)
+    //TODO DELETE
   }
   const handleOpen = () => {
     setOpen(true)
@@ -66,22 +57,20 @@ const AreaCard = (props) => {
               fullWidth={true}
               variant="outlined"
               onClick={() => {
-                props.getSpecialities(
-                  props.my_area.knowledge_area.knowledge_area
-                )
-                props.setSpecialityTutor(props.my_area)
+                handleSelect(null)
+                handleSelect(my_area)
               }}>
               <Typography align="center" variant="h5">
                 {' '}
-                {props.area.name}
+                {my_area.knowledge_area.name}
               </Typography>
             </Button>
           </Grid>
           <Grid item xs={3}>
             <Button
               className={classes.button}
-              id={props.area.id}
-              key={props.area.id}
+              id={my_area.id}
+              key={my_area.id}
               color="secondary"
               onClick={handleOpen}>
               <DeleteIcon className={classes.delete} />
@@ -94,7 +83,7 @@ const AreaCard = (props) => {
               <DialogTitle id="alert-dialog-title">{'Advertencia'}</DialogTitle>
               <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                  ¿Estas seguro de eliminar el area <b>{props.area.name}</b> ?
+                  ¿Estas seguro de eliminar el area <b>{my_area.knowledge_area.name}</b> ?
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -117,13 +106,4 @@ const AreaCard = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  specialities_tutor: state.knowledge_areas.specialities_tutor
-})
-
-export default connect(mapStateToProps, {
-  deleteSpecialityTutor,
-  setSpecialityTutor,
-  getSpecialities,
-  setIsCreate
-})(AreaCard)
+export default AreaCard

@@ -16,9 +16,6 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 //COMPONENTS
 import AreaCard from './areaCard'
 
-import { useAuthState } from 'src/context'
-import useTutorKnowledgeAreas from 'src/hooks/TutorHooks/useTutorKnowledgeArea'
-
 //STYLESS
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,11 +39,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const KnowledgeAreaListView = ({handleSelect}) => {
-  const user = useAuthState().user
-  const { data, isLoading } = useTutorKnowledgeAreas(user.id)
+const KnowledgeAreaListView = ({handleSelect, specialities_tutor}) => {
   const classes = useStyles()
-  const specialities_tutor= data
 
   return (
     <>
@@ -59,14 +53,15 @@ const KnowledgeAreaListView = ({handleSelect}) => {
               align="center">
               Áreas de conocimiento
             </Typography>
-            {!isLoading ? (
+            {specialities_tutor.length > 0 ? (
               <>
                 {specialities_tutor.map((area, index) => (
                   <AreaCard
                     key={index}
                     area={area.knowledge_area}
                     my_area={area}
-                    idArea={area.id}></AreaCard>
+                    idArea={area.id}
+                    handleSelect={handleSelect}></AreaCard>
                 ))}
               </>
             ) : (

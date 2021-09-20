@@ -28,7 +28,7 @@ import CertificateView from './certificates/certificate'
 import { Formik } from 'formik'
 
 //UTILS
-import Validation from './formikValues'
+import formikValues from './formikValues'
 
 import useKnowledgeAreas from 'src/hooks/useKnowledgeAreas'
 //import useSpecialities from 'src/hooks/useSpecialities'
@@ -56,30 +56,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-let initialValuesObj = {
-  id: -1,
-  knowledge_area: -1,
-  speciality: -1,
-  tags: '',
-  description: ''
-}
-
-const KnowledgeAreaInfoView = (props) => {
+const KnowledgeAreaInfoView = ({area, user}) => {
   const classes = useStyles()
   const { data, isLoading } = useKnowledgeAreas()
   const knowledgeAreas = data
-
   const [tags,setTags] = useState([])
   const [txtTags, setTxtTags] = useState(null)
+
+  if(area!=null){
+    formikValues.putValues(area)
+  }
 
   const handleSelect = (e) => {
    console.log(e.target.value)
   }
-
-  /*const initialTags = (initial) => {
-    setTags(initial.split(','))
-    setTxtTags(initial)
-  }*/
 
   const createTags = (e) => {
     setTags(e.target.value.split(','))
@@ -114,20 +104,15 @@ const KnowledgeAreaInfoView = (props) => {
                 {isLoading? "Cargando" :(
                   <Formik
                   enableReinitialize={true}
-                  initialValues={initialValuesObj}
-                  validationSchema={Validation.validation}
+                  initialValues={formikValues.initialValues}
+                  validationSchema={formikValues.Validation}
                   onSubmit={(values) => {
-                    let jsonValues = Validation.getValues({
+                    let jsonValues = formikValues.getValues({
                       ...values,
-                      user: props.user.id
+                      user: user.id
                     })
-                    if (props.is_create) props.addSpecialityTutor(jsonValues)
-                    else {
-                      props.updateSpecialityTutor(
-                        jsonValues,
-                        props.speciality_tutor.id
-                      )
-                    }
+                    console.log(jsonValues)
+                    //TODO: UPDATE AND ADD POST
                   }}>
                   {({
                     errors,
@@ -220,7 +205,6 @@ const KnowledgeAreaInfoView = (props) => {
                           margin="normal"
                           onBlur={handleBlur}
                           onChange={e => {handleChange(e);createTags(e)} }
-                          on
                           name="tags"
                           value={txtTags===null? values.tags : txtTags}
                           variant="outlined"
@@ -231,7 +215,7 @@ const KnowledgeAreaInfoView = (props) => {
                         {tags.map((tag,index) => (
                           <>
                             {tag!==''? 
-                            <Chip index={index} label={tag} onDelete={e => {
+                            <Chip index={index} key={index+"chip"} label={tag} onDelete={e => {
                               deleteTag(tag)
                             }} color="primary" />
                             : <></>}
@@ -261,7 +245,7 @@ const KnowledgeAreaInfoView = (props) => {
                           endIcon={<SaveIcon />}
                           variant="contained"
                           color='primary'>
-                          {props.is_create ? 'Guardar area' : 'Actualizar'}
+                          {area===null ? 'Guardar area' : 'Actualizar'}
                         </Button>
                       </Box>
                       <Box my={2}></Box>

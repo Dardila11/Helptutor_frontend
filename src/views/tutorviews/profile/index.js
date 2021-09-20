@@ -49,13 +49,13 @@ import {
                     className={classes.containerTitle}
                     variant="h4"
                     align="center">
-                    Mi perfil
+                    <b>Mi perfil</b>
                     </Typography>
                     <Container>
                     <Box textAlign="justify">
                         <Divider className={classes.divider} />
                         <Typography>
-                         Esta es la información es tu perfil publico, cuando un estudiante desee contratar tus servicios esta es la información que verán
+                         Este es tu perfil, cuando un estudiante desee contratar tus servicios esta es la información que verán. 
                         </Typography>
                     </Box>
                     </Container>                

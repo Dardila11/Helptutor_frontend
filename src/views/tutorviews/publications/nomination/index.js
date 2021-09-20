@@ -55,7 +55,8 @@ const NominationView = (props) => {
     addNomination,
     closeDialog,
     updateNomination,
-    deleteNomination
+    deleteNomination,
+    user
   } = props
   let opNomination = isUndefined(nomination)
   const [open, setOpen] = React.useState(false)
@@ -83,7 +84,7 @@ const NominationView = (props) => {
       <DialogContent dividers>
         <Box display="flex" flexDirection="column" justifyContent="center">
           <Typography variant="subtitle1" color="textSecondary">
-            Publicación de: <b>UserName</b>
+            Publicación de: <b>{user.first_name} {user.last_name}</b>
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
             {publication.description}

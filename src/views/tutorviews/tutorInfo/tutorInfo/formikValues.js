@@ -6,7 +6,7 @@ let initialValues = {
   interest: '',
   methodology: '',
   skills: '',
-  gender: 0,
+  gender: -1,
   birthday: '',
   email: '',
   trajectory: ''

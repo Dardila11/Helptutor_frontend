@@ -14,6 +14,7 @@ import {
 import NominationView from 'src/views/tutorviews/publications/nomination'
 import { isUndefined } from 'lodash-es'
 import DoneIcon from '@material-ui/icons/Done';
+import publications from 'src/redux/reducers/student/student_publications'
 
 const useStyles = makeStyles((theme) => ({
   details: {
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TutorPublicationCard = (props) => {
   const { publication, nomination, isSearch, query } = props
+  const user = publication.student.user
   let opNomination = isUndefined(nomination)
   const classes = useStyles()
   const [open, setOpen] = useState(false)
@@ -79,10 +81,10 @@ const TutorPublicationCard = (props) => {
               <Avatar
                 className={classes.cover}
                 alt="user photo"
-                src="/static/images/avatars/avatar_6.png"
+                src={user.photo}
               />
               <Typography>
-                <b>Username</b>
+                <b>{user.first_name} {user.last_name}</b>
               </Typography>
             </Box>
           </Grid>
@@ -115,6 +117,7 @@ const TutorPublicationCard = (props) => {
         aria-labelledby="tutorSelection-dialog-title">
         <NominationView
           publication={publication}
+          user={user}
           closeDialog={handleClose}
           nomination={nomination}
         />

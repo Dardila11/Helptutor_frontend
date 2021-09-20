@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
@@ -23,9 +23,6 @@ import Schedule from 'src/components/Schedule/Schedule'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 
 import useTutorInfo from 'src/hooks/useTutorInfo'
-
-import { getTutorSelectedInfo } from 'src/redux/actions/student/student_publications'
-import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   root: {

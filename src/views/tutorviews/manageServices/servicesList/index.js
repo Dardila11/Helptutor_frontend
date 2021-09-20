@@ -5,7 +5,6 @@ import React from 'react'
 import {
   Button,
   Card,
-  CircularProgress,
   Container,
   Grid,
   makeStyles,
@@ -16,8 +15,6 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 //COMPONENTS
 import ServiceCard from './serviceCard'
-
-import useTutorServices from 'src/hooks/TutorHooks/useTutorServices'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -42,8 +39,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ServicesListView = () => {
-  const {data, isLoading } = useTutorServices()
+const ServicesListView = ({services, handleSelect}) => {
   const classes = useStyles()
 
   return (
@@ -57,15 +53,14 @@ const ServicesListView = () => {
               align="center">
               Servicios
             </Typography>
-            {isLoading ? (
-              <>
-                {data.length>0 ? (
+                {services.length>0 ? (
                   <>
-                    {data.map((service, index) => (
+                    {services.map((service, index) => (
                       <ServiceCard
                         key={index}
                         id={service.id}
                         service={service}
+                        handleSelect={handleSelect}
                       />
                     ))}
                   </>
@@ -76,10 +71,6 @@ const ServicesListView = () => {
                     </Typography>
                   </>
                 )}
-              </>
-            ) : (
-              <CircularProgress />
-            )}
 
             <Container className={classes.actions}>
               <Button

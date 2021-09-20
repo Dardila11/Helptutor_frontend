@@ -1,7 +1,5 @@
 //REACT
-import React, { useEffect, useState } from 'react'
-
-import { connect } from 'react-redux'
+import React from 'react'
 
 //COMPONENTS MATERIAL UI
 import {
@@ -25,14 +23,9 @@ import SaveIcon from '@material-ui/icons/Save'
 
 import { Formik } from 'formik'
 
-import {
-  getSpecialitiesTutor,
-  addServiceTutor,
-  updateServiceTutor
-} from 'src/redux/actions/tutor/services'
-
 //UTILS
-import Validation from './formikValues'
+import formikValues from './formikValues'
+import useTutorKnowledgeAreas from 'src/hooks/TutorHooks/useTutorKnowledgeArea'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -56,29 +49,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-let initialValuesObj = {
-  title: '',
-  speciality: -1,
-  description: '',
-  price: 0
-}
-
-const ServicesInfoView = (props) => {
+const ServicesInfoView = ({service, user}) => {
   const classes = useStyles()
-
-  const [initialValues, setInitialValues] = useState(initialValuesObj)
-
-  useEffect(
-    () => {
-      props.getSpecialitiesTutor(props.user.id)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-
-  useEffect(() => {
-    setInitialValues(props.service_tutor)
-  }, [props.service_tutor])
+  const { data, isLoading } = useTutorKnowledgeAreas(user.id)
+  if(service!=null) formikValues.putValues(service)
 
   return (
     <>
@@ -99,19 +73,12 @@ const ServicesInfoView = (props) => {
               <Container maxWidth="sm">
                 <Formik
                   enableReinitialize={true}
-                  initialValues={initialValues}
-                  validationSchema={Validation.validation}
+                  initialValues={formikValues.initialValues}
+                  validationSchema={formikValues.validation}
                   onSubmit={(values) => {
-                    let jsonValues = Validation.getValues({
-                      ...values,
-                      user: props.user.id
-                    })
-                    if (props.is_create) props.addServiceTutor(jsonValues)
-                    else
-                      props.updateServiceTutor(
-                        jsonValues,
-                        props.service_tutor.id
-                      )
+                    let jsonValues = formikValues.getValues()
+                    console.log(jsonValues)
+                    //TODO POST AND PUT
                   }}>
                   {({
                     errors,
@@ -157,10 +124,13 @@ const ServicesInfoView = (props) => {
                           <MenuItem value={-1}>
                             <em>---</em>
                           </MenuItem>
-                          {props.specialities.map((subarea, index) => (
-                            <MenuItem key={index} value={subarea.id}>
-                              {subarea.knowledge_area.name}
-                            </MenuItem>
+                          {isLoading? '' :
+                            (
+                              data.map((subarea, index) => (
+                                <MenuItem key={index} value={subarea.id}>
+                                  {subarea.knowledge_area.name}
+                                </MenuItem>
+                            )
                           ))}
                         </Select>
                         {Boolean(touched.speciality && errors.speciality) && (
@@ -204,7 +174,7 @@ const ServicesInfoView = (props) => {
                           type="submit"
                           endIcon={<SaveIcon />}
                           variant="contained">
-                          {props.is_create ? 'Guardar Servicio' : 'Actualizar'}
+                          {service===null ? 'Guardar Servicio' : 'Actualizar'}
                         </Button>
                       </Box>
                       <Box my={2}></Box>
@@ -220,15 +190,4 @@ const ServicesInfoView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  service_tutor: state.services.service_tutor,
-  specialities: state.services.specialities_tutor,
-  is_create: state.services.is_create
-})
-
-export default connect(mapStateToProps, {
-  getSpecialitiesTutor,
-  addServiceTutor,
-  updateServiceTutor
-})(ServicesInfoView)
+export default ServicesInfoView
