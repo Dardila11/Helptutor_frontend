@@ -35,14 +35,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const StudentPublicationsView = (props) => {
+const StudentPublicationsView = () => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
 
   const { data, status } = usePublications()
-
 
   const handleOpen = () => {
     setOpen(true)
@@ -76,6 +75,27 @@ const StudentPublicationsView = (props) => {
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
+            <Box display="flex" flexDirection="row" justifyContent="center">
+              <Box>
+                <Button
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                  startIcon={<AddCircleIcon />}
+                  onClick={handleOpen}>
+                  Agregar publicación
+                </Button>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="publications-dialog-title">
+                  <PublicationFormView
+                    onClose={handleClose}
+                    publication={null}
+                  />
+                </Dialog>
+              </Box>
+            </Box>
             {status === 'success' ? (
               data.length === 0 ? (
                 <Box className={classes.title} textAlign="center">
@@ -86,36 +106,6 @@ const StudentPublicationsView = (props) => {
                   <Box className={classes.title} textAlign="center">
                     <Typography variant="h4">Mis plublicaciones</Typography>
                   </Box>
-                  {/* {creating ? (
-                    <CircularProgress />
-                  ) : (
-                    <>
-                      <Box
-                        display="flex"
-                        flexDirection="row"
-                        justifyContent="center">
-                        <Box>
-                          <Button
-                            className={classes.button}
-                            variant="contained"
-                            color="primary"
-                            startIcon={<AddCircleIcon />}
-                            onClick={handleOpen}>
-                            Agregar publicación
-                          </Button>
-                        </Box>
-                      </Box>
-                      <Dialog
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="publications-dialog-title">
-                        <PublicationFormView
-                          onClose={handleClose}
-                          publication={null}
-                        />
-                      </Dialog>
-                    </>
-                  )} */}
                   {listFilter === null ? (
                     <>
                       {data.map((publication, index) => (

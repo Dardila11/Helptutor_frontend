@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Button,
@@ -9,17 +9,20 @@ import {
   IconButton,
   makeStyles,
   TextField,
-  Typography
+  Typography,
+  Select,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  FormHelperText
 } from '@material-ui/core'
 import { Formik } from 'formik'
-import Validation from './formikValues'
-
 import CloseIcon from '@material-ui/icons/Close'
 
-//REDUX
-import { addPublication } from 'src/redux/actions/student/student_publications'
-
-import { connect } from 'react-redux'
+import useKnowledgeAreas from 'src/hooks/useKnowledgeAreas'
+import useCreatePublication from 'src/hooks/useCreatePublication'
+import { useAuthState} from 'src/context/context'
+import Validation from './formikValues'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -28,24 +31,37 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     marginTop: theme.spacing(2),
     marginBlock: theme.spacing(2)
+  },
+  selectControl: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(1)
   }
 }))
 
-let initialValuesObj = {
-  title: '',
-  description: ''
-}
+
+
 
 const PublicationFormView = (props) => {
-  const { addPublication, student, publication } = props
   const classes = useStyles()
+  const userId = useAuthState().user.id
+  const { data: categories, status } = useKnowledgeAreas()
+  const mutation = useCreatePublication()
   let edit = false
-  let initialValues = {}
+
+  let initialValuesObj = {
+    title: '',
+    description: '',
+    knowledge_area_student: 2,
+    student: userId
+  }
+
+  
+  /*let initialValues = {}
   if (publication === null) initialValues = initialValuesObj
   else {
     initialValues = publication
     edit = true
-  }
+  } */
   return (
     <>
       <DialogTitle
@@ -69,14 +85,17 @@ const PublicationFormView = (props) => {
             <Container maxWidth="lg">
               <Formik
                 enableReinitialize={true}
-                initialValues={initialValues}
+                initialValues={initialValuesObj}
                 validationSchema={Validation.validation}
                 onSubmit={(values) => {
-                  let jsonValues = Validation.getValues({
-                    ...values,
-                    student: student
-                  })
-                  addPublication(jsonValues)
+                  /* let jsonValues = Validation.getValues({
+                    ...values
+                    //student: student
+                  }) */
+                  //addPublication(jsonValues)
+                  console.log(values)
+                  mutation.mutate(values)
+
                 }}>
                 {({
                   errors,
@@ -87,6 +106,33 @@ const PublicationFormView = (props) => {
                   values
                 }) => (
                   <form onSubmit={handleSubmit}>
+                    <FormControl
+                      variant="outlined"
+                      className={classes.selectControl}
+                      fullWidth>
+                      <InputLabel id="categories-label">Categoria</InputLabel>
+                      <Select
+                        labelId="categories-label"
+                        id="categories-select"
+                        name="knowledge_area_student"
+                        value={values.knowledge_area_student}
+                        onChange={e => handleChange(e)}>
+                        <MenuItem value={-1}>
+                          <em>---</em>
+                        </MenuItem>
+                        {status === 'success' ? (
+                          categories.map((cat, index) => (
+                            <MenuItem key={index} value={cat.id}>
+                              {cat.name} 
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <MenuItem value={0}>
+                          <em>---</em>
+                        </MenuItem>
+                        )}
+                      </Select>
+                    </FormControl>
                     <TextField
                       id="txt_title"
                       error={Boolean(touched.title && errors.title)}
@@ -139,10 +185,4 @@ const PublicationFormView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  student: state.studentInfo.student
-})
-
-export default connect(mapStateToProps, {
-  addPublication
-})(PublicationFormView)
+export default PublicationFormView
