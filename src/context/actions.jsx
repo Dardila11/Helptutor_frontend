@@ -1,6 +1,6 @@
 const ROOT_URL = 'https://mdquilindo.pythonanywhere.com'
 
-export async function loginUser(dispatch, loginPayload) {
+export async function loginUser(dispatch, loginPayload, isGoogleLogin) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -9,7 +9,12 @@ export async function loginUser(dispatch, loginPayload) {
  
   try {
     dispatch({ type: 'REQUEST_LOGIN' });
-    let response = await fetch(`${ROOT_URL}/api/auth/login/google`, requestOptions);
+    let response
+    if(isGoogleLogin) {
+      response = await fetch(`${ROOT_URL}/api/auth/login/google`, requestOptions)
+    }else{
+      response = await fetch(`${ROOT_URL}/api/auth/login`, requestOptions)
+    }
     let data = await response.json();
     if (data.user) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: data });

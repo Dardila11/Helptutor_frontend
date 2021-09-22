@@ -65,7 +65,7 @@ const TutorScheduleView = (props) => {
                   <Divider className={classes.divider} />
                   <Typography>
                     Selecciona las franjas de tiempo que tienes disponibles para
-                    dictar tus clases
+                    dictar tus clases en la semana
                   </Typography>
                 </Box>
               </Container>
