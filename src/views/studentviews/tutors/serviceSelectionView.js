@@ -22,7 +22,7 @@ import ProfileView from 'src/components/cards/tutorProfileCard'
 import Schedule from 'src/components/Schedule/Schedule'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 
-import useTutorInfo from 'src/hooks/useTutorInfo'
+import useTutorInfo from 'src/hooks/TutorHooks/useTutorInfo'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,16 +86,9 @@ const ServiceSelectionView = (props) => {
   const [contract, setContract] = React.useState({})
   const { idTutor, service  } = props
   const steps = getSteps()
-  const queryUseTutorInfo = useTutorInfo(idTutor)
+  console.log(props.tutorInfo.id)
+  const queryUseTutorInfo = useTutorInfo(props.tutorInfo.user.id)
   console.log(queryUseTutorInfo)
-
-  /* useEffect(
-    () => {
-      props.getTutorSelectedInfo(idTutor)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  ) */
 
   const handleNext = () => {
     if (activeStep < 2) setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -153,7 +146,7 @@ const ServiceSelectionView = (props) => {
                   queryUseTutorInfo.isLoading ? (
                     <ProfileViewSkeleton/>
                   ) : (
-                    <ProfileView tutor={queryUseTutorInfo.data} /* idTutor={idTutor} next={handleTutor} */ />
+                    <ProfileView tutor={queryUseTutorInfo.data}/>
                   )
                 ) : (
                   <></>

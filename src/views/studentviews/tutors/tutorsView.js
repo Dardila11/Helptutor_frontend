@@ -6,7 +6,7 @@ import SearchBar from 'src/components/SearchBar'
 import TutorServiceCard from 'src/components/cards/tutorServiceCard'
 import Page from 'src/components/Page'
 
-import useTutorsServices from 'src/hooks/useTutorsServices'
+import useTutorsServices from 'src/hooks/TutorHooks/useTutorServices'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,14 +30,15 @@ const TutorsView = () => {
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
   const [filter, setFilter] = useState({ label: '', value: 0 })
-  const { data, status, isLoading, error } = useTutorsServices()
+  const tutorServicesQuery = useTutorsServices()
+  console.log(tutorServicesQuery);
 
   useEffect(
     () => {
       if (query === '') setListFilter(null)
       else
         setListFilter(
-          data.filter(
+          tutorServicesQuery.data.filter(
             (serv) =>
               serv.title.toLowerCase().includes(query.toLowerCase()) ||
               serv.description.toLowerCase().includes(query.toLowerCase())
@@ -62,7 +63,7 @@ const TutorsView = () => {
         if (filt.value !== 0) {
           if (!listFilter === null)
             setListFilter(listFilter.filter((serv) => serv.price <= filt.value))
-          else setListFilter(data.filter((serv) => serv.price <= filt.value))
+          else setListFilter(tutorServicesQuery.data.filter((serv) => serv.price <= filt.value))
         }
         break
 
@@ -77,18 +78,18 @@ const TutorsView = () => {
         <Box>
           <SearchBar
             option={'servicios'}
-            list={data}
+            list={tutorServicesQuery.data}
             setQuery={setQuery}
             setFilter={setFilter}
           />
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
-            {isLoading ? (
+            {tutorServicesQuery.isLoading ? (
               <CardsViewSkeleton />
-            ) : status === 'success' ? (
+            ) : tutorServicesQuery.status === 'success' ? (
               <>
-                {data.length === 0 ? (
+                {tutorServicesQuery.data.length === 0 ? (
                   <Box className={classes.title} textAlign="center">
                     <Typography variant="h5">No hay servicios</Typography>
                   </Box>
@@ -100,7 +101,7 @@ const TutorsView = () => {
                     <Box>
                       {listFilter === null ? (
                         <>
-                          {data.map((service, index) => (
+                          {tutorServicesQuery.data.map((service, index) => (
                             <TutorServiceCard
                               key={index}
                               id={service.id}
@@ -144,7 +145,7 @@ const TutorsView = () => {
             ) : (
               <>
                 <Box paddingLeft="10px">
-                  <Typography> {error.message}</Typography>
+                  <Typography> {tutorServicesQuery.error.message}</Typography>
                 </Box>
               </>
             )}

@@ -21,7 +21,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import useStudentKnowledgeAreas from 'src/hooks/StudentHooks/useStudentKnowledgeAreas'
 import useCreatePublication from 'src/hooks/useCreatePublication'
 import { useAuthState } from 'src/context/context'
-import Validation from './formikValues'
+import Validation from './formikUtils/formikValues'
 
 const useStyles = makeStyles((theme) => ({
   input: {

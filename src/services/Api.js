@@ -157,7 +157,7 @@ const addToken = (token) => {
 /** TUTOR SERVICES */
 
 const getTutorServices = (id) => {
-  return https.get('/api/tutor/'+5+'/service/', AuthHeader())
+  return https.get('/api/tutor/'+id+'/service/', AuthHeader())
 }
 
 const postServiceTutor = (data, values) => {

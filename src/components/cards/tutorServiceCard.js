@@ -89,7 +89,7 @@ const TutorServiceCard = (props) => {
                 src="/static/images/avatars/avatar_6.png"
               />
               <Typography>
-                <b>Username</b>
+                <b>{props.service.tutor.user.first_name} {props.service.tutor.user.last_name}</b>
               </Typography>
               <Rating name="read-only" size="small" value={4} readOnly />
             </Box>
@@ -113,7 +113,7 @@ const TutorServiceCard = (props) => {
               <Typography variant="subtitle1" color="textSecondary">
                 <b>Costo por hora</b>
               </Typography>
-              <Typography variant="h4">{service.price} $</Typography>
+              <Typography variant="h4">$ {service.price}</Typography>
             </Container>
           </Grid>
         </Grid>
@@ -125,7 +125,7 @@ const TutorServiceCard = (props) => {
         fullWidth={true}
         scroll="paper"
         aria-labelledby="tutorSelection-dialog-title">
-        <ServiceSelectionView onClose={handleClose} idTutor={service.tutor} service={service}/>
+        <ServiceSelectionView onClose={handleClose} tutorInfo={service.tutor} service={service}/>
       </Dialog>
     </Paper>
   )
