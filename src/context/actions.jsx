@@ -23,6 +23,12 @@ export async function loginUser(dispatch, loginPayload) {
     dispatch({ type: 'LOGIN_ERROR', error: error });
   }
 }
+
+export function onReload(dispatch, loginPayload) {
+  if (loginPayload.user) {
+    dispatch({ type: 'LOGIN_SUCCESS', payload: loginPayload })    
+  }
+}
  
 export async function logout(dispatch) {
   dispatch({ type: 'LOGOUT' });
