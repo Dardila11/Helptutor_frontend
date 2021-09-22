@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import {
   Box,
   Button,
@@ -13,15 +12,14 @@ import {
   Select,
   FormControl,
   MenuItem,
-  InputLabel,
-  FormHelperText
+  InputLabel
 } from '@material-ui/core'
 import { Formik } from 'formik'
 import CloseIcon from '@material-ui/icons/Close'
 
-import useKnowledgeAreas from 'src/hooks/useKnowledgeAreas'
-import useCreatePublication from 'src/hooks/useCreatePublication'
-import { useAuthState} from 'src/context/context'
+import useStudentKnowledgeAreas from 'src/hooks/StudentHooks/useStudentKnowledgeAreas'
+import useUpdateOffer from 'src/hooks/StudentHooks/useUpdateOffer'
+import { useAuthState } from 'src/context/context'
 import Validation from './formikValues'
 
 const useStyles = makeStyles((theme) => ({
@@ -38,43 +36,32 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-
-
-
-const PublicationFormView = (props) => {
+const UpdatePublicationFormView = ({ onClose, publication }) => {
   const classes = useStyles()
   const userId = useAuthState().user.id
-  const { data: categories, status } = useKnowledgeAreas()
-  const mutation = useCreatePublication()
-  let edit = false
-
-  let initialValuesObj = {
-    title: '',
-    description: '',
-    knowledge_area_student: 2,
-    student: userId
+  const { data, status } = useStudentKnowledgeAreas(userId)
+  let initialValues = {
+    title: publication.title,
+    description: publication.description ,
+    knowledge_area_student: publication.knowledge_area_student,
+    student: publication.student,
   }
+  const mutationUpdate = useUpdateOffer()
 
-  
-  /*let initialValues = {}
-  if (publication === null) initialValues = initialValuesObj
-  else {
-    initialValues = publication
-    edit = true
-  } */
+
   return (
     <>
       <DialogTitle
         id="publications-dialog-title"
         align="center"
-        onClose={props.onClose}>
+        onClose={onClose}>
         <Box display="flex" alignItems="center">
           <Box flexGrow={1}>
-            <Typography variant="h3">
-              {edit ? 'Editar publicación' : 'Agregar publicación'}
+            <Typography component={'span'} variant="h3">
+              Editar Publicación
             </Typography>
           </Box>
-          <IconButton onClick={props.onClose}>
+          <IconButton onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </Box>
@@ -85,17 +72,16 @@ const PublicationFormView = (props) => {
             <Container maxWidth="lg">
               <Formik
                 enableReinitialize={true}
-                initialValues={initialValuesObj}
+                initialValues={initialValues}
                 validationSchema={Validation.validation}
                 onSubmit={(values) => {
                   /* let jsonValues = Validation.getValues({
                     ...values
                     //student: student
                   }) */
-                  //addPublication(jsonValues)
-                  console.log(values)
-                  mutation.mutate(values)
-
+                  mutationUpdate.mutate([publication.id, values]) 
+                  onClose()
+                  
                 }}>
                 {({
                   errors,
@@ -116,20 +102,22 @@ const PublicationFormView = (props) => {
                         id="categories-select"
                         name="knowledge_area_student"
                         value={values.knowledge_area_student}
-                        onChange={e => handleChange(e)}>
+                        onChange={(e) => handleChange(e)}>
                         <MenuItem value={-1}>
                           <em>---</em>
                         </MenuItem>
                         {status === 'success' ? (
-                          categories.map((cat, index) => (
-                            <MenuItem key={index} value={cat.id}>
-                              {cat.name} 
+                          data.map((area, index) => (
+                            <MenuItem
+                              key={index}
+                              value={area.knowledge_area.id}>
+                              <em>{area.knowledge_area.name}</em>
                             </MenuItem>
                           ))
                         ) : (
                           <MenuItem value={0}>
-                          <em>---</em>
-                        </MenuItem>
+                            <em>---</em>
+                          </MenuItem>
                         )}
                       </Select>
                     </FormControl>
@@ -172,7 +160,7 @@ const PublicationFormView = (props) => {
                       fullWidth
                       type="submit"
                       variant="contained">
-                      {edit ? 'Actualizar' : 'Agregar'}
+                      Actualizar
                     </Button>
                   </form>
                 )}
@@ -185,4 +173,4 @@ const PublicationFormView = (props) => {
   )
 }
 
-export default PublicationFormView
+export default UpdatePublicationFormView

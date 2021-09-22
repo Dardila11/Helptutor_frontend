@@ -74,6 +74,10 @@ const getTutorKnowledgeAreas = (idTutor) => {
   return https.get('/api/tutor/' + idTutor + '/knowledgearea/', AuthHeader())
 }
 
+const getStudentKnowledgeAreas = (idStudent) => {
+  return https.get(`api/student/${idStudent}/knowledgearea/`, AuthHeader())
+}
+
 const deleteTutorKnowledgeArea = (idArea) => {
   return https.delete('/api/knowledgearea_tutor/' + idArea + '/')
 }
@@ -86,6 +90,10 @@ const getknowledgeAreas = () => {
 
 const getKnowledgeArea = (id) => {
   return https.get('/api/knowledgearea/' + id + '/')
+}
+
+const getOfferById = (id) => {
+  return https.get(`api/offer/${id}/`)
 }
 
 const getSubKnowledgeAreas = (idArea) => {
@@ -206,6 +214,10 @@ const getOffers = () => {
   return https.get('api/tutor/offer/', AuthHeader())
 }
 
+const getOffersByStudentId = (id) => {
+  return https.get(`api/student/${id}/offer/`, AuthHeader())
+}
+ 
 const postAdvertisement = (data, state) => {
   return https.post('api/advertisement/', data, tokenConfig(state))
 }
@@ -223,12 +235,12 @@ const getServices = () => {
   return https.get('api/service/', AuthHeader())
 }
 
-const patchOffer = (id, data, state) => {
-  return https.patch('api/offer/' + id + '/', data, tokenConfig(state))
+const patchOffer = (id, data) => {
+  return https.patch('api/offer/' + id + '/', data, AuthHeader())
 }
 
-const deleteOffer = (id, state) => {
-  return https.delete('api/offer/' + id + '/', tokenConfig(state))
+const deleteOffer = (id) => {
+  return https.delete('api/offer/' + id + '/', AuthHeader())
 }
 
 const getOfferNominations = (id, state) => {
@@ -260,11 +272,14 @@ const logConstants = {
   getStudentInfo,
   getknowledgeAreas,
   getKnowledgeArea,
+  getOfferById,
   getSubKnowledgeAreas,
   getCertificate,
   getTutorKnowledgeAreas,
+  getStudentKnowledgeAreas,
   getTutors,
   getOffers,
+  getOffersByStudentId,
   getAdvertisements,
   getAdvertisementAnswers,
   getTutorServices,

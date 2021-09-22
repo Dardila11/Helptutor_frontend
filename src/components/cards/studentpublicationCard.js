@@ -1,8 +1,6 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import CardContent from '@material-ui/core/CardContent'
-import Typography from '@material-ui/core/Typography'
 import {
+  makeStyles,
   Badge,
   Box,
   Button,
@@ -12,16 +10,20 @@ import {
   DialogTitle,
   Grid,
   IconButton,
-  Paper
+  Paper,
+  Tooltip,
+  CardContent,
+  Typography
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import VisibilityIcon from '@material-ui/icons/Visibility'
+
 import TutorSelectionView from 'src/views/studentviews/publications/tutorselection/tutorSelectionView'
-import PublicationFormView from 'src/views/studentviews/publications/publicationForm'
-import { deletePublication } from 'src/redux/actions/student/student_publications'
-import { connect } from 'react-redux'
+import UpdatePublicationFormView from 'src/views/studentviews/publications/crud/UpdatePublicationForm'
 import { isUndefined } from 'lodash-es'
+
+import useDeleteOffer from 'src/hooks/StudentHooks/useDeleteOffer'
 
 const useStyles = makeStyles((theme) => ({
   details: {
@@ -51,11 +53,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const StudentPublicationCard = (props) => {
-  const { publication, isStudent, deletePublication, isSearch, query } = props
+  const { publication, isSearch, query } = props
   const classes = useStyles()
   const [watch, setWatch] = React.useState(false)
   const [edit, setEdit] = React.useState(false)
   const [deletep, setDelete] = React.useState(false)
+
+  const mutation = useDeleteOffer(publication.id)
 
   const handleWatch = () => {
     setWatch(true)
@@ -68,7 +72,7 @@ const StudentPublicationCard = (props) => {
     setDelete(true)
   }
   const handleDelete = () => {
-    deletePublication(publication.id)
+    mutation.mutate()
     setDelete(false)
   }
   const handleClose = () => {
@@ -76,17 +80,12 @@ const StudentPublicationCard = (props) => {
     setEdit(false)
     setDelete(false)
   }
-  let gridValue = 12
-  if (isStudent) {
-    gridValue = 9
-  }
-
+  
   const getHighlightedText = (text) => {
     // Split on highlight term and include term into parts, ignore case
     const parts = text.split(new RegExp(`(${query})`, 'gi'))
     return (
       <span>
-        {' '}
         {parts.map((part, i) => (
           <span
             key={i}
@@ -97,7 +96,7 @@ const StudentPublicationCard = (props) => {
             }>
             {part}
           </span>
-        ))}{' '}
+        ))}
       </span>
     )
   }
@@ -105,7 +104,7 @@ const StudentPublicationCard = (props) => {
   return (
     <Paper className={classes.paper} elevation={3}>
       <Grid container>
-        <Grid item xs={gridValue}>
+        <Grid item xs={9}>
           <Box className={classes.details}>
             <CardContent className={classes.content}>
               <Typography component="h5" variant="h5">
@@ -115,7 +114,7 @@ const StudentPublicationCard = (props) => {
                     : publication.title}
                 </Box>
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
+              <Typography component="h6" variant="subtitle1" color="textSecondary">
                 {isSearch && !isUndefined(query)
                   ? getHighlightedText(publication.description)
                   : publication.description}
@@ -123,87 +122,84 @@ const StudentPublicationCard = (props) => {
             </CardContent>
           </Box>
         </Grid>
-        {isStudent ? (
-          <Grid className={classes.options} item xs={3}>
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              textAlign="center">
-              <Typography color="textSecondary">
-                <b>Opciones</b>
-              </Typography>
-              <Box spacing={3}>
+        <Grid className={classes.options} item xs={3}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            textAlign="center">
+            <Typography color="textSecondary">
+              <b>Opciones</b>
+            </Typography>
+            <Box spacing={3}>
+              <Tooltip title="nominados" placement="bottom" arrow>
                 <IconButton color="primary" onClick={handleWatch}>
                   <Badge badgeContent={4} color="primary">
                     <VisibilityIcon />
                   </Badge>
                 </IconButton>
+              </Tooltip>
+              <Tooltip title="editar" placement="bottom" arrow>
                 <IconButton color="primary" onClick={handleEdit}>
                   <EditIcon />
                 </IconButton>
+              </Tooltip>
+              <Tooltip title="eliminar" placement="bottom" arrow>
                 <IconButton color="primary" onClick={handleOpenDelete}>
                   <DeleteIcon />
                 </IconButton>
-              </Box>
+              </Tooltip>
             </Box>
-            <Dialog
-              open={watch}
+          </Box>
+          <Dialog
+            open={watch}
+            onClose={handleClose}
+            maxWidth="md"
+            scroll="paper"
+            fullWidth={true}
+            aria-labelledby="tutorSelection-dialog-title">
+            <TutorSelectionView
               onClose={handleClose}
-              maxWidth="md"
-              scroll="paper"
-              fullWidth={true}
-              aria-labelledby="tutorSelection-dialog-title">
-              <TutorSelectionView
-                  onClose={handleClose}
-                  id={publication.id}
-                  key={publication.id}
-                  publication={publication}
-                />
-            </Dialog>
-            <Dialog
-              open={edit}
+              id={publication.id}
+              key={publication.id}
+              publication={publication}
+            />
+          </Dialog>
+          <Dialog
+            open={edit}
+            onClose={handleClose}
+            aria-labelledby="publications-dialog-title">
+            <UpdatePublicationFormView
               onClose={handleClose}
-              aria-labelledby="publications-dialog-title">
-              <PublicationFormView onClose={handleClose} publication={publication} />
-            </Dialog>
-            <Dialog
-              open={deletep}
-              onClose={handleClose}
-              aria-labelledby="tutorDeletePublication-dialog-title">
-              <DialogTitle align="center">
-                <Typography variant="h4">Eliminar publicación</Typography>
-              </DialogTitle>
-              <DialogContent>
-                ¿Estas seguro de eliminar la publicación{' '}
-                <b>{publication.title}</b>?
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={handleClose}>
-                  Cancelar
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleDelete}>
-                  Eliminar
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </Grid>
-        ) : (
-          <></>
-        )}
+              publication={publication}
+            />
+          </Dialog>
+          <Dialog
+            open={deletep}
+            onClose={handleClose}
+            aria-labelledby="tutorDeletePublication-dialog-title">
+            <DialogTitle align="center">
+              <Typography component={'span'} variant="h4">Eliminar publicación</Typography>
+            </DialogTitle>
+            <DialogContent>
+              ¿Estas seguro de eliminar la publicación <b>{publication.title}</b>?
+            </DialogContent>
+            <DialogActions>
+              <Button variant="outlined" color="primary" onClick={handleClose}>
+                Cancelar
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleDelete}>
+                Eliminar
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Grid>
       </Grid>
     </Paper>
   )
 }
 
-const mapStateToProps = (state) => ({})
-
-export default connect(mapStateToProps, {
-  deletePublication
-})(StudentPublicationCard)
+export default StudentPublicationCard

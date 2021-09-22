@@ -10,12 +10,13 @@ import {
 
 import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
-import PublicationFormView from './publicationForm'
+import CreatePublicationForm from './crud/CreatePublicationForm'
 import StudentPublicationCard from 'src/components/cards/studentpublicationCard'
 import Page from 'src/components/Page'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 import usePublications from 'src/hooks/usePublications'
+import { useAuthState} from 'src/context/context'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,8 +43,8 @@ const StudentPublicationsView = () => {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
-
-  const { data, status } = usePublications()
+  const userId = useAuthState().user.id
+  const publicationsQuery = usePublications(userId)
 
   const handleOpen = () => {
     setOpen(true)
@@ -58,7 +59,7 @@ const StudentPublicationsView = () => {
       if (query === '') setListFilter(null)
       else
         setListFilter(
-          data.filter(
+          publicationsQuery.data.filter(
             (pub) =>
               pub.title.toLowerCase().includes(query.toLowerCase()) ||
               pub.description.toLowerCase().includes(query.toLowerCase())
@@ -73,7 +74,7 @@ const StudentPublicationsView = () => {
     <Page title="Publicaciones">
       <Box display="flex" flexDirection="row" justifyContent="center">
         <Box>
-          <SearchBar option={'publicaciones'} list={data} setQuery={setQuery} />
+          <SearchBar option={'publicaciones'} list={publicationsQuery.data} setQuery={setQuery} />
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
@@ -91,17 +92,17 @@ const StudentPublicationsView = () => {
                   open={open}
                   onClose={handleClose}
                   aria-labelledby="publications-dialog-title">
-                  <PublicationFormView
+                  <CreatePublicationForm
                     onClose={handleClose}
                     publication={null}
                   />
                 </Dialog>
               </Box>
             </Box>
-            {status === 'success' ? (
-              data.length === 0 ? (
+            {publicationsQuery.status === 'success' ? (
+              publicationsQuery.data.length === 0 ? (
                 <Box className={classes.title} textAlign="center">
-                  <Typography variant="h5">No hay publicaciones</Typography>
+                  <Typography component='h5' variant="h5">No hay publicaciones</Typography>
                 </Box>
               ) : (
                 <>
@@ -109,17 +110,14 @@ const StudentPublicationsView = () => {
                     <Typography variant="h4">Mis plublicaciones</Typography>
                   </Box>
                   {listFilter === null ? (
-                    <>
-                      {data.map((publication, index) => (
+                      publicationsQuery.data.map((publication, index) => (
                         <StudentPublicationCard
                           key={index}
                           id={publication.id}
                           publication={publication}
-                          isStudent={true}
                           isSearch={false}
                         />
-                      ))}
-                    </>
+                      ))
                   ) : (
                     <>
                       {listFilter.length > 0 ? (
@@ -129,7 +127,6 @@ const StudentPublicationsView = () => {
                               key={index}
                               id={publication.id}
                               publication={publication}
-                              isStudent={true}
                               isSearch={true}
                               query={query}
                             />

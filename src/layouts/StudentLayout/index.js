@@ -54,7 +54,7 @@ const StudentLayout = (props) => {
   return loading ? (
     <Backdrop className={classes.backdrop} open={true}>
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Typography color="primary">Cargando</Typography>
+        <Typography component="span" color="primary">Cargando</Typography>
         <CircularProgress color="primary" />
       </Box>
     </Backdrop>
