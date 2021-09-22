@@ -1,8 +1,10 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { Outlet } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
 import MainNavBar from './navbar'
 import { ToastContainer } from 'react-toastify'
+import { useAuthDispatch, onReload } from 'src/context'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +25,17 @@ const useStyles = makeStyles((theme) => ({
 
 export const MainLayout = () => {
   const classes = useStyles()
+  const dispatch = useAuthDispatch()
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem('currentUser'))
+    if(user!=null){
+      onReload(dispatch,user)
+      navigate('/seleccion-rol')
+    }
+  },[dispatch])
+
   return (
     <div className={classes.root}>
       <MainNavBar />

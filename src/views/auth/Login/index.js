@@ -1,10 +1,5 @@
-//REACT
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
-
-//REDUX
-import { login, selectRole } from 'src/redux/actions/auth'
-import { connect } from 'react-redux'
 
 //COMPONENTS MATERIAL UI
 import {
@@ -23,9 +18,10 @@ import Page from 'src/components/Page'
 import SignGoogleHooks from 'src/components/SignGoogleHooks'
 
 import { Formik } from 'formik'
-
-//UTILS
 import Validation from './formikValues'
+
+import { loginUser, useAuthDispatch } from 'src/context' 
+import { toast } from 'react-toastify'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -55,27 +51,17 @@ const useStyles = makeStyles((theme) => ({
 const LoginView = (props) => {
   const classes = useStyles()
   let navigate = useNavigate()
+  const dispatch = useAuthDispatch()
 
-  useEffect(
-    () => {
-      if (props.auth.isAuthenticated) {
-        if (props.auth.isStudent && props.auth.isTutor) {
-          navigate('/seleccion-rol')
-          return
-        }
-        if (props.auth.isStudent) {
-          props.selectRole('student')
-          navigate('/estudiante')
-          return
-        } else {
-          props.selectRole('tutor')
-          navigate('/tutor')
-          return
-        }
-      } else navigate('/login')
-    }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.auth.isAuthenticated]
-  )
+  async function submit(values) {
+    let jsonValues = Validation.getValues(values)
+    const response = await loginUser(dispatch, jsonValues, false)
+    if (!response.user) return
+    if(response.roles[0] && response.roles[1]) navigate('/seleccion-rol')
+    if(response.roles[0] && !response.roles[1]) navigate('/tutor')
+    if(!response.roles[0] && response.roles[1]) navigate('/estudiante')
+    toast.success("Bienvenido "+response.user.first_name)
+  }
 
   return (
     <Page className={classes.root} title="Login">
@@ -89,16 +75,12 @@ const LoginView = (props) => {
             initialValues={Validation.initialValues}
             validationSchema={Validation.validation}
             //ON_SUBMIT ENVIO DEL FORMULARIO
-            onSubmit={(values) => {
-              let jsonValues = Validation.getValues(values)
-              props.login(jsonValues)
-            }}>
+            onSubmit={values => submit(values)}>
             {({
               errors,
               handleBlur,
               handleChange,
               handleSubmit,
-              isSubmitting,
               touched,
               values
             }) => (
@@ -172,11 +154,4 @@ const LoginView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  auth: state.auth
-})
-
-export default connect(mapStateToProps, {
-  selectRole,
-  login
-})(LoginView)
+export default LoginView
