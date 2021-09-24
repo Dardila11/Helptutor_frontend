@@ -27,21 +27,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const LoginHooks = ({login}) => {
-  const dispatch = useAuthDispatch() //get the dispatch method from the useDispatch custom hook
-  let navigate = useNavigate()
-  const classes = useStyles()
-
-  const onSuccess = async(res) => {
-    /*
-     * check whether user email matches @unicauca.edu.co
-     */
-    let userEmail = res.profileObj.email
-    if (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co') {
-      console.log(res)
+const responseGoogle = async (login,response, isUnicaucaEmail, dispatch,navigate) => {
+    if (isUnicaucaEmail) {
       let jsonValues = {
-        token: res.tokenId
+        token: response.tokenId
       }
+      if (login){ 
         let payload = jsonValues
         try {
             let response = await loginUser(dispatch, payload, true) //loginUser action makes the request and handles all the neccessary state changes
@@ -53,8 +44,37 @@ const LoginHooks = ({login}) => {
         } catch (error) {
             console.log(error)
         }
+      }
     } else {
-      toast.error("El correo no pertenece a la Universidad del Cauca")
+      console.log("error")
+    }
+  }
+
+const LoginHooks = ({login, tutorSelect, studentSelect}) => {
+  const dispatch = useAuthDispatch() //get the dispatch method from the useDispatch custom hook
+  let navigate = useNavigate()
+  const classes = useStyles()
+  const hasRoleSelected = tutorSelect || studentSelect
+
+  const validateRole = () => {
+    if (!hasRoleSelected && !login) {
+      console.log("No has seleccionado el rol")
+    } else {
+      signIn()
+    }
+  }
+
+
+  const onSuccess = (res) => {
+    /*
+     * check whether user email matches @unicauca.edu.co
+     */
+    let userEmail = res.profileObj.email
+    if (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co') {
+      if (tutorSelect) responseGoogle(login, res, true, 'tutor',dispatch,navigate)
+      else responseGoogle(login, res, true, 'student',dispatch,navigate)
+    } else {
+      responseGoogle(login, res, false)
     }
   }
 
@@ -73,7 +93,7 @@ const LoginHooks = ({login}) => {
   })
 
   return (
-    <Card onClick={signIn} className={classes.button}>
+    <Card onClick={validateRole} className={classes.button}>
       <img src="icons/google.svg" alt="google login" className={classes.icon} />
       <span className={classes.buttonText}>
         {login ? 'Iniciar Sesión con Google' : 'Registrarme con Google'}
