@@ -218,8 +218,16 @@ const getOffersByStudentId = (id) => {
   return https.get(`api/student/${id}/offer/`, AuthHeader())
 }
  
-const postAdvertisement = (data, state) => {
-  return https.post('api/advertisement/', data, tokenConfig(state))
+const postAdvertisement = (data) => {
+  return https.post('api/advertisement/', data, AuthHeader())
+}
+
+const patchAdvertisement = (id, data) => {
+  return https.patch(`api/advertisement/${id}/`, data, AuthHeader())
+}
+
+const deleteAdvertisement = (id) => {
+  return https.delete(`api/advertisement/${id}/`, AuthHeader() )
 }
 
 const getAdvertisements = () => {
@@ -303,10 +311,12 @@ const logConstants = {
   patchServiceTutor,
   patchNomination,
   patchOffer,
+  patchAdvertisement,
   deleteTutorKnowledgeArea,
   deleteServiceTutor,
   deleteNomination,
   deleteOffer,
+  deleteAdvertisement,
   updateTutorInfo,
   updateStudentInfo,
   login,

@@ -9,19 +9,14 @@ import {
   IconButton,
   makeStyles,
   TextField,
-  Typography,
-  Select,
-  FormControl,
-  MenuItem,
-  InputLabel
+  Typography
 } from '@material-ui/core'
 import { Formik } from 'formik'
 import CloseIcon from '@material-ui/icons/Close'
 
-import useStudentKnowledgeAreas from 'src/hooks/StudentHooks/useStudentKnowledgeAreas'
-import useCreatePublication from 'src/hooks/useCreatePublication'
 import { useAuthState } from 'src/context/context'
 import Validation from './formikUtils/formikValues'
+import { useCreateAdvertisement } from 'src/hooks/useAdvertisements'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -37,17 +32,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const CreatePublicationForm = ({ onClose }) => {
+const CreateAdForm = ({ onClose }) => {
   const classes = useStyles()
   const userId = useAuthState().user.id
-  const { data, status } = useStudentKnowledgeAreas(userId)
-  const mutation = useCreatePublication()
+  const mutation = useCreateAdvertisement()
 
   let initialValues = {
     title: '',
     description: '',
-    knowledge_area_student: 2,
-    student: userId
   }
   return (
     <>
@@ -58,7 +50,7 @@ const CreatePublicationForm = ({ onClose }) => {
         <Box display="flex" alignItems="center">
           <Box flexGrow={1}>
             <Typography component={'span'} variant="h3">
-              Agregar publicación
+              Agregar Anuncio
             </Typography>
           </Box>
           <IconButton onClick={onClose}>
@@ -82,7 +74,6 @@ const CreatePublicationForm = ({ onClose }) => {
                   //addPublication(jsonValues)
                   mutation.mutate(values)
                   onClose()
-                  
                 }}>
                 {({
                   errors,
@@ -93,35 +84,6 @@ const CreatePublicationForm = ({ onClose }) => {
                   values
                 }) => (
                   <form onSubmit={handleSubmit}>
-                    <FormControl
-                      variant="outlined"
-                      className={classes.selectControl}
-                      fullWidth>
-                      <InputLabel id="categories-label">Categoria</InputLabel>
-                      <Select
-                        labelId="categories-label"
-                        id="categories-select"
-                        name="knowledge_area_student"
-                        value={values.knowledge_area_student}
-                        onChange={(e) => handleChange(e)}>
-                        <MenuItem value={-1}>
-                          <em>---</em>
-                        </MenuItem>
-                        {status === 'success' ? (
-                          data.map((area, index) => (
-                            <MenuItem
-                              key={index}
-                              value={area.knowledge_area.id}>
-                              <em>{area.knowledge_area.name}</em>
-                            </MenuItem>
-                          ))
-                        ) : (
-                          <MenuItem value={0}>
-                            <em>---</em>
-                          </MenuItem>
-                        )}
-                      </Select>
-                    </FormControl>
                     <TextField
                       id="txt_title"
                       error={Boolean(touched.title && errors.title)}
@@ -174,4 +136,4 @@ const CreatePublicationForm = ({ onClose }) => {
   )
 }
 
-export default CreatePublicationForm
+export default CreateAdForm
