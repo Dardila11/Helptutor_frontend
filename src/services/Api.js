@@ -218,8 +218,8 @@ const getOffersByStudentId = (id) => {
   return https.get(`api/student/${id}/offer/`, AuthHeader())
 }
  
-const postAdvertisement = (data, state) => {
-  return https.post('api/advertisement/', data, tokenConfig(state))
+const postAdvertisement = (data) => {
+  return https.post('api/advertisement/', data, AuthHeader())
 }
 
 const getAdvertisements = () => {

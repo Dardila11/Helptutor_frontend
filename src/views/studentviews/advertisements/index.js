@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import {
   Box,
-  CircularProgress,
   makeStyles,
   Paper,
-  Typography
+  Typography,
+  Button,
+  Dialog
 } from '@material-ui/core'
-import { getAdvertisements } from 'src/redux/actions/student/advertisements'
-import { connect } from 'react-redux'
+
 import SearchBar from 'src/components/SearchBar'
-import AdvertisementFormView from './advertisementForm'
 import Page from 'src/components/Page'
 import AdvertisementCard from 'src/components/cards/advertisementCard'
 import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
-
-import useAdvertisements from 'src/hooks/useAdvertisements'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import {useAdvertisements} from 'src/hooks/useAdvertisements'
+import CreateAdForm from './crud/CreateAdForm'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,9 +35,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     textTransform: 'none'
   },
-  addAdButton: {
-    float: 'right'
-  },
   nofindbox: {
     margin: theme.spacing(2)
   }
@@ -45,21 +42,25 @@ const useStyles = makeStyles((theme) => ({
 
 const StudentAdvertisementsView = (props) => {
   const classes = useStyles()
-  const { data, isLoading, status } = useAdvertisements()
-  const {
-    loadingAdvertisement,
-    getAdvertisements,
-    advertisements,
-    creating
-  } = props
+  const [open, setOpen] = useState(false)
+  const adsQuery = useAdvertisements()
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   useEffect(
     () => {
       if (query === '') setListFilter(null)
       else
         setListFilter(
-          data.filter(
+          adsQuery.data.filter(
             (ad) =>
               ad.title.toLowerCase().includes(query.toLowerCase()) ||
               ad.description.toLowerCase().includes(query.toLowerCase())
@@ -74,12 +75,29 @@ const StudentAdvertisementsView = (props) => {
     <Page title="Anuncios">
       <Box display="flex" flexDirection="row" justifyContent="center">
         <Box>
-          <SearchBar option={'anuncios'} list={data} setQuery={setQuery} />
+          <SearchBar option={'anuncios'} list={adsQuery.data} setQuery={setQuery} />
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
-            {status === 'success' ? (
-              data.length === 0 ? (
+            <Box display="flex" flexDirection="row" justifyContent="center">
+              <Button
+                className={classes.button}
+                variant="contained"
+                color="primary"
+                startIcon={<AddCircleIcon />}
+                onClick={handleOpen}>
+                Agregar Anuncio
+              </Button>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="ads-dialog-title">
+                {/* <AdvertisementFormView onClose={handleClose} /> */}
+                <CreateAdForm onClose={handleClose}/>
+              </Dialog>
+            </Box>
+            {adsQuery.status === 'success' ? (
+              adsQuery.data.length === 0 ? (
                 <Box className={classes.title} textAlign="center">
                   <Typography variant="h5">No hay anuncios</Typography>
                 </Box>
@@ -87,7 +105,7 @@ const StudentAdvertisementsView = (props) => {
                 <Box>
                   {listFilter === null ? (
                     <>
-                      {data.map((advertisement, index) => (
+                      {adsQuery.data.map((advertisement, index) => (
                         <AdvertisementCard
                           key={index}
                           id={advertisement.id}

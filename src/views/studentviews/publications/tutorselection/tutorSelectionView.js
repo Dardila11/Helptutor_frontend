@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Stepper from '@material-ui/core/Stepper'
-import Step from '@material-ui/core/Step'
-import StepLabel from '@material-ui/core/StepLabel'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
+import React, {useState} from 'react'
 import {
+  makeStyles,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
   Avatar,
   Box,
   Card,
@@ -23,8 +23,12 @@ import ProfileView from 'src/components/cards/tutorProfileCard'
 import Schedule from 'src/components/Schedule/Schedule'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 
-import { getTutorSelectedInfo } from 'src/redux/actions/student/student_publications'
-import { connect } from 'react-redux'
+/* import { getTutorSelectedInfo } from 'src/redux/actions/student/student_publications'
+import { connect } from 'react-redux' */
+
+import useTutorInfo from 'src/hooks/TutorHooks/useTutorInfo'
+import { truncate } from 'lodash-es'
+import { TrendingUpRounded } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,13 +96,14 @@ function getStepContent(step) {
 const TutorSelectionView = (props) => {
   const { publication } = props
   const classes = useStyles()
-  const [contract, setContract] = React.useState({})
-  const [activeStep, setActiveStep] = React.useState(0)
-  const [idTutor, setIdTutor] = React.useState(null)
+  const [contract, setContract] = useState({})
+  const [activeStep, setActiveStep] = useState(0)
+  const [idTutor, setIdTutor] = useState(null)
   const steps = getSteps()
-  const { loading, tutor } = props
+  /* const { loading, tutor } = props */
+  //const tutorInfoQuery = useTutorInfo(idTutor)
 
-  useEffect(
+  /* useEffect(
     () => {
       if (idTutor != null) {
         props.getTutorSelectedInfo(idTutor)
@@ -106,7 +111,7 @@ const TutorSelectionView = (props) => {
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [idTutor]
-  )
+  ) */
 
   const handleNext = () => {
     if (activeStep < 3) setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -202,10 +207,10 @@ const TutorSelectionView = (props) => {
                   <></>
                 )}
                 {activeStep === 1 ? (
-                  loading ? (
+                  true ? (
                     <ProfileViewSkeleton />
                   ) : (
-                    <ProfileView tutor={tutor} />
+                    {/* <ProfileView tutor={tutor} /> */}
                   )
                 ) : (
                   <></>
@@ -329,7 +334,7 @@ const TutorSelectionView = (props) => {
                 size="large"
                 variant="contained"
                 color="primary"
-                onClick={() => handleTutor(tutor)}
+                onClick={() => console.log('next')}
                 className={classes.button}>
                 {activeStep === 1  ? 'Siguiente' : 'Ir al pago'}
               </Button>
@@ -354,11 +359,13 @@ const TutorSelectionView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
+/* const mapStateToProps = (state) => ({
   tutor: state.publications.tutorInfo,
   loading: state.publications.loadingTutor
 })
 
 export default connect(mapStateToProps, {
   getTutorSelectedInfo
-})(TutorSelectionView)
+})(TutorSelectionView) */
+
+export default TutorSelectionView
