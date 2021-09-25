@@ -18,17 +18,16 @@ import {
   Typography
 } from '@material-ui/core'
 import AnswerView from 'src/views/studentviews/advertisements/answers/answer'
-
-import { clearAnswers } from 'src/redux/actions/student/advertisements'
-import { connect } from 'react-redux'
 import { isUndefined } from 'lodash-es'
 
 import { useAuthState } from 'src/context/context'
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
-import VisibilityIcon from '@material-ui/icons/Visibility'
 import ChatIcon from '@material-ui/icons/Chat'
+import UpdateAdFormView from 'src/views/studentviews/advertisements/crud/UpdateAdForm'
+import { useDeleteAdvertisement } from 'src/hooks/useAdvertisements'
+import CloseIcon from '@material-ui/icons/Close'
 
 const useStyles = makeStyles((theme) => ({
   details: {
@@ -74,8 +73,7 @@ const AdvertisementCard = (props) => {
   const [watch, setWatch] = React.useState(false)
   const [edit, setEdit] = React.useState(false)
   const [deletep, setDelete] = React.useState(false)
-  console.log(userId)
-  console.log(advertisement.student.user.id)
+  const mutation = useDeleteAdvertisement()
 
   const handleWatch = () => {
     setWatch(true)
@@ -88,6 +86,7 @@ const AdvertisementCard = (props) => {
     setDelete(true)
   }
   const handleDelete = () => {
+    mutation.mutate(advertisement.id)
     setDelete(false)
   }
   const handleClose = () => {
@@ -97,6 +96,7 @@ const AdvertisementCard = (props) => {
   }
 
   const handleOpen = () => {
+    console.log('card action area clicked')
     setOpen(true)
   }
 
@@ -110,7 +110,6 @@ const AdvertisementCard = (props) => {
     const parts = text.split(new RegExp(`(${query})`, 'gi'))
     return (
       <span>
-        {' '}
         {parts.map((part, i) => (
           <span
             key={i}
@@ -121,31 +120,31 @@ const AdvertisementCard = (props) => {
             }>
             {part}
           </span>
-        ))}{' '}
+        ))}
       </span>
     )
   }
   return (
     <Paper className={classes.paper} elevation={3}>
-      <CardActionArea className={classes.cardAction} onClick={handleOpen}>
-        <Grid container>
-          <Grid item xs={2}>
-            <Box className={classes.userSpace}>
-              <Avatar
-                className={classes.cover}
-                alt="user photo"
-                src="/static/images/avatars/avatar_6.png"
-              />
-              <Typography>
-                <b>
-                  {advertisement.student.user.first_name}{' '}
-                  {advertisement.student.user.last_name}
-                </b>
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={7}>
-            <Box className={classes.details}>
+      {/* <CardActionArea className={classes.cardAction} onClick={handleOpen}> */}
+      <Grid container>
+        <Grid item xs={2}>
+          <Box className={classes.userSpace}>
+            <Avatar
+              className={classes.cover}
+              alt="user photo"
+              src="/static/images/avatars/avatar_6.png"
+            />
+            <Typography>
+              <b>
+                {advertisement.student.user.first_name}{' '}
+                {advertisement.student.user.last_name}
+              </b>
+            </Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={7}>
+          <Box className={classes.details}>
             <CardContent className={classes.content}>
               <Typography component="h5" variant="h5">
                 <Box fontWeight="fontWeightBold">
@@ -159,111 +158,101 @@ const AdvertisementCard = (props) => {
                   ? getHighlightedText(advertisement.description)
                   : advertisement.description}
               </Typography>
-              </CardContent>
-            </Box>
-          </Grid>
-          {userId === advertisement.student.user.id ? (
-            <Grid className={classes.options} item xs={3}>
-              <Box
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                textAlign="center">
-                <Typography color="textSecondary">
-                  <b>Opciones</b>
-                </Typography>
-                <Box spacing={3}>
-                  <Tooltip title="comentarios" placement="bottom" arrow>
-                    <IconButton color="primary" onClick={handleWatch}>
-                      <Badge badgeContent={4} color="primary">
-                        <ChatIcon />
-                      </Badge>
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="editar" placement="bottom" arrow>
-                    <IconButton color="primary" onClick={handleEdit}>
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="eliminar" placement="bottom" arrow>
-                    <IconButton color="primary" onClick={handleOpenDelete}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
-                </Box>
+            </CardContent>
+          </Box>
+        </Grid>
+        {userId === advertisement.student.user.id ? (
+          <Grid className={classes.options} item xs={3}>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              textAlign="center">
+              <Typography color="textSecondary">
+                <b>Opciones</b>
+              </Typography>
+              <Box spacing={3}>
+                <Tooltip title="comentarios" placement="bottom" arrow>
+                  <IconButton color="primary" onClick={handleWatch}>
+                    <Badge badgeContent={4} color="primary">
+                      <ChatIcon />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="editar" placement="bottom" arrow>
+                  <IconButton color="primary" onClick={handleEdit}>
+                    <EditIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="eliminar" placement="bottom" arrow>
+                  <IconButton color="primary" onClick={handleOpenDelete}>
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
               </Box>
-              {/* <Dialog
-              open={watch}
-              onClose={handleClose}
-              maxWidth="md"
-              scroll="paper"
-              fullWidth={true}
-              aria-labelledby="tutorSelection-dialog-title">
-              <TutorSelectionView
-                onClose={handleClose}
-                id={advertisement.id}
-                key={publication.id}
-                publication={publication}
-              />
-            </Dialog> */}
-              {/* <Dialog
+            </Box>
+            <Dialog
               open={edit}
               onClose={handleClose}
-              aria-labelledby="publications-dialog-title">
-              <UpdatePublicationFormView
+              aria-labelledby="advertisements-dialog-title">
+              <UpdateAdFormView
                 onClose={handleClose}
-                publication={publication}
+                advertisement={advertisement}
               />
-            </Dialog> */}
-              <Dialog
-                open={deletep}
-                onClose={handleClose}
-                aria-labelledby="tutorDeletePublication-dialog-title">
-                <DialogTitle align="center">
-                  <Typography component={'span'} variant="h4">
-                    Eliminar publicación
-                  </Typography>
-                </DialogTitle>
-                <DialogContent>
-                  ¿Estas seguro de eliminar la publicación{' '}
-                  <b>{advertisement.title}</b>?
-                </DialogContent>
-                <DialogActions>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={handleClose}>
-                    Cancelar
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleDelete}>
-                    Eliminar
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </Grid>
-          ) : (
-            <></>
-          )}
-        </Grid>
-      </CardActionArea>
+            </Dialog>
+            <Dialog
+              open={deletep}
+              onClose={handleClose}
+              aria-labelledby="tutorDeletePublication-dialog-title">
+              <DialogTitle
+                id="advertisement-delete-dialog-title"
+                align="center"
+                onClose={handleClose}>
+                <Box display="flex" alignItems="center">
+                  <Box flexGrow={1}>
+                    <Typography component={'span'} variant="h3">
+                      Eliminar Anuncio
+                    </Typography>
+                  </Box>
+                  <IconButton onClick={handleClose}>
+                    <CloseIcon />
+                  </IconButton>
+                </Box>
+              </DialogTitle>
+              <DialogContent dividers>
+                ¿Estas seguro de eliminar el anuncio{' '}
+                <b>{advertisement.title}</b>?
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleClose}>
+                  Cancelar
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleDelete}>
+                  Eliminar
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Grid>
+        ) : (
+          <></>
+        )}
+      </Grid>
+      {/* </CardActionArea> */}
       <Dialog open={open} onClose={handleClose} aria-labelledby={idDialog}>
-        <AnswerView
+        {/* <AnswerView
           id={advertisement.id}
           advertisement={advertisement}
           student={student}
-        />
+        /> */}
       </Dialog>
     </Paper>
   )
 }
 
-const mapStateToProps = (state) => ({
-  student: state.advertisements.advertisement.student
-})
-
-export default connect(mapStateToProps, {
-  clearAnswers
-})(AdvertisementCard)
+export default AdvertisementCard
