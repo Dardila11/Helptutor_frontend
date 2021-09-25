@@ -161,87 +161,86 @@ const AdvertisementCard = (props) => {
             </CardContent>
           </Box>
         </Grid>
-        {userId === advertisement.student.user.id ? (
-          <Grid className={classes.options} item xs={3}>
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              textAlign="center">
-              <Typography color="textSecondary">
-                <b>Opciones</b>
-              </Typography>
-              <Box spacing={3}>
-                <Tooltip title="comentarios" placement="bottom" arrow>
-                  <IconButton color="primary" onClick={handleWatch}>
-                    <Badge badgeContent={4} color="primary">
-                      <ChatIcon />
-                    </Badge>
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="editar" placement="bottom" arrow>
-                  <IconButton color="primary" onClick={handleEdit}>
-                    <EditIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="eliminar" placement="bottom" arrow>
-                  <IconButton color="primary" onClick={handleOpenDelete}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-              </Box>
+
+        <Grid className={classes.options} item xs={3}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            textAlign="center">
+            <Typography color="textSecondary">
+              <b>Opciones</b>
+            </Typography>
+            <Box spacing={3}>
+              <Tooltip title="comentarios" placement="bottom" arrow>
+                <IconButton color="primary" onClick={handleWatch}>
+                  <Badge badgeContent={4} color="primary">
+                    <ChatIcon />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
+              {userId === advertisement.student.user.id ? (
+                <>
+                  <Tooltip title="editar" placement="bottom" arrow>
+                    <IconButton color="primary" onClick={handleEdit}>
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="eliminar" placement="bottom" arrow>
+                    <IconButton color="primary" onClick={handleOpenDelete}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                </>
+              ) : (
+                <></>
+              )}
             </Box>
-            <Dialog
-              open={edit}
+          </Box>
+          <Dialog
+            open={edit}
+            onClose={handleClose}
+            aria-labelledby="advertisements-dialog-title">
+            <UpdateAdFormView
               onClose={handleClose}
-              aria-labelledby="advertisements-dialog-title">
-              <UpdateAdFormView
-                onClose={handleClose}
-                advertisement={advertisement}
-              />
-            </Dialog>
-            <Dialog
-              open={deletep}
-              onClose={handleClose}
-              aria-labelledby="tutorDeletePublication-dialog-title">
-              <DialogTitle
-                id="advertisement-delete-dialog-title"
-                align="center"
-                onClose={handleClose}>
-                <Box display="flex" alignItems="center">
-                  <Box flexGrow={1}>
-                    <Typography component={'span'} variant="h3">
-                      Eliminar Anuncio
-                    </Typography>
-                  </Box>
-                  <IconButton onClick={handleClose}>
-                    <CloseIcon />
-                  </IconButton>
+              advertisement={advertisement}
+            />
+          </Dialog>
+          <Dialog
+            open={deletep}
+            onClose={handleClose}
+            aria-labelledby="tutorDeletePublication-dialog-title">
+            <DialogTitle
+              id="advertisement-delete-dialog-title"
+              align="center"
+              onClose={handleClose}>
+              <Box display="flex" alignItems="center">
+                <Box flexGrow={1}>
+                  <Typography component={'span'} variant="h3">
+                    Eliminar Anuncio
+                  </Typography>
                 </Box>
-              </DialogTitle>
-              <DialogContent dividers>
-                ¿Estas seguro de eliminar el anuncio{' '}
-                <b>{advertisement.title}</b>?
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={handleClose}>
-                  Cancelar
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleDelete}>
-                  Eliminar
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </Grid>
-        ) : (
-          <></>
-        )}
+                <IconButton onClick={handleClose}>
+                  <CloseIcon />
+                </IconButton>
+              </Box>
+            </DialogTitle>
+            <DialogContent dividers>
+              ¿Estas seguro de eliminar el anuncio <b>{advertisement.title}</b>?
+            </DialogContent>
+            <DialogActions>
+              <Button variant="outlined" color="primary" onClick={handleClose}>
+                Cancelar
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleDelete}>
+                Eliminar
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Grid>
       </Grid>
       {/* </CardActionArea> */}
       <Dialog open={open} onClose={handleClose} aria-labelledby={idDialog}>
