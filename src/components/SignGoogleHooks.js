@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const LoginHooks = ({login}) => {
+const LoginHooks = () => {
   const dispatch = useAuthDispatch() //get the dispatch method from the useDispatch custom hook
   let navigate = useNavigate()
   const classes = useStyles()
@@ -37,8 +37,8 @@ const LoginHooks = ({login}) => {
      * check whether user email matches @unicauca.edu.co
      */
     let userEmail = res.profileObj.email
+    console.log(res)
     if (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co') {
-      console.log(res)
       let jsonValues = {
         token: res.tokenId
       }
@@ -76,7 +76,7 @@ const LoginHooks = ({login}) => {
     <Card onClick={signIn} className={classes.button}>
       <img src="icons/google.svg" alt="google login" className={classes.icon} />
       <span className={classes.buttonText}>
-        {login ? 'Iniciar Sesión con Google' : 'Registrarme con Google'}
+        {'Iniciar Sesión con Google'}
       </span>
     </Card>
   )

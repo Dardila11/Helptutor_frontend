@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGoogleLogin } from 'react-google-login'
 import { Card, makeStyles } from '@material-ui/core'
+import Api from 'src/services/Api'
 
 import { loginUser, useAuthDispatch } from 'src/context' 
 import { toast } from 'react-toastify'
@@ -27,54 +28,49 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const responseGoogle = async (login,response, isUnicaucaEmail, dispatch,navigate) => {
-    if (isUnicaucaEmail) {
-      let jsonValues = {
-        token: response.tokenId
-      }
-      if (login){ 
-        let payload = jsonValues
-        try {
-            let response = await loginUser(dispatch, payload, true) //loginUser action makes the request and handles all the neccessary state changes
-            if (!response.user) return
-            if(response.roles[0] && response.roles[1]) navigate('/seleccion-rol')
-            if(response.roles[0] && !response.roles[1]) navigate('/tutor')
-            if(!response.roles[0] && response.roles[1]) navigate('/estudiante')
-            toast.success("Bienvenido "+response.user.first_name)
-        } catch (error) {
-            console.log(error)
-        }
-      }
-    } else {
-      console.log("error")
-    }
-  }
-
-const LoginHooks = ({login, tutorSelect, studentSelect}) => {
+const RegisterHooks = ({tutorSelect, studentSelect}) => {
   const dispatch = useAuthDispatch() //get the dispatch method from the useDispatch custom hook
   let navigate = useNavigate()
   const classes = useStyles()
   const hasRoleSelected = tutorSelect || studentSelect
 
   const validateRole = () => {
-    if (!hasRoleSelected && !login) {
-      console.log("No has seleccionado el rol")
+    if (!hasRoleSelected) {
+      toast.error("No has seleccionado un rol para registrarte")
     } else {
       signIn()
     }
   }
 
 
-  const onSuccess = (res) => {
+  const onSuccess = async (res) => {
     /*
      * check whether user email matches @unicauca.edu.co
      */
     let userEmail = res.profileObj.email
     if (userEmail.substr(userEmail.length - 15) === 'unicauca.edu.co') {
-      if (tutorSelect) responseGoogle(login, res, true, 'tutor',dispatch,navigate)
-      else responseGoogle(login, res, true, 'student',dispatch,navigate)
+        let jsonValues = {
+          token: res.tokenId
+        }
+        if(tutorSelect){
+          Api.postGoogleTutor(jsonValues).then(result => {  
+            console.log(result)
+          }).catch(err=>{
+            console.log(err)
+            toast.error("Login error "+err)
+          }
+          )
+        }else{
+          Api.postGoogleStudent(jsonValues).then(result => {
+            console.log(result)
+          }).catch(err=>{
+            console.log(err)
+            toast.error("Login error "+err)
+          }
+          )
+        }
     } else {
-      responseGoogle(login, res, false)
+      toast.error("El correo no pertenece a Unicauca")
     }
   }
 
@@ -96,11 +92,11 @@ const LoginHooks = ({login, tutorSelect, studentSelect}) => {
     <Card onClick={validateRole} className={classes.button}>
       <img src="icons/google.svg" alt="google login" className={classes.icon} />
       <span className={classes.buttonText}>
-        {login ? 'Iniciar Sesión con Google' : 'Registrarme con Google'}
+        {'Registrarme con Google'}
       </span>
     </Card>
   )
 }
 
 
-export default LoginHooks
+export default RegisterHooks
