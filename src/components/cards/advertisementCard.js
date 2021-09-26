@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import {
   Avatar,
-  CardActionArea,
   makeStyles,
   Badge,
   Box,
@@ -18,16 +17,16 @@ import {
   Typography
 } from '@material-ui/core'
 import AnswerView from 'src/views/studentviews/advertisements/answers/answer'
-import { isUndefined } from 'lodash-es'
-
-import { useAuthState } from 'src/context/context'
+import { capitalize, isUndefined } from 'lodash-es'
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import ChatIcon from '@material-ui/icons/Chat'
-import UpdateAdFormView from 'src/views/studentviews/advertisements/crud/UpdateAdForm'
-import { useDeleteAdvertisement } from 'src/hooks/useAdvertisements'
 import CloseIcon from '@material-ui/icons/Close'
+
+import UpdateAdFormView from 'src/views/studentviews/advertisements/crud/UpdateAdForm'
+import { useAuthState } from 'src/context/context'
+import { useDeleteAdvertisement } from 'src/hooks/useAdvertisements'
 
 const useStyles = makeStyles((theme) => ({
   details: {
@@ -137,8 +136,8 @@ const AdvertisementCard = (props) => {
             />
             <Typography>
               <b>
-                {advertisement.student.user.first_name}{' '}
-                {advertisement.student.user.last_name}
+                {capitalize(advertisement.student.user.first_name)}{' '}
+                {capitalize(advertisement.student.user.last_name)}
               </b>
             </Typography>
           </Box>

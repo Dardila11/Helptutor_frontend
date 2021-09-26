@@ -1,7 +1,4 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import CardContent from '@material-ui/core/CardContent'
-import Typography from '@material-ui/core/Typography'
 import {
   Avatar,
   Box,
@@ -9,11 +6,14 @@ import {
   Container,
   Dialog,
   Grid,
-  Paper
+  Paper,
+  Typography,
+  CardContent,
+  makeStyles
 } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
 import ServiceSelectionView from 'src/views/studentviews/tutors/serviceSelectionView'
-import { isUndefined } from 'lodash-es'
+import { capitalize, isUndefined } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   userSpace: {
@@ -89,9 +89,9 @@ const TutorServiceCard = (props) => {
                 src="/static/images/avatars/avatar_6.png"
               />
               <Typography>
-                <b>{props.service.tutor.user.first_name} {props.service.tutor.user.last_name}</b>
+                <b>{capitalize(props.service.tutor.user.first_name)} {capitalize(props.service.tutor.user.last_name)}</b>
               </Typography>
-              <Rating name="read-only" size="small" value={4} readOnly />
+              <Rating name="read-only" size="small" value={props.service.tutor.score} readOnly />
             </Box>
           </Grid>
           <Grid item xs={7}>
@@ -113,7 +113,7 @@ const TutorServiceCard = (props) => {
               <Typography variant="subtitle1" color="textSecondary">
                 <b>Costo por hora</b>
               </Typography>
-              <Typography variant="h4">$ {service.price}</Typography>
+              <Typography variant="h4">${service.price}</Typography>
             </Container>
           </Grid>
         </Grid>

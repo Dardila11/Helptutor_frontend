@@ -10,8 +10,8 @@ import {
   makeStyles,
   Typography
 } from '@material-ui/core'
+import { capitalize } from 'lodash-es'
 import { useAuthState } from 'src/context/context'
-import { capitalizeFirstLetter } from 'src/utils/utils'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -43,7 +43,7 @@ const NavBar = () => {
           alt="my-avatar"
           src={user.photo}>
           <Typography variant="h1">
-            <b>{capitalizeFirstLetter(user.first_name[0])}</b>
+            <b>{capitalize(user.first_name[0])}</b>
           </Typography>
         </Avatar>
         <List>
