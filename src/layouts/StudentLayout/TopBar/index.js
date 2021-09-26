@@ -20,6 +20,7 @@ import ScrollArrow from 'src/components/ScrollArrow'
 
 import { useAuthState} from 'src/context/context'
 import { logout, useAuthDispatch } from 'src/context'
+import { capitalizeFirstLetter } from 'src/utils/utils'
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -120,7 +121,7 @@ const StudentTopBar = () => {
                   <Typography className={classes.userSpace} variant="h4">
                     {user.user != null ? (
                       <>
-                        {user.user.first_name} {user.user.last_name}
+                        {capitalizeFirstLetter(user.user.first_name)} {capitalizeFirstLetter(user.user.last_name)}
                       </>
                     ) : (
                       <></>
@@ -131,7 +132,7 @@ const StudentTopBar = () => {
                   alt="user photo"
                   src={user.user.photo}
                 >
-                  <b>{user.user.first_name[0]}</b>
+                  <b>{capitalizeFirstLetter(user.user.first_name[0])}</b>
                 </Avatar>
                 </IconButton>
                 <Menu

@@ -1,15 +1,17 @@
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { makeStyles, Typography } from '@material-ui/core'
 import {
   Avatar,
   Card,
   Grid,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
+  makeStyles,
+  Typography
 } from '@material-ui/core'
-import { connect } from 'react-redux'
+import { useAuthState } from 'src/context/context'
+import { capitalizeFirstLetter } from 'src/utils/utils'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -30,18 +32,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const NavBar = (props) => {
+const NavBar = () => {
   const classes = useStyles()
+  const user = useAuthState().user
   return (
     <Card className={classes.nav} xs={3}>
       <Grid display="flex" flex="column">
-      <Avatar
+        <Avatar
           className={classes.avatar}
           alt="my-avatar"
-          src={props.user.photo}
-        >
-          <Typography variant='h1'>
-                    <b>{props.user.first_name[0]}</b>
+          src={user.photo}>
+          <Typography variant="h1">
+            <b>{capitalizeFirstLetter(user.first_name[0])}</b>
           </Typography>
         </Avatar>
         <List>
@@ -51,10 +53,7 @@ const NavBar = (props) => {
             button>
             <ListItemText primary="Editar Información" />
           </ListItem>
-          <ListItem
-            component={RouterLink}
-            to="/estudiante/cuenta"
-            button>
+          <ListItem component={RouterLink} to="/estudiante/cuenta" button>
             <ListItemText primary="Historial de pagos" />
           </ListItem>
         </List>
@@ -63,8 +62,4 @@ const NavBar = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user
-})
-
-export default connect(mapStateToProps, {})(NavBar)
+export default NavBar

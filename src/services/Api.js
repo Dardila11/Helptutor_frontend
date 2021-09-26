@@ -123,8 +123,8 @@ const getTutorInfoNew = (id, token) => {
 }
 
 
-const getStudentInfo = (id, state) => {
-  return https.get(`/api/student/${id}/`, tokenConfig(state))
+const getStudentInfo = (id) => {
+  return https.get(`/api/student/${id}/`, AuthHeader())
 }
 
 const tokenConfig = (getState) => {
