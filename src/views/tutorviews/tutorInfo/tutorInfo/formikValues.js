@@ -63,15 +63,6 @@ const validation = Yup.object().shape({
     })
     .max(255)
     .required('Correo Electrónico es requerido')
-
-  /* country: Yup.string().max(255).required('Pais es requerido'),
-  phone: Yup.string().max(255).required('Teléfono es requerido') */
-  /* password: Yup.string().max(255).required('Contraseña es requerido'),
-  confirmPassword: Yup.mixed()
-    .test('iguales', 'Contraseñas no son iguales', function () {
-      return this.parent.password === this.parent.confirmPassword
-    })
-    .required('Contraseña es requerido') */
 })
 
 const logFormikValues = {
