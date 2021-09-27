@@ -22,6 +22,7 @@ import useStudentKnowledgeAreas from 'src/hooks/StudentHooks/useStudentKnowledge
 import useCreatePublication from 'src/hooks/useCreatePublication'
 import { useAuthState } from 'src/context/context'
 import Validation from './formikUtils/formikValues'
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -46,7 +47,7 @@ const CreatePublicationForm = ({ onClose }) => {
   let initialValues = {
     title: '',
     description: '',
-    knowledge_area_student: 2,
+    knowledge_area_student: 4,
     student: userId
   }
   return (
@@ -81,6 +82,7 @@ const CreatePublicationForm = ({ onClose }) => {
                   }) */
                   //addPublication(jsonValues)
                   mutation.mutate(values)
+                  toast.success("Publicación agregada")
                   onClose()
                   
                 }}>

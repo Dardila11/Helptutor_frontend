@@ -128,7 +128,7 @@ const AdvertisementCard = (props) => {
             <Avatar
               className={classes.cover}
               alt="user photo"
-              src="/static/images/avatars/avatar_6.png"
+              src={advertisement.student.user.photo}
             />
             <Typography>
               <b>

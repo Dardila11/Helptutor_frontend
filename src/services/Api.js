@@ -46,11 +46,11 @@ const updateTutorInfo = (data, state) => {
 }
 
 const postGoogleTutor = (data) => {
-  return https.post('/api/tutor/google/', data)
+  return https.post('/api/tutor/google', data)
 }
 
 const postGoogleStudent = (data) => {
-  return https.post('/api/student/google/', data)
+  return https.post('/api/student/google', data)
 }
 
 const getCertificate = () => {

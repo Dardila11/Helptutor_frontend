@@ -8,6 +8,7 @@ import {
   Typography
 } from '@material-ui/core'
 import StudentTopBar from './TopBar'
+import { ToastContainer } from 'react-toastify'
 
 import { useStudentInfo } from 'src/hooks/StudentHooks/useStudentInfo'
 import { useAuthState } from 'src/context/context'
@@ -63,6 +64,7 @@ const StudentLayout = () => {
           <Outlet />
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={5000} closeOnClick pauseOnFocusLoss draggable pauseOnHover/>
     </div>
   )
 }

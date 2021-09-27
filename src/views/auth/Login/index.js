@@ -135,7 +135,7 @@ const LoginView = (props) => {
                 </Box>
                 <Box textAlign="center"> ó </Box>
                 <Box my={1}>
-                  <SignGoogleHooks login={true} />
+                  <SignGoogleHooks />
                   {/* <SignInGoogle login={true}></SignInGoogle> */}
                 </Box>
               </form>
