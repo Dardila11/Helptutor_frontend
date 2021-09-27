@@ -27,6 +27,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import UpdateAdFormView from 'src/views/studentviews/advertisements/crud/UpdateAdForm'
 import { useAuthState } from 'src/context/context'
 import { useDeleteAdvertisement } from 'src/hooks/useAdvertisements'
+import { Favorite, FavoriteBorder  } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   details: {
@@ -66,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 const AdvertisementCard = (props) => {
   const { advertisement, clearAnswers, student, isSearch, query } = props
   const [open, setOpen] = useState(false)
+  const [liked, setLiked] = useState(false)
   const classes = useStyles()
   const userId = useAuthState().user.id
   const idDialog = 'advertisement' + advertisement.id + '-dialog-title'
@@ -136,7 +138,7 @@ const AdvertisementCard = (props) => {
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={6}>
           <Box className={classes.details}>
             <CardContent className={classes.content}>
               <Typography component="h5" variant="h5">
@@ -164,7 +166,7 @@ const AdvertisementCard = (props) => {
               <b>Opciones</b>
             </Typography>
             <Box spacing={3}>
-              <Tooltip title="comentarios" placement="bottom" arrow>
+              <Tooltip title="respuestas" placement="bottom" arrow>
                 <IconButton color="primary" onClick={handleOpen}>
                   <Badge /* badgeContent={4} */ color="primary">
                     <ChatIcon />
@@ -233,12 +235,22 @@ const AdvertisementCard = (props) => {
             </DialogActions>
           </Dialog>
         </Grid>
+          <Box display="flex" alignItems="start">
+            <Tooltip title="like" placement="bottom" arrow>
+              <IconButton color="primary" onClick={() => setLiked(!liked)}>
+                <Badge /* badgeContent={4} */ color="primary">
+                  {liked ? <Favorite/> : <FavoriteBorder />}
+                </Badge>
+              </IconButton>
+            </Tooltip>
+          </Box>
       </Grid>
       <Dialog open={open} onClose={handleClose} aria-labelledby={idDialog}>
         <AnswerView
           id={advertisement.id}
           advertisement={advertisement}
-          onClose={handleClose}/>
+          onClose={handleClose}
+        />
       </Dialog>
     </Paper>
   )
