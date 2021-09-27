@@ -7,68 +7,62 @@ import {
   Grid,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
+  Box
 } from '@material-ui/core'
-import { useAuthState } from 'src/context/context';
+import { useAuthState } from 'src/context/context'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
+    margin: '1rem',
     width: theme.spacing(18),
     height: theme.spacing(18),
-    margin: theme.spacing(2),
-    marginLeft: theme.spacing(6),
     color: theme.palette.getContrastText('#1769aa'),
     backgroundColor: '#1769aa'
   },
   nav: {
-    width: theme.spacing(30),
-    height: theme.spacing(55),
-    marginLeft: theme.spacing(5),
-    marginRight: theme.spacing(5),
     borderRadius: '20px',
     overflow: 'initial'
-  },
+  }
 }))
 
 const NavBar = () => {
   const classes = useStyles()
   const user = useAuthState().user
   return (
-    <Card className={classes.nav} xs={3}>
-      <Grid display="flex" flex="column">
-        <Avatar
-          className={classes.avatar}
-          alt="my-avatar"
-          src={user.photo}
-        >
-          <Typography variant='h1'>
-                    <b>{user.first_name[0]}</b>
+    <Card className={classes.nav}>
+      <Box display="flex" justifyContent="center">
+        <Avatar className={classes.avatar} alt="my-avatar" src={user.photo}>
+          <Typography variant="h1">
+            <b>{user.first_name[0]}</b>
           </Typography>
         </Avatar>
-        <List>
-          <ListItem component={RouterLink} to="/tutor/cuenta/perfil" button>
-            <ListItemText primary="Ver Perfil" />
-          </ListItem>
-          <ListItem
-            component={RouterLink}
-            to="/tutor/cuenta/informacion"
-            button>
-            <ListItemText primary="Editar Información" />
-          </ListItem>
-          <ListItem
-            component={RouterLink}
-            to="/tutor/cuenta/especialidades"
-            button>
-            <ListItemText primary="Areas de conocimento" />
-          </ListItem>
-          <ListItem component={RouterLink} to="/tutor/cuenta/servicios" button>
-            <ListItemText primary="Servicios" />
-          </ListItem>
-          <ListItem component={RouterLink} to="/tutor/cuenta/horario" button>
-            <ListItemText primary="Horario" />
-          </ListItem>
-        </List>
-      </Grid>
+      </Box>
+      <List>
+        <ListItem component={RouterLink} to="/tutor/cuenta/perfil" button>
+          <i className="fas fa-user icon-menu"></i>
+          <ListItemText primary="Ver perfil" />
+        </ListItem>
+        <ListItem component={RouterLink} to="/tutor/cuenta/informacion" button>
+          <i className="fas fa-user-edit icon-menu"></i>
+          <ListItemText primary="Editar información" />
+        </ListItem>
+        <ListItem
+          component={RouterLink}
+          to="/tutor/cuenta/especialidades"
+          button>
+          <i className="fas fa-briefcase icon-menu"></i>
+          <ListItemText primary="Areas de conocimento" />
+        </ListItem>
+        <ListItem component={RouterLink} to="/tutor/cuenta/servicios" button>
+          <i className="fas fa-briefcase icon-menu"></i>
+          <ListItemText primary="Servicios" />
+        </ListItem>
+        <ListItem component={RouterLink} to="/tutor/cuenta/horario" button>
+          <i className="fas fa-calendar-alt icon-menu"></i>
+          <ListItemText primary="Horario" />
+        </ListItem>
+      </List>
     </Card>
   )
 }

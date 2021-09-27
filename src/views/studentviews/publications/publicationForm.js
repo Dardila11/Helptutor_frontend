@@ -19,9 +19,9 @@ import {
 import { Formik } from 'formik'
 import CloseIcon from '@material-ui/icons/Close'
 
-import useKnowledgeAreas from 'src/hooks/useKnowledgeAreas'
+import { useKnowledgeAreas } from 'src/hooks/useKnowledgeAreas'
 import useCreatePublication from 'src/hooks/useCreatePublication'
-import { useAuthState} from 'src/context/context'
+import { useAuthState } from 'src/context/context'
 import Validation from './formikValues'
 
 const useStyles = makeStyles((theme) => ({
@@ -38,9 +38,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-
-
-
 const PublicationFormView = (props) => {
   const classes = useStyles()
   const userId = useAuthState().user.id
@@ -55,7 +52,6 @@ const PublicationFormView = (props) => {
     student: userId
   }
 
-  
   /*let initialValues = {}
   if (publication === null) initialValues = initialValuesObj
   else {
@@ -95,7 +91,6 @@ const PublicationFormView = (props) => {
                   //addPublication(jsonValues)
                   console.log(values)
                   mutation.mutate(values)
-
                 }}>
                 {({
                   errors,
@@ -116,20 +111,20 @@ const PublicationFormView = (props) => {
                         id="categories-select"
                         name="knowledge_area_student"
                         value={values.knowledge_area_student}
-                        onChange={e => handleChange(e)}>
+                        onChange={(e) => handleChange(e)}>
                         <MenuItem value={-1}>
                           <em>---</em>
                         </MenuItem>
                         {status === 'success' ? (
                           categories.map((cat, index) => (
                             <MenuItem key={index} value={cat.id}>
-                              {cat.name} 
+                              {cat.name}
                             </MenuItem>
                           ))
                         ) : (
                           <MenuItem value={0}>
-                          <em>---</em>
-                        </MenuItem>
+                            <em>---</em>
+                          </MenuItem>
                         )}
                       </Select>
                     </FormControl>

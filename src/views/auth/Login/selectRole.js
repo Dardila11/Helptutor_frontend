@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SelectRoleView = (props) => {
+const SelectRoleView = () => {
   const classes = useStyles()
   const navigate = useNavigate()
 
@@ -44,7 +44,7 @@ const SelectRoleView = (props) => {
     navigate('/estudiante')
   }
   return (
-    <Page title="Seleccion de rol">
+    <Page title="Selección de rol">
       <Backdrop className={classes.backdrop} open={true}>
         <Dialog open={true}>
           <DialogTitle align="center">

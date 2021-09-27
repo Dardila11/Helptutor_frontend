@@ -15,7 +15,7 @@ let initialValues = {
 const putValues = (values) => {
   initialValues.first_name = values.user.first_name
   initialValues.last_name = values.user.last_name
-  initialValues.interest = values.interest
+  initialValues.interest = values.user.interest
   initialValues.methodology = values.methodology
   initialValues.skills = values.skills
   initialValues.gender = values.gender
@@ -30,14 +30,13 @@ const getValues = (values) => {
       first_name: values.first_name,
       last_name: values.last_name,
       email: values.email,
-      gender: values.gender,
       birthday: values.birthday,
-      telephone: ''
+      telephone: '',
+      interest: values.interest,
     },
     score: 0,
     methodology: values.methodology,
     skills: values.skills,
-    interest: values.interest,
     trajectory: values.trajectory
   }
 }
@@ -49,7 +48,6 @@ const validation = Yup.object().shape({
   methodology: Yup.string().max(255).required('Metodólogia es requerido'),
   skills: Yup.string().max(255).required('Habilidades es requerido'),
   trajectory: Yup.string().max(255).required('Experiencia es requerido'),
-  gender: Yup.string().max(255).required('Sexo es requerido'),
   birthday: Yup.string().max(255).required('Fecha de nacimiento es requerido'),
   email: Yup.string()
     .email('Debe ser un email valido')

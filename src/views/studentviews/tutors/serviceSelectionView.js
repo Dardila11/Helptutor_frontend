@@ -22,7 +22,7 @@ import ProfileView from 'src/components/cards/tutorProfileCard'
 import Schedule from 'src/components/Schedule/Schedule'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 
-import useTutorInfo from 'src/hooks/useTutorInfo'
+import {useTutorInfo} from 'src/hooks/useTutorInfo'
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -41,8 +41,8 @@ const postTutor = (data) => {
   return https.post('/api/tutor/', data)
 }
 
-const updateTutorInfo = (data, state) => {
-  return https.patch('/api/tutor/', data, tokenConfig(state))
+const updateTutorInfo = (data, id) => {
+  return https.patch('/api/tutor/' + id + '/', data, AuthHeader())
 }
 
 const postGoogleTutor = (data) => {
@@ -89,7 +89,7 @@ const getKnowledgeArea = (id) => {
 }
 
 const getSubKnowledgeAreas = (idArea) => {
-  return https.get('/api/knowledgearea/' + idArea + '/knowledgearea/')
+  return https.get('/api/knowledgearea/' + idArea + '/knowledgearea/', AuthHeader())
 }
 
 /*LOGIN*/

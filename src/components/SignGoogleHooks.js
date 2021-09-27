@@ -12,18 +12,9 @@ const useStyles = makeStyles((theme) => ({
   button: {
     cursor: 'pointer',
     display: 'flex',
-    /* fontSize: '1.3rem', */
     boxSizing: 'content-box',
     margin: '2px auto 0px',
-
-    /* padding: theme.spacing(0.7), */
     padding: '8px 22px',
-    /* 
-    width: '100%',
-    boxShadow: '0px 16px 60px rgba(78, 79, 114, 0.08)'
-    borderRadius: '24px', 
-    borderColor: 'transparent',
-    */
     backgroundColor: 'white',
     justifyContent: 'center'
   },
@@ -33,13 +24,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: '10px',
     left: '30px',
     alignItems: 'center'
-  },
-  buttonText: {
-    /* fontWeight: 'bolder' */
   }
 }))
 
-const responseGoogle = async (login,response, isUnicaucaEmail, role,dispatch,navigate) => {
+const responseGoogle = async (login,response, isUnicaucaEmail, key, dispatch,navigate) => {
     if (isUnicaucaEmail) {
       let jsonValues = {
         token: response.tokenId
@@ -47,7 +35,7 @@ const responseGoogle = async (login,response, isUnicaucaEmail, role,dispatch,nav
       if (login){ 
         let payload = jsonValues
         try {
-            let response = await loginUser(dispatch, payload) //loginUser action makes the request and handles all the neccessary state changes
+            let response = await loginUser(dispatch, payload, true) //loginUser action makes the request and handles all the neccessary state changes
             if (!response.user) return
             if(response.roles[0] && response.roles[1]) navigate('/seleccion-rol')
             if(response.roles[0] && !response.roles[1]) navigate('/tutor')
@@ -57,10 +45,6 @@ const responseGoogle = async (login,response, isUnicaucaEmail, role,dispatch,nav
             console.log(error)
         }
       }
-      /*else {
-        if (role === 'tutor') props.addTutorGoogle(jsonValues)
-        else props.addStudentGoogle(jsonValues)
-      }*/
     } else {
       console.log("error")
     }

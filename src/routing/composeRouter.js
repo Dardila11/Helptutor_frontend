@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { Routes, Route, Navigate } from 'react-router-dom'
-
+// routing
 import PrivateRoute from './privateRoute'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 import { MainLayout } from 'src/layouts/MainLayout'
 import TutorAccountLayout from 'src/layouts/TutorAccountLayout'
@@ -37,6 +37,7 @@ import MeetView from 'src/views/meet/MeetView'
 //STATICS
 import LandingPage from 'src/views/statics/LandingPage'
 
+// context
 import { useAuthState } from 'src/context'
 
 const Routing = () => {
