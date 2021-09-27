@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   Avatar,
   Box,
   DialogTitle,
   Grid,
   makeStyles,
-  Typography
+  Typography,
+  IconButton
 } from '@material-ui/core'
 import AnswerFormView from './answerForm'
 
-//REDUX
-import {
-  getAdvertisementAnswers,
-  getStudent
-} from 'src/redux/actions/student/advertisements'
-import { connect } from 'react-redux'
 import AnswerCard from 'src/components/cards/answerCard'
+import CloseIcon from '@material-ui/icons/Close'
 import AdvertisementInfoViewSkeleton from 'src/components/skeletons/AdvertisementInfoViewSkeleton'
+
+import { useStudentInfo } from 'src/hooks/StudentHooks/useStudentInfo'
+import { useAdvertisementAnswers } from 'src/hooks/useAdvertisements'
+import { capitalize } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   cover: {
@@ -36,34 +36,30 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const AnswerView = (props) => {
-  const {
-    answers,
-    getAdvertisementAnswers,
-    getStudent,
-    advertisement,
-    studentAd,
-    loading
-  } = props
   const classes = useStyles()
-
-  useEffect(
-    () => {
-      getAdvertisementAnswers(advertisement.id)
-      getStudent(advertisement.student)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+  const studentInfoQuery = useStudentInfo(props.advertisement.student.user.id)
+  const advertisementAnswersQuery = useAdvertisementAnswers(
+    props.advertisement.id
   )
+  console.log(studentInfoQuery)
+  console.log(advertisementAnswersQuery)
+
   return (
     <>
-      {loading ? (
-        <AdvertisementInfoViewSkeleton />
-      ) : (
+      {advertisementAnswersQuery.status === 'success' &&
+      studentInfoQuery.status === 'success' ? (
         <>
           <DialogTitle id="publications-dialog-title" align="center">
-            <Typography>
-              <b>ANUNCIO</b>
-            </Typography>
+            <Box display="flex" alignItems="center">
+              <Box flexGrow={1}>
+                <Typography component={'span'} variant="h3">
+                  Anuncio
+                </Typography>
+              </Box>
+              <IconButton onClick={props.onClose}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
           </DialogTitle>
           <Box className={classes.content}>
             <Grid container>
@@ -80,27 +76,28 @@ const AnswerView = (props) => {
                   />
                   <Typography variant="h6">
                     <b>
-                      {studentAd.user.first_name} {studentAd.user.last_name}
+                      {capitalize(studentInfoQuery.data.user.first_name)}{' '}
+                      {capitalize(studentInfoQuery.data.user.last_name)}
                     </b>
                   </Typography>
                 </Box>
               </Grid>
               <Grid item xs={10}>
                 <Typography>
-                  <b>{advertisement.title}</b>
+                  <b>{props.advertisement.title}</b>
                 </Typography>
-                <Typography>{advertisement.description}</Typography>
+                <Typography>{props.advertisement.description}</Typography>
               </Grid>
               <Grid item xs={12}>
-                <AnswerFormView advertisement={advertisement} />
+                <AnswerFormView advertisement={props.advertisement} />
               </Grid>
-              {answers.length > 0 ? (
+              {advertisementAnswersQuery.data.length > 0 ? (
                 <>
                   <Grid className={classes.answersTitle} item xs={12}>
                     <Typography variant="h6">Respuestas</Typography>
                   </Grid>
                   <Grid className={classes.answers} container>
-                    {answers.map((answer, index) => (
+                    {advertisementAnswersQuery.data.map((answer, index) => (
                       <AnswerCard id={answer.id} key={index} answer={answer} />
                     ))}
                   </Grid>
@@ -111,18 +108,11 @@ const AnswerView = (props) => {
             </Grid>
           </Box>
         </>
+      ) : (
+        <AdvertisementInfoViewSkeleton />
       )}
     </>
   )
 }
 
-const mapStateToProps = (state) => ({
-  answers: state.advertisements.advertisement.answers,
-  studentAd: state.advertisements.advertisement.student,
-  loading: state.advertisements.advertisement.loading
-})
-
-export default connect(mapStateToProps, {
-  getAdvertisementAnswers,
-  getStudent
-})(AnswerView)
+export default AnswerView

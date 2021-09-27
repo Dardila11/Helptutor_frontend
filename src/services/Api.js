@@ -123,8 +123,8 @@ const getTutorInfoNew = (id, token) => {
 }
 
 
-const getStudentInfo = (id, state) => {
-  return https.get(`/api/student/${id}/`, tokenConfig(state))
+const getStudentInfo = (id) => {
+  return https.get(`/api/student/${id}/`, AuthHeader())
 }
 
 const tokenConfig = (getState) => {
@@ -234,9 +234,8 @@ const getAdvertisements = () => {
   return https.get('/api/advertisement/', AuthHeader())
 }
 
-const getAdvertisementAnswers = (id, state) => {
-  console.log(id)
-  return https.get('/api/answer/', tokenConfig(state))
+const getAdvertisementAnswers = (id) => {
+  return https.get(`api/advertisement/${id}/answer`, AuthHeader())
 }
 
 const getServices = () => {
@@ -255,8 +254,8 @@ const getOfferNominations = (id, state) => {
   return https.get('api/nomination/', tokenConfig(state))
 }
 
-const postAnswer = (data, state) => {
-  return https.post('api/answer/', data, tokenConfig(state))
+const postAnswer = (data) => {
+  return https.post('api/answer/', data, AuthHeader())
 }
 
 const getSchedule = (idTutor) => {
