@@ -10,6 +10,14 @@ export const useAdvertisements = () => {
   return useQuery('advertisements', () => fetchAdvertisements())
 }
 
+const fetchAdvertisementAnswers = async (id) => {
+  return Api.getAdvertisementAnswers(id).then(res => res.data)
+}
+
+export const useAdvertisementAnswers = (id) => {
+  return useQuery(['advertisementAnswers', id], () => fetchAdvertisementAnswers(id))
+}
+
 export const useCreateAdvertisement = () => {
   const queryClient = useQueryClient()
   return useMutation(
@@ -22,6 +30,25 @@ export const useCreateAdvertisement = () => {
       onSuccess: () => {
         console.log('updating ads query')
         queryClient.invalidateQueries('advertisements')
+      },
+      onError: (err) => {
+        console.log(err)
+      }
+    }
+  )
+}
+
+export const useCreateAdvertisementAnswer = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (newAnswer) => {
+      return Api.postAnswer(newAnswer)
+      .then(res => res.data)
+      .catch(err => console.log(err))
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('advertisementAnswers')
       },
       onError: (err) => {
         console.log(err)

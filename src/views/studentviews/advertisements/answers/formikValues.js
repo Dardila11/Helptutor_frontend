@@ -4,12 +4,11 @@ const getValues = (values) => {
   return {
     description: values.description,
     advertisement: values.advertisement,
-    user: values.user
   }
 }
 
 const validation = Yup.object().shape({
-  description: Yup.string().max(255)
+  description: Yup.string().max(255).min(1)
 })
 
 const logConst = {

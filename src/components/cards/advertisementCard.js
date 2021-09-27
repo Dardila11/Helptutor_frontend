@@ -69,14 +69,10 @@ const AdvertisementCard = (props) => {
   const classes = useStyles()
   const userId = useAuthState().user.id
   const idDialog = 'advertisement' + advertisement.id + '-dialog-title'
-  const [watch, setWatch] = React.useState(false)
   const [edit, setEdit] = React.useState(false)
   const [deletep, setDelete] = React.useState(false)
   const mutation = useDeleteAdvertisement()
 
-  const handleWatch = () => {
-    setWatch(true)
-  }
   const handleEdit = () => {
     setEdit(true)
   }
@@ -89,19 +85,18 @@ const AdvertisementCard = (props) => {
     setDelete(false)
   }
   const handleClose = () => {
-    setWatch(false)
     setEdit(false)
     setDelete(false)
+    setOpen(false)
   }
 
   const handleOpen = () => {
-    console.log('card action area clicked')
     setOpen(true)
   }
 
   /* const handleClose = () => {
     setOpen(false)
-    clearAnswers()
+    //clearAnswers()
   } */
 
   const getHighlightedText = (text) => {
@@ -125,7 +120,6 @@ const AdvertisementCard = (props) => {
   }
   return (
     <Paper className={classes.paper} elevation={3}>
-      {/* <CardActionArea className={classes.cardAction} onClick={handleOpen}> */}
       <Grid container>
         <Grid item xs={2}>
           <Box className={classes.userSpace}>
@@ -160,7 +154,6 @@ const AdvertisementCard = (props) => {
             </CardContent>
           </Box>
         </Grid>
-
         <Grid className={classes.options} item xs={3}>
           <Box
             display="flex"
@@ -172,8 +165,8 @@ const AdvertisementCard = (props) => {
             </Typography>
             <Box spacing={3}>
               <Tooltip title="comentarios" placement="bottom" arrow>
-                <IconButton color="primary" onClick={handleWatch}>
-                  <Badge badgeContent={4} color="primary">
+                <IconButton color="primary" onClick={handleOpen}>
+                  <Badge /* badgeContent={4} */ color="primary">
                     <ChatIcon />
                   </Badge>
                 </IconButton>
@@ -208,7 +201,7 @@ const AdvertisementCard = (props) => {
           <Dialog
             open={deletep}
             onClose={handleClose}
-            aria-labelledby="tutorDeletePublication-dialog-title">
+            aria-labelledby="advertisement-dialog-title">
             <DialogTitle
               id="advertisement-delete-dialog-title"
               align="center"
@@ -241,13 +234,11 @@ const AdvertisementCard = (props) => {
           </Dialog>
         </Grid>
       </Grid>
-      {/* </CardActionArea> */}
       <Dialog open={open} onClose={handleClose} aria-labelledby={idDialog}>
-        {/* <AnswerView
+        <AnswerView
           id={advertisement.id}
           advertisement={advertisement}
-          student={student}
-        /> */}
+          onClose={handleClose}/>
       </Dialog>
     </Paper>
   )
