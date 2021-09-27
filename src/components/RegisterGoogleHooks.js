@@ -52,9 +52,15 @@ const RegisterHooks = ({tutorSelect, studentSelect}) => {
         let jsonValues = {
           token: res.tokenId
         }
+        console.log(jsonValues)
         if(tutorSelect){
-          Api.postGoogleTutor(jsonValues).then(result => {  
-            console.log(result)
+          Api.postGoogleTutor(jsonValues).then(async (result) => {  
+            let response = await loginUser(dispatch, jsonValues, true) //loginUser action makes the request and handles all the neccessary state changes
+            if (!response.user) return
+            if(response.roles[0] && response.roles[1]) navigate('/seleccion-rol')
+            if(response.roles[0] && !response.roles[1]) navigate('/tutor')
+            if(!response.roles[0] && response.roles[1]) navigate('/estudiante')
+            toast.success("Bienvenido "+response.user.first_name)
           }).catch(err=>{
             console.log(err)
             toast.error("Login error "+err)
