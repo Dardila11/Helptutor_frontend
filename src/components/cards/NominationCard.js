@@ -12,6 +12,7 @@ import {
   Paper
 } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
+import { capitalize } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,25 +70,25 @@ const NominationCard = (props) => {
                 <Avatar
                   className={classes.cover}
                   alt="user photo"
-                  src="/static/images/avatars/avatar_6.png"
+                  src={props.tutor.user.photo}
                 />
-                <Typography variant="h5">
-                  <b>Username</b>
+                <Typography component={'h5'} variant="h5">
+                  <b>{capitalize(props.tutor.user.first_name)} {capitalize(props.tutor.user.last_name)}</b>
                 </Typography>
-                <Rating name="read-only" size="small" value={4} readOnly />
+                <Rating name="read-only" size="small" value={props.tutor.score} readOnly />
               </Box>
             </Grid>
             <Grid item xs={2}>
               <Container className={classes.price}>
-                <Typography variant="subtitle1" color="textSecondary">
+                <Typography component={'h6'} variant="subtitle1" color="textSecondary">
                   <b>Costo</b>
                 </Typography>
-                <Typography variant="h5">{nomination.price}$</Typography>
+                <Typography component={'span'} variant="h5">${nomination.price}</Typography>
               </Container>
             </Grid>
             <Grid item xs={12}>
               <CardContent className={classes.content}>
-                <Typography color="textSecondary" variant="h5">
+                <Typography component={'span'} color="textSecondary" variant="h5">
                   {nomination.description}
                 </Typography>
               </CardContent>

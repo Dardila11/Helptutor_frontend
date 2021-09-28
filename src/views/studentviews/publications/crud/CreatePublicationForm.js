@@ -23,6 +23,7 @@ import useCreatePublication from 'src/hooks/useCreatePublication'
 import { useAuthState } from 'src/context/context'
 import Validation from './formikUtils/formikValues'
 import { toast } from 'react-toastify'
+import useKnowledgeAreas from 'src/hooks/useKnowledgeAreas'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -43,11 +44,12 @@ const CreatePublicationForm = ({ onClose }) => {
   const userId = useAuthState().user.id
   const { data, status } = useStudentKnowledgeAreas(userId)
   const mutation = useCreatePublication()
+  const knowledgeAreasQuery = useKnowledgeAreas()
 
   let initialValues = {
     title: '',
     description: '',
-    knowledge_area_student: 4,
+    knowledge_area_student: '',
     student: userId
   }
   return (
@@ -109,12 +111,12 @@ const CreatePublicationForm = ({ onClose }) => {
                         <MenuItem value={-1}>
                           <em>---</em>
                         </MenuItem>
-                        {status === 'success' ? (
-                          data.map((area, index) => (
+                        {knowledgeAreasQuery.status === 'success' ? (
+                          knowledgeAreasQuery.data.map((area, index) => (
                             <MenuItem
                               key={index}
-                              value={area.knowledge_area.id}>
-                              <em>{area.knowledge_area.name}</em>
+                              value={area.id}>
+                              <em>{area.name}</em>
                             </MenuItem>
                           ))
                         ) : (

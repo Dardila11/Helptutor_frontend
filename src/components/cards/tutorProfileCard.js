@@ -11,6 +11,7 @@ import {
 
 import { Rating } from '@material-ui/lab'
 import QualificationCard from 'src/components/cards/QualificationCard'
+import { capitalize } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,9 +47,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ProfileView = (props) => {
+const ProfileView = ({ tutor, reviews }) => {
   const classes = useStyles()
-  const { tutor } = props
   return (
     <>
       <Card className={classes.root}>
@@ -56,7 +56,8 @@ const ProfileView = (props) => {
           <Box className={classes.title} textAlign="center">
             <Typography variant="h3">
               <b>
-                {tutor.user.first_name} {tutor.user.last_name}
+                {capitalize(tutor.user.first_name)}{' '}
+                {capitalize(tutor.user.last_name)}
               </b>
             </Typography>
             <Typography variant="h4">Tutor</Typography>
@@ -85,7 +86,7 @@ const ProfileView = (props) => {
                 <Avatar
                   className={classes.cover}
                   alt="user photo"
-                  src="/static/images/avatars/avatar_6.png"
+                  src={tutor.user.photo}
                 />
               </Box>
             </Grid>
@@ -125,7 +126,15 @@ const ProfileView = (props) => {
                   <b>Reseñas</b>
                 </Typography>
               </Box>
-              <QualificationCard />
+              {reviews.length > 0 ? (
+                reviews.map((review, index) => (
+                  <QualificationCard key={index} review={review} />
+                ))
+              ) : (
+                <Typography component="span" variant="h6">
+                  No tiene reseñas
+                </Typography>
+              )}
             </Box>
           </Box>
         </Box>

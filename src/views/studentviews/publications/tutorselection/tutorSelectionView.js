@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   makeStyles,
   Stepper,
@@ -22,13 +22,8 @@ import NominationsView from './nominations'
 import ProfileView from 'src/components/cards/tutorProfileCard'
 import Schedule from 'src/components/Schedule/Schedule'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
-
-/* import { getTutorSelectedInfo } from 'src/redux/actions/student/student_publications'
-import { connect } from 'react-redux' */
-
 import useTutorInfo from 'src/hooks/TutorHooks/useTutorInfo'
-import { truncate } from 'lodash-es'
-import { TrendingUpRounded } from '@material-ui/icons'
+import {useReviews} from 'src/hooks/TutorHooks/useReviews'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,18 +95,16 @@ const TutorSelectionView = (props) => {
   const [activeStep, setActiveStep] = useState(0)
   const [idTutor, setIdTutor] = useState(null)
   const steps = getSteps()
-  /* const { loading, tutor } = props */
-  //const tutorInfoQuery = useTutorInfo(idTutor)
+  const tutorInfoQuery = useTutorInfo(idTutor)
+  const reviewsQuery = useReviews(idTutor)
 
-  /* useEffect(
-    () => {
-      if (idTutor != null) {
-        props.getTutorSelectedInfo(idTutor)
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [idTutor]
-  ) */
+  useEffect(() => {
+    if (idTutor !== null) {
+      tutorInfoQuery.refetch()
+      reviewsQuery.refetch()
+
+    }
+  }, [idTutor])
 
   const handleNext = () => {
     if (activeStep < 3) setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -123,7 +116,8 @@ const TutorSelectionView = (props) => {
 
   const handleNomination = (nomination) => {
     setContract({ ...contract, nomination: nomination })
-    setIdTutor(nomination.tutor)
+    console.log(nomination.tutor.user.id)
+    setIdTutor(nomination.tutor.user.id)
     handleNext()
   }
 
@@ -199,7 +193,6 @@ const TutorSelectionView = (props) => {
                 {activeStep === 0 ? (
                   <NominationsView
                     key={publication.id}
-                    id={publication.id}
                     publication={publication}
                     next={handleNomination}
                   />
@@ -207,10 +200,10 @@ const TutorSelectionView = (props) => {
                   <></>
                 )}
                 {activeStep === 1 ? (
-                  true ? (
-                    <ProfileViewSkeleton />
+                  tutorInfoQuery.status === 'success' && reviewsQuery.status === 'success' ? (
+                    <ProfileView tutor={tutorInfoQuery.data} reviews={reviewsQuery.data} />
                   ) : (
-                    {/* <ProfileView tutor={tutor} /> */}
+                    <ProfileViewSkeleton />
                   )
                 ) : (
                   <></>
@@ -334,9 +327,9 @@ const TutorSelectionView = (props) => {
                 size="large"
                 variant="contained"
                 color="primary"
-                onClick={() => console.log('next')}
+                onClick={handleNext}
                 className={classes.button}>
-                {activeStep === 1  ? 'Siguiente' : 'Ir al pago'}
+                {activeStep === 1 ? 'Siguiente' : 'Ir al pago'}
               </Button>
             </Box>
           ) : (
@@ -358,14 +351,5 @@ const TutorSelectionView = (props) => {
     </>
   )
 }
-
-/* const mapStateToProps = (state) => ({
-  tutor: state.publications.tutorInfo,
-  loading: state.publications.loadingTutor
-})
-
-export default connect(mapStateToProps, {
-  getTutorSelectedInfo
-})(TutorSelectionView) */
 
 export default TutorSelectionView

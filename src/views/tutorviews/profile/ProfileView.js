@@ -131,8 +131,8 @@ const TutorProfileView = () => {
                   <b>Reseñas</b>
                 </Typography>
               </Box>
-                <QualificationCard/>
-                <QualificationCard/>
+                {/* <QualificationCard/>
+                <QualificationCard/> */}
             </Box>
           </Box>
       </Box>

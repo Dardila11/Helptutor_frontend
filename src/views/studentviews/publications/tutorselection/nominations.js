@@ -1,43 +1,34 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Grid } from '@material-ui/core'
-import { getPublicationNominations } from 'src/redux/actions/student/student_publications'
-import { connect } from 'react-redux'
 import NominationCard from 'src/components/cards/NominationCard'
 import NominationCardSkeleton from 'src/components/skeletons/NominationCardSkeleton'
+import { useOfferNominations } from 'src/hooks/StudentHooks/useOfferNominations'
 
-const NominationsView = (props) => {
-  const { loading, publication, nominations, getPublicationNominations, next } = props
-  useEffect(
-    () => {
-      getPublicationNominations(publication.id)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [])
-    //DO LOADING AND SKELETON
-    return(
-        <Grid container spacing="3">
-          {loading? <NominationCardSkeleton /> :
-          <>
-            {nominations.map((nomination, index)=>(
-                <Grid item xs={4}>
-                    <NominationCard 
-                        id={'nom_'+nomination.id} 
-                        key={nomination.id+'_'+index} 
-                        nomination={nomination}
-                        next={next}/>
-                </Grid>
-                )
-            )}    
-          </>}        
-        </Grid>
+const NominationsView = ({ publication, next }) => {
+  const offerNominationsQuery = useOfferNominations(publication.id)
+  return (
+    <Grid container spacing="3">
+      {offerNominationsQuery.status === 'success' ? (
+        offerNominationsQuery.data.length > 0 ? (
+          offerNominationsQuery.data.map((nomination, index) => (
+            <Grid item xs={4}>
+              <NominationCard
+                id={'nom_' + nomination.id}
+                key={nomination.id + '_' + index}
+                nomination={nomination}
+                tutor={nomination.tutor}
+                next={next}
+              />
+            </Grid>
+          ))
+        ) : (
+          <h1>No hay tutores postulados</h1>
+        )
+      ) : (
+        <NominationCardSkeleton />
+      )}
+    </Grid>
   )
 }
 
-const mapStateToProps = (state) => ({
-  nominations: state.publications.nominations,
-  loading: state.publications.loadingNominations
-})
-
-export default connect(mapStateToProps, {
-  getPublicationNominations
-})(NominationsView)
+export default NominationsView

@@ -107,7 +107,7 @@ const StudentPublicationsView = () => {
               ) : (
                 <>
                   <Box className={classes.title} textAlign="center">
-                    <Typography variant="h4">Mis plublicaciones</Typography>
+                    <Typography variant="h4">Mis publicaciones</Typography>
                   </Box>
                   {listFilter === null ? (
                       publicationsQuery.data.map((publication, index) => (
