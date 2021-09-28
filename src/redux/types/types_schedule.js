@@ -1,0 +1,5 @@
+export const GET_SCHEDULE = 'GET_SCHEDULE'
+export const LOADING = 'LOADING'
+export const SAVE_SCHEDULE = 'SAVE_SCHEDULE'
+export const ADD_SLOT = 'ADD_SLOT'
+export const DELETE_SLOT = 'DELETE_SLOT'
