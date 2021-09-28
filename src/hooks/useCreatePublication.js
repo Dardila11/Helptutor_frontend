@@ -1,24 +1,25 @@
 import Api from 'src/services/Api'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
+//import { toast } from 'react-toastify'
 
 const useCreatePublication = () => {
-  return useMutation((newPublication) => {
-    return Api.postOffer(newPublication)
-      .then((res) => res.data)
-      .then((res) => console.log(res))
-      .catch(err => console.log(err)), {
-          onMutate: (newPublication) => {
-              console.log(newPublication)
-              return newPublication
-          },
-          onSuccess: (res) => {
-              console.log(res)
-          },
-          onError: (error) => {
-              console.log(error)
-          }
-      }
-  })
+  const queryClient = useQueryClient()
+  return useMutation(
+    async (newPublication) => {
+      return Api.postOffer(newPublication)
+        .then((res) => res.data)
+        .catch((err) => console.log(err))
+    },
+    {
+      onSuccess: () => {
+        console.log('updating queries')
+        queryClient.invalidateQueries('publications')
+      },
+      onError: (error) => {
+        console.log(error)
+      },
+    }
+  )
 }
 
 export default useCreatePublication

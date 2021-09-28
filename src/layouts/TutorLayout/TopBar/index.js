@@ -81,6 +81,7 @@ const useStyles = makeStyles((theme) => ({
 const TutorTopBar = (props) => {
   const navigate = useNavigate()
   const user = useAuthState()
+  const roles = user.roles
   const dispatch = useAuthDispatch()
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -153,17 +154,15 @@ const TutorTopBar = (props) => {
                     </Typography>
                   </MenuItem>
                 </RouterLink>
-                {/* {props.isStudent && props.isTutor ? (
-                    <RouterLink to="/seleccion-rol">
-                      <MenuItem onClick={handleClose}>
-                        <Typography color="primary">
-                          <b>Cambiar de rol</b>
-                        </Typography>
-                      </MenuItem>
-                    </RouterLink>
-                  ) : (
-                    <></>
-                  )} */}
+                {(roles[0] && roles[1])? (
+                  <RouterLink to="/seleccion-rol">
+                  <MenuItem onClick={handleClose}>
+                    <Typography color="primary">
+                      <b>Cambiar de rol</b>
+                    </Typography>
+                  </MenuItem>
+                </RouterLink>
+                ): <></>}
                 <Divider></Divider>
                 <RouterLink to="/como-funciona">
                   <MenuItem className={classes.menuItem} onClick={handleClose}>

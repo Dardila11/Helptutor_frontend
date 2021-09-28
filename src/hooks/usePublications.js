@@ -1,14 +1,14 @@
 import { useQuery } from 'react-query'
 import Api from 'src/services/Api'
 
-const fetchOffers = async () => {
-  return Api.getOffers()
+const fetchOffers = async (userId) => {
+  return Api.getOffersByStudentId(userId)
     .then((res) => res.data)
-    .catch(err => console.log(err))
+    .catch((err) => console.log(err))
 }
 
-const usePublications = () => {
-  return useQuery('publications', () => fetchOffers())
+const usePublications = (userId) => {
+  return useQuery(['publications', userId], () => fetchOffers(userId))
 }
 
 export default usePublications

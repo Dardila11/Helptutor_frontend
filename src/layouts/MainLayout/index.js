@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
 import MainNavBar from './navbar'
 import { ToastContainer } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
 import { useAuthDispatch, onReload } from 'src/context'
 
 const useStyles = makeStyles((theme) => ({

@@ -4,9 +4,7 @@ import { Formik } from 'formik'
 import Validation from './formikValues'
 import SendIcon from '@material-ui/icons/Send'
 
-//REDUX
-import { addAnswer } from 'src/redux/actions/student/advertisements'
-import { connect } from 'react-redux'
+import {useCreateAdvertisementAnswer} from 'src/hooks/useAdvertisements'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -21,8 +19,8 @@ let initialValuesObj = {
   description: ''
 }
 
-const AnswerFormView = (props) => {
-  const { user, advertisement, addAnswer } = props
+const AnswerFormView = ({advertisement}) => {
+  const mutation = useCreateAdvertisementAnswer()
   const classes = useStyles()
   return (
     <Box justifyContent="center">
@@ -34,9 +32,8 @@ const AnswerFormView = (props) => {
           let jsonValues = Validation.getValues({
             ...values,
             advertisement: advertisement.id,
-            user: user
           })
-          addAnswer(jsonValues)
+          mutation.mutate(jsonValues)
           resetForm({ values: initialValuesObj })
         }}>
         {({
@@ -82,10 +79,4 @@ const AnswerFormView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user.id
-})
-
-export default connect(mapStateToProps, {
-  addAnswer
-})(AnswerFormView)
+export default AnswerFormView

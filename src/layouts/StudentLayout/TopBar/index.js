@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { capitalize } from 'lodash-es'
 import {
   Toolbar,
   Typography,
@@ -120,7 +121,7 @@ const StudentTopBar = () => {
                   <Typography className={classes.userSpace} variant="h4">
                     {user.user != null ? (
                       <>
-                        {user.user.first_name} {user.user.last_name}
+                        {capitalize(user.user.first_name)} {capitalize(user.user.last_name)}
                       </>
                     ) : (
                       <></>
@@ -131,7 +132,7 @@ const StudentTopBar = () => {
                   alt="user photo"
                   src={user.user.photo}
                 >
-                  <b>{user.user.first_name[0]}</b>
+                  <b>{capitalize(user.user.first_name[0])}</b>
                 </Avatar>
                 </IconButton>
                 <Menu

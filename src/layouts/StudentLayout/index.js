@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Outlet } from 'react-router-dom'
 import {
   Backdrop,
@@ -8,9 +8,10 @@ import {
   Typography
 } from '@material-ui/core'
 import StudentTopBar from './TopBar'
+import { ToastContainer } from 'react-toastify'
 
-import { getStudentInfo } from 'src/redux/actions/student/student_data'
-import { connect } from 'react-redux'
+import { useStudentInfo } from 'src/hooks/StudentHooks/useStudentInfo'
+import { useAuthState } from 'src/context/context'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,20 +42,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const StudentLayout = (props) => {
+const StudentLayout = () => {
   const classes = useStyles()
-  const { getStudentInfo, user, loading } = props
-  useEffect(
-    () => {
-      getStudentInfo(user.id)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-  return loading ? (
+  const userId = useAuthState().user.id
+  const studentInfoQuery = useStudentInfo(userId)
+  
+  return studentInfoQuery.isLoading ? (
     <Backdrop className={classes.backdrop} open={true}>
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Typography color="primary">Cargando</Typography>
+        <Typography component="span" color="primary">Cargando</Typography>
         <CircularProgress color="primary" />
       </Box>
     </Backdrop>
@@ -68,15 +64,9 @@ const StudentLayout = (props) => {
           <Outlet />
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={5000} closeOnClick pauseOnFocusLoss draggable pauseOnHover/>
     </div>
   )
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  loading: state.studentInfo.isLoading
-})
-
-export default connect(mapStateToProps, {
-  getStudentInfo
-})(StudentLayout)
+export default StudentLayout

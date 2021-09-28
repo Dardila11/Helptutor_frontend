@@ -158,11 +158,4 @@ const LoginView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  auth: state.auth
-})
-
-export default connect(mapStateToProps, {
-  selectRole,
-  login
-})(LoginView)
+export default LoginView

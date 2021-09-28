@@ -30,7 +30,7 @@ import { Formik } from 'formik'
 
 //UTILS
 import Validation from './formikValues'
-import LoginHooks from '../../../components/SignGoogleHooks'
+import RegisterHooks from '../../../components/RegisterGoogleHooks'
 import TermsAndConditions from '../../../components/TermsDialog'
 
 //STYLESS

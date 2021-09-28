@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Box,
   Button,
@@ -13,16 +13,17 @@ import {
   Select,
   FormControl,
   MenuItem,
-  InputLabel,
-  FormHelperText
+  InputLabel
 } from '@material-ui/core'
 import { Formik } from 'formik'
 import CloseIcon from '@material-ui/icons/Close'
 
-import { useKnowledgeAreas } from 'src/hooks/useKnowledgeAreas'
+import useStudentKnowledgeAreas from 'src/hooks/StudentHooks/useStudentKnowledgeAreas'
 import useCreatePublication from 'src/hooks/useCreatePublication'
 import { useAuthState } from 'src/context/context'
-import Validation from './formikValues'
+import Validation from './formikUtils/formikValues'
+import { toast } from 'react-toastify'
+import {useKnowledgeAreas} from 'src/hooks/useKnowledgeAreas'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -38,39 +39,32 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const PublicationFormView = (props) => {
+const CreatePublicationForm = ({ onClose }) => {
   const classes = useStyles()
   const userId = useAuthState().user.id
-  const { data: categories, status } = useKnowledgeAreas()
+  const { data, status } = useStudentKnowledgeAreas(userId)
   const mutation = useCreatePublication()
-  let edit = false
+  const knowledgeAreasQuery = useKnowledgeAreas()
 
-  let initialValuesObj = {
+  let initialValues = {
     title: '',
     description: '',
-    knowledge_area_student: 2,
+    knowledge_area_student: '',
     student: userId
   }
-
-  /*let initialValues = {}
-  if (publication === null) initialValues = initialValuesObj
-  else {
-    initialValues = publication
-    edit = true
-  } */
   return (
     <>
       <DialogTitle
         id="publications-dialog-title"
         align="center"
-        onClose={props.onClose}>
+        onClose={onClose}>
         <Box display="flex" alignItems="center">
           <Box flexGrow={1}>
-            <Typography variant="h3">
-              {edit ? 'Editar publicación' : 'Agregar publicación'}
+            <Typography component={'span'} variant="h3">
+              Agregar publicación
             </Typography>
           </Box>
-          <IconButton onClick={props.onClose}>
+          <IconButton onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </Box>
@@ -81,7 +75,7 @@ const PublicationFormView = (props) => {
             <Container maxWidth="lg">
               <Formik
                 enableReinitialize={true}
-                initialValues={initialValuesObj}
+                initialValues={initialValues}
                 validationSchema={Validation.validation}
                 onSubmit={(values) => {
                   /* let jsonValues = Validation.getValues({
@@ -89,8 +83,10 @@ const PublicationFormView = (props) => {
                     //student: student
                   }) */
                   //addPublication(jsonValues)
-                  console.log(values)
                   mutation.mutate(values)
+                  toast.success("Publicación agregada")
+                  onClose()
+                  
                 }}>
                 {({
                   errors,
@@ -115,10 +111,12 @@ const PublicationFormView = (props) => {
                         <MenuItem value={-1}>
                           <em>---</em>
                         </MenuItem>
-                        {status === 'success' ? (
-                          categories.map((cat, index) => (
-                            <MenuItem key={index} value={cat.id}>
-                              {cat.name}
+                        {knowledgeAreasQuery.status === 'success' ? (
+                          knowledgeAreasQuery.data.map((area, index) => (
+                            <MenuItem
+                              key={index}
+                              value={area.id}>
+                              <em>{area.name}</em>
                             </MenuItem>
                           ))
                         ) : (
@@ -167,7 +165,7 @@ const PublicationFormView = (props) => {
                       fullWidth
                       type="submit"
                       variant="contained">
-                      {edit ? 'Actualizar' : 'Agregar'}
+                      Agregar
                     </Button>
                   </form>
                 )}
@@ -180,4 +178,4 @@ const PublicationFormView = (props) => {
   )
 }
 
-export default PublicationFormView
+export default CreatePublicationForm

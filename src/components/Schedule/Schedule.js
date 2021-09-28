@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
   slotSelected: {
     height: 30,
-    backgroundColor: '#a5d6a7'
+    backgroundColor: '#bbdefb'
   },
   listHead: {
     marginBottom: theme.spacing(2)
@@ -122,7 +122,7 @@ const Schedule = (props) => {
         deleteSlot(slot)
       } else {
         slot = { ...slot, isSelect: true }
-        element.style.backgroundColor = '#a5d6a7'
+        element.style.backgroundColor = '#bbdefb'
         addSlot(slot)
       }
       element.slot = JSON.stringify(slot)

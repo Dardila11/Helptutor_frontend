@@ -22,14 +22,11 @@ import formikValues from './formikValues'
 
 import EditProfileViewSkeleton from 'src/components/skeletons/EditProfileViewSkeleton'
 
-//REDUX
-import {
-  getStudentInfo,
-  updateStudent
-} from 'src/redux/actions/student/student_data'
-
-import { connect } from 'react-redux'
 import Page from 'src/components/Page';
+import { useAuthState } from 'src/context/context';
+import { useStudentInfo, useUpdateStudentInfo } from 'src/hooks/StudentHooks/useStudentInfo'
+import { capitalize } from 'lodash-es';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,28 +67,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const StudentEditInfoView = (props) => {
-  const { updateStudent, userInfo, requestInProgress } = props
+
+
+const StudentEditInfoView = () => {
+  const userId = useAuthState().user.id
+  const userInfoQuery = useStudentInfo(userId)
+  console.log(userInfoQuery)
+  const mutation = useUpdateStudentInfo()
   const [file, setFile] = React.useState(null)
-  const [initialInfo, setInitialInfo] = useState(formikValues.initialValues)
-  const [loading, setLoading] = useState(true)
   const [preview, setPreview] = useState(null)
 
-  useEffect(
-    () => {
-      getStudentInfo(props.user.id)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-
-  useEffect(() => {
-    setLoading(requestInProgress)
-  }, [requestInProgress])
-
-  useEffect(() => {
-    setInitialInfo(userInfo)
-  }, [userInfo])
+  let initialValues = {
+    first_name: userInfoQuery.data.user.first_name,
+    last_name: userInfoQuery.data.user.last_name,
+    birthday: userInfoQuery.data.user.birthday,
+    email: userInfoQuery.data.user.email,
+    interest: userInfoQuery.data.user.interest
+  }
+  console.log(initialValues)
 
   const fileSelectedHandler = (e) => {
     setFile(e.target.files[0])
@@ -113,21 +106,17 @@ const StudentEditInfoView = (props) => {
   const classes = useStyles()
   return (
     <Page  title="Editar perfil">
-      {loading ? (
-        <>
-          <EditProfileViewSkeleton />
-        </>
-      ) : (
+      {userInfoQuery.status === 'success' ? (
         <Paper className={classes.infoView} elevation={3}>
         <Card className={classes.root}>
           <Box display="flex" flexDirection="column" justifyContent="center">
             <Formik
               enableReinitialize
-              initialValues={initialInfo}
+              initialValues={initialValues}
               //validationSchema={formikValues.validation}
               onSubmit={(values) => {
                 let jsonValues = formikValues.getValues(values)
-                updateStudent(jsonValues, file)
+                //updateStudent(jsonValues, file)
               }}>
               {({
                 errors,
@@ -140,7 +129,7 @@ const StudentEditInfoView = (props) => {
                 <form onSubmit={handleSubmit}>
                   <Box mb={3} textAlign="center">
                     <Typography color="textPrimary" variant="h4">
-                      Información
+                      Información del Estudiante
                     </Typography>
                   </Box>
                   <Grid container>
@@ -156,10 +145,10 @@ const StudentEditInfoView = (props) => {
                                   id='avatarPhoto'
                                   className={classes.avatar}
                                   alt="my-avatar"
-                                  src={preview === null ? props.user.photo : preview}
+                                  src={preview === null ? userInfoQuery.data.user.photo : preview}
                                 >
                                   <Typography variant='h1'>
-                                    <b>{userInfo.first_name[0]}</b>
+                                    <b>{capitalize(userInfoQuery.data.user.first_name[0])}</b>
                                   </Typography>
                                   </Avatar>
                               </Badge>
@@ -200,7 +189,7 @@ const StudentEditInfoView = (props) => {
                         />
                         </Box>
                         <Box className={classes.inputs} display='flex' flexDirection='row'>
-                          <FormControl
+                          {/* <FormControl
                             variant="outlined"
                             className={classes.selectControl}
                             error={Boolean(touched.gender && errors.gender)}
@@ -231,7 +220,7 @@ const StudentEditInfoView = (props) => {
                                 Otro
                               </MenuItem>
                             </Select>
-                          </FormControl>
+                          </FormControl> */}
                           <TextField
                             id="txt_birthday"
                             className={classes.birthday}
@@ -294,18 +283,22 @@ const StudentEditInfoView = (props) => {
           </Box>
         </Card>
       </Paper>
+      ) : (
+        <EditProfileViewSkeleton/>
       )}
     </Page>
   )
 }
 
-const mapStateToProps = (state) => ({
+/* const mapStateToProps = (state) => ({
   user: state.auth.user,
   userInfo: state.studentInfo.userInfo,
   requestInProgress: state.studentInfo.requestInProgress
-})
+}) */
 
-export default connect(mapStateToProps, {
+/* export default connect(mapStateToProps, {
   getStudentInfo,
   updateStudent
-})(StudentEditInfoView)
+})(StudentEditInfoView) */
+
+export default StudentEditInfoView

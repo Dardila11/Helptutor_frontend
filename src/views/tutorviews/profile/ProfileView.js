@@ -126,15 +126,14 @@ const TutorProfileView = () => {
             <Box className={classes.divider}>
               <Divider />
             </Box>
-            <Box textAlign="center">
-              <Typography variant="h4">
-                <b>Experiencia</b>
-              </Typography>
-            </Box>
-            <Box>
-              <Typography align="justify">
-                {tutor.trajectory ? tutor.trajectory : 'No hay trayectoria'}
-              </Typography>
+            <Box >
+              <Box textAlign='center'>
+                <Typography variant='h4'>
+                  <b>Reseñas</b>
+                </Typography>
+              </Box>
+                {/* <QualificationCard/>
+                <QualificationCard/> */}
             </Box>
           </Box>
           <Box className={classes.divider}>

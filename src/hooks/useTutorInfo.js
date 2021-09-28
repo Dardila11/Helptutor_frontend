@@ -1,13 +1,16 @@
 import { useQuery, useMutation } from 'react-query'
 import Api from 'src/services/Api'
-import { TOKEN } from './token'
 
-const fetchTutorInfo = async (tutorId) => {
-  return Api.getTutorInfoNew(tutorId, TOKEN).then((res) => res.data)
+const fetchTutorInfo =  async (id) => {
+  return Api.getTutorInfo(id).then(res => res.data)
 }
 
-export const useTutorInfo = (tutorId) => {
-  return useQuery(['tutorInfo', tutorId], () => fetchTutorInfo(tutorId))
+export const useTutorInfo = (id) => {
+  return useQuery(['tutorInfo',id], () => fetchTutorInfo(id), {
+    // disable query from automatically running if id is null
+    enabled: id === null ? false : true,
+    refetchOnWindowFocus: id === null ? false : true
+})
 }
 
 export const useUpdateTutor = () => {

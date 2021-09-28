@@ -46,11 +46,11 @@ const updateTutorInfo = (data, id) => {
 }
 
 const postGoogleTutor = (data) => {
-  return https.post('/api/tutor/google/', data)
+  return https.post('/api/tutor/google', data)
 }
 
 const postGoogleStudent = (data) => {
-  return https.post('/api/student/google/', data)
+  return https.post('/api/student/google', data)
 }
 
 const getCertificate = () => {
@@ -74,6 +74,10 @@ const getTutorKnowledgeAreas = (idTutor) => {
   return https.get('/api/tutor/' + idTutor + '/knowledgearea/', AuthHeader())
 }
 
+const getStudentKnowledgeAreas = (idStudent) => {
+  return https.get(`api/student/${idStudent}/knowledgearea/`, AuthHeader())
+}
+
 const deleteTutorKnowledgeArea = (idArea) => {
   return https.delete('/api/knowledgearea_tutor/' + idArea + '/')
 }
@@ -86,6 +90,10 @@ const getknowledgeAreas = () => {
 
 const getKnowledgeArea = (id) => {
   return https.get('/api/knowledgearea/' + id + '/')
+}
+
+const getOfferById = (id) => {
+  return https.get(`api/offer/${id}/`)
 }
 
 const getSubKnowledgeAreas = (idArea) => {
@@ -115,8 +123,8 @@ const getTutorInfoNew = (id, token) => {
 }
 
 
-const getStudentInfo = (id, state) => {
-  return https.get(`/api/student/${id}/`, tokenConfig(state))
+const getStudentInfo = (id) => {
+  return https.get(`/api/student/${id}/`, AuthHeader())
 }
 
 const tokenConfig = (getState) => {
@@ -149,7 +157,7 @@ const addToken = (token) => {
 /** TUTOR SERVICES */
 
 const getTutorServices = (id) => {
-  return https.get('/api/tutor/'+5+'/service/', AuthHeader())
+  return https.get('/api/tutor/'+id+'/service/', AuthHeader())
 }
 
 const postServiceTutor = (data, values) => {
@@ -190,8 +198,8 @@ const postStudent = (data) => {
   return https.post('/api/student/', data)
 }
 
-const updateStudentInfo = (data, state) => {
-  return https.patch('/api/student/', data, tokenConfig(state))
+const updateStudentInfo = (data) => {
+  return https.patch('/api/student/', data, AuthHeader())
 }
 
 const postOffer = (data) => {
@@ -206,37 +214,52 @@ const getOffers = () => {
   return https.get('api/tutor/offer/', AuthHeader())
 }
 
-const postAdvertisement = (data, state) => {
-  return https.post('api/advertisement/', data, tokenConfig(state))
+const getOffersByStudentId = (id) => {
+  return https.get(`api/student/${id}/offer/`, AuthHeader())
+}
+ 
+const postAdvertisement = (data) => {
+  return https.post('api/advertisement/', data, AuthHeader())
+}
+
+const patchAdvertisement = (id, data) => {
+  return https.patch(`api/advertisement/${id}/`, data, AuthHeader())
+}
+
+const deleteAdvertisement = (id) => {
+  return https.delete(`api/advertisement/${id}/`, AuthHeader() )
 }
 
 const getAdvertisements = () => {
   return https.get('/api/advertisement/', AuthHeader())
 }
 
-const getAdvertisementAnswers = (id, state) => {
-  console.log(id)
-  return https.get('/api/answer/', tokenConfig(state))
+const getAdvertisementAnswers = (id) => {
+  return https.get(`api/advertisement/${id}/answer`, AuthHeader())
 }
 
 const getServices = () => {
   return https.get('api/service/', AuthHeader())
 }
 
-const patchOffer = (id, data, state) => {
-  return https.patch('api/offer/' + id + '/', data, tokenConfig(state))
+const patchOffer = (id, data) => {
+  return https.patch('api/offer/' + id + '/', data, AuthHeader())
 }
 
-const deleteOffer = (id, state) => {
-  return https.delete('api/offer/' + id + '/', tokenConfig(state))
+const deleteOffer = (id) => {
+  return https.delete('api/offer/' + id + '/', AuthHeader())
 }
 
-const getOfferNominations = (id, state) => {
-  return https.get('api/nomination/', tokenConfig(state))
+const getOfferNominations = (id) => {
+  return https.get(`api/offer/${id}/nomination/`, AuthHeader())
 }
 
-const postAnswer = (data, state) => {
-  return https.post('api/answer/', data, tokenConfig(state))
+const getTutorReviews = (id) => {
+  return https.get(`api/tutor/${id}/review`, AuthHeader())
+}
+
+const postAnswer = (data) => {
+  return https.post('api/answer/', data, AuthHeader())
 }
 
 const getSchedule = (idTutor) => {
@@ -260,11 +283,14 @@ const logConstants = {
   getStudentInfo,
   getknowledgeAreas,
   getKnowledgeArea,
+  getOfferById,
   getSubKnowledgeAreas,
   getCertificate,
   getTutorKnowledgeAreas,
+  getStudentKnowledgeAreas,
   getTutors,
   getOffers,
+  getOffersByStudentId,
   getAdvertisements,
   getAdvertisementAnswers,
   getTutorServices,
@@ -273,6 +299,7 @@ const logConstants = {
   getNominations,
   getOfferNominations,
   getSchedule,
+  getTutorReviews,
   postTutor,
   postGoogleTutor,
   postGoogleStudent,
@@ -288,10 +315,12 @@ const logConstants = {
   patchServiceTutor,
   patchNomination,
   patchOffer,
+  patchAdvertisement,
   deleteTutorKnowledgeArea,
   deleteServiceTutor,
   deleteNomination,
   deleteOffer,
+  deleteAdvertisement,
   updateTutorInfo,
   updateStudentInfo,
   login,
