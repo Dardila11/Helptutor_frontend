@@ -6,18 +6,27 @@ const theme = createMuiTheme({
   palette: {
     background: {
       dark: '#F4F6F8',
+      //dark: colors.common.white,
       default: colors.common.white,
       paper: colors.common.white
     },
     primary: {
-      main: colors.indigo[500]
+      //main: colors.indigo[500]
+      main: '#1190CB'
     },
     secondary: {
-      main: colors.indigo[500]
+      main: '#8e9ea5'
+    },
+    prices: {
+      main: '#00e676'
     },
     text: {
-      primary: colors.blueGrey[900],
+      //primary: colors.blueGrey[900],
+      primary: '#005579',
       secondary: colors.blueGrey[600]
+    },
+    button: {
+      primary: '#005579'
     }
   },
   shadows,

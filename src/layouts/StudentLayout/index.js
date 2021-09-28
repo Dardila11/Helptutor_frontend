@@ -1,49 +1,72 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core'
+import {
+  Backdrop,
+  Box,
+  CircularProgress,
+  makeStyles,
+  Typography
+} from '@material-ui/core'
+import StudentTopBar from './TopBar'
+import { ToastContainer } from 'react-toastify'
+
+import { useStudentInfo } from 'src/hooks/StudentHooks/useStudentInfo'
+import { useAuthState } from 'src/context/context'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
-    display: 'flex',
     height: '100%',
-    overflow: 'hidden',
-    width: '100%'
+    overflow: 'auto',
+    backgroundImage: `url(https://i.redd.it/ihfnlpbze7o01.jpg)`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat'
   },
-  wrapper: {
-    display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden',
-    paddingTop: 64,
-    [theme.breakpoints.up('lg')]: {
-      paddingLeft: 256
-    }
+  topbarContainer: {
+    marginTop: theme.spacing(8)
   },
   contentContainer: {
     display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    
   },
   content: {
     flex: '1 1 auto',
-    height: '100%',
-    overflow: 'auto'
+    overflow: 'hidden',
+    marginRight: theme.spacing(3)    
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: theme.palette.common.white
   }
 }))
 
-export const StudentLayout = () => {
+const StudentLayout = () => {
   const classes = useStyles()
-  return (
+  const userId = useAuthState().user.id
+  const studentInfoQuery = useStudentInfo(userId)
+  
+  return studentInfoQuery.isLoading ? (
+    <Backdrop className={classes.backdrop} open={true}>
+      <Box display="flex" flexDirection="column" alignItems="center">
+        <Typography component="span" color="primary">Cargando</Typography>
+        <CircularProgress color="primary" />
+      </Box>
+    </Backdrop>
+  ) : (
     <div className={classes.root}>
-      {/* TopBar */}
-      <h1> StudentLayout - Topbar </h1>
-      <div className={classes.wrapper}>
-        <div className={classes.contentContainer}>
-          <div className={classes.content}>
-            <Outlet />
-          </div>
+      <div className={classes.topbarContainer}>
+      <StudentTopBar />
+      </div>
+      <div className={classes.contentContainer}>
+        <div className={classes.content}>
+          <Outlet />
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={5000} closeOnClick pauseOnFocusLoss draggable pauseOnHover/>
     </div>
   )
 }
+
+export default StudentLayout

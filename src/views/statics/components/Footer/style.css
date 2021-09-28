@@ -1,0 +1,24 @@
+.footerContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin: 0 20px;
+  }
+  
+  .contact {
+    margin-top: 20px;
+  }
+
+  .contact h2 {
+    color: #7A7D84;
+  }
+  
+  .social {
+    min-width: 300px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+  }
