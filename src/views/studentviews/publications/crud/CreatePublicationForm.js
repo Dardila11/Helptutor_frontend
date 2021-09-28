@@ -23,7 +23,7 @@ import useCreatePublication from 'src/hooks/useCreatePublication'
 import { useAuthState } from 'src/context/context'
 import Validation from './formikUtils/formikValues'
 import { toast } from 'react-toastify'
-import useKnowledgeAreas from 'src/hooks/useKnowledgeAreas'
+import {useKnowledgeAreas} from 'src/hooks/useKnowledgeAreas'
 
 const useStyles = makeStyles((theme) => ({
   input: {

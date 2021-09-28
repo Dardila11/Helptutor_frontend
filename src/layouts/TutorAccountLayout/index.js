@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core'
+import { makeStyles, Grid } from '@material-ui/core'
 import { Outlet } from 'react-router-dom'
 import TutorTopBar from 'src/layouts/TutorLayout/TopBar'
 import NavBar from './NavBar'
@@ -11,19 +11,12 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     overflow: 'auto'
   },
-  contentContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    overflow: 'hidden',
-    margin: theme.spacing(1)
+  container: {
+    margin: '2rem 1rem'
   },
-  topbarContainer: {
-    marginTop: theme.spacing(8)
-  },
-  content: {
-    flex: '1 1 auto',
-    overflow: 'hidden',
-    marginRight: theme.spacing(3),
+  menu: {
+    padding: '0 1rem',
+    paddingBottom: '0.5rem'
   }
 }))
 
@@ -31,16 +24,18 @@ const TutorAccountLayout = () => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <div className={classes.topbarContainer}>
       <TutorTopBar />
-      </div>
-      <div className={classes.contentContainer}>
-        <NavBar />
-        <div className={classes.content}>
-          <Outlet />
-        </div>
-      </div>
-      <ToastContainer position="top-right" autoClose={5000} closeOnClick pauseOnFocusLoss draggable pauseOnHover/>
+      <dir className={classes.container}>
+        <Grid container className={classes.contentContainer}>
+          <Grid item xs={12} md={3} className={classes.menu}>
+            <NavBar />
+          </Grid>
+          <Grid item xs={12} md={9} style={{ padding: '0 1rem' }}>
+            <Outlet />
+          </Grid>
+        </Grid>
+      </dir>
+      <ToastContainer position="top-right" autoClose={5000} />
     </div>
   )
 }

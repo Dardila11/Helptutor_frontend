@@ -37,9 +37,8 @@
   }
 }
 
-
 .scrollTop {
-  position: fixed; 
+  position: fixed;
   width: 100%;
   bottom: 20px;
   align-items: center;
@@ -52,7 +51,7 @@
   opacity: 0.5;
 }
 
-.scrollTop:hover{
+.scrollTop:hover {
   opacity: 1;
 }
 
@@ -63,4 +62,27 @@
   100% {
     opacity: 0.5;
   }
+}
+
+.makeStyles-root-1 {
+  height: auto !important;
+}
+
+.makeStyles-content-3 > div {
+  margin-top: 0;
+}
+
+.text-trucate {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: initial;
+  height: 50px;
+}
+
+.icon-menu {
+  margin-right: 0.5rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  font-size: 1.5rem;
 }

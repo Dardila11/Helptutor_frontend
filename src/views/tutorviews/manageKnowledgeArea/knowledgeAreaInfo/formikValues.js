@@ -11,8 +11,9 @@ let initialValues = {
 const putValues = (values) => {
     initialValues.tags = values.tags
     initialValues.description = values.description
-    initialValues.knowledge_area = values.knowledge_area.id
+    initialValues.knowledge_area = values.knowledge_area.knowledge_area[0]
     initialValues.user = values.user
+    initialValues.speciality = values.knowledge_area.id
 }
 
 const getValues = (values) => {

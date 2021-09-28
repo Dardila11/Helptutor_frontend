@@ -8,7 +8,8 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   toolbar: {
       backgroundColor: '#ffff',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      overflow: 'auto'
   },
   primaryColor: {
     color : theme.palette.primary.main

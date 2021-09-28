@@ -1,21 +1,29 @@
 import React from 'react'
-import { Avatar, Box, Card, CardContent, makeStyles, Typography } from '@material-ui/core'
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  makeStyles,
+  Typography
+} from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
 import { useReviews } from 'src/hooks/TutorHooks/useReviews'
 
 const useStyles = makeStyles((theme) => ({
-    root:{
-        padding: '4px'
-    },
-    content:{
-        paddingBottom: '0px'
-    },
-    cover:{
-        width: 30,
-        height: 30
-    }
-}
-))
+  root: {
+    padding: '0.7rem !important',
+    marginBottom: '0.4rem'
+  },
+  content: {
+    paddingBottom: '0px'
+  },
+  cover: {
+    width: 30,
+    height: 30,
+    marginRight: '0.5rem'
+  }
+}))
 
 const QualificationCard = ({review}) => {
 
