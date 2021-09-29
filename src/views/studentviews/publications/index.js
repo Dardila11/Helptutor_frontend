@@ -15,7 +15,7 @@ import StudentPublicationCard from 'src/components/cards/studentpublicationCard'
 import Page from 'src/components/Page'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 
-import usePublications from 'src/hooks/usePublications'
+import { useOffersByStudentId } from 'src/hooks/StudentHooks/useStudentOffers'
 import { useAuthState} from 'src/context/context'
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +44,7 @@ const StudentPublicationsView = () => {
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
   const userId = useAuthState().user.id
-  const publicationsQuery = usePublications(userId)
+  const offersQuery = useOffersByStudentId(userId)
 
   const handleOpen = () => {
     setOpen(true)
@@ -59,7 +59,7 @@ const StudentPublicationsView = () => {
       if (query === '') setListFilter(null)
       else
         setListFilter(
-          publicationsQuery.data.filter(
+          offersQuery.data.filter(
             (pub) =>
               pub.title.toLowerCase().includes(query.toLowerCase()) ||
               pub.description.toLowerCase().includes(query.toLowerCase())
@@ -74,7 +74,7 @@ const StudentPublicationsView = () => {
     <Page title="Publicaciones">
       <Box display="flex" flexDirection="row" justifyContent="center">
         <Box>
-          <SearchBar option={'publicaciones'} list={publicationsQuery.data} setQuery={setQuery} />
+          <SearchBar option={'publicaciones'} list={offersQuery.data} setQuery={setQuery} />
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
@@ -99,8 +99,8 @@ const StudentPublicationsView = () => {
                 </Dialog>
               </Box>
             </Box>
-            {publicationsQuery.status === 'success' ? (
-              publicationsQuery.data.length === 0 ? (
+            {offersQuery.status === 'success' ? (
+              offersQuery.data.length === 0 ? (
                 <Box className={classes.title} textAlign="center">
                   <Typography component='h5' variant="h5">No hay publicaciones</Typography>
                 </Box>
@@ -110,7 +110,7 @@ const StudentPublicationsView = () => {
                     <Typography variant="h4">Mis publicaciones</Typography>
                   </Box>
                   {listFilter === null ? (
-                      publicationsQuery.data.map((publication, index) => (
+                      offersQuery.data.map((publication, index) => (
                         <StudentPublicationCard
                           key={index}
                           id={publication.id}

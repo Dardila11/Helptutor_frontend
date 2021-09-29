@@ -17,13 +17,11 @@ import {
 } from '@material-ui/core'
 import { Formik } from 'formik'
 import CloseIcon from '@material-ui/icons/Close'
-
-import useStudentKnowledgeAreas from 'src/hooks/StudentHooks/useStudentKnowledgeAreas'
-import useCreatePublication from 'src/hooks/useCreatePublication'
-import { useAuthState } from 'src/context/context'
-import Validation from './formikUtils/formikValues'
 import { toast } from 'react-toastify'
+
+import { useCreateOffer } from 'src/hooks/StudentHooks/useStudentOffers'
 import useKnowledgeAreas from 'src/hooks/useKnowledgeAreas'
+import formikValues from './formikUtils/formikValues'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -41,16 +39,13 @@ const useStyles = makeStyles((theme) => ({
 
 const CreatePublicationForm = ({ onClose }) => {
   const classes = useStyles()
-  const userId = useAuthState().user.id
-  const { data, status } = useStudentKnowledgeAreas(userId)
-  const mutation = useCreatePublication()
+  const mutation = useCreateOffer()
   const knowledgeAreasQuery = useKnowledgeAreas()
 
   let initialValues = {
     title: '',
     description: '',
     knowledge_area_student: '',
-    student: userId
   }
   return (
     <>
@@ -76,16 +71,19 @@ const CreatePublicationForm = ({ onClose }) => {
               <Formik
                 enableReinitialize={true}
                 initialValues={initialValues}
-                validationSchema={Validation.validation}
+                validationSchema={formikValues.validation}
                 onSubmit={(values) => {
-                  /* let jsonValues = Validation.getValues({
-                    ...values
-                    //student: student
-                  }) */
-                  //addPublication(jsonValues)
-                  mutation.mutate(values)
-                  toast.success("Publicación agregada")
-                  onClose()
+                  let jsonValues = formikValues.getValues(values) 
+                  mutation.mutate(jsonValues, {
+                    onSuccess: () => {
+                      toast.success("Publicación agregada")
+                      onClose()
+                    },
+                    onError: () => {
+                      toast.error('Ha ocurrido un error')
+                      onClose()
+                    }
+                  })
                   
                 }}>
                 {({
@@ -100,6 +98,8 @@ const CreatePublicationForm = ({ onClose }) => {
                     <FormControl
                       variant="outlined"
                       className={classes.selectControl}
+                      error={Boolean(touched.knowledge_area_student && errors.knowledge_area_student)}
+                      helperText={touched.knowledge_area_student && errors.knowledge_area_student}
                       fullWidth>
                       <InputLabel id="categories-label">Categoria</InputLabel>
                       <Select
