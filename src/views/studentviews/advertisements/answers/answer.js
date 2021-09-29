@@ -6,7 +6,8 @@ import {
   Grid,
   makeStyles,
   Typography,
-  IconButton
+  IconButton,
+  DialogContent
 } from '@material-ui/core'
 import AnswerFormView from './answerForm'
 
@@ -41,7 +42,6 @@ const AnswerView = (props) => {
   const advertisementAnswersQuery = useAdvertisementAnswers(
     props.advertisement.id
   )
-  console.log(studentInfoQuery)
   console.log(advertisementAnswersQuery)
 
   return (
@@ -61,52 +61,58 @@ const AnswerView = (props) => {
               </IconButton>
             </Box>
           </DialogTitle>
-          <Box className={classes.content}>
-            <Grid container>
-              <Grid item xs={2}>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="center"
-                  textAlign="center">
-                  <Avatar
-                    className={classes.cover}
-                    alt="user photo"
-                    src="/static/images/avatars/avatar_6.png"
-                  />
-                  <Typography variant="h6">
-                    <b>
-                      {capitalize(studentInfoQuery.data.user.first_name)}{' '}
-                      {capitalize(studentInfoQuery.data.user.last_name)}
-                    </b>
+          <DialogContent dividers>
+            <Box className={classes.content}>
+              <Grid container>
+                <Grid item xs={2}>
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    textAlign="center">
+                    <Avatar
+                      className={classes.cover}
+                      alt="user photo"
+                      src="/static/images/avatars/avatar_6.png"
+                    />
+                    <Typography variant="h6">
+                      <b>
+                        {capitalize(studentInfoQuery.data.user.first_name)}{' '}
+                        {capitalize(studentInfoQuery.data.user.last_name)}
+                      </b>
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={10}>
+                  <Typography>
+                    <b>{props.advertisement.title}</b>
                   </Typography>
-                </Box>
+                  <Typography>{props.advertisement.description}</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <AnswerFormView advertisement={props.advertisement} />
+                </Grid>
+                {advertisementAnswersQuery.data.length > 0 ? (
+                  <>
+                    <Grid className={classes.answersTitle} item xs={12}>
+                      <Typography variant="h6">Respuestas</Typography>
+                    </Grid>
+                    <Grid className={classes.answers} container>
+                      {advertisementAnswersQuery.data.map((answer, index) => (
+                        <AnswerCard
+                          id={answer.id}
+                          key={index}
+                          answer={answer}
+                        />
+                      ))}
+                    </Grid>
+                  </>
+                ) : (
+                  <></>
+                )}
               </Grid>
-              <Grid item xs={10}>
-                <Typography>
-                  <b>{props.advertisement.title}</b>
-                </Typography>
-                <Typography>{props.advertisement.description}</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <AnswerFormView advertisement={props.advertisement} />
-              </Grid>
-              {advertisementAnswersQuery.data.length > 0 ? (
-                <>
-                  <Grid className={classes.answersTitle} item xs={12}>
-                    <Typography variant="h6">Respuestas</Typography>
-                  </Grid>
-                  <Grid className={classes.answers} container>
-                    {advertisementAnswersQuery.data.map((answer, index) => (
-                      <AnswerCard id={answer.id} key={index} answer={answer} />
-                    ))}
-                  </Grid>
-                </>
-              ) : (
-                <></>
-              )}
-            </Grid>
-          </Box>
+            </Box>
+          </DialogContent>
         </>
       ) : (
         <AdvertisementInfoViewSkeleton />

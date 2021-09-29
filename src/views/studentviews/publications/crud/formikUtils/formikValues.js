@@ -15,10 +15,20 @@ const validation = Yup.object().shape({
   title: Yup.string()
     .min(20, 'Titulo debe tener por lo menos 20 caracteres')
     .max(255, 'Titulo debe tener un maximo de 255 caracteres')
+    .test(
+      'empty characters',
+      'No puede estar vacio',
+      (title) => !title || title.trim() !== ""
+    )
     .required('Titulo es obligatorio'),
   description: Yup.string()
     .min(20, 'Descripción debe tener por lo menos 20 caracteres')
     .max(255, 'Descripción debe tener un maximo de 255 caracteres')
+    .test(
+      'empty characters',
+      'No puede estar vacio',
+      (description) => !description || description.trim() !== ""
+    )
     .required('Descripción es obligatorio')
 })
 

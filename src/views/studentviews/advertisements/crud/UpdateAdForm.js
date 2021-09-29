@@ -15,6 +15,7 @@ import {
   
   import { useUpdateAdvertisement } from 'src/hooks/useAdvertisements'
   import Validation from './formikUtils/formikValues'
+import { toast } from 'react-toastify'
   
   const useStyles = makeStyles((theme) => ({
     input: {
@@ -33,6 +34,7 @@ import {
   const UpdateAdFormView = ({ onClose, advertisement }) => {
     const classes = useStyles()
     const mutationUpdate = useUpdateAdvertisement()
+    
     let initialValues = {
         title: advertisement.title,
         description: advertisement.description,
@@ -63,12 +65,17 @@ import {
                   initialValues={initialValues}
                   validationSchema={Validation.validation}
                   onSubmit={(values) => {
-                    /* let jsonValues = Validation.getValues({
-                      ...values
-                      //student: student
-                    }) */
-                    mutationUpdate.mutate([advertisement.id, values]) 
-                    onClose()
+                    let jsonValues = Validation.getValues(values)
+                    mutationUpdate.mutate([advertisement.id, jsonValues], {
+                      onSuccess: () => {
+                        toast.success('Anuncio actualizado')
+                        onClose()
+                      },
+                      onError: (err) => {
+                        toast.error('Ha ocurrido un error ' + err)
+                        onClose()
+                      }
+                    }) 
                     
                   }}>
                   {({

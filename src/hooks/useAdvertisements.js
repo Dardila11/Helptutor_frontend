@@ -1,6 +1,5 @@
 import Api from 'src/services/Api'
 import { useQuery, useQueryClient, useMutation } from 'react-query'
-import { toast } from 'react-toastify'
 
 const fetchAdvertisements = async () => {
   return Api.getAdvertisements().then((res) => res.data)
@@ -28,7 +27,6 @@ export const useCreateAdvertisement = () => {
     },
     {
       onSuccess: () => {
-        console.log('updating ads query')
         queryClient.invalidateQueries('advertisements')
       },
       onError: (err) => {
@@ -68,7 +66,6 @@ export const useUpdateAdvertisement = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries('advertisements')
-        toast.success('Anuncio modificado satisfactoriamente')
       },
       onError: (err) => {
         console.log(err)
@@ -85,13 +82,11 @@ export const useDeleteAdvertisement = () => {
       .then((res) => console.log(res))
   },
   {
-    onSuccess: (res) => {
+    onSuccess: () => {
       queryClient.invalidateQueries('advertisements')
-      toast.success('Anuncio eliminado satisfactoriamente')
     },
     onError: (error) => {
       console.log(error)
-      toast.success(`Hubo un error al eliminar el anuncio ${error}`)
     }
   }
 )

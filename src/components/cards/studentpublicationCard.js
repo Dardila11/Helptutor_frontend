@@ -137,9 +137,9 @@ const StudentPublicationCard = (props) => {
               <b>Opciones</b>
             </Typography>
             <Box spacing={3}>
-              <Tooltip title="nominados" placement="bottom" arrow>
+              <Tooltip title="postulaciones" placement="bottom" arrow>
                 <IconButton color="primary" onClick={handleWatch}>
-                  <Badge badgeContent={4} color="primary">
+                  <Badge /* badgeContent={4} */ color="primary">
                     <VisibilityIcon />
                   </Badge>
                 </IconButton>

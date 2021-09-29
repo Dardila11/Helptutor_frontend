@@ -28,6 +28,7 @@ import UpdateAdFormView from 'src/views/studentviews/advertisements/crud/UpdateA
 import { useAuthState } from 'src/context/context'
 import { useDeleteAdvertisement } from 'src/hooks/useAdvertisements'
 import { Favorite, FavoriteBorder  } from '@material-ui/icons'
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   details: {
@@ -83,8 +84,16 @@ const AdvertisementCard = (props) => {
     setDelete(true)
   }
   const handleDelete = () => {
-    mutation.mutate(advertisement.id)
-    setDelete(false)
+    mutation.mutate(advertisement.id, {
+      onSuccess: () => {
+        toast.success('Anuncio eliminado')
+        setDelete(false)
+      },
+      onError: (err) => {
+        toast.error('Ha ocurrido un error ', + err )
+        setDelete(false)
+      }
+    })
   }
   const handleClose = () => {
     setEdit(false)

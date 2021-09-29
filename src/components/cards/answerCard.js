@@ -1,5 +1,6 @@
 import React from 'react'
 import { Avatar, Grid, makeStyles, Typography } from '@material-ui/core'
+import { capitalize } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   coverAnswer: {
@@ -11,23 +12,27 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const AnswerCard = (props) => {
+const AnswerCard = ({ answer }) => {
   const classes = useStyles()
-  const { answer } = props
   return (
     <>
-      <Grid item xs={1}>
-        <Avatar
-          className={classes.coverAnswer}
-          alt="user photo"
-          src="/static/images/avatars/avatar_6.png"
-        />
-      </Grid>
-      <Grid className={classes.answer} item xs={11}>
-        <Typography lineheight={1} variant="h6">
-          <b>Username</b>
-        </Typography>
-        <Typography variant="h6">{answer.description}</Typography>
+      <Grid container spacing={5}>
+        <Grid item xs={1}>
+          <Avatar
+            className={classes.coverAnswer}
+            alt="user photo"
+            src={answer.user.photo}
+          />
+        </Grid>
+        <Grid className={classes.answer} item xs={11}>
+          <Typography component="h6" lineheight={1} variant="h6">
+            <b>
+              {capitalize(answer.user.first_name)}{' '}
+              {capitalize(answer.user.last_name)}
+            </b>
+          </Typography>
+          <Typography component="h6" variant="h6">{answer.description}</Typography>
+        </Grid>
       </Grid>
     </>
   )
