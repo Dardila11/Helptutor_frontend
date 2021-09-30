@@ -37,12 +37,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const UpdatePublicationFormView = ({ onClose, publication }) => {
+  console.log(publication)
   const classes = useStyles()
   const knowledgeAreasQuery = useKnowledgeAreas()
+  console.log(knowledgeAreasQuery)
   let initialValues = {
     title: publication.title,
     description: publication.description,
-    knowledge_area_student: publication.knowledge_area_student
+    knowledge_area: publication.knowledge_area
   }
   const mutationUpdate = useUpdateOffer()
 
@@ -97,20 +99,20 @@ const UpdatePublicationFormView = ({ onClose, publication }) => {
                       variant="outlined"
                       className={classes.selectControl}
                       error={Boolean(
-                        touched.knowledge_area_student &&
-                          errors.knowledge_area_student
+                        touched.knowledge_area &&
+                          errors.knowledge_area
                       )}
                       helperText={
-                        touched.knowledge_area_student &&
-                        errors.knowledge_area_student
+                        touched.knowledge_area &&
+                        errors.knowledge_area
                       }
                       fullWidth>
                       <InputLabel id="categories-label">Categoria</InputLabel>
                       <Select
                         labelId="categories-label"
                         id="categories-select"
-                        name="knowledge_area_student"
-                        value={values.knowledge_area_student}
+                        name="knowledge_area"
+                        value={values.knowledge_area}
                         onChange={(e) => handleChange(e)}>
                         <MenuItem value={-1}>
                           <em>---</em>

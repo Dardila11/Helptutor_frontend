@@ -21,11 +21,16 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     textAlign: 'center',
     alignItems: 'center',
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    border: '2px solid black'
   },
   details: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    border: '2px solid black'
   },
   content: {
     flex: '1 0 auto'
@@ -36,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     display: 'flex',
-    height: 120,
+    height: 'auto', 
     borderRadius: '20px',
     margin: theme.spacing(1),
     marginLeft: theme.spacing(3),
@@ -48,8 +53,11 @@ const useStyles = makeStyles((theme) => ({
   },
   price: {
     color: '#1ad41a',
-    marginTop: theme.spacing(2),
-    textAlign: 'center'
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    textAlign: 'center',
+    alignItems: 'center',
+    border: '2px solid black'
   }
 }))
 
@@ -81,6 +89,7 @@ const TutorServiceCard = (props) => {
     <Paper className={classes.paper} elevation={3}>
       <CardActionArea className={classes.cardAction} onClick={handleOpen}>
         <Grid container>
+          {/* Photo, name and Rating */}
           <Grid item xs={2}>
             <Box className={classes.userSpace}>
               <Avatar
@@ -94,6 +103,7 @@ const TutorServiceCard = (props) => {
               <Rating name="read-only" size="small" value={props.service.tutor.score} readOnly />
             </Box>
           </Grid>
+          {/* Title and Description */}
           <Grid item xs={7}>
             <Container className={classes.details}>
               <CardContent className={classes.content}>
@@ -108,7 +118,8 @@ const TutorServiceCard = (props) => {
               </CardContent>
             </Container>
           </Grid>
-          <Grid item xs={3}>
+          {/* Price */}
+          <Grid item xs={3} alignContent="center" alignItems="center">
             <Container className={classes.price}>
               <Typography variant="subtitle1" color="textSecondary">
                 <b>Costo por hora</b>

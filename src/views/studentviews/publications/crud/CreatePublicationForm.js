@@ -45,7 +45,7 @@ const CreatePublicationForm = ({ onClose }) => {
   let initialValues = {
     title: '',
     description: '',
-    knowledge_area_student: '',
+    knowledge_area: '',
   }
   return (
     <>
@@ -79,8 +79,9 @@ const CreatePublicationForm = ({ onClose }) => {
                       toast.success("Publicación agregada")
                       onClose()
                     },
-                    onError: () => {
-                      toast.error('Ha ocurrido un error')
+                    onError: (err) => {
+                      console.log(err)
+                      toast.error('Ha ocurrido un error ' + err)
                       onClose()
                     }
                   })
@@ -98,15 +99,15 @@ const CreatePublicationForm = ({ onClose }) => {
                     <FormControl
                       variant="outlined"
                       className={classes.selectControl}
-                      error={Boolean(touched.knowledge_area_student && errors.knowledge_area_student)}
-                      helperText={touched.knowledge_area_student && errors.knowledge_area_student}
+                      error={Boolean(touched.knowledge_area && errors.knowledge_area)}
+                      helperText={touched.knowledge_area && errors.knowledge_area}
                       fullWidth>
-                      <InputLabel id="categories-label">Categoria</InputLabel>
+                      <InputLabel id="categories-label">Categoría</InputLabel>
                       <Select
                         labelId="categories-label"
                         id="categories-select"
-                        name="knowledge_area_student"
-                        value={values.knowledge_area_student}
+                        name="knowledge_area"
+                        value={values.knowledge_area}
                         onChange={(e) => handleChange(e)}>
                         <MenuItem value={-1}>
                           <em>---</em>
@@ -131,7 +132,7 @@ const CreatePublicationForm = ({ onClose }) => {
                       error={Boolean(touched.title && errors.title)}
                       fullWidth
                       helperText={touched.title && errors.title}
-                      label="Titulo"
+                      label="Título"
                       margin="normal"
                       onBlur={handleBlur}
                       onChange={handleChange}

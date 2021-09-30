@@ -75,7 +75,7 @@ const SearchBar = (props) => {
         return(
           <Box>
             <Typography>
-              publications filters
+              Filtros de publicaciones
             </Typography>
           </Box>
         )
@@ -83,7 +83,7 @@ const SearchBar = (props) => {
         return(
           <Box>
             <Typography>
-              advertisements filters
+              Filtros de anuncios
             </Typography>
           </Box>
         )
@@ -123,7 +123,7 @@ const SearchBar = (props) => {
         (
           <Box textAlign='center'>
             <Typography><b>Filtrar por</b></Typography>
-            {renderFilters(option)}
+            {' '}{renderFilters(option)}
           </Box>
         ):<></>}
       </Box>    
