@@ -78,7 +78,7 @@ const NominationView = (props) => {
     <>
       <DialogTitle id="publications-dialog-title" align="center">
         <Typography>
-          <b>{publication.title.toUpperCase()}</b>
+          <b>{publication.title}</b>
         </Typography>
       </DialogTitle>
       <DialogContent dividers>

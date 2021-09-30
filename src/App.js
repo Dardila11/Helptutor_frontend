@@ -1,27 +1,31 @@
 import React from 'react'
-import { ThemeProvider } from '@material-ui/core'
-import GlobalStyles from './components/GlobalStyles'
-import theme from './theme'
 
+// ROUTER
 import Routing from './routing/composeRouter'
 
-//ALERTS
+// UTILITY
 import AlertComponent from './components/Alert'
-
 import ProgressAction from './layouts/Progress/ProgressAction'
+
+// QUERY
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
+
+// CONTEXT
+import { AuthProvider } from './context'
 
 //REDUX
 import { Provider } from 'react-redux'
 import store from './redux/store'
 
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
-import { AuthProvider} from './context'
+// STYLES
+import { ThemeProvider } from '@material-ui/core'
+import GlobalStyles from './components/GlobalStyles'
+import theme from './theme'
 
 const queryClient = new QueryClient()
 
 const App = () => {
-
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
@@ -32,8 +36,8 @@ const App = () => {
             <AlertComponent />
             <Routing />
           </ThemeProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
         </Provider>
-        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </AuthProvider>
   )

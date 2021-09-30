@@ -3,7 +3,7 @@ import https from './ApiConfig'
 
 /* token header */
 const AuthHeader = () => {
-  const token = JSON.parse(localStorage.getItem("currentUser")).token
+  const token = localStorage.getItem("token")
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -41,8 +41,8 @@ const postTutor = (data) => {
   return https.post('/api/tutor/', data)
 }
 
-const updateTutorInfo = (data, state) => {
-  return https.patch('/api/tutor/', data, tokenConfig(state))
+const updateTutorInfo = (data, id) => {
+  return https.patch('/api/tutor/' + id + '/', data, AuthHeader())
 }
 
 const postGoogleTutor = (data) => {
@@ -62,12 +62,12 @@ const postKnowledgeAreaTutor = (data, values) => {
   return https.post(
     '/api/knowledgearea_tutor/',
     data,
-    tokenConfig(values.state)
+    AuthHeader()
   )
 }
 
 const patchTutorKnowledgeAreas = (data, pk) => {
-  return https.patch('/api/knowledgearea_tutor/' + pk + '/', data)
+  return https.patch('/api/knowledgearea_tutor/' + pk + '/', data, AuthHeader())
 }
 
 const getTutorKnowledgeAreas = (idTutor) => {
@@ -97,7 +97,7 @@ const getOfferById = (id) => {
 }
 
 const getSubKnowledgeAreas = (idArea) => {
-  return https.get('/api/knowledgearea/' + idArea + '/knowledgearea/')
+  return https.get('/api/knowledgearea/' + idArea + '/knowledgearea/', AuthHeader())
 }
 
 /*LOGIN*/

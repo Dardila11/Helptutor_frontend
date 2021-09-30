@@ -1,28 +1,20 @@
 import React from 'react'
-import { Link as RouterLink , useNavigate} from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import {
-  Toolbar,
   Typography,
-  Button,
   makeStyles,
   IconButton,
   Avatar,
   Menu,
   MenuItem,
   Divider,
-  AppBar,  
-  Backdrop,
-  Box,
-  CircularProgress,
 } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import HelpIcon from '@material-ui/icons/Help';
-import TutorNavBar from 'src/layouts/TutorLayout/NavBar'
-import logo from 'src/layouts/TutorLayout/logo.svg'
+import HelpIcon from '@material-ui/icons/Help'
 
-import { useAuthState } from 'src/context/context';
+import { useAuthState } from 'src/context/context'
 
-import { logout, useAuthDispatch } from 'src/context' 
+import { logout, useAuthDispatch } from 'src/context'
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -79,12 +71,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const TutorTopBar = () => {
-  const navigate = useNavigate()
-  const user = useAuthState()
-  const roles = user.roles
+  const { user, roles } = useAuthState()
   const dispatch = useAuthDispatch()
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
+
+  console.log(user, roles)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -94,113 +86,67 @@ const TutorTopBar = () => {
     setAnchorEl(null)
   }
 
-  async function handleLogOut () {
-    navigate('/login')
-    await logout(dispatch)
+  async function handleLogOut() {
+    logout(dispatch)
   }
 
-  return (     
-    <>
-    {false? ( 
-      <Backdrop className={classes.backdrop} open={true}>
-        <Box display="flex" flexDirection="column" alignItems="center">
-          <Typography color="primary">Cargando</Typography>
-          <CircularProgress color="primary" />
-        </Box>
-      </Backdrop>
-    ) : (
-      <Box display='flex' flexDirection='column' justifyContent='center'>
-      <Box>
-        <AppBar position='absolute'>
-        <Toolbar className={classes.toolbar} >
-          <Button className={classes.button} variant="outlined" href="/">
-            <img
-              className={classes.img}
-              src={logo}
-              width="50"
-              alt="LogoImage"></img>
-            <Typography
-              className={classes.title}
-              variant="h2"
-              color="initial"
-              noWrap>
-              HELPTUTOR
+  return (
+    <div>
+      <IconButton
+        className={classes.userSpace}
+        aria-label="account of current user"
+        aria-controls="menu-appbar"
+        aria-haspopup="true"
+        color="inherit"
+        onClick={handleClick}>
+        <Typography className={classes.userSpace} variant="h4">
+          {console.log(user)}
+          {user.first_name} {user.last_name}
+        </Typography>
+        <Avatar className={classes.cover} alt="user photo" src={user.photo}>
+          {user != null ? <b>{user.first_name}</b> : null}
+        </Avatar>
+      </IconButton>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}>
+        <RouterLink to="/tutor/cuenta">
+          <MenuItem onClick={handleClose}>
+            <Typography color="primary">
+              <b>Cuenta</b>
             </Typography>
-          </Button>
-            <Box>
-              <IconButton
-                className={classes.userSpace}
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                color="inherit"
-                onClick={handleClick}>
-                <Typography className={classes.userSpace} variant="h4">
-                  {user.user !== "" ? (
-                    <>
-                      {user.user.first_name} {user.user.last_name}
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </Typography>
-                <Avatar
-                  className={classes.cover}
-                  alt="user photo"
-                  src={user.user.photo}
-                >
-                  <b>{user.user.first_name[0]}</b>
-                </Avatar>
-              </IconButton>
-              <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}>
-                <RouterLink to="/tutor/cuenta">
-                  <MenuItem onClick={handleClose}>
-                    <Typography color="primary">
-                      <b>Cuenta</b>
-                    </Typography>
-                  </MenuItem>
-                </RouterLink>
-                {(roles[0] && roles[1])? (
-                  <RouterLink to="/seleccion-rol">
-                  <MenuItem onClick={handleClose}>
-                    <Typography color="primary">
-                      <b>Cambiar de rol</b>
-                    </Typography>
-                  </MenuItem>
-                </RouterLink>
-                ): <></>}
-                <Divider></Divider>
-                <RouterLink to="/como-funciona">
-                  <MenuItem className={classes.menuItem} onClick={handleClose}>
-                    <Typography color="primary">
-                      <b>Como funciona</b>
-                    </Typography>
-                    <HelpIcon className={classes.icon}/>
-                  </MenuItem>
-                </RouterLink>
-                <MenuItem className={classes.menuItem} onClick={handleLogOut}>
-                    <Typography color="primary">
-                      <b>Salir</b>
-                    </Typography>
-                    <ExitToAppIcon className={classes.icon} />
-                </MenuItem>
-              </Menu>
-          </Box>
-        </Toolbar>
-        </AppBar>
-      </Box>
-      <Box>
-        <TutorNavBar />
-      </Box>
-    </Box>
+          </MenuItem>
+        </RouterLink>
+        {roles[0] && roles[1] ? (
+          <RouterLink to="/seleccion-rol">
+            <MenuItem onClick={handleClose}>
+              <Typography color="primary">
+                <b>Cambiar de rol</b>
+              </Typography>
+            </MenuItem>
+          </RouterLink>
+        ) : null}
+        <Divider />
+        <RouterLink to="/como-funciona">
+          <MenuItem className={classes.menuItem} onClick={handleClose}>
+            <Typography color="primary">
+              <b>Como funciona</b>
+            </Typography>
+            <HelpIcon className={classes.icon} />
+          </MenuItem>
+        </RouterLink>
+        <MenuItem className={classes.menuItem} onClick={handleLogOut}>
+          <Typography color="primary">
+            <b>Salir</b>
+          </Typography>
+          <ExitToAppIcon className={classes.icon} />
+        </MenuItem>
+      </Menu>
+    </div>
   )
 }
-</>
-  )}
 
 export default TutorTopBar

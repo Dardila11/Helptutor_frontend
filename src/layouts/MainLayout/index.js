@@ -1,50 +1,37 @@
-import React,{useEffect} from 'react'
+import React from 'react'
+
+// ROUTER
 import { Outlet } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core'
+
+// COMPONENTS
 import MainNavBar from './navbar'
+
+// UTILITY
 import { ToastContainer } from 'react-toastify'
-import { useAuthDispatch, onReload } from 'src/context'
+
+// STYLES
+import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
-    height: '100%',
-    overflow: 'auto'
+    height: '100%'
   },
-  contentContainer: {
-    display: 'flex',
-    overflow: 'hidden'
-  },
-  content: {
-    flex: '1 1 auto',
-    overflow: 'hidden',
-    marginTop: theme.spacing(8)
+  container: {
+    margin: '1rem 2rem'
   }
 }))
 
 export const MainLayout = () => {
   const classes = useStyles()
-  const dispatch = useAuthDispatch()
-  const navigate = useNavigate()
-
-  useEffect(()=>{
-    const user = JSON.parse(localStorage.getItem('currentUser'))
-    if(user!=null){
-      onReload(dispatch,user)
-      navigate('/seleccion-rol')
-    }
-  },[dispatch])
-
+  
   return (
     <div className={classes.root}>
       <MainNavBar />
-      <div className={classes.contentContainer}>
-        <div className={classes.content}>
-          <Outlet />
-        </div>
+      <div className={classes.container}>
+        <Outlet/>
       </div>
-      <ToastContainer position="top-right" autoClose={5000} closeOnClick pauseOnFocusLoss draggable pauseOnHover/>
+      <ToastContainer position="top-right" autoClose={5000} />
     </div>
   )
 }

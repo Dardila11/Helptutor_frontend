@@ -1,5 +1,5 @@
 //REACT
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 //COMPONENTS MATERIAL UI
 import {
@@ -25,13 +25,17 @@ import SaveIcon from '@material-ui/icons/Save'
 //COMPONENTS
 import CertificateView from './certificates/certificate'
 
-import { Formik } from 'formik'
+import { Formik, useFormik } from 'formik'
 
 //UTILS
 import formikValues from './formikValues'
 
-import useKnowledgeAreas from 'src/hooks/useKnowledgeAreas'
-//import useSpecialities from 'src/hooks/useSpecialities'
+import {
+  useKnowledgeAreas,
+  fetchSubKnowledgeAreas
+} from 'src/hooks/useKnowledgeAreas'
+import { useUpdateKnowledgeAreaTutor } from 'src/hooks/useKnowledgeAreas'
+import { useCreateKnowledgeAreaTutor } from 'src/hooks/useKnowledgeAreas'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -56,20 +60,53 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const KnowledgeAreaInfoView = ({area, user}) => {
+const KnowledgeAreaInfoView = (props) => {
+  const { area } = props
+  const mutation = useUpdateKnowledgeAreaTutor()
+  const mutation1 = useCreateKnowledgeAreaTutor()
   const classes = useStyles()
   const { data, isLoading } = useKnowledgeAreas()
+  const [id, setId] = useState(0)
   const knowledgeAreas = data
-  const [tags,setTags] = useState([])
+  const [tags, setTags] = useState([])
   const [txtTags, setTxtTags] = useState(null)
+  const [subKnowledgeAreas, setSubKnowledgeAreas] = useState([])
 
-  if(area!=null){
-    formikValues.putValues(area)
-  }
+  useEffect(() => {
+    fetchSubKnowledgeAreas(id).then((data) => setSubKnowledgeAreas(data))
+  }, [id])
 
-  const handleSelect = (e) => {
-   console.log(e.target.value)
-  }
+  const formik = useFormik({
+    initialValues: formikValues.initialValues,
+    validationSchema: formikValues.validation,
+    onSubmit: (values, { setSubmitting }) => {
+      let jsonValues = formikValues.getValues({
+        ...values
+      })
+      if (area != null) {
+        mutation.mutate([jsonValues, area.id])
+      } else {
+        mutation1.mutate([jsonValues])
+      }
+    }
+  })
+
+  useEffect(() => {
+    if (area !== null) {
+      formik.setValues({
+        tags: area.tags,
+        description: area.description,
+        knowledge_area: area.knowledge_area.knowledge_area[0],
+        speciality: area.knowledge_area.id
+      })
+      setTags(area.tags.split(','))
+      setId(area.knowledge_area.knowledge_area[0])
+    } else {
+      formik.setValues(formikValues.initialValues)
+      setTags([])
+      setId(-1)
+    }
+  }, [area])
 
   const createTags = (e) => {
     setTags(e.target.value.split(','))
@@ -77,15 +114,17 @@ const KnowledgeAreaInfoView = ({area, user}) => {
   }
 
   const deleteTag = (tag) => {
-    let str =''
-    tags.forEach( item => (
-      item !== tag ? str += item+',' : <></>
-    ))
-    setTags(tags.filter( item => item!==tag))
+    let str = ''
+    tags.forEach((item) => (item !== tag ? (str += item + ',') : <></>))
+    setTags(tags.filter((item) => item !== tag))
     setTxtTags(str)
   }
+
   return (
     <>
+      {mutation1.isLoading || mutation.isLoading ? (
+        <div>Ejecuntado accion</div>
+      ) : null}
       <Grid item xs={9}>
         <Paper className={classes.infoView} elevation={3}>
           <Card className={classes.infoView}>
@@ -101,157 +140,152 @@ const KnowledgeAreaInfoView = ({area, user}) => {
               height="100%"
               justifyContent="center">
               <Container maxWidth="sm">
-                {isLoading? "Cargando" :(
-                  <Formik
-                  enableReinitialize={true}
-                  initialValues={formikValues.initialValues}
-                  validationSchema={formikValues.Validation}
-                  onSubmit={(values) => {
-                    let jsonValues = formikValues.getValues({
-                      ...values,
-                      user: user.id
-                    })
-                    console.log(jsonValues)
-                    //TODO: UPDATE AND ADD POST
-                  }}>
-                  {({
-                    errors,
-                    handleBlur,
-                    handleChange,
-                    handleSubmit,
-                    touched,
-                    values
-                  }) => (
-                    <form onSubmit={handleSubmit}>
-                      <FormControl
-                        variant="outlined"
-                        className={classes.selectControl}
-                        error={Boolean(
-                          touched.knowledge_area && errors.knowledge_area
-                        )}
-                        helpertext={
-                          touched.knowledge_area && errors.knowledge_area
-                        }
-                        fullWidth>
-                        <InputLabel id="select-area-label">
-                          Área de conocimiento
-                        </InputLabel>
-                        <Select
-                          labelId="select-area-label"
-                          id="select-area"
-                          value={values.knowledge_area}
-                          name="knowledge_area"
-                          onChange={(e) => {
-                            handleChange(e)
-                            handleSelect(e)
-                          }}
-                          label="Área de conocimiento">
-                          <MenuItem value={-1}>
-                            <em>---</em>
+                {isLoading ? (
+                  'Cargando'
+                ) : (
+                  <form onSubmit={formik.handleSubmit}>
+                    <FormControl
+                      variant="outlined"
+                      className={classes.selectControl}
+                      error={Boolean(formik.errors.knowledge_area)}
+                      helpertext={formik.errors.knowledge_area}
+                      fullWidth>
+                      <InputLabel id="select-area-label">
+                        Área de conocimiento
+                      </InputLabel>
+                      <Select
+                        labelId="select-area-label"
+                        id="select-area"
+                        value={formik.values.knowledge_area}
+                        name="knowledge_area"
+                        onChange={(e) => {
+                          formik.handleChange(e)
+                          setId(e.target.value)
+                        }}
+                        label="Área de conocimiento">
+                        <MenuItem value={-1}>
+                          <em>---</em>
+                        </MenuItem>
+                        {knowledgeAreas.map((area, index) => (
+                          <MenuItem key={index} value={area.id}>
+                            {area.name}
                           </MenuItem>
-                          {knowledgeAreas.map((area, index) => (
-                            <MenuItem key={index} value={area.id}>
-                              {area.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                        {Boolean(
-                          touched.knowledge_area && errors.knowledge_area
-                        ) && (
-                          <FormHelperText error>
-                            {' '}
-                            {errors.knowledge_area}{' '}
-                          </FormHelperText>
-                        )}
-                      </FormControl>
-                      <FormControl
-                        variant="outlined"
-                        className={classes.selectControl}
-                        error={Boolean(touched.speciality && errors.speciality)}
-                        helpertext={touched.speciality && errors.speciality}
-                        fullWidth>
-                        <InputLabel id="select-subarea-label">
-                          Especialidad
-                        </InputLabel>
-                        <Select
-                          labelId="select-subarea-label"
-                          id="select-subarea"
-                          value={values.speciality}
-                          name="speciality"
-                          onChange={handleChange}
-                          label="Especialidad">
-                          <MenuItem value={-1}>
-                            <em>---</em>
-                          </MenuItem>
-                          {[].map((subarea, index) => (
-                            <MenuItem key={index} value={subarea.id}>
-                              {subarea.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                        {Boolean(touched.speciality && errors.speciality) && (
-                          <FormHelperText error>
-                            {errors.speciality}
-                          </FormHelperText>
-                        )}
-                      </FormControl>
-                      <Box>
-                        <TextField
-                          id="txt_tags"
-                          error={Boolean(touched.tags && errors.tags)}
-                          fullWidth
-                          helperText={touched.tags && errors.tags}
-                          label="Etiquetas, describa palabras clave separadas por coma(,)"
-                          margin="normal"
-                          onBlur={handleBlur}
-                          onChange={e => {handleChange(e);createTags(e)} }
-                          name="tags"
-                          value={txtTags===null? values.tags : txtTags}
-                          variant="outlined"
-                          InputProps={{
-                            className: classes.input
-                          }}
-                        />
-                        {tags.map((tag,index) => (
-                          <>
-                            {tag!==''? 
-                            <Chip index={index} key={index+"chip"} label={tag} onDelete={e => {
-                              deleteTag(tag)
-                            }} color="primary" />
-                            : <></>}
-                          </>
                         ))}
-                      </Box>
+                      </Select>
+                      {Boolean(formik.errors.knowledge_area) && (
+                        <FormHelperText error>
+                          {' '}
+                          {formik.errors.knowledge_area}{' '}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                    <FormControl
+                      variant="outlined"
+                      className={classes.selectControl}
+                      error={Boolean(
+                        formik.touched.speciality && formik.errors.speciality
+                      )}
+                      helpertext={
+                        formik.touched.speciality && formik.errors.speciality
+                      }
+                      fullWidth>
+                      <InputLabel id="select-subarea-label">
+                        Especialidad
+                      </InputLabel>
+                      <Select
+                        labelId="select-subarea-label"
+                        id="select-subarea"
+                        value={formik.values.speciality}
+                        name="speciality"
+                        onChange={formik.handleChange}
+                        label="Especialidad">
+                        <MenuItem value={-1}>
+                          <em>---</em>
+                        </MenuItem>
+                        {subKnowledgeAreas.map((subarea, index) => (
+                          <MenuItem key={index} value={subarea.id}>
+                            {subarea.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                      {Boolean(
+                        formik.touched.speciality && formik.errors.speciality
+                      ) && (
+                        <FormHelperText error>
+                          {formik.errors.speciality}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+                    <Box>
                       <TextField
-                        id="txt_description"
+                        id="txt_tags"
                         error={Boolean(
-                          touched.description && errors.description
+                          formik.touched.tags && formik.errors.tags
                         )}
                         fullWidth
-                        helperText={touched.description && errors.description}
-                        label="Descripción"
+                        helperText={formik.touched.tags && formik.errors.tags}
+                        label="Etiquetas, describa palabras clave separadas por coma(,)"
                         margin="normal"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        name="description"
-                        value={values.description}
+                        onBlur={formik.handleBlur}
+                        onChange={(e) => {
+                          formik.handleChange(e)
+                          createTags(e)
+                        }}
+                        name="tags"
+                        value={formik.values.tags}
                         variant="outlined"
+                        InputProps={{
+                          className: classes.input
+                        }}
                       />
-                      <CertificateView />
-                      <Box my={2} align="center">
-                        <Button
-                          id="btn_registerArea"
-                          type="submit"
-                          endIcon={<SaveIcon />}
-                          variant="contained"
-                          color='primary'>
-                          {area===null ? 'Guardar area' : 'Actualizar'}
-                        </Button>
-                      </Box>
-                      <Box my={2}></Box>
-                    </form>
-                  )}
-                </Formik>
+                      {tags.map((tag, index) => (
+                        <>
+                          {tag !== '' ? (
+                            <Chip
+                              index={index}
+                              key={index + 'chip'}
+                              label={tag}
+                              onDelete={(e) => {
+                                deleteTag(tag)
+                              }}
+                              color="primary"
+                            />
+                          ) : (
+                            <></>
+                          )}
+                        </>
+                      ))}
+                    </Box>
+                    <TextField
+                      id="txt_description"
+                      error={Boolean(
+                        formik.touched.description && formik.errors.description
+                      )}
+                      fullWidth
+                      helperText={
+                        formik.touched.description && formik.errors.description
+                      }
+                      label="Descripción"
+                      margin="normal"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      name="description"
+                      value={formik.values.description}
+                      variant="outlined"
+                    />
+                    <CertificateView />
+                    <Box my={2} align="center">
+                      <Button
+                        id="btn_registerArea"
+                        type="submit"
+                        endIcon={<SaveIcon />}
+                        variant="contained"
+                        color="primary">
+                        {area === null ? 'Guardar area' : 'Actualizar'}
+                      </Button>
+                    </Box>
+                    <Box my={2}></Box>
+                  </form>
                 )}
               </Container>
             </Box>

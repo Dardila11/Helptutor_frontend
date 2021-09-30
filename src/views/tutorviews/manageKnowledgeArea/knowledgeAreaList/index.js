@@ -39,8 +39,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const KnowledgeAreaListView = ({handleSelect, specialities_tutor}) => {
+const KnowledgeAreaListView = (props) => {
   const classes = useStyles()
+
+  const { list, handleSelect } = props
 
   return (
     <>
@@ -53,9 +55,9 @@ const KnowledgeAreaListView = ({handleSelect, specialities_tutor}) => {
               align="center">
               Áreas de conocimiento
             </Typography>
-            {specialities_tutor.length > 0 ? (
+            {list.length > 0 ? (
               <>
-                {specialities_tutor.map((area, index) => (
+                {list.map((area, index) => (
                   <AreaCard
                     key={index}
                     area={area.knowledge_area}
@@ -76,7 +78,7 @@ const KnowledgeAreaListView = ({handleSelect, specialities_tutor}) => {
                 color="primary"
                 variant="contained"
                 endIcon={<AddCircleIcon />}
-                onClick={handleSelect}>
+                onClick={() => handleSelect(null)}>
                 Agregar Area
               </Button>
             </Container>

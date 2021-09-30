@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const StudentProfileView = (props) => {
+  console.log(props)
   const classes = useStyles()
   const { user, userInfo, requestInProgress, getStudentInfo } = props
   useEffect(

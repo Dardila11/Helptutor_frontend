@@ -23,6 +23,7 @@ export function useAuthState() {
   }
 
   export const AuthProvider = ({ children }) => {
+    console.log('montando componente', Boolean(initialState.token))
     const [user, dispatch] = useReducer(AuthReducer, initialState);
    
     return (
