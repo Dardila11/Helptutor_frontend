@@ -4,25 +4,15 @@ let initialValues = {
   title: "",
   description: "",
   price: 0,
-  user: 0,
   speciality: -1
-}
-
-const putValues = (values) => {
-  initialValues.title = values.title
-  initialValues.speciality = values.knowledge_area_tutor
-  initialValues.description = values.description
-  initialValues.price = values.price
-  initialValues.user = values.tutor.id
 }
 
 const getValues = (values) => {
   return {
     title: values.title,
-    speciality: values.speciality,
+    knowledge_area_tutor: values.speciality,
     description: values.description,
     price: values.price,
-    user: values.user
   }
 }
 
@@ -36,8 +26,7 @@ const validation = Yup.object().shape({
 const logConst = {
   initialValues,
   getValues,
-  validation,
-  putValues
+  validation
 }
 
 export default logConst

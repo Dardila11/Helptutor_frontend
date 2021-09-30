@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { CircularProgress, Grid, makeStyles } from '@material-ui/core'
 import Page from 'src/components/Page'
 import ServicesInfoView from './servicesInfo'
 import ServicesListView from './servicesList'
-import useTutorsServices from 'src/hooks/TutorHooks/useTutorServices'
+import useTutorServices from 'src/hooks/TutorHooks/useTutorServices'
 import { useAuthState } from 'src/context'
 
 const useStyles = makeStyles((theme) => ({
@@ -17,22 +17,20 @@ const useStyles = makeStyles((theme) => ({
 
 const ManageServicesView = () => {
   const classes = useStyles()
-  const user = useAuthState().user
-  const { data, isLoading} = useTutorsServices()
+  const { user } = useAuthState()
+  console.log('manageservice', user)
+  const { data, isLoading } = useTutorServices.useTutorServices(user.id)
   const [service, setService] = useState(null)
   return (
     <>
       <Page className={classes.root} title="Gestionar areas de conocimiento">
         <Grid container spacing={2}>
-          {isLoading? <CircularProgress /> :
-          (
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
             <>
-              <ServicesListView services={data} handleSelect={setService}/>
-              {service!=null? 
-                <ServicesInfoView service={service} user={user}/> 
-                :
-                <ServicesInfoView user={user}/>
-              }
+              <ServicesListView services={data} handleSelect={setService} />
+              <ServicesInfoView service={service} user={user} />
             </>
           )}
         </Grid>

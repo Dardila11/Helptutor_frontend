@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ServicesListView = ({services, handleSelect}) => {
+const ServicesListView = ({ services, handleSelect }) => {
   const classes = useStyles()
 
   return (
@@ -53,24 +53,24 @@ const ServicesListView = ({services, handleSelect}) => {
               align="center">
               Servicios
             </Typography>
-                {services.length>0 ? (
-                  <>
-                    {services.map((service, index) => (
-                      <ServiceCard
-                        key={index}
-                        id={service.id}
-                        service={service}
-                        handleSelect={handleSelect}
-                      />
-                    ))}
-                  </>
-                ) : (
-                  <>
-                    <Typography align="center">
-                      No se encontraron servicios
-                    </Typography>
-                  </>
-                )}
+            {services.length > 0 ? (
+              <>
+                {services.map((service, index) => (
+                  <ServiceCard
+                    key={index}
+                    id={service.id}
+                    service={service}
+                    handleSelect={handleSelect}
+                  />
+                ))}
+              </>
+            ) : (
+              <>
+                <Typography align="center">
+                  No se encontraron servicios
+                </Typography>
+              </>
+            )}
 
             <Container className={classes.actions}>
               <Button
@@ -79,7 +79,7 @@ const ServicesListView = ({services, handleSelect}) => {
                 color="primary"
                 variant="contained"
                 endIcon={<AddCircleIcon />}
-                onClick={()=>{}}>
+                onClick={() => handleSelect(null)}>
                 Agregar Servicio
               </Button>
             </Container>

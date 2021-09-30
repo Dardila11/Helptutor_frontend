@@ -11,6 +11,7 @@ import TutorNavBar from '../TutorLayout/NavBar'
 import StudentNavBar from '../StudentLayout/NavBar'
 import TutorTopBar from '../TutorLayout/TopBar'
 import StudentTopBar from '../StudentLayout/TopBar'
+import NavBarMenu from './navBarMenu'
 
 // STYLES
 import {
@@ -52,12 +53,12 @@ const TOP_BAR = {
 const MainNavBar = () => {
   const classes = useStyles()
   const location = useLocation()
-  const { isAuthenticated } = useAuthState()
+  const { isAuthenticated, roles } = useAuthState()
 
   const topBar = TOP_BAR[location.pathname.split('/')[1]] || null
 
   const guestLink = (
-    <>
+    <div>
       <RouterLink to="/registrar">
         <Button className={classes.button} variant="outlined">
           <span>
@@ -72,11 +73,19 @@ const MainNavBar = () => {
           </span>
         </Button>
       </RouterLink>
-    </>
+    </div>
   )
 
   const authLink =
-    location.pathname.split('/')[1] === 'tutor' ? (
+    location.pathname.split('/')[1] === '' ? (
+      roles[0] && roles[1] ? (
+        <NavBarMenu />
+      ) : roles[0] && !roles[1] ? (
+        <TutorTopBar />
+      ) : !roles[0] && roles[1] ? (
+        <StudentTopBar />
+      ) : null
+    ) : location.pathname.split('/')[1] === 'tutor' ? (
       <TutorTopBar />
     ) : location.pathname.split('/')[1] === 'estudiante' ? (
       <StudentTopBar />

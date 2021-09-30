@@ -69,7 +69,6 @@ const KnowledgeAreaInfoView = (props) => {
   const [id, setId] = useState(0)
   const knowledgeAreas = data
   const [tags, setTags] = useState([])
-  const [txtTags, setTxtTags] = useState(null)
   const [subKnowledgeAreas, setSubKnowledgeAreas] = useState([])
 
   useEffect(() => {
@@ -110,14 +109,12 @@ const KnowledgeAreaInfoView = (props) => {
 
   const createTags = (e) => {
     setTags(e.target.value.split(','))
-    setTxtTags(e.target.value)
   }
 
   const deleteTag = (tag) => {
     let str = ''
     tags.forEach((item) => (item !== tag ? (str += item + ',') : <></>))
     setTags(tags.filter((item) => item !== tag))
-    setTxtTags(str)
   }
 
   return (

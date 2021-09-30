@@ -69,6 +69,7 @@ const LoginHooks = () => {
   })
 
   useEffect(() => {
+    if (roles[0] && roles[1]) navigate('/seleccion-rol')
     if (roles[0] && !roles[1]) navigate('/tutor')
     if (!roles[0] && roles[1]) navigate('/estudiante')
   }, [roles, navigate])

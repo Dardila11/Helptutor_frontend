@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const TutorTopBar = () => {
+const NavBarMenu = () => {
   const { user, roles } = useAuthState()
   const dispatch = useAuthDispatch()
   const classes = useStyles()
@@ -111,18 +111,11 @@ const TutorTopBar = () => {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}>
-        <RouterLink to="/tutor/cuenta">
-          <MenuItem onClick={handleClose}>
-            <Typography color="primary">
-              <b>Cuenta</b>
-            </Typography>
-          </MenuItem>
-        </RouterLink>
         {roles[0] && roles[1] ? (
           <RouterLink to="/seleccion-rol">
             <MenuItem onClick={handleClose}>
               <Typography color="primary">
-                <b>Cambiar de rol</b>
+                <b>Seleccione rol</b>
               </Typography>
             </MenuItem>
           </RouterLink>
@@ -147,4 +140,4 @@ const TutorTopBar = () => {
   )
 }
 
-export default TutorTopBar
+export default NavBarMenu

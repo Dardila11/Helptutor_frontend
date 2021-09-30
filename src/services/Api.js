@@ -160,8 +160,8 @@ const getTutorServices = (id) => {
   return https.get('/api/tutor/'+id+'/service/', AuthHeader())
 }
 
-const postServiceTutor = (data, values) => {
-  return https.post('/api/service/', data, tokenConfig(values.state))
+const postServiceTutor = (data) => {
+  return https.post('/api/service/', data, AuthHeader())
 }
 
 const deleteServiceTutor = (id) => {
@@ -169,7 +169,7 @@ const deleteServiceTutor = (id) => {
 }
 
 const patchServiceTutor = (id, data) => {
-  return https.patch('/api/service/' + id + '/', data)
+  return https.patch('/api/service/' + id + '/', data, AuthHeader())
 }
 
 const getNomination = (id, state) => {
