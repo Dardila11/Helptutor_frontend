@@ -75,7 +75,7 @@ const ProfileView = ({ tutor, reviews }) => {
                 <Typography className={classes.contentPrincipal} variant="h4">
                   {tutor.skills}
                 </Typography>
-                <Rating value={4} size="large" readOnly />
+                <Rating value={tutor.score} size="large" readOnly />
                 <Typography className={classes.contentPrincipal} variant="h4">
                   Promedio: 4.5 de 23 calificaciones
                 </Typography>

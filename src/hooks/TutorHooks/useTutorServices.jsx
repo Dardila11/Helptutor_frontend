@@ -6,7 +6,7 @@ const fetchTutorServices =  async () => {
 }
 
 const useTutorServices = () => {
-  return useQuery(['services',], () => fetchTutorServices())
+  return useQuery(['services'], () => fetchTutorServices())
 }
 
 export default useTutorServices

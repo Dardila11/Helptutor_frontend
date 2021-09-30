@@ -86,7 +86,7 @@ const TutorServiceCard = (props) => {
               <Avatar
                 className={classes.cover}
                 alt="user photo"
-                src="/static/images/avatars/avatar_6.png"
+                src={props.service.tutor.user.photo}
               />
               <Typography>
                 <b>{capitalize(props.service.tutor.user.first_name)} {capitalize(props.service.tutor.user.last_name)}</b>
