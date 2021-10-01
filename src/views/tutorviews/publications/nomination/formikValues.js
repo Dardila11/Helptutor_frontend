@@ -5,7 +5,6 @@ const getValues = (values) => {
     price: values.price,
     description: values.description,
     offer: values.offer,
-    tutor: values.tutor
   }
 }
 

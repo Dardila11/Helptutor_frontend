@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { Box, makeStyles, Paper, Typography, Grid } from '@material-ui/core'
+
+// QUERY
+import useOffers from 'src/hooks/TutorHooks/useOffers'
+
+// COMPONENT
 import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
 import TutorPublicationCard from 'src/components/cards/tutorPublicationCard'
 import Page from 'src/components/Page'
-import useOffers from 'src/hooks/TutorHooks/useOffers'
+
+// STYLES
+import { Box, makeStyles, Paper, Typography, Grid } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(2)
-  },
+  }
 }))
 
-const TutorPublicationsView = (props) => {
+const TutorPublicationsView = () => {
   const classes = useStyles()
   const { data, isLoading } = useOffers()
   const publications = data
@@ -56,10 +62,7 @@ const TutorPublicationsView = (props) => {
                       {publications.map((publication, index) => (
                         <TutorPublicationCard
                           key={index}
-                          id={publication.id}
                           publication={publication}
-                          isStudent={false}
-                          isSearch={false}
                         />
                       ))}
                     </>
@@ -70,9 +73,7 @@ const TutorPublicationsView = (props) => {
                           {listFilter.map((publication, index) => (
                             <TutorPublicationCard
                               key={index}
-                              id={publication.id}
                               publication={publication}
-                              isStudent={false}
                               isSearch={true}
                               query={query}
                             />

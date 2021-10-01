@@ -12,7 +12,8 @@ import {
   Paper
 } from '@material-ui/core'
 import NominationView from 'src/views/tutorviews/publications/nomination'
-import { isUndefined } from 'lodash-es'
+import { useAuthState } from 'src/context/context'
+import { isUndefined, isNil } from 'lodash-es'
 import DoneIcon from '@material-ui/icons/Done'
 
 const useStyles = makeStyles((theme) => ({
@@ -60,9 +61,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const TutorPublicationCard = (props) => {
-  const { publication, nomination, isSearch, query } = props
-  const user = publication.student.user
-  let opNomination = isUndefined(nomination)
+  const { publication, isSearch, query } = props
+  const { user } = useAuthState()
+  const student = publication.student.user
+  const nomination = publication.nomination
+  let opNomination = isNil(publication.nomination)
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
@@ -101,7 +104,7 @@ const TutorPublicationCard = (props) => {
               <Avatar
                 className={classes.cover}
                 alt="user photo"
-                src={user.photo}
+                src={student.photo}
               />
             </Box>
           </Grid>
@@ -117,7 +120,7 @@ const TutorPublicationCard = (props) => {
                 </Typography>
                 <Typography variant="subtitle2">
                   <b>
-                    {user.first_name} {user.last_name}
+                    {student.first_name} {student.last_name}
                   </b>
                 </Typography>
                 <Typography
@@ -130,18 +133,21 @@ const TutorPublicationCard = (props) => {
               </CardContent>
             </Box>
           </Grid>
-          {opNomination ? (
-            <></>
-          ) : (
-            <Grid item xs={3}>
-              <Chip
-                label={<Typography>Ya te postulaste</Typography>}
-                color="primary"
-                icon={<DoneIcon />}
-                clickable
-              />
-            </Grid>
-          )}
+          {publication.tutor_id === user.id && nomination.is_active
+            ? () => {
+                console.log('cargado')
+                return (
+                  <Grid item xs={3}>
+                    <Chip
+                      label={<Typography>Ya te postulaste</Typography>}
+                      color="primary"
+                      icon={<DoneIcon />}
+                      clickable
+                    />
+                  </Grid>
+                )
+              }
+            : null}
         </Grid>
       </CardActionArea>
       <Dialog
@@ -150,9 +156,13 @@ const TutorPublicationCard = (props) => {
         aria-labelledby="tutorSelection-dialog-title">
         <NominationView
           publication={publication}
-          user={user}
+          user={student}
           closeDialog={handleClose}
-          nomination={nomination}
+          nomination={
+            publication.tutor_id === user.id && nomination.is_active
+              ? nomination
+              : null
+          }
         />
       </Dialog>
     </Paper>

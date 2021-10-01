@@ -180,16 +180,16 @@ const getNominations = (state) => {
   return https.get('/api/nomination/', tokenConfig(state))
 }
 
-const postNomination = (data, state) => {
-  return https.post('/api/nomination/', data, tokenConfig(state))
+const postNomination = (data) => {
+  return https.post('/api/nomination/', data, AuthHeader())
 }
 
-const patchNomination = (id, data, state) => {
-  return https.patch('/api/nomination/' + id + '/', data, tokenConfig(state))
+const patchNomination = (id, data) => {
+  return https.patch('/api/nomination/' + id + '/', data, AuthHeader())
 }
 
-const deleteNomination = (id, state) => {
-  return https.delete('/api/nomination/' + id + '/', tokenConfig(state))
+const deleteNomination = (id) => {
+  return https.delete('/api/nomination/' + id + '/', AuthHeader())
 }
 
 /** ESTUDENT SERVICES */
