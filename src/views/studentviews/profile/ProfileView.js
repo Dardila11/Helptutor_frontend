@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Card, Divider, makeStyles } from '@material-ui/core'
-
-import { getStudentInfo } from 'src/redux/actions/student/student_data'
-import { connect } from 'react-redux'
+import { capitalize } from 'lodash-es'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 import Page from 'src/components/Page'
+import { useStudentInfo,  } from 'src/hooks/StudentHooks/useStudentInfo'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     maxWidth: '800px',
     padding: '20px',
@@ -14,43 +13,28 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const StudentProfileView = (props) => {
+const StudentProfileView = ({user}) => {
   const classes = useStyles()
-  const { user, userInfo, requestInProgress, getStudentInfo } = props
-  useEffect(
-    () => {
-      getStudentInfo(user.id)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
+  const userInfoQuery = useStudentInfo(user.id)
 
   return (
     <Page title="Perfil">
       <Card className={classes.root}>
-        {requestInProgress ? (
-          <ProfileViewSkeleton />
-        ) : (
+        {userInfoQuery.status === 'success' ? (
           <>
             <h1>
               {' '}
-              {userInfo.first_name} {userInfo.last_name}{' '}
+              {capitalize(userInfoQuery.data.user.first_name)} {capitalize(userInfoQuery.data.user.last_name)}
             </h1>
             <h3> Estudiante </h3>
             <Divider />
           </>
+        ) : (
+          <ProfileViewSkeleton />
         )}
       </Card>
     </Page>
   )
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  userInfo: state.studentInfo.userInfo,
-  requestInProgress: state.studentInfo.requestInProgress
-})
-
-export default connect(mapStateToProps, {
-  getStudentInfo
-})(StudentProfileView)
+export default StudentProfileView
