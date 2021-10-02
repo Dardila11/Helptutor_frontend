@@ -269,6 +269,7 @@ const postSchedule = (idTutor) => {
 }
 
 const logConstants = {
+  AuthHeader,
   getCountries,
   getState,
   getCity,

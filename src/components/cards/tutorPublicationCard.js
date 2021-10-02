@@ -133,21 +133,16 @@ const TutorPublicationCard = (props) => {
               </CardContent>
             </Box>
           </Grid>
-          {publication.tutor_id === user.id && nomination.is_active
-            ? () => {
-                console.log('cargado')
-                return (
-                  <Grid item xs={3}>
-                    <Chip
-                      label={<Typography>Ya te postulaste</Typography>}
-                      color="primary"
-                      icon={<DoneIcon />}
-                      clickable
-                    />
-                  </Grid>
-                )
-              }
-            : null}
+          {publication.tutor_id === user.id && nomination.is_active ? (
+            <Grid item xs={3}>
+              <Chip
+                label={<Typography>Ya te postulaste</Typography>}
+                color="primary"
+                icon={<DoneIcon />}
+                clickable
+              />
+            </Grid>
+          ) : null}
         </Grid>
       </CardActionArea>
       <Dialog

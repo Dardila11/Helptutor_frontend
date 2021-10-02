@@ -6,9 +6,6 @@ import { Outlet } from 'react-router-dom'
 // COMPONENTS
 import MainNavBar from './navbar'
 
-// UTILITY
-import { ToastContainer } from 'react-toastify'
-
 // STYLES
 import { makeStyles } from '@material-ui/core'
 
@@ -31,7 +28,6 @@ export const MainLayout = () => {
       <div className={classes.container}>
         <Outlet/>
       </div>
-      <ToastContainer position="top-right" autoClose={5000} />
     </div>
   )
 }

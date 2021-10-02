@@ -18,24 +18,25 @@ const useStyles = makeStyles((theme) => ({
 const ManageServicesView = () => {
   const classes = useStyles()
   const { user } = useAuthState()
-  console.log('manageservice', user)
   const { data, isLoading } = useTutorServices.useTutorServices(user.id)
   const [service, setService] = useState(null)
   return (
-    <>
-      <Page className={classes.root} title="Gestionar areas de conocimiento">
-        <Grid container spacing={2}>
-          {isLoading ? (
-            <CircularProgress />
-          ) : (
-            <>
+    <Page className={classes.root} title="Gestionar areas de conocimiento">
+      <Grid container spacing={2}>
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            <Grid item xs={12} md={3}>
               <ServicesListView services={data} handleSelect={setService} />
+            </Grid>
+            <Grid item xs={12} md={9}>
               <ServicesInfoView service={service} user={user} />
-            </>
-          )}
-        </Grid>
-      </Page>
-    </>
+            </Grid>
+          </>
+        )}
+      </Grid>
+    </Page>
   )
 }
 

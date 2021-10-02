@@ -1,22 +1,22 @@
 import React from 'react'
 
 import LinearProgress from '@material-ui/core/LinearProgress'
+import { useAuthState } from 'src/context'
 
-import { connect } from 'react-redux'
-
-function ProgressAction(props) {
+function ProgressAction() {
+  const { isRunning } = useAuthState()
   return (
-    <LinearProgress
+    <div
       style={{
-        borderRadius: 0,
-        display: props.isRunning ? 'flex' : 'none'
-      }}
-    />
+        display: isRunning ? 'block' : 'none',
+        position: 'fixed',
+        top: 0,
+        width: '100%',
+        zIndex: 9999
+      }}>
+      <LinearProgress />
+    </div>
   )
 }
 
-const mapStateToProps = (state) => ({
-  isRunning: state.auth.isRunning
-})
-
-export default connect(mapStateToProps)(ProgressAction)
+export default ProgressAction

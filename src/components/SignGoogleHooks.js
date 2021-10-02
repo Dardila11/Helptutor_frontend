@@ -28,10 +28,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const LoginHooks = () => {
-  const { roles } = useAuthState()
-  const dispatch = useAuthDispatch() //get the dispatch method from the useDispatch custom hook
-  const navigate = useNavigate()
   const classes = useStyles()
+  const navigate = useNavigate()
+  const { roles } = useAuthState()
+  const dispatch = useAuthDispatch()
 
   const onSuccess = async (res) => {
     /*
@@ -45,7 +45,6 @@ const LoginHooks = () => {
       let payload = jsonValues
       try {
         loginUser(dispatch, payload, true)
-        // toast.success('Bienvenido ' + response.user.first_name)
       } catch (error) {
         console.log(error)
       }
@@ -54,22 +53,17 @@ const LoginHooks = () => {
     }
   }
 
-  const onFailure = (res) => {
-    console.log('login error')
-    console.log(res)
-  }
+  const onFailure = () => {}
 
   const { signIn } = useGoogleLogin({
     onSuccess,
     onFailure,
     clientId,
-    /* isSignedIn: true, */
     accessType: false,
     cookiePolicy: 'single_host_origin'
   })
 
   useEffect(() => {
-    console.log('cargando')
     if (roles[0] && roles[1]) navigate('/seleccion-rol')
     if (roles[0] && !roles[1]) navigate('/tutor')
     if (!roles[0] && roles[1]) navigate('/estudiante')

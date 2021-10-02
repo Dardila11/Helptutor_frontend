@@ -1,4 +1,16 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+
+// QUERY
+import useNomination from 'src/hooks/TutorHooks/useNomination'
+
+// FORM
+import { Formik } from 'formik'
+import Validation from './formikValues'
+
+// UTILITY
+import { isNil } from 'lodash-es'
+
+// STYLES
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Box,
@@ -11,13 +23,6 @@ import {
   TextField,
   Typography
 } from '@material-ui/core'
-import useNomination from 'src/hooks/TutorHooks/useNomination'
-import { toast } from 'react-toastify'
-
-import { isNil, toArray } from 'lodash-es'
-import { Formik } from 'formik'
-
-import Validation from './formikValues'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,11 +41,6 @@ const useStyles = makeStyles((theme) => ({
     }
   }
 }))
-
-let initialValuesObj = {
-  title: '',
-  description: ''
-}
 
 const NominationView = (props) => {
   const classes = useStyles()
@@ -88,8 +88,7 @@ const NominationView = (props) => {
             {publication.description}
           </Typography>
           <Formik
-            enableReinitialize
-            initialValues={opNomination ? initialValuesObj : nomination}
+            initialValues={opNomination ? Validation.initialValues : nomination}
             validationSchema={Validation.validation}
             onSubmit={(values) => {
               let jsonValues = Validation.getValues({
@@ -111,9 +110,9 @@ const NominationView = (props) => {
               <form onSubmit={handleSubmit}>
                 <TextField
                   id="txt_price_nomination"
-                  error={Boolean(touched.price && errors.price)}
+                  error={Boolean(errors.price)}
                   fullWidth
-                  helperText={touched.price && errors.price}
+                  helperText={errors.price}
                   label="Precio $"
                   margin="normal"
                   onBlur={handleBlur}

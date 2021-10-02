@@ -42,7 +42,7 @@ const TutorEditInfoView = () => {
   return (
     <Page className={classes.root} title="Editar perfil">
       <Grid container spacing={2}>
-        <Grid item xs={3}>
+        <Grid item xs={12} md={3}>
           <Paper className={classes.content} elevation={3}>
             <Card className={classes.content}>
               <Typography
@@ -63,7 +63,7 @@ const TutorEditInfoView = () => {
             </Card>
           </Paper>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={12} md={9}>
           <EditInfoView />
         </Grid>
       </Grid>

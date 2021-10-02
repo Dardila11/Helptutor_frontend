@@ -97,6 +97,7 @@ const Routing = () => {
       </PrivateRoute>
       <PrivateRoute path="/tutor" element={<MainLayout />}>
         <Route path={'/'} element={<TutorInfoView menu={<NavBarTutor />} />} />
+        <Route path={'/cuenta/perfil'} element={<TutorInfoView menu={<NavBarTutor />} />} />
         <Route
           path={'/cuenta'}
           element={<TutorInfoView menu={<NavBarTutor />} />}

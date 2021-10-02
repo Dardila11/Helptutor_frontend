@@ -1,5 +1,10 @@
 import * as Yup from 'yup'
 
+let initialValues = {
+  title: '',
+  description: ''
+}
+
 const getValues = (values) => {
   return {
     price: values.price,
@@ -18,6 +23,7 @@ const validation = Yup.object().shape({
 })
 
 const logConst = {
+  initialValues,
   getValues,
   validation
 }

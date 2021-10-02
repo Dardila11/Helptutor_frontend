@@ -20,6 +20,7 @@ import store from './redux/store'
 
 // STYLES
 import { ThemeProvider } from '@material-ui/core'
+import { ToastContainer } from 'react-toastify'
 import GlobalStyles from './components/GlobalStyles'
 import theme from './theme'
 
@@ -32,8 +33,9 @@ const App = () => {
         <Provider store={store}>
           <ThemeProvider theme={theme}>
             <GlobalStyles />
-            <ProgressAction />
             <AlertComponent />
+            <ProgressAction />
+            <ToastContainer position="top-right" autoClose={5000} />
             <Routing />
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} />

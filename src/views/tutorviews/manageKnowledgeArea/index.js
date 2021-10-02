@@ -39,8 +39,12 @@ const ManageKnowledgeAreaView = () => {
           <CircularProgress />
         ) : (
           <>
-            <KnowledgeAreaListView handleSelect={setAreaSelect} list={data} />
-            <KnowledgeAreaInfoView area={areaSelect} />
+            <Grid item xs={12} md={3}>
+              <KnowledgeAreaListView handleSelect={setAreaSelect} list={data} />
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <KnowledgeAreaInfoView area={areaSelect} />
+            </Grid>
           </>
         )}
       </Grid>

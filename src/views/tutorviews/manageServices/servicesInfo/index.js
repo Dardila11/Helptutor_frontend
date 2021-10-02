@@ -88,124 +88,120 @@ const ServicesInfoView = (props) => {
   }, [service])
 
   return (
-    <Grid item xs={9}>
-      <Paper className={classes.infoView} elevation={3}>
-        <Card className={classes.infoView}>
-          <Typography
-            className={classes.containerTitle}
-            variant="h4"
-            align="center">
-            Información del Servicio
-          </Typography>
-          <Box
-            display="flex"
-            flexDirection="column"
-            height="100%"
-            justifyContent="center">
-            <Container maxWidth="sm">
-              <form onSubmit={formik.handleSubmit}>
-                <TextField
-                  id="txt_title"
-                  error={Boolean(formik.touched.title && formik.errors.title)}
-                  fullWidth
-                  helperText={formik.touched.title && formik.errors.title}
-                  label="Titulo"
-                  margin="normal"
-                  onBlur={formik.handleBlur}
+    <Paper className={classes.infoView} elevation={3}>
+      <Card className={classes.infoView}>
+        <Typography
+          className={classes.containerTitle}
+          variant="h4"
+          align="center">
+          Información del Servicio
+        </Typography>
+        <Box
+          display="flex"
+          flexDirection="column"
+          height="100%"
+          justifyContent="center">
+          <Container maxWidth="sm">
+            <form onSubmit={formik.handleSubmit}>
+              <TextField
+                id="txt_title"
+                error={Boolean(formik.touched.title && formik.errors.title)}
+                fullWidth
+                helperText={formik.touched.title && formik.errors.title}
+                label="Titulo"
+                margin="normal"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                name="title"
+                value={formik.values.title}
+                variant="outlined"
+                InputProps={{
+                  className: classes.input
+                }}
+              />
+              <FormControl
+                variant="outlined"
+                className={classes.selectControl}
+                error={Boolean(
+                  formik.touched.speciality && formik.errors.speciality
+                )}
+                helpertext={
+                  formik.touched.speciality && formik.errors.speciality
+                }
+                fullWidth>
+                <InputLabel id="select-subarea-label">Especialidad</InputLabel>
+                <Select
+                  labelId="select-subarea-label"
+                  id="select-subarea"
+                  value={formik.values.speciality}
+                  name="speciality"
                   onChange={formik.handleChange}
-                  name="title"
-                  value={formik.values.title}
-                  variant="outlined"
-                  InputProps={{
-                    className: classes.input
-                  }}
-                />
-                <FormControl
-                  variant="outlined"
-                  className={classes.selectControl}
-                  error={Boolean(
-                    formik.touched.speciality && formik.errors.speciality
-                  )}
-                  helpertext={
-                    formik.touched.speciality && formik.errors.speciality
-                  }
-                  fullWidth>
-                  <InputLabel id="select-subarea-label">
-                    Especialidad
-                  </InputLabel>
-                  <Select
-                    labelId="select-subarea-label"
-                    id="select-subarea"
-                    value={formik.values.speciality}
-                    name="speciality"
-                    onChange={formik.handleChange}
-                    label="Especialidad">
-                    <MenuItem value={-1}>
-                      <em>---</em>
-                    </MenuItem>
-                    {isLoading
-                      ? ''
-                      : data.map((subarea, index) => (
-                          <MenuItem key={index} value={subarea.id}>
-                            {subarea.knowledge_area.name}
-                          </MenuItem>
-                        ))}
-                  </Select>
-                  {Boolean(
-                    formik.touched.speciality && formik.errors.speciality
-                  ) && (
-                    <FormHelperText error>
-                      {formik.errors.speciality}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-                <TextField
-                  id="txt_description"
-                  error={Boolean(
-                    formik.touched.description && formik.errors.description
-                  )}
-                  fullWidth
-                  helperText={
-                    formik.touched.description && formik.errors.description
-                  }
-                  label="Descripción"
-                  margin="normal"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  name="description"
-                  value={formik.values.description}
-                  variant="outlined"
-                />
-                <TextField
-                  id="txt_price"
-                  error={Boolean(formik.touched.price && formik.errors.price)}
-                  fullWidth
-                  helperText={formik.touched.price && formik.errors.price}
-                  label="Precio $"
-                  margin="normal"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  name="price"
-                  value={formik.values.price}
-                  variant="outlined"
-                />
-                <Box my={2} align="center">
-                  <Button
-                    id="btn_registerService"
-                    className={classes.button}
-                    type="submit"
-                    endIcon={<SaveIcon />}
-                    variant="contained">
-                    {service === null ? 'Guardar Servicio' : 'Actualizar'}
-                  </Button>
-                </Box>
-                <Box my={2}></Box>
-              </form>
-            </Container>
-          </Box>
-        </Card>
-      </Paper>
-    </Grid>
+                  label="Especialidad">
+                  <MenuItem value={-1}>
+                    <em>---</em>
+                  </MenuItem>
+                  {isLoading
+                    ? ''
+                    : data.map((subarea, index) => (
+                        <MenuItem key={index} value={subarea.id}>
+                          {subarea.knowledge_area.name}
+                        </MenuItem>
+                      ))}
+                </Select>
+                {Boolean(
+                  formik.touched.speciality && formik.errors.speciality
+                ) && (
+                  <FormHelperText error>
+                    {formik.errors.speciality}
+                  </FormHelperText>
+                )}
+              </FormControl>
+              <TextField
+                id="txt_description"
+                error={Boolean(
+                  formik.touched.description && formik.errors.description
+                )}
+                fullWidth
+                helperText={
+                  formik.touched.description && formik.errors.description
+                }
+                label="Descripción"
+                margin="normal"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                name="description"
+                value={formik.values.description}
+                variant="outlined"
+              />
+              <TextField
+                id="txt_price"
+                error={Boolean(formik.touched.price && formik.errors.price)}
+                fullWidth
+                helperText={formik.touched.price && formik.errors.price}
+                label="Precio $"
+                margin="normal"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                name="price"
+                value={formik.values.price}
+                variant="outlined"
+              />
+              <Box my={2} align="center">
+                <Button
+                  id="btn_registerService"
+                  className={classes.button}
+                  type="submit"
+                  endIcon={<SaveIcon />}
+                  variant="contained">
+                  {service === null ? 'Guardar Servicio' : 'Actualizar'}
+                </Button>
+              </Box>
+              <Box my={2}></Box>
+            </form>
+          </Container>
+        </Box>
+      </Card>
+    </Paper>
   )
 }
 

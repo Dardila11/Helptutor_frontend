@@ -4,15 +4,18 @@ import {
   USER_LOADED,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  LOADING_ACTION,
+  STOP_ACTION
 } from './types'
 
 export const initialState = {
   token: localStorage.getItem('token'),
-  isAuthenticated: false,
+  isAuthenticated: Boolean(localStorage.getItem('token')),
   isLoading: false,
-  user: null,
-  roles: []
+  isRunning: false,
+  user: { first_name: '', last_name: '', photo: '' },
+  roles: [false, false, false]
 }
 
 export const AuthReducer = (state = initialState, action) => {
@@ -48,6 +51,16 @@ export const AuthReducer = (state = initialState, action) => {
         isLoading: false,
         user: null,
         roles: []
+      }
+    case LOADING_ACTION:
+      return {
+        ...state,
+        isRunning: true
+      }
+    case STOP_ACTION:
+      return {
+        ...state,
+        isRunning: false
       }
     default:
       throw new Error(`Unhandled action type: ${action.type}`)
