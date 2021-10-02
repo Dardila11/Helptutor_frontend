@@ -11,6 +11,7 @@ import {
   Typography,
   Select,
   FormControl,
+  FormHelperText,
   MenuItem,
   InputLabel
 } from '@material-ui/core'
@@ -102,10 +103,6 @@ const UpdatePublicationFormView = ({ onClose, publication }) => {
                         touched.knowledge_area &&
                           errors.knowledge_area
                       )}
-                      helperText={
-                        touched.knowledge_area &&
-                        errors.knowledge_area
-                      }
                       fullWidth>
                       <InputLabel id="categories-label">Categoria</InputLabel>
                       <Select
@@ -129,6 +126,10 @@ const UpdatePublicationFormView = ({ onClose, publication }) => {
                           </MenuItem>
                         )}
                       </Select>
+                      <FormHelperText id="component-error-text">{
+                        touched.knowledge_area &&
+                        errors.knowledge_area
+                      }</FormHelperText>
                     </FormControl>
                     <TextField
                       id="txt_title"

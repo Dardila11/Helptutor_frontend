@@ -9,9 +9,12 @@ const getValues = (values) => {
 }
 
 const validation = Yup.object().shape({
-  knowledge_area: Yup.string().required(
-    'Campo categoria es obligatorio'
-  ),
+  knowledge_area: Yup.number()
+    .test(
+      'invalid knowledge_area', 
+      'No puede estar vacio',
+      (knowledge_area) => knowledge_area != -1)
+    .required('Campo categoria es obligatorio'),
   title: Yup.string()
     .min(10, 'Titulo debe tener por lo menos 20 caracteres')
     .max(255, 'Titulo debe tener un maximo de 255 caracteres')

@@ -12,6 +12,7 @@ import {
   Typography,
   Select,
   FormControl,
+  FormHelperText,
   MenuItem,
   InputLabel
 } from '@material-ui/core'
@@ -126,6 +127,10 @@ const CreatePublicationForm = ({ onClose }) => {
                           </MenuItem>
                         )}
                       </Select>
+                      <FormHelperText id="component-error-text">{
+                        touched.knowledge_area &&
+                        errors.knowledge_area
+                      }</FormHelperText>
                     </FormControl>
                     <TextField
                       id="txt_title"
