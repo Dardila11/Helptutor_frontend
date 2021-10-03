@@ -35,7 +35,7 @@ import TermsAndConditions from '../../../components/TermsDialog'
 
 import { toast } from 'react-toastify'
 import { registerUser } from 'src/context/actions'
-import { useAuthDispatch } from 'src/context'
+import { useAuthDispatch, useAuthState } from 'src/context'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -70,6 +70,8 @@ const RegisterView = () => {
   const [tutorSelect, setTutorSelect] = useState(false)
   const [studentSelect, setStudentSelect] = useState(false)
   const dispatch = useAuthDispatch()
+  const { roles } = useAuthState()
+  const navigate = useNavigate()
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -92,6 +94,12 @@ const RegisterView = () => {
       }
     }
   }
+
+  useEffect(() => {
+    if (roles[0] && roles[1]) navigate('/seleccion-rol')
+    if (roles[0] && !roles[1]) navigate('/tutor')
+    if (!roles[0] && roles[1]) navigate('/estudiante')
+  }, [roles, navigate])
 
   return (
     <Page className={classes.root} title="Register">

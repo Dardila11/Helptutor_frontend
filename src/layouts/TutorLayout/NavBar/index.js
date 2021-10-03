@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   toolbar: {
     backgroundColor: '#ffff',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    overflowX: 'auto'
   },
   primaryColor: {
     color: theme.palette.primary.main

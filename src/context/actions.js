@@ -3,7 +3,9 @@ import {
   USER_LOADING,
   USER_LOADED,
   LOGIN_SUCCESS,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  LOADING_ACTION,
+  STOP_ACTION
 } from './types'
 
 import config from '../services/ApiConfig'
@@ -24,6 +26,7 @@ export const registerUser = (
     : isGoogle
     ? '/api/student/google'
     : '/api/student/'
+  dispatch({ type: LOADING_ACTION })
   config
     .post(path, data)
     .then((res) => {
@@ -31,13 +34,18 @@ export const registerUser = (
         type: LOGIN_SUCCESS,
         payload: res.data
       })
+      dispatch({ type: STOP_ACTION })
       toast.success('Bienvenido')
     })
     .catch((err) => {
       dispatch({
         type: AUTH_ERROR
       })
-      toast.error(err.response.data.token.join())
+      dispatch({ type: STOP_ACTION })
+      if (err.response.data.token)
+        toast.error(err.response.data.token.join())
+      if (err.response.data.non_field_errors)
+        toast.error(err.response.data.non_field_errors.join())
     })
 }
 
@@ -51,6 +59,7 @@ export const loginUser = (dispatch, data, isGoogle = false) => {
         type: LOGIN_SUCCESS,
         payload: res.data
       })
+      toast.success('Bienvenido')
     })
     .catch((err) => {
       dispatch({
