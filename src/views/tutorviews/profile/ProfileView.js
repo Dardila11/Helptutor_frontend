@@ -162,10 +162,12 @@ const TutorProfileView = () => {
               <Box className={classes.review}>
                 {isLoading1 ? (
                   <span>Loading... </span>
-                ) : (
+                ) : reviews.length > 0 ? (
                   reviews.map((item, key) => (
                     <QualificationCard key={key} review={item} />
                   ))
+                ) : (
+                  <span>No se encontraron reseñas</span>
                 )}
               </Box>
             </Grid>
