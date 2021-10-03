@@ -15,7 +15,7 @@ const validation = Yup.object().shape({
       'empty characters',
       'No puede estar vacio',
       (description) => !description || description.trim() !== ""
-    ).required('Campo descripción es obligatorio')
+    ).required('Campo comentario es obligatorio')
 }) 
 
 const logConst = {

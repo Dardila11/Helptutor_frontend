@@ -17,9 +17,8 @@ export const useUpdateStudentInfo = () => {
         .then((res) => res.data)
     },
     {
-      onSuccess: (res) => {
+      onSuccess: () => {
         queryClient.invalidateQueries('studentInfo')
-        //toast.success('Información del Estudiante actualizada satisfactoriamente')
       },
       onError: (error) => {
         console.log(error)

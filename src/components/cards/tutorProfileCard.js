@@ -44,6 +44,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: theme.spacing(1)
+  },
+  ratings: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center'
   }
 }))
 
@@ -75,19 +82,19 @@ const ProfileView = ({ tutor, reviews }) => {
                 <Typography className={classes.contentPrincipal} variant="h4">
                   {tutor.skills}
                 </Typography>
-                <Rating value={tutor.score} size="large" readOnly />
-                <Typography className={classes.contentPrincipal} variant="h4">
-                  Promedio: 4.5 de 23 calificaciones
-                </Typography>
               </Box>
             </Grid>
             <Grid item xs={4}>
-              <Box display="flex" justifyContent="center">
+              <Box className={classes.ratings}>
                 <Avatar
                   className={classes.cover}
                   alt="user photo"
                   src={tutor.user.photo}
                 />
+                <Rating value={tutor.score} size="large" readOnly />
+                <Typography className={classes.contentPrincipal} variant="h4">
+                  Promedio: 4.5 de 23 calificaciones
+                </Typography>
               </Box>
             </Grid>
           </Grid>

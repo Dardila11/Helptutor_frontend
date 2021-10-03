@@ -127,7 +127,7 @@ const RegisterView = ({ isAuthenticated, addTutor, addStudent }) => {
               <form data-testid="register-form" onSubmit={handleSubmit}>
                 <Box mb={3} textAlign="center">
                   <Typography color="textPrimary" variant="h2">
-                    INSCRIBETE
+                    INSCRÍBETE
                   </Typography>
                 </Box>
                 <Box display="flex" textAlign="center" justifyContent="center">
