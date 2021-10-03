@@ -1,8 +1,8 @@
 import React from 'react'
 
-import Intro from './components/Intro/Intro';
-import Features from './components/Features/Features';
-import Tutorial from './components/Tutorial/Tutorial';
+import Intro from './components/Intro/Intro'
+import Features from './components/Features/Features'
+import Tutorial from './components/Tutorial/Tutorial'
 import Footer from './components/Footer/Footer'
 
 import './style.css'
@@ -12,19 +12,19 @@ const LandingPage = () => {
     <>
       <main className="root">
         <section className="sec1" id="sec1">
-          <Intro/>
+          <Intro />
         </section>
         <section className="sec2" id="sec2">
-          <Features/>
+          <Features />
         </section>
         <section className="sec3" id="sec3">
-          <Tutorial/>
+          <Tutorial />
         </section>
         {/* <section id="sec4"> title</section> */}
+        <footer id="footer">
+          <Footer />
+        </footer>
       </main>
-      <footer id="footer">
-        <Footer/>
-      </footer>
     </>
   )
 }

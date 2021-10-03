@@ -102,7 +102,7 @@ const TutorTopBar = () => {
           {user.first_name} {user.last_name}
         </Typography>
         <Avatar className={classes.cover} alt="user photo" src={user.photo}>
-          {user != null ? <b>{user.first_name}</b> : null}
+          {user != null ? <b>{user.first_name[0]}</b> : null}
         </Avatar>
       </IconButton>
       <Menu

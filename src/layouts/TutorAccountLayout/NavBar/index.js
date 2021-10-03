@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#1769aa'
   },
   nav: {
-    borderRadius: '20px',
+    borderRadius: theme.spacing(2),
     overflow: 'initial'
   },
   menu: {

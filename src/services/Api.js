@@ -1,9 +1,8 @@
 import https from './ApiConfig'
 
-
 /* token header */
 const AuthHeader = () => {
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem('token')
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -59,11 +58,7 @@ const getCertificate = () => {
 
 /** TUTOR KNOWLEDGE AREA */
 const postKnowledgeAreaTutor = (data, values) => {
-  return https.post(
-    '/api/knowledgearea_tutor/',
-    data,
-    AuthHeader()
-  )
+  return https.post('/api/knowledgearea_tutor/', data, AuthHeader())
 }
 
 const patchTutorKnowledgeAreas = (data, pk) => {
@@ -97,7 +92,10 @@ const getOfferById = (id) => {
 }
 
 const getSubKnowledgeAreas = (idArea) => {
-  return https.get('/api/knowledgearea/' + idArea + '/knowledgearea/', AuthHeader())
+  return https.get(
+    '/api/knowledgearea/' + idArea + '/knowledgearea/',
+    AuthHeader()
+  )
 }
 
 /*LOGIN*/
@@ -121,7 +119,6 @@ const getTutorInfo = (id) => {
 const getTutorInfoNew = (id, token) => {
   return https.get(`/api/tutor/${id}/`, addToken(token))
 }
-
 
 const getStudentInfo = (id) => {
   return https.get(`/api/student/${id}/`, AuthHeader())
@@ -150,14 +147,14 @@ const addToken = (token) => {
     }
   }
   config.headers['Authorization'] = 'Token ' + token
-  
+
   return config
 }
 
 /** TUTOR SERVICES */
 
 const getTutorServices = (id) => {
-  return https.get('/api/tutor/'+id+'/service/', AuthHeader())
+  return https.get('/api/tutor/' + id + '/service/', AuthHeader())
 }
 
 const postServiceTutor = (data) => {
@@ -214,10 +211,14 @@ const getOffers = () => {
   return https.get('api/tutor/offer/', AuthHeader())
 }
 
+const getReviews = (id_tutor) => {
+  return https.get('api/tutor/' + id_tutor + '/review', AuthHeader())
+}
+
 const getOffersByStudentId = (id) => {
   return https.get(`api/student/${id}/offer/`, AuthHeader())
 }
- 
+
 const postAdvertisement = (data) => {
   return https.post('api/advertisement/', data, AuthHeader())
 }
@@ -227,7 +228,7 @@ const patchAdvertisement = (id, data) => {
 }
 
 const deleteAdvertisement = (id) => {
-  return https.delete(`api/advertisement/${id}/`, AuthHeader() )
+  return https.delete(`api/advertisement/${id}/`, AuthHeader())
 }
 
 const getAdvertisements = () => {
@@ -259,17 +260,18 @@ const postAnswer = (data) => {
 }
 
 const getSchedule = (idTutor) => {
-  console.log('get schedule with id:'+idTutor)
+  console.log('get schedule with id:' + idTutor)
   //return https.post('api/tutor/'+idTutor+'/schedule', tokenConfig(state))
 }
 
 const postSchedule = (idTutor) => {
-  console.log('post schedule with id:'+idTutor)
+  console.log('post schedule with id:' + idTutor)
   //return https.post('api/tutor/'+idTutor+'/schedule', tokenConfig(state))
 }
 
 const logConstants = {
   AuthHeader,
+  getReviews,
   getCountries,
   getState,
   getCity,

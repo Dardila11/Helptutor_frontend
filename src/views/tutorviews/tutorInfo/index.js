@@ -7,10 +7,13 @@ import {
   Grid,
   makeStyles,
   Paper,
-  Typography
+  Typography,
+  Button
 } from '@material-ui/core'
 import Page from 'src/components/Page'
 import EditInfoView from './tutorInfo/EditInfoView'
+import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
+import { useNavigate } from 'react-router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,13 +41,25 @@ const useStyles = makeStyles((theme) => ({
 
 const TutorEditInfoView = () => {
   const classes = useStyles()
-  
+  const navigate = useNavigate()
+
   return (
     <Page className={classes.root} title="Editar perfil">
       <Grid container spacing={2}>
         <Grid item xs={12} md={3}>
           <Paper className={classes.content} elevation={3}>
             <Card className={classes.content}>
+              <Container className={classes.actions}>
+                <Button
+                  className={classes.button}
+                  fullWidth={true}
+                  color="secundary"
+                  variant="contained"
+                  startIcon={<ArrowBackIos />}
+                  onClick={() => navigate('/tutor/cuenta')}>
+                  Menú
+                </Button>
+              </Container>
               <Typography
                 className={classes.containerTitle}
                 variant="h4"

@@ -20,11 +20,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.dark
   },
   content: {
-    borderRadius: '20px'
+    borderRadius: theme.spacing(2)
   },
-  containerTitle: {
-    marginTop: theme.spacing(2),
-    marginBlockEnd: theme.spacing(2)
+  information: {
+    padding: theme.spacing(2)
   },
   actions: {
     marginTop: theme.spacing(2),
@@ -33,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     textTransform: 'none'
   },
-  information: {
-    padding: theme.spacing(2)
-  }
 }))
 
 const TutorInfoView = (props) => {
@@ -49,16 +45,15 @@ const TutorInfoView = (props) => {
           {menu}
         </Grid>
         <Grid item xs={12} md={2}>
-          <Paper className={classes.content} elevation={2}>
-            <Card className={classes.content}>
+          <Paper className={classes.content} elevation={1}>
+            <Card className={classes.information}>
               <Typography
-                className={classes.containerTitle}
                 variant="h4"
                 align="center">
                 <b>Mi perfil</b>
               </Typography>
               <Container>
-                <Box textAlign="justify" className={classes.information}>
+                <Box textAlign="justify">
                   <Typography>
                     Este es tu perfil, cuando un estudiante desee contratar tus
                     servicios esta es la información que verán.

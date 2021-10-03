@@ -42,8 +42,7 @@ export const registerUser = (
         type: AUTH_ERROR
       })
       dispatch({ type: STOP_ACTION })
-      if (err.response.data.token)
-        toast.error(err.response.data.token.join())
+      if (err.response.data.token) toast.error(err.response.data.token.join())
       if (err.response.data.non_field_errors)
         toast.error(err.response.data.non_field_errors.join())
     })
@@ -65,6 +64,9 @@ export const loginUser = (dispatch, data, isGoogle = false) => {
       dispatch({
         type: AUTH_ERROR
       })
+      if (err.response.data.token) toast.error(err.response.data.token.join())
+      if (err.response.data.non_field_errors)
+        toast.error(err.response.data.non_field_errors.join())
     })
 }
 

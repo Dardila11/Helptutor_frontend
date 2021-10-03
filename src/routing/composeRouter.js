@@ -74,12 +74,14 @@ const Routing = () => {
     </Backdrop>
   ) : (
     <Routes>
+      {/* public routes */}
       <Route path="/" element={<MainLayout />}>
         <Route path="login" element={<LoginView />} />
         <Route path="registrar" element={<RegisterView />} />
         <Route path="seleccion-rol" element={<SelectRoleView />} />
         <Route path="/" element={<LandingPage />} />
       </Route>
+      {/* private student routes */}
       <PrivateRoute path="/estudiante" element={<MainLayout />}>
         <Route path="/" element={<StudentPublicationsView />} />
         <Route path="/publicaciones" element={<StudentPublicationsView />} />
@@ -91,25 +93,23 @@ const Routing = () => {
         <Route path="/perfil" element={<StudentProfileView />} />
         <Route path="/informacion" element={<StudentEditInfoView />} />
       </PrivateRoute>
+      {/* private tutor routes */}
       <PrivateRoute path="/tutor" element={<MainLayout />}>
         <Route path="/" element={<TutorPublicationsView />} />
         <Route path="/publicaciones" element={<TutorPublicationsView />} />
       </PrivateRoute>
-      <PrivateRoute path="/tutor" element={<MainLayout />}>
-        <Route path={'/'} element={<TutorInfoView menu={<NavBarTutor />} />} />
-        <Route path={'/cuenta/perfil'} element={<TutorInfoView menu={<NavBarTutor />} />} />
+      <PrivateRoute path="/tutor/cuenta" element={<MainLayout />}>
+        <Route path="/" element={<TutorInfoView menu={<NavBarTutor />} />} />
         <Route
-          path={'/cuenta'}
+          path="/perfil"
           element={<TutorInfoView menu={<NavBarTutor />} />}
         />
-        <Route path="/cuenta/informacion" element={<TutorEditInfoView />} />
-        <Route path="/cuenta/servicios" element={<ManageServicesView />} />
-        <Route
-          path="/cuenta/especialidades"
-          element={<ManageKnowledgeAreaView />}
-        />
-        <Route path="/cuenta/horario" element={<TutorScheduleView />} />
+        <Route path="/informacion" element={<TutorEditInfoView />} />
+        <Route path="/servicios" element={<ManageServicesView />} />
+        <Route path="/especialidades" element={<ManageKnowledgeAreaView />} />
+        <Route path="/horario" element={<TutorScheduleView />} />
       </PrivateRoute>
+      {/* private meet routes */}
       <PrivateRoute path="/meet" element={<MainLayout />}>
         <Route path="/" element={<MeetView />} />
       </PrivateRoute>

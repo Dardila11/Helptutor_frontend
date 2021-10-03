@@ -14,14 +14,14 @@ import { Box, makeStyles, Paper, Typography, Grid } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    borderRadius: theme.spacing(2)
   }
 }))
 
 const TutorPublicationsView = () => {
   const classes = useStyles()
-  const { data, isLoading } = useOffers()
-  const publications = data
+  const { data: publications, isLoading } = useOffers()
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
 
@@ -40,20 +40,20 @@ const TutorPublicationsView = () => {
   return (
     <Page title="Publicaciones">
       <Grid container spacing={2}>
-        <Grid className={classes.options} item xs={12} md={3}>
+        <Grid item xs={12} md={3}>
           <SearchBar
             option={'publication'}
             list={publications}
             setQuery={setQuery}
           />
         </Grid>
-        <Grid className={classes.main} item xs={12} md={9}>
-          <Paper className={classes.container} elevation={3}>
+        <Grid item xs={12} md={9}>
+          <Paper className={classes.container} elevation={1}>
             {isLoading ? (
               <CardsViewSkeleton type="publications" />
             ) : (
               <>
-                <Box className={classes.title} textAlign="center">
+                <Box textAlign="center">
                   <Typography variant="h4">Publicaciones</Typography>
                 </Box>
                 <Box>
@@ -80,7 +80,7 @@ const TutorPublicationsView = () => {
                           ))}
                         </>
                       ) : (
-                        <Box className={classes.nofindbox} textAlign="center">
+                        <Box textAlign="center">
                           <Typography>
                             No se encontraron publicaciones que contengan "
                             {query}"

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column'
   },
   cardAction: {
-    borderRadius: 20
+    borderRadius: theme.spacing(2)
   },
   content: {
     flex: '1 0 auto',
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     display: 'flex',
     height: 150,
-    borderRadius: '20px',
+    borderRadius: theme.spacing(2),
     margin: theme.spacing(1),
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3)
@@ -65,7 +65,7 @@ const TutorPublicationCard = (props) => {
   const { user } = useAuthState()
   const student = publication.student.user
   const nomination = publication.nomination
-  let opNomination = isNil(publication.nomination)
+  let isNomination = isNil(publication.nomination)
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
@@ -80,7 +80,6 @@ const TutorPublicationCard = (props) => {
     const parts = text.split(new RegExp(`(${query})`, 'gi'))
     return (
       <span>
-        {' '}
         {parts.map((part, i) => (
           <span
             key={i}
@@ -91,12 +90,12 @@ const TutorPublicationCard = (props) => {
             }>
             {part}
           </span>
-        ))}{' '}
+        ))}
       </span>
     )
   }
   return (
-    <Paper className={classes.paper} elevation={3}>
+    <Paper className={classes.paper} elevation={1}>
       <CardActionArea className={classes.cardAction} onClick={handleOpen}>
         <Grid container className={classes.container}>
           <Grid item xs={2}>
@@ -104,11 +103,12 @@ const TutorPublicationCard = (props) => {
               <Avatar
                 className={classes.cover}
                 alt="user photo"
-                src={student.photo}
-              />
+                src={student.photo}>
+                <b>{student.first_name.split('')[0]}</b>
+              </Avatar>
             </Box>
           </Grid>
-          <Grid item xs={opNomination ? 10 : 7}>
+          <Grid item xs={isNomination ? 10 : 7}>
             <Box className={classes.details}>
               <CardContent className={classes.content}>
                 <Typography component="h5" variant="h5">
@@ -140,7 +140,7 @@ const TutorPublicationCard = (props) => {
                 color="primary"
                 icon={<DoneIcon />}
                 clickable
-              />
+              />    
             </Grid>
           ) : null}
         </Grid>

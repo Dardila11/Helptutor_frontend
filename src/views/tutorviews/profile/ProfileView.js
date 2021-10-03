@@ -21,12 +21,12 @@ import {
   Typography
 } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
+import useReviews from 'src/hooks/TutorHooks/useReview'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: '800px',
-    padding: '20px',
-    borderRadius: '20px'
+    padding: theme.spacing(2),
+    borderRadius: theme.spacing(2)
   },
   title: {
     margin: theme.spacing(2)
@@ -38,25 +38,31 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.getContrastText('#1769aa'),
     backgroundColor: '#1769aa'
   },
-  principalInformation: {
-    margin: theme.spacing(2)
+  main: {
+    padding: theme.spacing(2)
   },
-  contentPrincipal: {
-    margin: theme.spacing(1)
+  principal: {
+    padding: theme.spacing(1)
   },
-  secondInformation: {
-    margin: theme.spacing(1)
+  information: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'row'
   },
   divider: {
-    margin: theme.spacing(1)
+    padding: theme.spacing(1)
+  },
+  review: {
+    height: '200px',
+    overflowY: 'auto'
   }
 }))
 
 const TutorProfileView = () => {
   const classes = useStyles()
   const user = useAuthState().user
-  const { data, isLoading } = useTutorInfo(user.id)
-  const tutor = data
+  const { data: tutor, isLoading } = useTutorInfo(user.id)
+  const { data: reviews, isLoading: isLoading1 } = useReviews(user.id)
 
   return isLoading ? (
     <p>Loading...</p>
@@ -74,19 +80,17 @@ const TutorProfileView = () => {
         <Divider />
         <Grid container>
           <Grid item xs={8}>
-            <Box
-              className={classes.principalInformation}
-              display="flex"
-              flexDirection="column">
-              <Typography className={classes.contentPrincipal} variant="h4">
+            <Box className={classes.main} display="flex" flexDirection="column">
+              <Typography className={classes.principal} variant="h4">
                 {tutor.user.birthday ? getAge(tutor.user.birthday) : ''} años
               </Typography>
-              <Typography className={classes.contentPrincipal} variant="h4">
+              <Typography className={classes.principal} variant="h4">
                 {tutor.skills}
               </Typography>
-              <Rating value={tutor.score} size="large" readOnly />
-              <Typography className={classes.contentPrincipal} variant="h4">
-                Promedio: 4.5 de 23 calificaciones
+              <Rating value={tutor.score_average} size="large" readOnly />
+              <Typography className={classes.principal} variant="h4">
+                Promedio: {tutor.score_average} de {tutor.score_count}{' '}
+                calificaciones
               </Typography>
             </Box>
           </Grid>
@@ -104,57 +108,68 @@ const TutorProfileView = () => {
           </Grid>
         </Grid>
         <Divider />
-        <Box display="flex" flexDirection="row">
-          <Box className={classes.secondInformation}>
-            <Box textAlign="center">
-              <Typography variant="h4">
-                <b>Intereses</b>
-              </Typography>
-            </Box>
-            <Box>
-              <Typography align="justify">
-                {tutor.user.interest ? tutor.user.interest : ''}
-              </Typography>
-            </Box>
-            <Box className={classes.divider}>
-              <Divider />
-            </Box>
-            <Box textAlign="center">
-              <Typography variant="h4">
-                <b>Metodologia</b>
-              </Typography>
-            </Box>
-            <Box>
-              <Typography align="justify">
-                {tutor.methodology ? tutor.methodology : ''}
-              </Typography>
-            </Box>
-            <Box className={classes.divider}>
-              <Divider />
-            </Box>
-            <Box textAlign="center">
-              <Typography variant="h4">
-                <b>Experiencia</b>
-              </Typography>
-            </Box>
-            <Box>
-              <Typography align="justify">
-                {tutor.trajectory ? tutor.trajectory : ''}
-              </Typography>
-            </Box>
-          </Box>
-          <Box className={classes.divider}>
-            <Divider orientation="vertical" />
-          </Box>
-          <Box>
-            <Box textAlign="center">
-              <Typography variant="h4">
-                <b>Reseñas</b>
-              </Typography>
-            </Box>
-            <QualificationCard />
-            <QualificationCard />
-          </Box>
+        <Box>
+          <Grid container className={classes.information}>
+            <Grid item xs={4}>
+              <Box>
+                <Typography variant="h5">
+                  <b>Intereses</b>
+                </Typography>
+              </Box>
+              <Box>
+                <Typography align="justify">
+                  {tutor.user.interest
+                    ? tutor.user.interest
+                    : 'No hay intereses'}
+                </Typography>
+              </Box>
+              <Box className={classes.divider}>
+                <Divider />
+              </Box>
+              <Box>
+                <Typography variant="h5">
+                  <b>Metodologia</b>
+                </Typography>
+              </Box>
+              <Box>
+                <Typography align="justify">
+                  {tutor.methodology ? tutor.methodology : 'No hay metodologia'}
+                </Typography>
+              </Box>
+              <Box className={classes.divider}>
+                <Divider />
+              </Box>
+              <Box>
+                <Typography variant="h5">
+                  <b>Experiencia</b>
+                </Typography>
+              </Box>
+              <Box>
+                <Typography align="justify">
+                  {tutor.trajectory ? tutor.trajectory : 'No hay trayectoria'}
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={1} className={classes.divider}>
+              <Divider orientation="vertical" />
+            </Grid>
+            <Grid item xs={6}>
+              <Box textAlign="center">
+                <Typography variant="h4">
+                  <b>Reseñas</b>
+                </Typography>
+              </Box>
+              <Box className={classes.review}>
+                {isLoading1 ? (
+                  <span>Loading... </span>
+                ) : (
+                  reviews.map((item, key) => (
+                    <QualificationCard key={key} review={item} />
+                  ))
+                )}
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Card>
