@@ -20,10 +20,10 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import CloseIcon from '@material-ui/icons/Close'
 import NominationsView from './nominations'
 import ProfileView from 'src/components/cards/tutorProfileCard'
-import Schedule from 'src/components/Schedule/Schedule'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 import useTutorInfo from 'src/hooks/TutorHooks/useTutorInfo'
 import {useReviews} from 'src/hooks/TutorHooks/useReviews'
+import Schedule from 'src/components/Schedule/Schedule'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -187,9 +187,8 @@ const TutorSelectionView = (props) => {
             flexDirection="column"
             justifyContent="center"
             alignItems="center">
-            <Grid container>
-              <Grid item xs={1}></Grid>
-              <Grid item xs={10}>
+            <Grid container>              
+              <Grid item xs={12}>
                 {activeStep === 0 ? (
                   <NominationsView
                     key={publication.id}

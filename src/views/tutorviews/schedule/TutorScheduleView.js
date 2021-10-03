@@ -12,7 +12,7 @@ import {
 import React from 'react'
 import Page from 'src/components/Page'
 import SaveIcon from '@material-ui/icons/Save'
-import ScheduleV2 from 'src/components/Schedule/ScheduleV2'
+import Schedule from 'src/components/Schedule/Schedule'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,7 +82,7 @@ const TutorScheduleView = (props) => {
           </Paper>
         </Grid>
         <Grid item xs={9}>
-        <ScheduleV2 />
+        <Schedule role={"tutor"}/>
         </Grid>
       </Grid>
     </Page>
