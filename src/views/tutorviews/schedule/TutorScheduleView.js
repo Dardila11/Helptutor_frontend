@@ -11,11 +11,6 @@ import {
 } from '@material-ui/core'
 import React from 'react'
 import Page from 'src/components/Page'
-import {
-  Scheduler,
-  WeekView,
-  Appointments,
-} from '@devexpress/dx-react-scheduler-material-ui';
 import SaveIcon from '@material-ui/icons/Save'
 
 const useStyles = makeStyles((theme) => ({
@@ -86,10 +81,7 @@ const TutorScheduleView = (props) => {
           </Paper>
         </Grid>
         <Grid item xs={9}>
-        <Scheduler data={[]} height={600}>
-          <WeekView startDayHour={0} endDayHour={24} />
-          <Appointments />
-        </Scheduler>
+        
         </Grid>
       </Grid>
     </Page>
