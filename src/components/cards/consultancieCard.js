@@ -58,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ConsultancieCard = (props) => {
   const { consultancie, isSearch, query } = props
-  const navigate = useNavigate()
   const classes = useStyles()
 
   const getHighlightedText = (text) => {
@@ -71,12 +70,6 @@ const ConsultancieCard = (props) => {
             { part }
         </span>)
     } </span>
-  }
-
-  const openInNewTab = (url) => {
-    navigate("/meet")
-    /*const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
-    if (newWindow) newWindow.opener = null*/
   }
   
   return (
@@ -120,7 +113,7 @@ const ConsultancieCard = (props) => {
                 <b>Opciones</b>
               </Typography>
               <Box spacing={3}>
-                  <IconButton color="primary" onClick={() => openInNewTab(consultancie.link)}>
+                  <IconButton color="primary">
                     <Videocam />
                   </IconButton>
                 <IconButton color="primary" >

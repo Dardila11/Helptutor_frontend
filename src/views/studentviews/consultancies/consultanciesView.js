@@ -31,7 +31,7 @@ const StudentConsultanciesView = (props) => {
   const [filter, setFilter] = useState({label: '', value: 0})
   const loading = false
 
-  const consultancies = [{ id: 1, title: 'Clase de electromagnetismo' ,tutor:'Alexander Villaquiran', slot: {day: 'lunes', start: 12, end: 13}, link: 'https://meet.google.com/php-knjy-mke' }]
+  const consultancies = [{ id: 1, title: 'Clase de electromagnetismo' ,tutor:'Alexander Villaquiran', slot: {day: 'lunes', start: 12, end: 13}}]
 
   useEffect(
     () => {

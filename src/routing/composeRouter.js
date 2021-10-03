@@ -30,10 +30,6 @@ import StudentAdvertisementsView from 'src/views/studentviews/advertisements'
 import TutorScheduleView from 'src/views/tutorviews/schedule/TutorScheduleView'
 import StudentConsultanciesView from 'src/views/studentviews/consultancies/consultanciesView'
 
-//MEETINGS
-import MeetingLayout from 'src/layouts/MeetingLayout'
-import MeetView from 'src/views/meet/MeetView'
-
 //STATICS
 import LandingPage from 'src/views/statics/LandingPage'
 
@@ -77,9 +73,6 @@ const Routing = () => {
         <Route path="/cuenta/horario" element={<TutorScheduleView />} />
       </PrivateRoute>
 
-      <PrivateRoute path="/meet" element={!Boolean(user.token)? <Navigate to="/login" />:<MeetingLayout />} >
-        <Route path="/" element={<MeetView />} />
-      </PrivateRoute>
       <Route path="*" element={<NotFoundView />} />
     </Routes>
   )
