@@ -107,6 +107,10 @@ const TutorSelectionView = (props) => {
     }
   }, [idTutor])
 
+  useEffect(() => {
+    console.log(contract)
+  },[contract])
+
   const handleNext = () => {
     if (activeStep < 3) setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
@@ -237,18 +241,17 @@ const TutorSelectionView = (props) => {
                             <Typography>
                               <b>Precio:</b> ${contract.nomination.price}
                             </Typography>
-                            {/*
                             <Typography>
                               <b>Franja:</b> {contract.slot.day} de{' '}
-                              {contract.slot.start <= 12
-                                ? contract.slot.start
-                                : contract.slot.start - 12}{' '}
-                              {contract.slot.start < 12 ? 'am' : 'pm'} a{' '}
-                              {contract.slot.end <= 12
-                                ? contract.slot.end
-                                : contract.slot.end - 12}{' '}
-                              {contract.slot.end < 12 ? 'am' : 'pm'}
-                            </Typography> */}
+                              {contract.slot.start_time <= 12
+                                ? contract.slot.start_time
+                                : contract.slot.start_time - 12}{' '}
+                              {contract.slot.start_time < 12 ? 'am' : 'pm'} a{' '}
+                              {contract.slot.end_time <= 12
+                                ? contract.slot.end_time
+                                : contract.slot.end_time - 12}{' '}
+                              {contract.slot.end_time < 12 ? 'am' : 'pm'}
+                            </Typography>
                           </Box>
                         </Box>
                       </Card>
@@ -267,7 +270,7 @@ const TutorSelectionView = (props) => {
       </DialogContent>
       <DialogActions classes={{ root: classes.centerStepper }}>
         <Box display="flex" flexDirection="column">
-          {activeStep !== 0 /* && activeStep !== 2 */ ? (
+          {activeStep !== 0 && activeStep !== 2 ? (
             <Box className={classes.nextButton}>
               <Button
                 size="large"

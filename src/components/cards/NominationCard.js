@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import {
   Avatar,
   Box,
+  Card,
   CardActionArea,
   Container,
   Grid,
@@ -26,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '20px',
     minHeight: 200,
     minWidth: 288,
+    maxWidth: 288,
+    maxHeight: 200
   },
   userSpace: {
     display: 'flex',
@@ -42,29 +45,28 @@ const useStyles = makeStyles((theme) => ({
     width: 40,
     height: 40
   },
-  paper: {
-    borderRadius: '20px'
-  },
   price: {
     color: '#1ad41a',
     marginTop: theme.spacing(2),
     textAlign: 'center'
+  },
+  gridContainer : {
+    margin: '10px'
   }
 }))
 
 const NominationCard = (props) => {
   const { nomination, next } = props
   const classes = useStyles()
-  console.log("NOMINACION !!")
-  console.log(nomination)
 
   const handleSelect = () => {
     next(nomination)
   }
   return (
     <Paper className={classes.paper} elevation={3}>
-        <CardActionArea className={classes.cardAction} onClick={handleSelect}>
-          <Grid container>
+      <Card className={classes.cardAction}>
+        <CardActionArea onClick={handleSelect}>
+          <Grid className={classes.gridContainer} container>
             {/* Avatar, name and rating */}
             <Grid item xs={6}>
               <Box className={classes.userSpace}>
@@ -97,6 +99,7 @@ const NominationCard = (props) => {
             </Grid>
           </Grid>
         </CardActionArea>
+      </Card>
     </Paper>
   )
 }
