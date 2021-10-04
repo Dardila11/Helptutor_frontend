@@ -6,7 +6,7 @@ import SearchBar from 'src/components/SearchBar'
 import TutorServiceCard from 'src/components/cards/tutorServiceCard'
 import Page from 'src/components/Page'
 
-import useTutorsServices from 'src/hooks/TutorHooks/useTutorServices'
+import { useServices } from 'src/hooks/useTutorsServices'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,8 +30,7 @@ const TutorsView = () => {
   const [query, setQuery] = useState('')
   const [listFilter, setListFilter] = useState(null)
   const [filter, setFilter] = useState({ label: '', value: 0 })
-  const tutorServicesQuery = useTutorsServices()
-  console.log(tutorServicesQuery);
+  const tutorServicesQuery = useServices()
 
   useEffect(
     () => {
