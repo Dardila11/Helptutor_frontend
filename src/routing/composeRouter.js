@@ -35,9 +35,10 @@ import TutorScheduleView from 'src/views/tutorviews/schedule/TutorScheduleView'
 import StudentConsultanciesView from 'src/views/studentviews/consultancies/consultanciesView'
 
 // MEETING VIEWS
-import MeetView from 'src/views/meet/MeetView'
+/* import MeetView from 'src/views/meet/MeetView' */
 
 // STATIC VIEWS
+//STATICS
 import LandingPage from 'src/views/statics/LandingPage'
 
 // STYLES
@@ -110,9 +111,10 @@ const Routing = () => {
         <Route path="/horario" element={<TutorScheduleView />} />
       </PrivateRoute>
       {/* private meet routes */}
-      <PrivateRoute path="/meet" element={<MainLayout />}>
+      {/* <PrivateRoute path="/meet" element={<MainLayout />}>
         <Route path="/" element={<MeetView />} />
-      </PrivateRoute>
+      </PrivateRoute> */}
+
       <Route path="*" element={<NotFoundView />} />
     </Routes>
   )

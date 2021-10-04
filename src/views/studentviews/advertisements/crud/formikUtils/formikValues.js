@@ -9,8 +9,14 @@ const getValues = (values) => {
 
 const validation = 
 Yup.object().shape({
-  title: Yup.string().max(255).required("El anuncio debe tener un titulo"),
-  description: Yup.string().max(255).required("El anuncio debe tener una descripción")
+  title: Yup.string()
+    .min(20, 'Titulo debe tener por lo menos 20 caracteres')
+    .max(255, 'Titulo debe tener un maximo de 255 caracteres')
+    .required('Titulo es obligatorio'),
+  description: Yup.string()
+    .min(20, 'Descripción debe tener por lo menos 20 caracteres')
+    .max(255, 'Descripción debe tener un maximo de 255 caracteres')
+    .required('Descripción es obligatorio')
 })
 
 const logConst = {

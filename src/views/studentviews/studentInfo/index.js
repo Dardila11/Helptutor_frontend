@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Avatar,
@@ -7,12 +7,8 @@ import {
   Button,
   Card,
   Grid,
-  FormControl,
-  Select,
-  MenuItem,
-  InputLabel,
   makeStyles,
-  IconButton, 
+  IconButton,
   Paper
 } from '@material-ui/core'
 import Badge from '@material-ui/core/Badge';
@@ -22,14 +18,12 @@ import formikValues from './formikValues'
 
 import EditProfileViewSkeleton from 'src/components/skeletons/EditProfileViewSkeleton'
 
-//REDUX
-import {
-  getStudentInfo,
-  updateStudent
-} from 'src/redux/actions/student/student_data'
-
-import { connect } from 'react-redux'
 import Page from 'src/components/Page';
+import { useAuthState } from 'src/context/context';
+import { useStudentInfo, useUpdateStudentInfo } from 'src/hooks/StudentHooks/useStudentInfo'
+import { capitalize } from 'lodash-es';
+import { toast } from 'react-toastify';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,39 +64,35 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const StudentEditInfoView = (props) => {
-  const { updateStudent, userInfo, requestInProgress } = props
+
+
+const StudentEditInfoView = () => {
+  const userId = useAuthState().user.id
+  const userInfoQuery = useStudentInfo(userId)
+  console.log(userInfoQuery)
+  const mutation = useUpdateStudentInfo()
   const [file, setFile] = React.useState(null)
-  const [initialInfo, setInitialInfo] = useState(formikValues.initialValues)
-  const [loading, setLoading] = useState(true)
   const [preview, setPreview] = useState(null)
 
-  useEffect(
-    () => {
-      getStudentInfo(props.user.id)
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
-
-  useEffect(() => {
-    setLoading(requestInProgress)
-  }, [requestInProgress])
-
-  useEffect(() => {
-    setInitialInfo(userInfo)
-  }, [userInfo])
+  let initialValues = {
+    first_name: userInfoQuery.data.user.first_name,
+    last_name: userInfoQuery.data.user.last_name,
+    birthday: userInfoQuery.data.user.birthday,
+    email: userInfoQuery.data.user.email,
+    /* interest: userInfoQuery.data.user.interest */
+  }
+  console.log(initialValues)
 
   const fileSelectedHandler = (e) => {
     setFile(e.target.files[0])
 
-     let reader = new FileReader();
-  
-     reader.readAsDataURL(e.target.files[0]);
-   
-     reader.onload = function(){
-       setPreview(reader.result)
-     } 
+    let reader = new FileReader();
+
+    reader.readAsDataURL(e.target.files[0]);
+
+    reader.onload = function () {
+      setPreview(reader.result)
+    }
   }
 
   const handleInput = () => {
@@ -112,126 +102,98 @@ const StudentEditInfoView = (props) => {
 
   const classes = useStyles()
   return (
-    <Page  title="Editar perfil">
-      {loading ? (
-        <>
-          <EditProfileViewSkeleton />
-        </>
-      ) : (
+    <Page title="Editar perfil">
+      {userInfoQuery.status === 'success' ? (
         <Paper className={classes.infoView} elevation={3}>
-        <Card className={classes.root}>
-          <Box display="flex" flexDirection="column" justifyContent="center">
-            <Formik
-              enableReinitialize
-              initialValues={initialInfo}
-              //validationSchema={formikValues.validation}
-              onSubmit={(values) => {
-                let jsonValues = formikValues.getValues(values)
-                updateStudent(jsonValues, file)
-              }}>
-              {({
-                errors,
-                handleBlur,
-                handleChange,
-                handleSubmit,
-                touched,
-                values
-              }) => (
-                <form onSubmit={handleSubmit}>
-                  <Box mb={3} textAlign="center">
-                    <Typography color="textPrimary" variant="h4">
-                      Información
-                    </Typography>
-                  </Box>
-                  <Grid container>
-                    <Grid item xs={3}>
-                      <Box display="flex" flexDirection='row' justifyContent='center'>                        
-                        <input id='fileInput' accept="image/png, image/jpeg" type='file' onChange={fileSelectedHandler} className={classes.input}/>
-                          <IconButton style={{paddingTop: 0}}onClick={handleInput}>
-                              <Badge
-                                overlap="circle"
-                                badgeContent={<IconButton className={classes.iconbutton} variant='outlined' color='primary'><EditRoundedIcon fontSize='small'/></IconButton>}
+          <Card className={classes.root}>
+            <Box display="flex" flexDirection="column" justifyContent="center">
+              <Formik
+                enableReinitialize
+                initialValues={initialValues}
+                validationSchema={formikValues.validation}
+                onSubmit={(values) => {
+                  let jsonValues = formikValues.getValues(values)
+                  mutation.mutate(jsonValues, { 
+                    onSuccess: (res) => {
+                      console.log(res)
+                      toast.success('perfil actualizado')
+                    },
+                    onError: (err) => {
+                      toast.error('Ha ocurrido un error ', err)
+                    }
+                  })
+                }}>
+                {({
+                  errors,
+                  handleBlur,
+                  handleChange,
+                  handleSubmit,
+                  touched,
+                  values
+                }) => (
+                  <form onSubmit={handleSubmit}>
+                    <Box mb={3} textAlign="center">
+                      <Typography color="textPrimary" variant="h4">
+                        Información del Estudiante
+                      </Typography>
+                    </Box>
+                    <Grid container>
+                      <Grid item xs={3}>
+                        <Box display="flex" flexDirection='row' justifyContent='center'>
+                          <input id='fileInput' accept="image/png, image/jpeg" type='file' onChange={fileSelectedHandler} className={classes.input} />
+                          <IconButton style={{ paddingTop: 0 }} onClick={handleInput}>
+                            <Badge
+                              overlap="circle"
+                              badgeContent={<IconButton className={classes.iconbutton} variant='outlined' color='primary'><EditRoundedIcon fontSize='small' /></IconButton>}
+                            >
+                              <Avatar
+                                id='avatarPhoto'
+                                className={classes.avatar}
+                                alt="my-avatar"
+                                src={preview === null ? userInfoQuery.data.user.photo : preview}
                               >
-                                <Avatar
-                                  id='avatarPhoto'
-                                  className={classes.avatar}
-                                  alt="my-avatar"
-                                  src={preview === null ? props.user.photo : preview}
-                                >
-                                  <Typography variant='h1'>
-                                    <b>{userInfo.first_name[0]}</b>
-                                  </Typography>
-                                  </Avatar>
-                              </Badge>
-                            </IconButton>
-                      </Box>
-                    </Grid>
-                    <Grid container item xs={9}>
-                      <Box className={classes.inputs} display='flex' flexDirection='row'>
-                        <TextField
-                          id="txt_firstname"
-                          error={Boolean(touched.first_name && errors.first_name)}
-                          fullWidth
-                          helperText={touched.first_name && errors.first_name}
-                          label="Nombre"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          name="first_name"
-                          value={values.first_name}
-                          variant="outlined"
-                          inputProps={{
-                            'data-testid': 'firstname'
-                          }}
-                        />
-                        <TextField
-                          id="txt_lastname"
-                          error={Boolean(touched.last_name && errors.last_name)}
-                          fullWidth
-                          helperText={touched.last_name && errors.last_name}
-                          label="Apellido"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          name="last_name"
-                          value={values.last_name}
-                          variant="outlined"
-                          inputProps={{
-                            'data-testid': 'lastname'
-                          }}
-                        />
+                                <Typography variant='h1'>
+                                  <b>{capitalize(userInfoQuery.data.user.first_name[0])}</b>
+                                </Typography>
+                              </Avatar>
+                            </Badge>
+                          </IconButton>
+                        </Box>
+                      </Grid>
+                      <Grid container item xs={9}>
+                        <Box className={classes.inputs} display='flex' flexDirection='row'>
+                          <TextField
+                            id="txt_firstname"
+                            error={Boolean(touched.first_name && errors.first_name)}
+                            fullWidth
+                            helperText={touched.first_name && errors.first_name}
+                            label="Nombre"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            name="first_name"
+                            value={values.first_name}
+                            variant="outlined"
+                            inputProps={{
+                              'data-testid': 'firstname'
+                            }}
+                          />
+                          <TextField
+                            id="txt_lastname"
+                            error={Boolean(touched.last_name && errors.last_name)}
+                            fullWidth
+                            helperText={touched.last_name && errors.last_name}
+                            label="Apellido"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            name="last_name"
+                            value={values.last_name}
+                            variant="outlined"
+                            inputProps={{
+                              'data-testid': 'lastname'
+                            }}
+                          />
                         </Box>
                         <Box className={classes.inputs} display='flex' flexDirection='row'>
-                          <FormControl
-                            variant="outlined"
-                            className={classes.selectControl}
-                            error={Boolean(touched.gender && errors.gender)}
-                            helpertext={touched.gender && errors.gender}
-                            fullWidth
-                            >
-                            <InputLabel id="select-gender-label"> Género </InputLabel>
-                            <Select
-                              labelId="select-gender-label"
-                              id="select_gender"
-                              value={values.gender}
-                              name="gender"
-                              onChange={handleChange}
-                              label="Género"
-                              inputProps={{
-                                'data-testid': 'gender'
-                              }}>
-                              <MenuItem key={3} value={3}>
-                                --
-                              </MenuItem>
-                              <MenuItem key={0} value={0}>
-                                Femenino
-                              </MenuItem>
-                              <MenuItem key={1} value={1}>
-                                Masculino
-                              </MenuItem>
-                              <MenuItem key={2} value={2}>
-                                Otro
-                              </MenuItem>
-                            </Select>
-                          </FormControl>
                           <TextField
                             id="txt_birthday"
                             className={classes.birthday}
@@ -272,40 +234,32 @@ const StudentEditInfoView = (props) => {
                             }}
                           />
                         </Box>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Box display='flex' justifyContent='center'>
+                          <Button
+                            id="btn_updateTutor"
+                            color="primary"
+                            size="large"
+                            type="submit"
+                            variant="contained"
+                            data-testid="btn-update">
+                            Actualizar
+                          </Button>
+                        </Box>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                      <Box display='flex' justifyContent='center'>
-                        <Button
-                          id="btn_updateTutor"
-                          color="primary"
-                          //disabled={isSubmitting}
-                          size="large"
-                          type="submit"
-                          variant="contained"
-                          data-testid="btn-update">
-                          Actualizar
-                        </Button>
-                      </Box>
-                  </Grid>
-                  </Grid>
-                </form>
-              )}
-            </Formik>
-          </Box>
-        </Card>
-      </Paper>
+                  </form>
+                )}
+              </Formik>
+            </Box>
+          </Card>
+        </Paper>
+      ) : (
+        <EditProfileViewSkeleton />
       )}
     </Page>
   )
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  userInfo: state.studentInfo.userInfo,
-  requestInProgress: state.studentInfo.requestInProgress
-})
-
-export default connect(mapStateToProps, {
-  getStudentInfo,
-  updateStudent
-})(StudentEditInfoView)
+export default StudentEditInfoView

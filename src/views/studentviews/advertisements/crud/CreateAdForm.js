@@ -17,6 +17,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import { useAuthState } from 'src/context/context'
 import Validation from './formikUtils/formikValues'
 import { useCreateAdvertisement } from 'src/hooks/useAdvertisements'
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -67,13 +68,17 @@ const CreateAdForm = ({ onClose }) => {
                 initialValues={initialValues}
                 validationSchema={Validation.validation}
                 onSubmit={(values) => {
-                  /* let jsonValues = Validation.getValues({
-                    ...values
-                    //student: student
-                  }) */
-                  //addPublication(jsonValues)
-                  mutation.mutate(values)
-                  onClose()
+                  let jsonValues = Validation.getValues(values)
+                  mutation.mutate(jsonValues, {
+                    onSuccess: () => {
+                      toast.success('Anuncio agregado')
+                      onClose()
+                    },
+                    onError: (err) => {
+                      toast.error('Ha ocurrido un error ', + err)
+                      onClose()
+                    }
+                  })
                 }}>
                 {({
                   errors,

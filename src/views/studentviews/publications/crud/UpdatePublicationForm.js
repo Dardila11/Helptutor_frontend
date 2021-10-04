@@ -11,16 +11,17 @@ import {
   Typography,
   Select,
   FormControl,
+  FormHelperText,
   MenuItem,
   InputLabel
 } from '@material-ui/core'
 import { Formik } from 'formik'
 import CloseIcon from '@material-ui/icons/Close'
+import { toast } from 'react-toastify'
 
-import useStudentKnowledgeAreas from 'src/hooks/StudentHooks/useStudentKnowledgeAreas'
-import useUpdateOffer from 'src/hooks/StudentHooks/useUpdateOffer'
-import { useAuthState } from 'src/context/context'
-import Validation from './formikUtils/formikValues'
+import {useKnowledgeAreas} from 'src/hooks/useKnowledgeAreas'
+import { useUpdateOffer } from 'src/hooks/StudentHooks/useStudentOffers'
+import formikValues from './formikUtils/formikValues'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -37,17 +38,16 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const UpdatePublicationFormView = ({ onClose, publication }) => {
+  console.log(publication)
   const classes = useStyles()
-  const userId = useAuthState().user.id
-  const { data, status } = useStudentKnowledgeAreas(userId)
+  const knowledgeAreasQuery = useKnowledgeAreas()
+  console.log(knowledgeAreasQuery)
   let initialValues = {
     title: publication.title,
-    description: publication.description ,
-    knowledge_area_student: publication.knowledge_area_student,
-    student: publication.student,
+    description: publication.description,
+    knowledge_area: publication.knowledge_area
   }
   const mutationUpdate = useUpdateOffer()
-
 
   return (
     <>
@@ -73,15 +73,19 @@ const UpdatePublicationFormView = ({ onClose, publication }) => {
               <Formik
                 enableReinitialize={true}
                 initialValues={initialValues}
-                validationSchema={Validation.validation}
+                validationSchema={formikValues.validation}
                 onSubmit={(values) => {
-                  /* let jsonValues = Validation.getValues({
-                    ...values
-                    //student: student
-                  }) */
-                  mutationUpdate.mutate([publication.id, values]) 
-                  onClose()
-                  
+                  let jsonValues = formikValues.getValues(values)
+                  mutationUpdate.mutate([publication.id, jsonValues], {
+                    onSuccess: () => {
+                      toast.success('Publicación actualizada')
+                      onClose()
+                    },
+                    onError: (err) => {
+                      toast.error('Ha ocurrido un error ' + err)
+                      onClose()
+                    }
+                  })
                 }}>
                 {({
                   errors,
@@ -95,23 +99,25 @@ const UpdatePublicationFormView = ({ onClose, publication }) => {
                     <FormControl
                       variant="outlined"
                       className={classes.selectControl}
+                      error={Boolean(
+                        touched.knowledge_area &&
+                          errors.knowledge_area
+                      )}
                       fullWidth>
                       <InputLabel id="categories-label">Categoria</InputLabel>
                       <Select
                         labelId="categories-label"
                         id="categories-select"
-                        name="knowledge_area_student"
-                        value={values.knowledge_area_student}
+                        name="knowledge_area"
+                        value={values.knowledge_area}
                         onChange={(e) => handleChange(e)}>
                         <MenuItem value={-1}>
                           <em>---</em>
                         </MenuItem>
-                        {status === 'success' ? (
-                          data.map((area, index) => (
-                            <MenuItem
-                              key={index}
-                              value={area.knowledge_area.id}>
-                              <em>{area.knowledge_area.name}</em>
+                        {knowledgeAreasQuery.status === 'success' ? (
+                          knowledgeAreasQuery.data.map((area, index) => (
+                            <MenuItem key={index} value={area.id}>
+                              <em>{area.name}</em>
                             </MenuItem>
                           ))
                         ) : (
@@ -120,6 +126,10 @@ const UpdatePublicationFormView = ({ onClose, publication }) => {
                           </MenuItem>
                         )}
                       </Select>
+                      <FormHelperText id="component-error-text">{
+                        touched.knowledge_area &&
+                        errors.knowledge_area
+                      }</FormHelperText>
                     </FormControl>
                     <TextField
                       id="txt_title"

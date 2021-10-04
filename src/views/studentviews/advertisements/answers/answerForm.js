@@ -5,6 +5,7 @@ import Validation from './formikValues'
 import SendIcon from '@material-ui/icons/Send'
 
 import {useCreateAdvertisementAnswer} from 'src/hooks/useAdvertisements'
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -33,7 +34,15 @@ const AnswerFormView = ({advertisement}) => {
             ...values,
             advertisement: advertisement.id,
           })
-          mutation.mutate(jsonValues)
+          console.log(jsonValues)
+          mutation.mutate(jsonValues, { 
+            onSuccess: () => {
+              toast.success('Respuesta agregada')
+            },
+            onError: (err) => {
+              toast.error('Ha ocurrido un error ', err)
+            }
+          })
           resetForm({ values: initialValuesObj })
         }}>
         {({

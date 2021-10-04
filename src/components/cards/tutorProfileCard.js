@@ -11,6 +11,7 @@ import {
 
 import { Rating } from '@material-ui/lab'
 import QualificationCard from 'src/components/cards/QualificationCard'
+import { capitalize } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,12 +44,18 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: theme.spacing(1)
+  },
+  ratings: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center'
   }
 }))
 
-const ProfileView = (props) => {
+const ProfileView = ({ tutor, reviews }) => {
   const classes = useStyles()
-  const { tutor } = props
   return (
     <>
       <Card className={classes.root}>
@@ -56,7 +63,8 @@ const ProfileView = (props) => {
           <Box className={classes.title} textAlign="center">
             <Typography variant="h3">
               <b>
-                {tutor.user.first_name} {tutor.user.last_name}
+                {capitalize(tutor.user.first_name)}{' '}
+                {capitalize(tutor.user.last_name)}
               </b>
             </Typography>
             <Typography variant="h4">Tutor</Typography>
@@ -74,19 +82,19 @@ const ProfileView = (props) => {
                 <Typography className={classes.contentPrincipal} variant="h4">
                   {tutor.skills}
                 </Typography>
-                <Rating value={4} size="large" readOnly />
-                <Typography className={classes.contentPrincipal} variant="h4">
-                  Promedio: 4.5 de 23 calificaciones
-                </Typography>
               </Box>
             </Grid>
             <Grid item xs={4}>
-              <Box display="flex" justifyContent="center">
+              <Box className={classes.ratings}>
                 <Avatar
                   className={classes.cover}
                   alt="user photo"
-                  src="/static/images/avatars/avatar_6.png"
+                  src={tutor.user.photo}
                 />
+                <Rating value={tutor.score} size="large" readOnly />
+                <Typography className={classes.contentPrincipal} variant="h4">
+                  Promedio: 4.5 de 23 calificaciones
+                </Typography>
               </Box>
             </Grid>
           </Grid>
@@ -125,7 +133,15 @@ const ProfileView = (props) => {
                   <b>Reseñas</b>
                 </Typography>
               </Box>
-              <QualificationCard />
+              {reviews.length > 0 ? (
+                reviews.map((review, index) => (
+                  <QualificationCard key={index} review={review} />
+                ))
+              ) : (
+                <Typography component="span" variant="h6">
+                  No tiene reseñas
+                </Typography>
+              )}
             </Box>
           </Box>
         </Box>

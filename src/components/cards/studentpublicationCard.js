@@ -23,7 +23,8 @@ import TutorSelectionView from 'src/views/studentviews/publications/tutorselecti
 import UpdatePublicationFormView from 'src/views/studentviews/publications/crud/UpdatePublicationForm'
 import { isUndefined } from 'lodash-es'
 
-import useDeleteOffer from 'src/hooks/StudentHooks/useDeleteOffer'
+import { useDeleteOffer } from 'src/hooks/StudentHooks/useStudentOffers'
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   details: {
@@ -59,7 +60,7 @@ const StudentPublicationCard = (props) => {
   const [edit, setEdit] = React.useState(false)
   const [deletep, setDelete] = React.useState(false)
 
-  const mutation = useDeleteOffer(publication.id)
+  const mutation = useDeleteOffer()
 
   const handleWatch = () => {
     setWatch(true)
@@ -72,8 +73,12 @@ const StudentPublicationCard = (props) => {
     setDelete(true)
   }
   const handleDelete = () => {
-    mutation.mutate()
-    setDelete(false)
+    mutation.mutate(publication.id, {
+      onSuccess: () => {
+        toast.success('Publicación eliminada')
+        setDelete(false)
+      }
+    })
   }
   const handleClose = () => {
     setWatch(false)
@@ -132,9 +137,9 @@ const StudentPublicationCard = (props) => {
               <b>Opciones</b>
             </Typography>
             <Box spacing={3}>
-              <Tooltip title="nominados" placement="bottom" arrow>
+              <Tooltip title="postulaciones" placement="bottom" arrow>
                 <IconButton color="primary" onClick={handleWatch}>
-                  <Badge badgeContent={4} color="primary">
+                  <Badge /* badgeContent={4} */ color="primary">
                     <VisibilityIcon />
                   </Badge>
                 </IconButton>

@@ -12,17 +12,17 @@ const Features = () => {
   return (
     <>
       <div className="sec2--container">
-        <h2> ¡Aprender nunca fue tan facil! </h2>
+        <h2> ¡Aprender nunca fue tan fácil! </h2>
         <div className="sec2--container-features">
           <div className="box" id="flexible">
             <AccessTimeIcon color="primary" style={{ fontSize: 45 }} />
             <h3>Flexible</h3>
-            <p>Escoge un tutor que trabaje segun tu horario</p>
+            <p>Escoge un tutor que trabaje según tu horario</p>
           </div>
           <div className="box" id="secure">
             <VerifiedUserIcon color="primary" style={{ fontSize: 45 }} />
             <h3>Seguro</h3>
-            <p>Nosotros nos encargamos de todo. Tu disfruta las clases</p>
+            <p>Nosotros nos encargamos de todo. Tú disfruta las clases</p>
           </div>
           <div className="box" id="tutors">
             <EmojiEventsIcon color="primary" style={{ fontSize: 45 }} />
@@ -34,7 +34,7 @@ const Features = () => {
           <div className="box" id="money">
             <MonetizationOnIcon color="primary" style={{ fontSize: 45 }} />
             <h3>Ahorras dinero</h3>
-            <p>Clases economicas, sin minimo de horas, sin cargos ocultos</p>
+            <p>Clases económicas, sin mínimo de horas, sin cargos ocultos</p>
           </div>
         </div>
       </div>

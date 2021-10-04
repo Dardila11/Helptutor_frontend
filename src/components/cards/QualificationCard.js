@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
 import studentInfo from 'src/views/studentviews/studentInfo'
+import { useReviews } from 'src/hooks/TutorHooks/useReviews'
 
 const useStyles = makeStyles((theme) => ({
   root: {

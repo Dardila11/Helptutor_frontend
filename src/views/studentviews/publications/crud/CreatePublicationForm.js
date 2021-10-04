@@ -12,17 +12,17 @@ import {
   Typography,
   Select,
   FormControl,
+  FormHelperText,
   MenuItem,
   InputLabel
 } from '@material-ui/core'
 import { Formik } from 'formik'
 import CloseIcon from '@material-ui/icons/Close'
-
-import useStudentKnowledgeAreas from 'src/hooks/StudentHooks/useStudentKnowledgeAreas'
-import useCreatePublication from 'src/hooks/useCreatePublication'
-import { useAuthState } from 'src/context/context'
-import Validation from './formikUtils/formikValues'
 import { toast } from 'react-toastify'
+
+import { useCreateOffer } from 'src/hooks/StudentHooks/useStudentOffers'
+import {useKnowledgeAreas} from 'src/hooks/useKnowledgeAreas'
+import formikValues from './formikUtils/formikValues'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -40,15 +40,13 @@ const useStyles = makeStyles((theme) => ({
 
 const CreatePublicationForm = ({ onClose }) => {
   const classes = useStyles()
-  const userId = useAuthState().user.id
-  const { data, status } = useStudentKnowledgeAreas(userId)
-  const mutation = useCreatePublication()
+  const mutation = useCreateOffer()
+  const knowledgeAreasQuery = useKnowledgeAreas()
 
   let initialValues = {
     title: '',
     description: '',
-    knowledge_area_student: 4,
-    student: userId
+    knowledge_area: '',
   }
   return (
     <>
@@ -74,16 +72,20 @@ const CreatePublicationForm = ({ onClose }) => {
               <Formik
                 enableReinitialize={true}
                 initialValues={initialValues}
-                validationSchema={Validation.validation}
+                validationSchema={formikValues.validation}
                 onSubmit={(values) => {
-                  /* let jsonValues = Validation.getValues({
-                    ...values
-                    //student: student
-                  }) */
-                  //addPublication(jsonValues)
-                  mutation.mutate(values)
-                  toast.success("Publicación agregada")
-                  onClose()
+                  let jsonValues = formikValues.getValues(values) 
+                  mutation.mutate(jsonValues, {
+                    onSuccess: () => {
+                      toast.success("Publicación agregada")
+                      onClose()
+                    },
+                    onError: (err) => {
+                      console.log(err)
+                      toast.error('Ha ocurrido un error ' + err)
+                      onClose()
+                    }
+                  })
                   
                 }}>
                 {({
@@ -98,23 +100,25 @@ const CreatePublicationForm = ({ onClose }) => {
                     <FormControl
                       variant="outlined"
                       className={classes.selectControl}
+                      error={Boolean(touched.knowledge_area && errors.knowledge_area)}
+                      helperText={touched.knowledge_area && errors.knowledge_area}
                       fullWidth>
-                      <InputLabel id="categories-label">Categoria</InputLabel>
+                      <InputLabel id="categories-label">Categoría</InputLabel>
                       <Select
                         labelId="categories-label"
                         id="categories-select"
-                        name="knowledge_area_student"
-                        value={values.knowledge_area_student}
+                        name="knowledge_area"
+                        value={values.knowledge_area}
                         onChange={(e) => handleChange(e)}>
                         <MenuItem value={-1}>
                           <em>---</em>
                         </MenuItem>
-                        {status === 'success' ? (
-                          data.map((area, index) => (
+                        {knowledgeAreasQuery.status === 'success' ? (
+                          knowledgeAreasQuery.data.map((area, index) => (
                             <MenuItem
                               key={index}
-                              value={area.knowledge_area.id}>
-                              <em>{area.knowledge_area.name}</em>
+                              value={area.id}>
+                              <em>{area.name}</em>
                             </MenuItem>
                           ))
                         ) : (
@@ -123,13 +127,17 @@ const CreatePublicationForm = ({ onClose }) => {
                           </MenuItem>
                         )}
                       </Select>
+                      <FormHelperText id="component-error-text">{
+                        touched.knowledge_area &&
+                        errors.knowledge_area
+                      }</FormHelperText>
                     </FormControl>
                     <TextField
                       id="txt_title"
                       error={Boolean(touched.title && errors.title)}
                       fullWidth
                       helperText={touched.title && errors.title}
-                      label="Titulo"
+                      label="Título"
                       margin="normal"
                       onBlur={handleBlur}
                       onChange={handleChange}

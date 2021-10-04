@@ -23,6 +23,7 @@ import Schedule from 'src/components/Schedule/Schedule'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 
 import useTutorInfo from 'src/hooks/TutorHooks/useTutorInfo'
+import { useReviews } from 'src/hooks/TutorHooks/useReviews'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,10 +85,10 @@ const ServiceSelectionView = (props) => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
   const [contract, setContract] = React.useState({})
-  const { idTutor, service  } = props
+  const { service } = props
   const steps = getSteps()
-  console.log(props.tutorInfo.id)
   const queryUseTutorInfo = useTutorInfo(props.tutorInfo.user.id)
+  const reviewsQuery = useReviews(props.tutorInfo.user.id)
   console.log(queryUseTutorInfo)
 
   const handleNext = () => {
@@ -143,10 +144,10 @@ const ServiceSelectionView = (props) => {
               <Grid item xs={1}></Grid>
               <Grid item xs={10}>
                 {activeStep === 0 ? (
-                  queryUseTutorInfo.isLoading ? (
-                    <ProfileViewSkeleton/>
+                  queryUseTutorInfo.status === 'success' && reviewsQuery.status === 'success' ? (
+                    <ProfileView tutor={queryUseTutorInfo.data} reviews={reviewsQuery.data} />
                   ) : (
-                    <ProfileView tutor={queryUseTutorInfo.data}/>
+                    <ProfileViewSkeleton />
                   )
                 ) : (
                   <></>
@@ -266,15 +267,15 @@ const ServiceSelectionView = (props) => {
         <Box display="flex" flexDirection="column">
           {activeStep !== 1 ? (
             <Box className={classes.nextButton}>
-            <Button
-              size="large"
-              variant="contained"
-              color="primary"
-              onClick={() => handleTutor(queryUseTutorInfo.data)}
-              className={classes.button}>
-              {activeStep === 0 ? 'Siguiente' : 'Ir al pago'}
-            </Button>
-          </Box>
+              <Button
+                size="large"
+                variant="contained"
+                color="primary"
+                onClick={() => handleTutor(queryUseTutorInfo.data)}
+                className={classes.button}>
+                {activeStep === 0 ? 'Siguiente' : 'Ir al pago'}
+              </Button>
+            </Box>
           ) : (
             <></>
           )}

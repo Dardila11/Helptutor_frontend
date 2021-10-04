@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   makeStyles,
   Stepper,
@@ -20,15 +20,10 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import CloseIcon from '@material-ui/icons/Close'
 import NominationsView from './nominations'
 import ProfileView from 'src/components/cards/tutorProfileCard'
-import Schedule from 'src/components/Schedule/Schedule'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
-
-/* import { getTutorSelectedInfo } from 'src/redux/actions/student/student_publications'
-import { connect } from 'react-redux' */
-
 import useTutorInfo from 'src/hooks/TutorHooks/useTutorInfo'
-import { truncate } from 'lodash-es'
-import { TrendingUpRounded } from '@material-ui/icons'
+import {useReviews} from 'src/hooks/TutorHooks/useReviews'
+import Schedule from 'src/components/Schedule/Schedule'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,18 +95,17 @@ const TutorSelectionView = (props) => {
   const [activeStep, setActiveStep] = useState(0)
   const [idTutor, setIdTutor] = useState(null)
   const steps = getSteps()
-  /* const { loading, tutor } = props */
-  //const tutorInfoQuery = useTutorInfo(idTutor)
+  const tutorInfoQuery = useTutorInfo(idTutor)
+  const reviewsQuery = useReviews(idTutor)
+  const [scheduleSelected, setScheduleSelected] = useState({})
 
-  /* useEffect(
-    () => {
-      if (idTutor != null) {
-        props.getTutorSelectedInfo(idTutor)
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [idTutor]
-  ) */
+  useEffect(() => {
+    if (idTutor !== null) {
+      tutorInfoQuery.refetch()
+      reviewsQuery.refetch()
+
+    }
+  }, [idTutor])
 
   const handleNext = () => {
     if (activeStep < 3) setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -123,18 +117,18 @@ const TutorSelectionView = (props) => {
 
   const handleNomination = (nomination) => {
     setContract({ ...contract, nomination: nomination })
-    setIdTutor(nomination.tutor)
-    handleNext()
-  }
-
-  const handleTutor = (tutor) => {
-    setContract({ ...contract, tutor: tutor })
+    console.log(nomination.tutor.user.id)
+    setIdTutor(nomination.tutor.user.id)
     handleNext()
   }
 
   const handleSchedule = (slot) => {
-    setContract({ ...contract, slot: slot })
+    setContract({ ...contract, slot: slot , tutor: tutorInfoQuery.data})
     handleNext()
+  }
+
+  const handleScheduleSelected = (schedule) => {
+    setScheduleSelected(schedule)
   }
 
   /*const handlePayment = () => {
@@ -193,13 +187,11 @@ const TutorSelectionView = (props) => {
             flexDirection="column"
             justifyContent="center"
             alignItems="center">
-            <Grid container>
-              <Grid item xs={1}></Grid>
-              <Grid item xs={10}>
+            <Grid container>              
+              <Grid item xs={12}>
                 {activeStep === 0 ? (
                   <NominationsView
                     key={publication.id}
-                    id={publication.id}
                     publication={publication}
                     next={handleNomination}
                   />
@@ -207,15 +199,15 @@ const TutorSelectionView = (props) => {
                   <></>
                 )}
                 {activeStep === 1 ? (
-                  true ? (
-                    <ProfileViewSkeleton />
+                  tutorInfoQuery.status === 'success' && reviewsQuery.status === 'success' ? (
+                    <ProfileView tutor={tutorInfoQuery.data} reviews={reviewsQuery.data} />
                   ) : (
-                    {/* <ProfileView tutor={tutor} /> */}
+                    <ProfileViewSkeleton />
                   )
                 ) : (
                   <></>
                 )}
-                {activeStep === 2 ? <Schedule next={handleSchedule} /> : <></>}
+                {activeStep === 2 ? <Schedule next={handleSchedule} handleScheduleSelected={handleScheduleSelected} /> : <></>}
                 {activeStep === 3 ? (
                   <>
                     <Box
@@ -234,17 +226,18 @@ const TutorSelectionView = (props) => {
                             <Avatar
                               className={classes.cover}
                               alt="user photo"
-                              src="/static/images/avatars/avatar_6.png"
+                              src={contract.tutor.user.photo}
                             />
                           </Box>
                           <Box>
                             <Typography>
-                              <b>Tutor:</b> {contract.tutor.user.first_name}{' '}
-                              {contract.tutor.user.last_name}
+                              <b>Tutor:</b> {tutorInfoQuery.data.user.first_name}{' '}
+                              {tutorInfoQuery.data.user.last_name}
                             </Typography>
                             <Typography>
-                              <b>Precio:</b> {contract.nomination.price}$
+                              <b>Precio:</b> ${contract.nomination.price}
                             </Typography>
+                            {/*
                             <Typography>
                               <b>Franja:</b> {contract.slot.day} de{' '}
                               {contract.slot.start <= 12
@@ -255,64 +248,10 @@ const TutorSelectionView = (props) => {
                                 ? contract.slot.end
                                 : contract.slot.end - 12}{' '}
                               {contract.slot.end < 12 ? 'am' : 'pm'}
-                            </Typography>
+                            </Typography> */}
                           </Box>
                         </Box>
                       </Card>
-                    </Box>
-                    <Box className={classes.nextButton}>
-                      <form
-                        method="post"
-                        action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu">
-                        <input name="merchantId" type="hidden" value={508029} />
-                        <input name="accountId" type="hidden" value={512321} />
-                        <input
-                          name="ApiLogin"
-                          type="hidden"
-                          value="pRRXKOl8ikMmt9u"
-                        />
-                        <input
-                          name="description"
-                          type="hidden"
-                          value="Test PAYU"
-                        />
-                        <input
-                          name="referenceCode"
-                          type="hidden"
-                          value="TestPayU"
-                        />
-                        <input name="amount" type="hidden" value={3} />
-                        <input name="tax" type="hidden" value={0} />
-                        <input name="taxReturnBase" type="hidden" value={0} />
-                        <input name="currency" type="hidden" value="COP" />
-                        <input
-                          name="signature"
-                          type="hidden"
-                          value="ba9ffa71559580175585e45ce70b6c37"
-                        />
-                        <input name="test" type="hidden" value="1" />
-                        <input
-                          name="buyerEmail"
-                          type="hidden"
-                          value="test@test.com"
-                        />
-                        <input
-                          name="responseUrl"
-                          type="hidden"
-                          value="http://www.test.com/response"
-                        />
-                        <input
-                          name="confirmationUrl"
-                          type="hidden"
-                          value="http://www.test.com/confirmation"
-                        />
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          type="submit">
-                          Ir al pago
-                        </Button>
-                      </form>
                     </Box>
                   </>
                 ) : (
@@ -328,15 +267,16 @@ const TutorSelectionView = (props) => {
       </DialogContent>
       <DialogActions classes={{ root: classes.centerStepper }}>
         <Box display="flex" flexDirection="column">
-          {activeStep !== 0 && activeStep !== 2 ? (
+          {activeStep !== 0 /* && activeStep !== 2 */ ? (
             <Box className={classes.nextButton}>
               <Button
                 size="large"
                 variant="contained"
                 color="primary"
-                onClick={() => console.log('next')}
+                /* disabled={activeStep === 2 && scheduleSelected == {} ? true : false} */
+                onClick={handleNext}
                 className={classes.button}>
-                {activeStep === 1  ? 'Siguiente' : 'Ir al pago'}
+                {activeStep === 1 || activeStep === 2 ? 'Siguiente' : 'Ir al pago'}
               </Button>
             </Box>
           ) : (
@@ -358,14 +298,5 @@ const TutorSelectionView = (props) => {
     </>
   )
 }
-
-/* const mapStateToProps = (state) => ({
-  tutor: state.publications.tutorInfo,
-  loading: state.publications.loadingTutor
-})
-
-export default connect(mapStateToProps, {
-  getTutorSelectedInfo
-})(TutorSelectionView) */
 
 export default TutorSelectionView

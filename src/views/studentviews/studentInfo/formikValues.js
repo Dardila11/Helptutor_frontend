@@ -3,19 +3,17 @@ import * as Yup from 'yup'
 let initialValues = {
   first_name: '',
   last_name: '',
-  gender: 0,
   birthday: '',
   email: '',
-  interest: ''
 }
 
 const putValues = (values) => {
-  initialValues.first_name = values.first_name
-  initialValues.last_name = values.last_name
-  initialValues.gender = values.gender
-  initialValues.birthday = values.birthday
-  initialValues.email = values.email
-  initialValues.interest = values.interest
+  return {
+    first_name: values.first_name,
+    last_name: values.last_name,
+    birthday: values.birthday,
+    email: values.email
+  }
 }
 
 const getValues = (values) => {
@@ -24,18 +22,27 @@ const getValues = (values) => {
       first_name: values.first_name,
       last_name: values.last_name,
       email: values.email,
-      gender: values.gender,
       birthday: values.birthday,
-      interest: values.interest
     }
   }
 }
 
 const validation = Yup.object().shape({
-  first_name: Yup.string().max(255).required('Nombre es requerido'),
-  last_name: Yup.string().max(255).required('Apellido es requerido'),
-  gender: Yup.string().max(255).required('Sexo es requerido'),
-  birthday: Yup.string().max(255).required('Fecha de nacimiento es requerido'),
+  first_name: Yup.string().max(255)
+    .test(
+      'empty characters',
+      'No puede estar vacio',
+      (first_name) => !first_name || first_name.trim() !== ""
+    ).required('Campo nombre es obligatorio')
+    .required('Nombre es requerido'),
+  last_name: Yup.string().max(255)
+    .test(
+      'empty characters',
+      'No puede estar vacio',
+      (last_name) => !last_name || last_name.trim() !== ""
+    ).required('Campo Apellido es obligatorio')
+    .required('Apellido es requerido'),
+  birthday: Yup.string().max(255),
   email: Yup.string()
     .email('Debe ser un email valido')
     .test('Valido', 'Email debe ser @unicauca.edu.co', function () {
@@ -48,15 +55,6 @@ const validation = Yup.object().shape({
     })
     .max(255)
     .required('Correo Electrónico es requerido')
-
-  /* country: Yup.string().max(255).required('Pais es requerido'),
-  phone: Yup.string().max(255).required('Teléfono es requerido') */
-  /* password: Yup.string().max(255).required('Contraseña es requerido'),
-  confirmPassword: Yup.mixed()
-    .test('iguales', 'Contraseñas no son iguales', function () {
-      return this.parent.password === this.parent.confirmPassword
-    })
-    .required('Contraseña es requerido') */
 })
 
 const logFormikValues = {

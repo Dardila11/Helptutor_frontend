@@ -1,6 +1,5 @@
 import React from 'react'
 
-//import Student from 'src/views/statics/components/Intro/student.jpeg'
 import './style.css'
 
 const Intro = () => {

@@ -195,8 +195,8 @@ const postStudent = (data) => {
   return https.post('/api/student/', data)
 }
 
-const updateStudentInfo = (data, state) => {
-  return https.patch('/api/student/', data, tokenConfig(state))
+const updateStudentInfo = (data) => {
+  return https.patch('/api/student/', data, AuthHeader())
 }
 
 const postOffer = (data) => {
@@ -251,8 +251,12 @@ const deleteOffer = (id) => {
   return https.delete('api/offer/' + id + '/', AuthHeader())
 }
 
-const getOfferNominations = (id, state) => {
-  return https.get('api/nomination/', tokenConfig(state))
+const getOfferNominations = (id) => {
+  return https.get(`api/offer/${id}/nomination/`, AuthHeader())
+}
+
+const getTutorReviews = (id) => {
+  return https.get(`api/tutor/${id}/review`, AuthHeader())
 }
 
 const postAnswer = (data) => {
@@ -298,6 +302,7 @@ const logConstants = {
   getNominations,
   getOfferNominations,
   getSchedule,
+  getTutorReviews,
   postTutor,
   postGoogleTutor,
   postGoogleStudent,

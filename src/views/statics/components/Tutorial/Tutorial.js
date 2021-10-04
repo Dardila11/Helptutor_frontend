@@ -15,7 +15,7 @@ const Tutorial = () => {
         <h2>¿Cómo funciona HelpTutor?</h2>
         <p>
           Simple, son clases online, en directo, con un profesor particular para
-          ti
+          tí
         </p>
         <div className="group-box">
           <div className="steps step1">
@@ -70,7 +70,7 @@ const Tutorial = () => {
               <h3>Publica sobre los temas que necesitas ayuda!</h3>
               <p>
                 Nuestra plataforma te permite publicar los temas en que
-                requieres asesorias y escoger los tutores que se postulen para
+                requieres asesorías y escoger los tutores que se postulen para
                 ayudarte!
               </p>
             </div>
