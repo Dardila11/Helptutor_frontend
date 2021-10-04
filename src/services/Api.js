@@ -219,6 +219,10 @@ const getOffersByStudentId = (id) => {
   return https.get(`api/student/${id}/offer/`, AuthHeader())
 }
 
+const getAggrements = (id) => {
+  return https.get(`api/student/${id}/aggrement/`, AuthHeader())
+}
+
 const postAdvertisement = (data) => {
   return https.post('api/advertisement/', data, AuthHeader())
 }
@@ -243,7 +247,7 @@ const getServices = () => {
   return https.get('api/service/', AuthHeader())
 }
 
-const getAggrements = (id) => {
+const getAgreements = (id) => {
   return https.get('api/tutor/' + id + '/aggrement/', AuthHeader())
 }
 
@@ -312,6 +316,7 @@ const logConstants = {
   getOfferNominations,
   getSchedule,
   getTutorReviews,
+  getAgreements,
   postTutor,
   postGoogleTutor,
   postGoogleStudent,
