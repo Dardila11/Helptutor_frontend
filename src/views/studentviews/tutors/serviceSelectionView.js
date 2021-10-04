@@ -183,25 +183,25 @@ const ServiceSelectionView = (props) => {
                               <b>Servicio:</b> {service.title}
                             </Typography>
                             <Typography>
-                              <b>Precio:</b> {service.price}$
+                              <b>Precio:</b> ${service.price}
                             </Typography>
                             <Typography>
                               <b>Franja:</b> {contract.slot.day} de{' '}
-                              {contract.slot.start <= 12
-                                ? contract.slot.start
-                                : contract.slot.start - 12}{' '}
-                              {contract.slot.start < 12 ? 'am' : 'pm'} a{' '}
-                              {contract.slot.end <= 12
-                                ? contract.slot.end
-                                : contract.slot.end - 12}{' '}
-                              {contract.slot.end < 12 ? 'am' : 'pm'}
+                              {contract.slot.start_time <= 12
+                                ? contract.slot.start_time
+                                : contract.slot.start_time - 12}{' '}
+                              {contract.slot.start_time < 12 ? 'am' : 'pm'} a{' '}
+                              {contract.slot.end_time <= 12
+                                ? contract.slot.end_time
+                                : contract.slot.end_time - 12}{' '}
+                              {contract.slot.end_time < 12 ? 'am' : 'pm'}
                             </Typography>
                           </Box>
                         </Box>
                       </Card>
                     </Box>
-                    <Box className={classes.nextButton}>
-                      <form
+                    {/* <Box className={classes.nextButton}>
+                    <form
                         method="post"
                         action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu">
                         <input name="merchantId" type="hidden" value={508029} />
@@ -253,7 +253,7 @@ const ServiceSelectionView = (props) => {
                           Ir al pago
                         </Button>
                       </form>
-                    </Box>
+                    </Box> */}
                   </>
                 ) : (
                   <></>
