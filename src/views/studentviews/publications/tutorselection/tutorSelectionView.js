@@ -121,40 +121,10 @@ const TutorSelectionView = (props) => {
     handleNext()
   }
 
-  const handleTutor = (tutor) => {
-    setContract({ ...contract, tutor: tutor })
-    handleNext()
-  }
-
   const handleSchedule = (slot) => {
-    setContract({ ...contract, slot: slot })
+    setContract({ ...contract, slot: slot , tutor: tutorInfoQuery.data})
     handleNext()
   }
-
-  /*const handlePayment = () => {
-    const data = {
-      merchantId: '871233',
-      accountId: '878901',
-      description: 'Test PAYU',
-      referenceCode: 'TestPAYU',
-      amount: '20000',
-      tax: '3193',
-      taxReturnBase: '16806',
-      currency: 'COP',
-      signature: '7ee7cf808ce6a39b17481c54f2c57acc',
-      test: '0', 
-      buyerEmail: 'test@test.com',
-      responseUrl: 'http://www.test.com/response',
-      confirmationUrl: 'http://www.test.com/confirmation'
-    }
-    axios.post('https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/', data).then(
-      (res) => {
-        console.log(res)
-      }
-    ).catch((err) => {
-      console.log(err)
-    })
-  }*/
 
   return (
     <>
@@ -226,7 +196,7 @@ const TutorSelectionView = (props) => {
                             <Avatar
                               className={classes.cover}
                               alt="user photo"
-                              src="/static/images/avatars/avatar_6.png"
+                              src={contract.tutor.user.photo}
                             />
                           </Box>
                           <Box>
@@ -239,72 +209,18 @@ const TutorSelectionView = (props) => {
                             </Typography>
                             <Typography>
                               <b>Franja:</b> {contract.slot.day} de{' '}
-                              {contract.slot.start <= 12
-                                ? contract.slot.start
-                                : contract.slot.start - 12}{' '}
-                              {contract.slot.start < 12 ? 'am' : 'pm'} a{' '}
-                              {contract.slot.end <= 12
-                                ? contract.slot.end
-                                : contract.slot.end - 12}{' '}
-                              {contract.slot.end < 12 ? 'am' : 'pm'}
+                              {contract.slot.start_time <= 12
+                                ? contract.slot.start_time
+                                : contract.slot.start_time - 12}{' '}
+                              {contract.slot.start_time < 12 ? 'am' : 'pm'} a{' '}
+                              {contract.slot.end_time <= 12
+                                ? contract.slot.end_time
+                                : contract.slot.end_time - 12}{' '}
+                              {contract.slot.end_time < 12 ? 'am' : 'pm'}
                             </Typography>
                           </Box>
                         </Box>
                       </Card>
-                    </Box>
-                    <Box className={classes.nextButton}>
-                      <form
-                        method="post"
-                        action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu">
-                        <input name="merchantId" type="hidden" value={508029} />
-                        <input name="accountId" type="hidden" value={512321} />
-                        <input
-                          name="ApiLogin"
-                          type="hidden"
-                          value="pRRXKOl8ikMmt9u"
-                        />
-                        <input
-                          name="description"
-                          type="hidden"
-                          value="Test PAYU"
-                        />
-                        <input
-                          name="referenceCode"
-                          type="hidden"
-                          value="TestPayU"
-                        />
-                        <input name="amount" type="hidden" value={3} />
-                        <input name="tax" type="hidden" value={0} />
-                        <input name="taxReturnBase" type="hidden" value={0} />
-                        <input name="currency" type="hidden" value="COP" />
-                        <input
-                          name="signature"
-                          type="hidden"
-                          value="ba9ffa71559580175585e45ce70b6c37"
-                        />
-                        <input name="test" type="hidden" value="1" />
-                        <input
-                          name="buyerEmail"
-                          type="hidden"
-                          value="test@test.com"
-                        />
-                        <input
-                          name="responseUrl"
-                          type="hidden"
-                          value="http://www.test.com/response"
-                        />
-                        <input
-                          name="confirmationUrl"
-                          type="hidden"
-                          value="http://www.test.com/confirmation"
-                        />
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          type="submit">
-                          Ir al pago
-                        </Button>
-                      </form>
                     </Box>
                   </>
                 ) : (
