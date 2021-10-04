@@ -24,6 +24,7 @@ import ManageKnowledgeAreaView from 'src/views/tutorviews/manageKnowledgeArea'
 import ManageServicesView from 'src/views/tutorviews/manageServices'
 import TutorInfoView from 'src/views/tutorviews/profile/index'
 import TutorPublicationsView from 'src/views/tutorviews/publications/index'
+import TutorAggrementsView from 'src/views/tutorviews/services/index'
 
 // STUDENT VIEWS
 import StudentProfileView from 'src/views/studentviews/profile/ProfileView'
@@ -98,6 +99,7 @@ const Routing = () => {
       <PrivateRoute path="/tutor" element={<MainLayout />}>
         <Route path="/" element={<TutorPublicationsView />} />
         <Route path="/publicaciones" element={<TutorPublicationsView />} />
+        <Route path="/asesorias" element={<TutorAggrementsView />} />
       </PrivateRoute>
       <PrivateRoute path="/tutor/cuenta" element={<MainLayout />}>
         <Route path="/" element={<TutorInfoView menu={<NavBarTutor />} />} />

@@ -55,7 +55,7 @@ const TutorNavBar = () => {
     {
       id: 2,
       title: 'Asesorias',
-      link: '/tutor/publicaciones',
+      link: '/tutor/asesorias',
       icon: <ClassIcon className={classes.primaryColor} />
     }
   ]

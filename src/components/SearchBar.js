@@ -83,6 +83,11 @@ const SearchBar = (props) => {
       <Box>
         <Typography>anuncios</Typography>
       </Box>
+    ),
+    services: (
+      <Box>
+        <Typography>servicios</Typography>
+      </Box>
     )
   }
 

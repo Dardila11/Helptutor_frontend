@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TOP_BAR = {
   tutor: <TutorNavBar />,
-  student: <StudentNavBar />
+  estudiante: <StudentNavBar />
 }
 
 const MainNavBar = () => {
@@ -90,6 +90,8 @@ const MainNavBar = () => {
     ) : location.pathname.split('/')[1] === 'estudiante' ? (
       <StudentTopBar />
     ) : null
+
+    console.log(location.pathname.split('/')[1] === 'estudiante')
 
   return (
     <AppBar position="sticky">

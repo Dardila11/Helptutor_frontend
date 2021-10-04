@@ -243,14 +243,6 @@ const getServices = () => {
   return https.get('api/service/', AuthHeader())
 }
 
-const getAggrements = (id) => {
-  return https.get('api/tutor/' + id + '/aggrement/', AuthHeader())
-}
-
-const patchAggrement = (id, data) => {
-  return https.patch('api/aggrement/' + id + '/', data, AuthHeader())
-}
-
 const patchOffer = (id, data) => {
   return https.patch('api/offer/' + id + '/', data, AuthHeader())
 }
@@ -283,7 +275,6 @@ const postSchedule = (idTutor) => {
 
 const logConstants = {
   AuthHeader,
-  getAggrements,
   getReviews,
   getCountries,
   getState,
@@ -323,7 +314,6 @@ const logConstants = {
   postNomination,
   postAnswer,
   postSchedule,
-  patchAggrement,
   patchTutorKnowledgeAreas,
   patchServiceTutor,
   patchNomination,

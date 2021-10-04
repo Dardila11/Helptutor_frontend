@@ -17,7 +17,7 @@ const getValues = (values) => {
 }
 
 const validation = Yup.object().shape({
-  title: Yup.string().max(255),
+  title: Yup.string().max(255).required('Titulo requerido'),
   speciality: Yup.number().positive('Especialidad requierida'),
   description: Yup.string().max(255),
   price: Yup.number().positive('Precio requerido')
