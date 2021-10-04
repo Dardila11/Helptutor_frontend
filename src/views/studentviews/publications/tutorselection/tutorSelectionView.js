@@ -97,6 +97,7 @@ const TutorSelectionView = (props) => {
   const steps = getSteps()
   const tutorInfoQuery = useTutorInfo(idTutor)
   const reviewsQuery = useReviews(idTutor)
+  const [scheduleSelected, setScheduleSelected] = useState({})
 
   useEffect(() => {
     if (idTutor !== null) {
@@ -129,6 +130,10 @@ const TutorSelectionView = (props) => {
   const handleSchedule = (slot) => {
     setContract({ ...contract, slot: slot })
     handleNext()
+  }
+
+  const handleScheduleSelected = (schedule) => {
+    setScheduleSelected(schedule)
   }
 
   /*const handlePayment = () => {
@@ -207,7 +212,7 @@ const TutorSelectionView = (props) => {
                 ) : (
                   <></>
                 )}
-                {activeStep === 2 ? <Schedule next={handleSchedule} /> : <></>}
+                {activeStep === 2 ? <Schedule next={handleSchedule} handleScheduleSelected={handleScheduleSelected} /> : <></>}
                 {activeStep === 3 ? (
                   <>
                     <Box
@@ -226,17 +231,18 @@ const TutorSelectionView = (props) => {
                             <Avatar
                               className={classes.cover}
                               alt="user photo"
-                              src="/static/images/avatars/avatar_6.png"
+                              src={tutorInfoQuery.data.user.photo}
                             />
                           </Box>
                           <Box>
                             <Typography>
-                              <b>Tutor:</b> {contract.tutor.user.first_name}{' '}
-                              {contract.tutor.user.last_name}
+                              <b>Tutor:</b> {tutorInfoQuery.data.user.first_name}{' '}
+                              {tutorInfoQuery.data.user.last_name}
                             </Typography>
                             <Typography>
-                              <b>Precio:</b> {contract.nomination.price}$
+                              <b>Precio:</b> ${contract.nomination.price}
                             </Typography>
+                            {/*
                             <Typography>
                               <b>Franja:</b> {contract.slot.day} de{' '}
                               {contract.slot.start <= 12
@@ -247,7 +253,7 @@ const TutorSelectionView = (props) => {
                                 ? contract.slot.end
                                 : contract.slot.end - 12}{' '}
                               {contract.slot.end < 12 ? 'am' : 'pm'}
-                            </Typography>
+                            </Typography> */}
                           </Box>
                         </Box>
                       </Card>
@@ -320,15 +326,16 @@ const TutorSelectionView = (props) => {
       </DialogContent>
       <DialogActions classes={{ root: classes.centerStepper }}>
         <Box display="flex" flexDirection="column">
-          {activeStep !== 0 && activeStep !== 2 ? (
+          {activeStep !== 0 /* && activeStep !== 2 */ ? (
             <Box className={classes.nextButton}>
               <Button
                 size="large"
                 variant="contained"
                 color="primary"
+                /* disabled={activeStep === 2 && scheduleSelected == {} ? true : false} */
                 onClick={handleNext}
                 className={classes.button}>
-                {activeStep === 1 ? 'Siguiente' : 'Ir al pago'}
+                {activeStep === 1 || activeStep === 2 ? 'Siguiente' : 'Ir al pago'}
               </Button>
             </Box>
           ) : (

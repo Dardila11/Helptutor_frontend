@@ -15,10 +15,15 @@ import { Rating } from '@material-ui/lab'
 import { capitalize } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
+  paper: {
+    borderRadius: '20px',
+    margin: theme.spacing(1)
+  },
   root: {
     display: 'flex',
     borderRadius: '20px',
-    height: 200,
+    minHeight: 100,
+    height: 'auto',
     width: 250
   },
   userSpace: {
@@ -39,13 +44,6 @@ const useStyles = makeStyles((theme) => ({
     width: 40,
     height: 40
   },
-  paper: {
-    borderRadius: '20px',
-    margin: theme.spacing(1)
-  },
-  methodology: {
-    marginTop: theme.spacing(1)
-  },
   price: {
     color: '#1ad41a',
     marginTop: theme.spacing(2),
@@ -56,6 +54,8 @@ const useStyles = makeStyles((theme) => ({
 const NominationCard = (props) => {
   const { nomination, next } = props
   const classes = useStyles()
+  console.log("NOMINACION !!")
+  console.log(nomination)
 
   const handleSelect = () => {
     next(nomination)
@@ -63,8 +63,9 @@ const NominationCard = (props) => {
   return (
     <Paper className={classes.paper} elevation={3}>
       <Card className={classes.root}>
-        <CardActionArea className={classes.cardAction} onClick={handleSelect}>
+        <CardActionArea onClick={handleSelect}>
           <Grid container>
+            {/* Avatar, name and rating */}
             <Grid item xs={6}>
               <Box className={classes.userSpace}>
                 <Avatar
@@ -78,6 +79,7 @@ const NominationCard = (props) => {
                 <Rating name="read-only" size="small" value={props.tutor.score} readOnly />
               </Box>
             </Grid>
+            {/* Price */}
             <Grid item xs={2}>
               <Container className={classes.price}>
                 <Typography component={'h6'} variant="subtitle1" color="textSecondary">

@@ -38,7 +38,7 @@ const scheduleInitial = [{day: "Lunes", start_time: 7, end_time: 9}, {day: "Mart
                   {day: "Miercoles", start_time: 13, end_time: 14}, {day: "Lunes", start_time: 16, end_time: 17},
                   {day: "Martes", start_time: 7, end_time: 9} ]
 
-const Schedule = ({role}) => {
+const Schedule = ({role, handleScheduleSelected}) => {
   const classes = useStyles()
   const [rows, setRows] = useState(null)
   const [columns, setColumns] = useState(null)
@@ -114,6 +114,7 @@ const Schedule = ({role}) => {
         if(e.value==="Disponible") newStudent.push(slot)
         else newStudent = newStudent.filter(element => element.id!==slot.id)
         setStudentSelect(newStudent)
+        handleScheduleSelected(newStudent)
         setRows(newRow)
       }
     }
