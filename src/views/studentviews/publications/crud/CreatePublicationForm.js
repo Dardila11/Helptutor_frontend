@@ -21,7 +21,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import { toast } from 'react-toastify'
 
 import { useCreateOffer } from 'src/hooks/StudentHooks/useStudentOffers'
-import useKnowledgeAreas from 'src/hooks/useKnowledgeAreas'
+import {useKnowledgeAreas} from 'src/hooks/useKnowledgeAreas'
 import formikValues from './formikUtils/formikValues'
 
 const useStyles = makeStyles((theme) => ({

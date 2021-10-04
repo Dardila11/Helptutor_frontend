@@ -136,7 +136,7 @@ const Schedule = ({role, next}) => {
         if(e.value==="Disponible") newStudent.push(slot)
         else newStudent = newStudent.filter(element => element.id!==slot.id)
         setStudentSelect(newStudent)
-        handleScheduleSelected(newStudent)
+        /* handleScheduleSelected(newStudent) */
         setRows(newRow)
         next(slot)
       }

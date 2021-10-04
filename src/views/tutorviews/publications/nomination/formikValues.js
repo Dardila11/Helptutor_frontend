@@ -1,11 +1,15 @@
 import * as Yup from 'yup'
 
+let initialValues = {
+  title: '',
+  description: ''
+}
+
 const getValues = (values) => {
   return {
     price: values.price,
     description: values.description,
     offer: values.offer,
-    tutor: values.tutor
   }
 }
 
@@ -19,6 +23,7 @@ const validation = Yup.object().shape({
 })
 
 const logConst = {
+  initialValues,
   getValues,
   validation
 }

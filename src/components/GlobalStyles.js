@@ -11,11 +11,11 @@ const useStyles = makeStyles(() =>
       html: {
         '-webkit-font-smoothing': 'antialiased',
         '-moz-osx-font-smoothing': 'grayscale',
-        height: '100%',
-        width: '100%'
+        overflowX: 'hidden'
       },
       body: {
         backgroundColor: '#F4F6F8',
+        paddingRight: '0 !important',
         height: '100%',
         width: '100%'
       },
@@ -32,7 +32,6 @@ const useStyles = makeStyles(() =>
 
 const GlobalStyles = () => {
   useStyles()
-
   return null
 }
 

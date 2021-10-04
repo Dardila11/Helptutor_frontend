@@ -19,7 +19,7 @@ import { Formik } from 'formik'
 import CloseIcon from '@material-ui/icons/Close'
 import { toast } from 'react-toastify'
 
-import useKnowledgeAreas from 'src/hooks/useKnowledgeAreas'
+import {useKnowledgeAreas} from 'src/hooks/useKnowledgeAreas'
 import { useUpdateOffer } from 'src/hooks/StudentHooks/useStudentOffers'
 import formikValues from './formikUtils/formikValues'
 

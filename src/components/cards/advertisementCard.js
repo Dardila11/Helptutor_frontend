@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const AdvertisementCard = (props) => {
-  const { advertisement, clearAnswers, student, isSearch, query } = props
+  const { advertisement, isSearch, query } = props
   const [open, setOpen] = useState(false)
   const [liked, setLiked] = useState(false)
   const classes = useStyles()

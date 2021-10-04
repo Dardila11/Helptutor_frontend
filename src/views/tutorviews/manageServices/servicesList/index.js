@@ -15,6 +15,8 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 //COMPONENTS
 import ServiceCard from './serviceCard'
+import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
+import { useNavigate } from 'react-router'
 
 //STYLESS
 const useStyles = makeStyles((theme) => ({
@@ -39,54 +41,60 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ServicesListView = ({services, handleSelect}) => {
+const ServicesListView = ({ services, handleSelect }) => {
   const classes = useStyles()
+  const navigate = useNavigate()
 
   return (
-    <>
-      <Grid item xs={3}>
-        <Paper className={classes.lateralView} elevation={2}>
-          <Card className={classes.lateralView}>
-            <Typography
-              className={classes.containerTitle}
-              variant="h4"
-              align="center">
-              Servicios
-            </Typography>
-                {services.length>0 ? (
-                  <>
-                    {services.map((service, index) => (
-                      <ServiceCard
-                        key={index}
-                        id={service.id}
-                        service={service}
-                        handleSelect={handleSelect}
-                      />
-                    ))}
-                  </>
-                ) : (
-                  <>
-                    <Typography align="center">
-                      No se encontraron servicios
-                    </Typography>
-                  </>
-                )}
+    <Paper className={classes.lateralView} elevation={2}>
+      <Card className={classes.lateralView}>
+        <Container className={classes.actions}>
+          <Button
+            className={classes.button}
+            fullWidth={true}
+            color="secundary"
+            variant="contained"
+            startIcon={<ArrowBackIos />}
+            onClick={() => navigate('/tutor/cuenta')}>
+            Menú
+          </Button>
+        </Container>
+        <Typography
+          className={classes.containerTitle}
+          variant="h4"
+          align="center">
+          Servicios
+        </Typography>
+        {services.length > 0 ? (
+          <>
+            {services.map((service, index) => (
+              <ServiceCard
+                key={index}
+                id={service.id}
+                service={service}
+                handleSelect={handleSelect}
+              />
+            ))}
+          </>
+        ) : (
+          <>
+            <Typography align="center">No se encontraron servicios</Typography>
+          </>
+        )}
 
-            <Container className={classes.actions}>
-              <Button
-                className={classes.button}
-                fullWidth
-                color="primary"
-                variant="contained"
-                endIcon={<AddCircleIcon />}
-                onClick={()=>{}}>
-                Agregar Servicio
-              </Button>
-            </Container>
-          </Card>
-        </Paper>
-      </Grid>
-    </>
+        <Container className={classes.actions}>
+          <Button
+            className={classes.button}
+            fullWidth
+            color="primary"
+            variant="contained"
+            endIcon={<AddCircleIcon />}
+            onClick={() => handleSelect(null)}>
+            Agregar Servicio
+          </Button>
+        </Container>
+      </Card>
+    </Paper>
   )
 }
 

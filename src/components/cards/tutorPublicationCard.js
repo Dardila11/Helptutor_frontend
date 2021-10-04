@@ -12,26 +12,35 @@ import {
   Paper
 } from '@material-ui/core'
 import NominationView from 'src/views/tutorviews/publications/nomination'
-import { isUndefined } from 'lodash-es'
-import DoneIcon from '@material-ui/icons/Done';
-import publications from 'src/redux/reducers/student/student_publications'
+import { useAuthState } from 'src/context/context'
+import { isUndefined, isNil } from 'lodash-es'
+import DoneIcon from '@material-ui/icons/Done'
 
 const useStyles = makeStyles((theme) => ({
   details: {
     display: 'flex',
     flexDirection: 'column'
   },
+  cardAction: {
+    borderRadius: theme.spacing(2)
+  },
   content: {
-    flex: '1 0 auto'
+    flex: '1 0 auto',
+    borderRadius: '20px'
   },
   cover: {
     width: 60,
     height: 60
   },
+  textTrucate: {
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden'
+  },
   paper: {
     display: 'flex',
-    height: 120,
-    borderRadius: '20px',
+    height: 150,
+    borderRadius: theme.spacing(2),
     margin: theme.spacing(1),
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3)
@@ -45,13 +54,18 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     alignItems: 'center',
     marginTop: theme.spacing(1)
+  },
+  container: {
+    padding: theme.spacing(2)
   }
 }))
 
 const TutorPublicationCard = (props) => {
-  const { publication, nomination, isSearch, query } = props
-  const user = publication.student.user
-  let opNomination = isUndefined(nomination)
+  const { publication, isSearch, query } = props
+  const { user } = useAuthState()
+  const student = publication.student.user
+  const nomination = publication.nomination
+  let isNomination = isNil(publication.nomination)
   const classes = useStyles()
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
@@ -64,51 +78,71 @@ const TutorPublicationCard = (props) => {
   const getHighlightedText = (text) => {
     // Split on highlight term and include term into parts, ignore case
     const parts = text.split(new RegExp(`(${query})`, 'gi'))
-    return <span> { parts.map((part, i) => 
-        <span key={i} 
-          style={part.toLowerCase() === query.toLowerCase() ? { fontWeight: 'bold', color: '#2979ff' } : {} }
-        >
-            { part }
-        </span>)
-    } </span>
-}
+    return (
+      <span>
+        {parts.map((part, i) => (
+          <span
+            key={i}
+            style={
+              part.toLowerCase() === query.toLowerCase()
+                ? { fontWeight: 'bold', color: '#2979ff' }
+                : {}
+            }>
+            {part}
+          </span>
+        ))}
+      </span>
+    )
+  }
   return (
-    <Paper className={classes.paper} elevation={3}>
+    <Paper className={classes.paper} elevation={1}>
       <CardActionArea className={classes.cardAction} onClick={handleOpen}>
-        <Grid container>
-        <Grid item xs={2}>
+        <Grid container className={classes.container}>
+          <Grid item xs={2}>
             <Box className={classes.userSpace}>
               <Avatar
                 className={classes.cover}
                 alt="user photo"
-                src={user.photo}
-              />
-              <Typography>
-                <b>{user.first_name} {user.last_name}</b>
-              </Typography>
+                src={student.photo}>
+                <b>{student.first_name.split('')[0]}</b>
+              </Avatar>
             </Box>
           </Grid>
-          <Grid item xs={opNomination ? 10 : 7}>
+          <Grid item xs={isNomination ? 10 : 7}>
             <Box className={classes.details}>
               <CardContent className={classes.content}>
                 <Typography component="h5" variant="h5">
                   <Box fontWeight="fontWeightBold">
-                  {isSearch && !isUndefined(query)? getHighlightedText(publication.title): publication.title}
-                    </Box>
+                    {isSearch && !isUndefined(query)
+                      ? getHighlightedText(publication.title)
+                      : publication.title}
+                  </Box>
                 </Typography>
-                <Typography variant="subtitle1" color="textSecondary">
-                  {isSearch && !isUndefined(query)? getHighlightedText(publication.description): publication.description}
+                <Typography variant="subtitle2">
+                  <b>
+                    {student.first_name} {student.last_name}
+                  </b>
+                </Typography>
+                <Typography
+                  className={classes.textTrucate}
+                  color="textSecondary">
+                  {isSearch && !isUndefined(query)
+                    ? getHighlightedText(publication.description)
+                    : publication.description}
                 </Typography>
               </CardContent>
             </Box>
           </Grid>
-          {opNomination ? (
-            <></>
-          ) : (
+          {publication.tutor_id === user.id && nomination.is_active ? (
             <Grid item xs={3}>
-              <Chip label={<Typography>Ya te postulaste</Typography>} color='primary' icon={<DoneIcon />} clickable/>
+              <Chip
+                label={<Typography>Ya te postulaste</Typography>}
+                color="primary"
+                icon={<DoneIcon />}
+                clickable
+              />    
             </Grid>
-          )}
+          ) : null}
         </Grid>
       </CardActionArea>
       <Dialog
@@ -117,9 +151,13 @@ const TutorPublicationCard = (props) => {
         aria-labelledby="tutorSelection-dialog-title">
         <NominationView
           publication={publication}
-          user={user}
+          user={student}
           closeDialog={handleClose}
-          nomination={nomination}
+          nomination={
+            publication.tutor_id === user.id && nomination.is_active
+              ? nomination
+              : null
+          }
         />
       </Dialog>
     </Paper>

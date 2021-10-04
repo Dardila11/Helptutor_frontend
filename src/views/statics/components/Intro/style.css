@@ -6,7 +6,7 @@
 	padding-left: 20px ;
   width: 100vw;
   height: 100vh;
-  background: url('/src/views/statics/components/Intro/student2.jpeg');
+  background: url('/src/views/statics/components/Intro/intro1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 
@@ -21,4 +21,8 @@
 .sec1--p {
 	width: 30vw;
   font-size: 1.2rem;
+}
+
+.sec1--information {
+  position: absolute;
 }

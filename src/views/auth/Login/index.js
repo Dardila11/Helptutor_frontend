@@ -55,12 +55,7 @@ const LoginView = (props) => {
 
   async function submit(values) {
     let jsonValues = Validation.getValues(values)
-    const response = await loginUser(dispatch, jsonValues, false)
-    if (!response.user) return
-    if(response.roles[0] && response.roles[1]) navigate('/seleccion-rol')
-    if(response.roles[0] && !response.roles[1]) navigate('/tutor')
-    if(!response.roles[0] && response.roles[1]) navigate('/estudiante')
-    toast.success("Bienvenido "+response.user.first_name)
+    loginUser(dispatch, jsonValues, false)
   }
 
   return (

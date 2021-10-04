@@ -1,4 +1,16 @@
 import React from 'react'
+
+// QUERY
+import useNomination from 'src/hooks/TutorHooks/useNomination'
+
+// FORM
+import { Formik } from 'formik'
+import Validation from './formikValues'
+
+// UTILITY
+import { isNil } from 'lodash-es'
+
+// STYLES
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Box,
@@ -11,17 +23,6 @@ import {
   TextField,
   Typography
 } from '@material-ui/core'
-
-import { isUndefined } from 'lodash-es'
-import { connect } from 'react-redux'
-import { Formik } from 'formik'
-import {
-  addNomination,
-  updateNomination,
-  deleteNomination
-} from 'src/redux/actions/tutor/nominations'
-
-import Validation from './formikValues'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,30 +42,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-let initialValuesObj = {
-  title: '',
-  description: ''
-}
-
 const NominationView = (props) => {
   const classes = useStyles()
+  const { nomination, publication, closeDialog, user } = props
   const {
-    nomination,
-    publication,
-    tutor,
-    addNomination,
-    closeDialog,
-    updateNomination,
-    deleteNomination,
-    user
-  } = props
-  let opNomination = isUndefined(nomination)
+    useCreateNomination,
+    useUpdateNomination,
+    useDeleteNomination
+  } = useNomination
+  const mutation = useCreateNomination()
+  const mutation1 = useUpdateNomination()
+  const mutation2 = useDeleteNomination()
+  let opNomination = isNil(nomination)
   const [open, setOpen] = React.useState(false)
 
   const handleDelete = () => {
-    setOpen(false)
+    mutation2.mutate(nomination.id)
     closeDialog()
-    deleteNomination(nomination.id)
   }
 
   const handleOpen = () => {
@@ -74,33 +68,35 @@ const NominationView = (props) => {
   const handleClose = () => {
     setOpen(false)
   }
+
   return (
     <>
       <DialogTitle id="publications-dialog-title" align="center">
         <Typography>
-          <b>{publication.title.toUpperCase()}</b>
+          <b>{publication.title}</b>
         </Typography>
       </DialogTitle>
       <DialogContent dividers>
         <Box display="flex" flexDirection="column" justifyContent="center">
           <Typography variant="subtitle1" color="textSecondary">
-            Publicación de: <b>{user.first_name} {user.last_name}</b>
+            Publicación de:{' '}
+            <b>
+              {user.first_name} {user.last_name}
+            </b>
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
             {publication.description}
           </Typography>
           <Formik
-            enableReinitialize
-            initialValues={opNomination ? initialValuesObj : nomination}
+            initialValues={opNomination ? Validation.initialValues : nomination}
             validationSchema={Validation.validation}
             onSubmit={(values) => {
               let jsonValues = Validation.getValues({
                 ...values,
-                offer: publication.id,
-                tutor: tutor
+                offer: publication.id
               })
-              if (opNomination) addNomination(jsonValues)
-              else updateNomination(nomination.id, jsonValues)
+              if (opNomination) mutation.mutate(jsonValues)
+              else mutation1.mutate([nomination.id, jsonValues])
               closeDialog()
             }}>
             {({
@@ -114,9 +110,9 @@ const NominationView = (props) => {
               <form onSubmit={handleSubmit}>
                 <TextField
                   id="txt_price_nomination"
-                  error={Boolean(touched.price && errors.price)}
+                  error={Boolean(errors.price)}
                   fullWidth
-                  helperText={touched.price && errors.price}
+                  helperText={errors.price}
                   label="Precio $"
                   margin="normal"
                   onBlur={handleBlur}
@@ -152,9 +148,7 @@ const NominationView = (props) => {
                     variant="contained">
                     {opNomination ? 'Postularme' : 'Actualizar'}
                   </Button>
-                  {opNomination ? (
-                    <></>
-                  ) : (
+                  {opNomination ? null : (
                     <Button
                       className={classes.delete}
                       id="btn_cancel_nominate"
@@ -208,12 +202,4 @@ const NominationView = (props) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  tutor: state.tutorInfo.tutor
-})
-
-export default connect(mapStateToProps, {
-  addNomination,
-  updateNomination,
-  deleteNomination
-})(NominationView)
+export default NominationView

@@ -6,7 +6,7 @@ const fetchOffers =  async () => {
 }
 
 const useOffers = () => {
-  return useQuery('offers', () => fetchOffers())
+  return useQuery(['offers'], () => fetchOffers())
 }
 
 export default useOffers

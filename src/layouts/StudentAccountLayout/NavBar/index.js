@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const NavBar = () => {
+const NavBarStudent = () => {
   const classes = useStyles()
   const user = useAuthState().user
   return (
@@ -62,4 +62,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar
+export default NavBarStudent
