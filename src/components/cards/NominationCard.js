@@ -1,6 +1,5 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import {
@@ -22,9 +21,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     borderRadius: '20px',
-    minHeight: 100,
-    height: 'auto',
-    width: 250
+  },
+  cardAction: {
+    borderRadius: '20px',
+    minHeight: 200,
+    minWidth: 288,
   },
   userSpace: {
     display: 'flex',
@@ -33,16 +34,16 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     marginTop: theme.spacing(1)
   },
-  details: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
   content: {
-    flex: '1 0 auto'
+    flex: '1 0 auto',
+    minHeight: 100
   },
   cover: {
     width: 40,
     height: 40
+  },
+  paper: {
+    borderRadius: '20px'
   },
   price: {
     color: '#1ad41a',
@@ -62,8 +63,7 @@ const NominationCard = (props) => {
   }
   return (
     <Paper className={classes.paper} elevation={3}>
-      <Card className={classes.root}>
-        <CardActionArea onClick={handleSelect}>
+        <CardActionArea className={classes.cardAction} onClick={handleSelect}>
           <Grid container>
             {/* Avatar, name and rating */}
             <Grid item xs={6}>
@@ -90,14 +90,13 @@ const NominationCard = (props) => {
             </Grid>
             <Grid item xs={12}>
               <CardContent className={classes.content}>
-                <Typography component={'span'} color="textSecondary" variant="h5">
+                <Typography component={'span'} color="textSecondary" variant="h6">
                   {nomination.description}
                 </Typography>
               </CardContent>
             </Grid>
           </Grid>
         </CardActionArea>
-      </Card>
     </Paper>
   )
 }

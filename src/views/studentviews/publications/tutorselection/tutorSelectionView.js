@@ -122,13 +122,8 @@ const TutorSelectionView = (props) => {
     handleNext()
   }
 
-  const handleTutor = (tutor) => {
-    setContract({ ...contract, tutor: tutor })
-    handleNext()
-  }
-
   const handleSchedule = (slot) => {
-    setContract({ ...contract, slot: slot })
+    setContract({ ...contract, slot: slot , tutor: tutorInfoQuery.data})
     handleNext()
   }
 
@@ -231,7 +226,7 @@ const TutorSelectionView = (props) => {
                             <Avatar
                               className={classes.cover}
                               alt="user photo"
-                              src={tutorInfoQuery.data.user.photo}
+                              src={contract.tutor.user.photo}
                             />
                           </Box>
                           <Box>
@@ -257,60 +252,6 @@ const TutorSelectionView = (props) => {
                           </Box>
                         </Box>
                       </Card>
-                    </Box>
-                    <Box className={classes.nextButton}>
-                      <form
-                        method="post"
-                        action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu">
-                        <input name="merchantId" type="hidden" value={508029} />
-                        <input name="accountId" type="hidden" value={512321} />
-                        <input
-                          name="ApiLogin"
-                          type="hidden"
-                          value="pRRXKOl8ikMmt9u"
-                        />
-                        <input
-                          name="description"
-                          type="hidden"
-                          value="Test PAYU"
-                        />
-                        <input
-                          name="referenceCode"
-                          type="hidden"
-                          value="TestPayU"
-                        />
-                        <input name="amount" type="hidden" value={3} />
-                        <input name="tax" type="hidden" value={0} />
-                        <input name="taxReturnBase" type="hidden" value={0} />
-                        <input name="currency" type="hidden" value="COP" />
-                        <input
-                          name="signature"
-                          type="hidden"
-                          value="ba9ffa71559580175585e45ce70b6c37"
-                        />
-                        <input name="test" type="hidden" value="1" />
-                        <input
-                          name="buyerEmail"
-                          type="hidden"
-                          value="test@test.com"
-                        />
-                        <input
-                          name="responseUrl"
-                          type="hidden"
-                          value="http://www.test.com/response"
-                        />
-                        <input
-                          name="confirmationUrl"
-                          type="hidden"
-                          value="http://www.test.com/confirmation"
-                        />
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          type="submit">
-                          Ir al pago
-                        </Button>
-                      </form>
                     </Box>
                   </>
                 ) : (

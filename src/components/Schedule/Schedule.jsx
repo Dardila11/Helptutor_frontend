@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import { makeStyles, CircularProgress } from '@material-ui/core'
+import { makeStyles, CircularProgress, Box, Button } from '@material-ui/core'
 import clsx from 'clsx'
 import { DataGrid } from '@material-ui/data-grid'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,21 +34,23 @@ const useStyles = makeStyles((theme) => ({
       },
   },
 }))
-
+const month = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
 const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
 const scheduleInitial = [{day: "Lunes", start_time: 7, end_time: 9}, {day: "Martes", start_time: 10, end_time: 11},
                   {day: "Miercoles", start_time: 13, end_time: 14}, {day: "Lunes", start_time: 16, end_time: 17},
                   {day: "Martes", start_time: 7, end_time: 9} ]
 
-const Schedule = ({role, handleScheduleSelected}) => {
+const Schedule = ({role, next}) => {
   const classes = useStyles()
   const [rows, setRows] = useState(null)
   const [columns, setColumns] = useState(null)
   const [loading, setLoading] = useState(true)
   const [schedule, setSchedule] = useState(scheduleInitial)
   const [studentSelect, setStudentSelect] = useState([])
-
+  const [date, setDate] = useState(new Date(2021,9,3))
+  const [nextButton, setNext] = useState(true)
   useEffect(()=> {
+    var newDays = getDate(date)
     setStudentSelect([])
     const generatedRows = [], genetaredColumns = []
     for (let index = 6; index <= 22; index++) {
@@ -60,9 +64,13 @@ const Schedule = ({role, handleScheduleSelected}) => {
                       width: 75, cellClassName: 'FranjaCell', sortable: false
     }
     genetaredColumns.push(franja)
-    days.forEach(day => {
+    newDays.forEach((day) => {
       genetaredColumns.push(
-        { field: day, headerName: <strong>{day}</strong>, width: 150,
+        { field: day.label, headerName: 
+            <>
+              <strong>{day.label}</strong> {"\n"}
+              <strong>{day.date}-{day.month}</strong>
+            </>, width: 150,
            cellClassName: (params) =>
            clsx('cell', {
            selected: params.value === "Disponible",
@@ -75,6 +83,19 @@ const Schedule = ({role, handleScheduleSelected}) => {
     loadSchedule(generatedRows)
     setLoading(false)
   },[])
+
+  const getDate = (current) => {
+    var week= new Array(); 
+    current.setDate((current.getDate() - (current.getDay()-1)));
+    for (var i = 0; i < 7; i++) {
+        let actual = new Date(current)
+        let dayactual = actual.getDay() === 0? 6: actual.getDay()-1
+        week.push({year: actual.getFullYear(), month: month[actual.getMonth()], date: actual.getDate(), label: days[dayactual]})
+        current.setDate(current.getDate() +1);
+    }
+    setDate(new Date())
+    return week; 
+  }
 
   const loadSchedule = (generatedRows) => {
     let loadedSchedule = [...generatedRows]
@@ -101,6 +122,7 @@ const Schedule = ({role, handleScheduleSelected}) => {
       newRow[index] = slot
       setRows(newRow)
     }else{
+      console.log(e)
       if(e.value==="Disponible" || e.value==="Seleccionado"){
         let slot = {id: e.field+e.id,day: e.field, start_time: e.id, end_time: e.id+1}
         let day = e.field
@@ -116,14 +138,78 @@ const Schedule = ({role, handleScheduleSelected}) => {
         setStudentSelect(newStudent)
         handleScheduleSelected(newStudent)
         setRows(newRow)
+        next(slot)
       }
     }
   }
   useEffect(()=>{
-    console.log(studentSelect)
+    if(role!=="tutor")console.log(studentSelect)
   },[studentSelect])
   
+  const handleClickWeek = () => {
+    date.setDate(date.getDate()+7)
+    setDate(date)
+    console.log(date.toDateString())
+    let genetaredColumns = []
+    let newsDays = getDate(date)
+    const franja = { field: 'franja', headerName: 'Franja', headerClassName: 'slotheader',
+                      width: 75, cellClassName: 'FranjaCell', sortable: false
+    }
+    genetaredColumns.push(franja)
+    newsDays.forEach((day) => {
+      genetaredColumns.push(
+        { field: day.label, headerName: 
+            <>
+              <strong>{day.label}</strong> {"\n"}
+              <strong>{day.date}-{day.month}</strong>
+            </>, width: 150,
+           cellClassName: (params) =>
+           clsx('cell', {
+           selected: params.value === "Disponible",
+           unselected: role!=="tutor"? params.value === "No disponible" : false,
+           student: params.value === "Seleccionado"
+         }),sortable: false, headerAlign: 'center', headerClassName: 'cellHeader'
+        })
+    })
+    setColumns(genetaredColumns)
+    setNext(false)
+  }
+
+  const handleClickWeekprev = () => {
+    let genetaredColumns = []
+    let newsDays = getDate(new Date())
+    const franja = { field: 'franja', headerName: 'Franja', headerClassName: 'slotheader',
+                      width: 75, cellClassName: 'FranjaCell', sortable: false
+    }
+    genetaredColumns.push(franja)
+    newsDays.forEach((day) => {
+      genetaredColumns.push(
+        { field: day.label, headerName: 
+            <>
+              <strong>{day.label}</strong> {"\n"}
+              <strong>{day.date}-{day.month}</strong>
+            </>, width: 150,
+           cellClassName: (params) =>
+           clsx('cell', {
+           selected: params.value === "Disponible",
+           unselected: role!=="tutor"? params.value === "No disponible" : false,
+           student: params.value === "Seleccionado"
+         }),sortable: false, headerAlign: 'center', headerClassName: 'cellHeader'
+        })
+    })
+    setColumns(genetaredColumns)
+    setNext(true)
+    setDate(new Date())
+  }
   return (
+    <>
+    {role!=="tutor"? 
+    <Box display="flex" flexDirection="Row">
+      {nextButton? <Button color="primary" onClick={handleClickWeek} endIcon={<ArrowForwardIosIcon />}> Semana siguiente</Button> :
+      <Button color="primary" onClick={handleClickWeekprev} startIcon={<ArrowBackIosIcon />}> Semana anterior</Button>}
+    </Box> 
+    : 
+    <></>}
     <div style={role==="tutor"? { height: 500, width: '100%' }:{ height: 400, width: '100%' }} className={classes.root}>
             {loading? <CircularProgress /> : 
           (
@@ -136,6 +222,7 @@ const Schedule = ({role, handleScheduleSelected}) => {
           />
           )}
     </div>
+    </>
   )
 }
 
