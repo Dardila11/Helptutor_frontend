@@ -104,7 +104,7 @@ const TutorPublicationCard = (props) => {
                 className={classes.cover}
                 alt="user photo"
                 src={student.photo}>
-                <b>{student.first_name.split('')[0]}</b>
+                <b>{student.first_name[0]}</b>
               </Avatar>
             </Box>
           </Grid>
