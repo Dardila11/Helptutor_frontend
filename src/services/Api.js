@@ -74,7 +74,7 @@ const getStudentKnowledgeAreas = (idStudent) => {
 }
 
 const deleteTutorKnowledgeArea = (idArea) => {
-  return https.delete('/api/knowledgearea_tutor/' + idArea + '/')
+  return https.delete('/api/knowledgearea_tutor/' + idArea + '/', AuthHeader())
 }
 
 /**Knowledge Area services */

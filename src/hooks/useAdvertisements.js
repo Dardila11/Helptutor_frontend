@@ -76,7 +76,7 @@ export const useUpdateAdvertisement = () => {
 
 export const useDeleteAdvertisement = () => {
   const queryClient = useQueryClient()
-  return useMutation((id) => {
+  return useMutation( async (id) => {
     return Api.deleteAdvertisement(id)
       .then((res) => res.data)
       .then((res) => console.log(res))

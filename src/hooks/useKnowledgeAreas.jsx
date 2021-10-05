@@ -61,3 +61,20 @@ export const useUpdateKnowledgeAreaTutor = () => {
     }
   )
 }
+
+export const useDeleteKnowledgeAreaTutor = () => {
+  const queryClient = useQueryClient()
+  return useMutation( async (id) => {
+    return Api.deleteTutorKnowledgeArea(id)
+      .then((res) => res.data)
+  },
+  {
+    onSuccess: () => {
+      queryClient.invalidateQueries('tutorKnowledgeAreas')
+    },
+    onError: (error) => {
+      console.log(error)
+    }
+  }
+)
+}

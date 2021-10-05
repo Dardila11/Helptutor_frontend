@@ -57,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
   },
   infoView: {
     borderRadius: '20px'
+  },
+  chip:{
+    margin: theme.spacing(0.5)
   }
 }))
 
@@ -232,6 +235,7 @@ const KnowledgeAreaInfoView = (props) => {
                     <>
                       {tag !== '' ? (
                         <Chip
+                          className={classes.chip}
                           index={index}
                           key={index + 'chip'}
                           label={tag}
@@ -263,7 +267,7 @@ const KnowledgeAreaInfoView = (props) => {
                   value={formik.values.description}
                   variant="outlined"
                 />
-                <CertificateView />
+                {/* <CertificateView /> */}
                 <Box my={2} align="center">
                   <Button
                     id="btn_registerArea"

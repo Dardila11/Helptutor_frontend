@@ -44,8 +44,12 @@ const useStyles = makeStyles((theme) => ({
 const KnowledgeAreaListView = (props) => {
   const classes = useStyles()
   const navigate = useNavigate()
-
   const { list, handleSelect } = props
+  const [isUpdate, setIsUpdate] = React.useState(true)
+
+  const isUpdating = () => {
+    setIsUpdate(false)
+  }
 
   return (
     <Paper className={classes.lateralView} elevation={2}>
@@ -71,6 +75,7 @@ const KnowledgeAreaListView = (props) => {
           <>
             {list.map((area, index) => (
               <AreaCard
+                isUpdating={isUpdating}
                 key={index}
                 area={area.knowledge_area}
                 my_area={area}
@@ -90,7 +95,10 @@ const KnowledgeAreaListView = (props) => {
             color="primary"
             variant="contained"
             endIcon={<AddCircleIcon />}
-            onClick={() => handleSelect(null)}>
+            onClick={() => {
+              handleSelect(null)
+              isUpdating(true)
+            } }>
             Agregar Area
           </Button>
         </Container>

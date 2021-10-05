@@ -147,7 +147,7 @@ const AdvertisementCard = (props) => {
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={7}>
           <Box className={classes.details}>
             <CardContent className={classes.content}>
               <Typography component="h5" variant="h5">
@@ -244,15 +244,15 @@ const AdvertisementCard = (props) => {
             </DialogActions>
           </Dialog>
         </Grid>
-          <Box display="flex" alignItems="start">
+          {/* <Box display="flex" alignItems="start">
             <Tooltip title="like" placement="bottom" arrow>
               <IconButton color="primary" onClick={() => setLiked(!liked)}>
-                <Badge /* badgeContent={4} */ color="primary">
-                  {liked ? <Favorite/> : <FavoriteBorder />}
+                <Badge /* badgeContent={4}  color="primary">/*
+                 /* {liked ? <Favorite/> : <FavoriteBorder />}
                 </Badge>
               </IconButton>
             </Tooltip>
-          </Box>
+          </Box> */}
       </Grid>
       <Dialog open={open} onClose={handleClose} aria-labelledby={idDialog}>
         <AnswerView

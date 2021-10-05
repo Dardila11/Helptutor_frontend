@@ -12,6 +12,8 @@ import {
   Typography
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
+import { useDeleteKnowledgeAreaTutor } from 'src/hooks/useKnowledgeAreas'
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,10 +38,15 @@ const AreaCard = (props) => {
   const {handleSelect, my_area} = props
   const classes = useStyles()
   const [open, setOpen] = useState(false)
+  const mutation = useDeleteKnowledgeAreaTutor()
   
   const handleDelete = () => {
+    mutation.mutate(my_area.id, {
+      onSuccess: () => {
+        toast.success("Area de conocimiento eliminada")
+      }
+    })
     setOpen(false)
-    //TODO DELETE
   }
   const handleOpen = () => {
     setOpen(true)
@@ -59,6 +66,7 @@ const AreaCard = (props) => {
               onClick={() => {
                 handleSelect(null)
                 handleSelect(my_area)
+                props.isUpdating()
               }}>
               <Typography align="center" variant="h5">
                 {' '}
