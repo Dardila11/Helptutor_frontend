@@ -10,7 +10,6 @@ import {
   makeStyles,
   Typography
 } from '@material-ui/core'
-import { capitalize } from 'lodash-es'
 import { useAuthState } from 'src/context/context'
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +42,7 @@ const NavBarStudent = () => {
           alt="my-avatar"
           src={user.photo}>
           <Typography variant="h1">
-            <b>{capitalize(user.first_name[0])}</b>
+            <b>{user.first_name[0]}</b>
           </Typography>
         </Avatar>
         <List>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Divider, makeStyles } from '@material-ui/core'
-import { capitalize } from 'lodash-es'
+
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 import Page from 'src/components/Page'
 import { useStudentInfo,  } from 'src/hooks/StudentHooks/useStudentInfo'
@@ -26,7 +26,7 @@ const StudentProfileView = () => {
           <>
             <h1>
               {' '}
-              {capitalize(userInfoQuery.data.user.first_name)} {capitalize(userInfoQuery.data.user.last_name)}
+              {userInfoQuery.data.user.first_name} {userInfoQuery.data.user.last_name}
             </h1>
             <h3> Estudiante </h3>
             <Divider />

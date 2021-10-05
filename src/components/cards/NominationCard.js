@@ -12,7 +12,6 @@ import {
   Paper
 } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
-import { capitalize } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -76,7 +75,7 @@ const NominationCard = (props) => {
                   src={props.tutor.user.photo}
                 />
                 <Typography component={'h5'} variant="h5">
-                  <b>{capitalize(props.tutor.user.first_name)} {capitalize(props.tutor.user.last_name)}</b>
+                  <b>{props.tutor.user.first_name} {props.tutor.user.last_name}</b>
                 </Typography>
                 <Rating name="read-only" size="small" value={props.tutor.score} readOnly />
               </Box>

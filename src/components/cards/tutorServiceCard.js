@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
 import ServiceSelectionView from 'src/views/studentviews/tutors/serviceSelectionView'
-import { capitalize, isUndefined } from 'lodash-es'
+import { isUndefined } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -88,7 +88,7 @@ const TutorServiceCard = (props) => {
                   src={props.service.tutor.user.photo}
                 />
                 <Typography>
-                  <b>{capitalize(props.service.tutor.user.first_name)} {capitalize(props.service.tutor.user.last_name)}</b>
+                  <b>{props.service.tutor.user.first_name} {props.service.tutor.user.last_name}</b>
                 </Typography>
                 <Rating name="read-only" size="small" value={props.service.tutor.score} readOnly />
               </Box>

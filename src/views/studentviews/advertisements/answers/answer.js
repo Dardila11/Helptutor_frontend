@@ -17,7 +17,6 @@ import AdvertisementInfoViewSkeleton from 'src/components/skeletons/Advertisemen
 
 import { useStudentInfo } from 'src/hooks/StudentHooks/useStudentInfo'
 import { useAdvertisementAnswers } from 'src/hooks/useAdvertisements'
-import { capitalize } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   cover: {
@@ -77,8 +76,8 @@ const AnswerView = (props) => {
                     />
                     <Typography variant="h6">
                       <b>
-                        {capitalize(studentInfoQuery.data.user.first_name)}{' '}
-                        {capitalize(studentInfoQuery.data.user.last_name)}
+                        {studentInfoQuery.data.user.first_name}{' '}
+                        {studentInfoQuery.data.user.last_name}
                       </b>
                     </Typography>
                   </Box>

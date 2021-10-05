@@ -17,7 +17,7 @@ import {
   Typography
 } from '@material-ui/core'
 import AnswerView from 'src/views/studentviews/advertisements/answers/answer'
-import { capitalize, isUndefined } from 'lodash-es'
+import { isUndefined } from 'lodash-es'
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
@@ -141,8 +141,8 @@ const AdvertisementCard = (props) => {
             />
             <Typography>
               <b>
-                {capitalize(advertisement.student.user.first_name)}{' '}
-                {capitalize(advertisement.student.user.last_name)}
+                {advertisement.student.user.first_name}{' '}
+                {advertisement.student.user.last_name}
               </b>
             </Typography>
           </Box>
