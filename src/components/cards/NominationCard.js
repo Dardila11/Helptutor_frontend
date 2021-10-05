@@ -75,7 +75,7 @@ const NominationCard = (props) => {
                   src={props.tutor.user.photo}
                 />
                 <Typography component={'h5'} variant="h5">
-                  <b>{props.tutor.user.first_name} {props.tutor.user.last_name}</b>
+                  <b>{props.tutor.user.first_name.split(" ")[0]} {props.tutor.user.last_name.split(" ")[0]}</b>
                 </Typography>
                 <Rating name="read-only" size="small" value={props.tutor.score} readOnly />
               </Box>
