@@ -34,6 +34,7 @@ import TutorsView from 'src/views/studentviews/tutors/tutorsView'
 import StudentAdvertisementsView from 'src/views/studentviews/advertisements'
 import TutorScheduleView from 'src/views/tutorviews/schedule/TutorScheduleView'
 import StudentConsultanciesView from 'src/views/studentviews/consultancies/consultanciesView'
+import StudentAccountLayout from 'src/layouts/StudentAccountLayout'
 
 // MEETING VIEWS
 /* import MeetView from 'src/views/meet/MeetView' */
@@ -91,7 +92,8 @@ const Routing = () => {
         <Route path="/anuncios" element={<StudentAdvertisementsView />} />
         <Route path="/asesorias" element={<StudentConsultanciesView />} />
       </PrivateRoute>
-      <PrivateRoute path="/estudiante/cuenta" element={<MainLayout />}>
+      <PrivateRoute path="/estudiante/cuenta" element={<StudentAccountLayout />}>
+        <Route path="/" element={<StudentProfileView />} />
         <Route path="/perfil" element={<StudentProfileView />} />
         <Route path="/informacion" element={<StudentEditInfoView />} />
       </PrivateRoute>
@@ -101,6 +103,7 @@ const Routing = () => {
         <Route path="/publicaciones" element={<TutorPublicationsView />} />
         <Route path="/asesorias" element={<TutorAggrementsView />} />
       </PrivateRoute>
+      
       <PrivateRoute path="/tutor/cuenta" element={<MainLayout />}>
         <Route path="/" element={<TutorInfoView menu={<NavBarTutor />} />} />
         <Route
