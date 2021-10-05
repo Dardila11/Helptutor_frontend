@@ -4,6 +4,7 @@ import { capitalize } from 'lodash-es'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 import Page from 'src/components/Page'
 import { useStudentInfo,  } from 'src/hooks/StudentHooks/useStudentInfo'
+import { useAuthState } from 'src/context/context'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -13,8 +14,9 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const StudentProfileView = ({user}) => {
+const StudentProfileView = () => {
   const classes = useStyles()
+  const { user } = useAuthState()
   const userInfoQuery = useStudentInfo(user.id)
 
   return (
