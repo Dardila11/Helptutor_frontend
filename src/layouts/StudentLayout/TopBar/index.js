@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
 
 const StudentTopBar = () => {
   const navigate = useNavigate()
-  const user = useAuthState()
+  const { user, roles } = useAuthState()
   const dispatch = useAuthDispatch()
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -119,9 +119,9 @@ const StudentTopBar = () => {
                   color="inherit"
                   onClick={handleClick}>
                   <Typography className={classes.userSpace} variant="h4">
-                    {user.user != null ? (
+                    {user != null ? (
                       <>
-                        {capitalize(user.user.first_name)} {capitalize(user.user.last_name)}
+                        {capitalize(user.first_name)} {capitalize(user.last_name)}
                       </>
                     ) : (
                       <></>
@@ -130,9 +130,9 @@ const StudentTopBar = () => {
                   <Avatar
                   className={classes.cover}
                   alt="user photo"
-                  src={user.user.photo}
+                  src={user.photo}
                 >
-                  <b>{capitalize(user.user.first_name[0])}</b>
+                  <b>{capitalize(user.first_name[0])}</b>
                 </Avatar>
                 </IconButton>
                 <Menu
@@ -148,15 +148,15 @@ const StudentTopBar = () => {
                       </Typography>
                     </MenuItem>
                   </RouterLink>
-                  {/* {(user.isStudent && user.isTutor)? (
-                  <RouterLink to="/seleccion-rol">
-                  <MenuItem onClick={handleClose}>
-                    <Typography color="primary">
-                      <b>Cambiar de rol</b>
-                    </Typography>
-                  </MenuItem>
-                </RouterLink>
-                  ): <></>} */}
+                  {roles[0] && roles[1] ? (
+                    <RouterLink to="/seleccion-rol">
+                      <MenuItem onClick={handleClose}>
+                        <Typography color="primary">
+                          <b>Cambiar de rol</b>
+                        </Typography>
+                      </MenuItem>
+                    </RouterLink>
+                  ) : null}
                   <Divider></Divider>
                   <MenuItem onClick={handleLogOut}>
                     <Typography color="primary">

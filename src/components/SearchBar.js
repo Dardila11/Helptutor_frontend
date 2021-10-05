@@ -111,14 +111,6 @@ const SearchBar = (props) => {
             )
           }}
         />
-        {!isUndefined(option) ? (
-          <Box className={classes.label} textAlign="center">
-            <Typography>
-              <b>Filtrar por</b>
-            </Typography>
-            {renderFilters(option)}
-          </Box>
-        ) : null}
       </Box>
     </Paper>
   )

@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     animation: 'fadeIn 0.3s',
     transition: 'opacity 0.4s',
-    opacity: 0.5,
+    opacity: 0.7,
   }
 }))
 
@@ -24,9 +24,9 @@ const ScrollArrow = () =>{
   const [showScroll, setShowScroll] = useState(false)
 
   const checkScrollTop = () => {
-    if (!showScroll && window.pageYOffset > 10){
+    if (!showScroll && window.pageYOffset > 500){
       setShowScroll(true)
-    } else if (showScroll && window.pageYOffset <= 10){
+    } else if (showScroll && window.pageYOffset <= 500){
       setShowScroll(false)
     }
   };
@@ -39,8 +39,7 @@ const ScrollArrow = () =>{
 
   return (
     <>
-    
-        <IconButton className={classes.scrollTop} onClick={scrollTop} style={{height: 40, display: showScroll ? 'flex' : 'none'}}>
+        <IconButton className={classes.scrollTop} variant="contained" color="primary" onClick={scrollTop} style={{height: 40, display: showScroll ? 'flex' : 'none'}}>
             <ArrowUpwardIcon/>
         </IconButton>
     </>
