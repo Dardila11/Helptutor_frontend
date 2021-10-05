@@ -98,7 +98,6 @@ const TutorTopBar = () => {
         color="inherit"
         onClick={handleClick}>
         <Typography className={classes.userSpace} variant="h4">
-          {console.log(user)}
           {user.first_name} {user.last_name}
         </Typography>
         <Avatar className={classes.cover} alt="user photo" src={user.photo}>

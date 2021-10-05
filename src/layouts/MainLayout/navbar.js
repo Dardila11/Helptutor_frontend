@@ -91,8 +91,6 @@ const MainNavBar = () => {
       <StudentTopBar />
     ) : null
 
-    console.log(location.pathname.split('/')[1] === 'estudiante')
-
   return (
     <AppBar position="sticky">
       <Toolbar className={classes.toolbar}>

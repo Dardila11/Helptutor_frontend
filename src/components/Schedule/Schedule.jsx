@@ -51,10 +51,12 @@ const Schedule = ({role, next, handleTutor, idTutor}) => {
   const [date, setDate] = useState(new Date(2021,9,3))
   const [nextButton, setNext] = useState(true)
   const [dates, setDates] = useState(null)
+  const [pnewdays, setNewDays] = useState(null)
 
   useEffect(()=> {
     if(!isLoading){
       var newDays = getDate(date)
+      setNewDays(newDays)
     setStudentSelect([])
     const generatedRows = [], genetaredColumns = []
     for (let index = 6; index <= 22; index++) {
@@ -149,16 +151,20 @@ const Schedule = ({role, next, handleTutor, idTutor}) => {
         if(e.value==="Disponible") newStudent.push(slot)
         else newStudent = newStudent.filter(element => element.id!==slot.id)
         setStudentSelect(newStudent)
-        /* handleScheduleSelected(newStudent) */
+        let scheEl = data.find( element => 
+          parseInt(element.start_time[0]+element.start_time[1])===slot.start_time 
+          && 
+          parseInt(element.end_time[0]+element.end_time[1])===slot.end_time
+          &&
+          pnewdays.find(pelement => pelement.date === (new Date(element.day)).getDate()+1).label === slot.day)
         setRows(newRow)
-        next(slot)
+        next(slot, scheEl)
       }
     }
   }
   const handleClickWeek = () => {
     date.setDate(date.getDate()+7)
     setDate(date)
-    console.log(date.toDateString())
     let genetaredColumns = []
     let newsDays = getDate(date)
     const franja = { field: 'franja', headerName: 'Franja', headerClassName: 'slotheader',

@@ -143,8 +143,9 @@ const TutorSelectionView = (props) => {
     handleNext()
   }
 
-  const handleSchedule = (slot) => {
-    setContract({ ...contract, slot: slot, tutor: tutorInfoQuery.data })
+  const handleSchedule = (slot, scheEl) => {
+    let slotp = {...slot, id: scheEl.id}
+    setContract({ ...contract, slot: slotp, tutor: tutorInfoQuery.data })
     handleNext()
   }
 
