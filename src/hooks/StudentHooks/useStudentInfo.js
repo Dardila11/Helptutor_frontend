@@ -13,7 +13,7 @@ export const useUpdateStudentInfo = () => {
   const queryClient = useQueryClient()
   return useMutation(
     async (values) => {
-      return Api.updateStudentInfo(values)
+      return Api.updateStudentInfo(values[0], values[1])
         .then((res) => res.data)
     },
     {

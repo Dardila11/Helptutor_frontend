@@ -93,7 +93,7 @@ const ProfileView = ({ tutor, reviews }) => {
                 />
                 <Rating value={tutor.score} size="large" readOnly />
                 <Typography className={classes.contentPrincipal} variant="h4">
-                  Promedio: 4.5 de 23 calificaciones
+                  Promedio: {tutor.score} de {tutor.score_average} calificaciones
                 </Typography>
               </Box>
             </Grid>

@@ -69,7 +69,6 @@ const useStyles = makeStyles((theme) => ({
 const StudentEditInfoView = () => {
   const userId = useAuthState().user.id
   const userInfoQuery = useStudentInfo(userId)
-  console.log(userInfoQuery)
   const mutation = useUpdateStudentInfo()
   const [file, setFile] = React.useState(null)
   const [preview, setPreview] = useState(null)
@@ -113,7 +112,7 @@ const StudentEditInfoView = () => {
                 validationSchema={formikValues.validation}
                 onSubmit={(values) => {
                   let jsonValues = formikValues.getValues(values)
-                  mutation.mutate(jsonValues, { 
+                  mutation.mutate([userId, jsonValues], { 
                     onSuccess: (res) => {
                       console.log(res)
                       toast.success('perfil actualizado')

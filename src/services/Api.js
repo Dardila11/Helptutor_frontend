@@ -195,8 +195,8 @@ const postStudent = (data) => {
   return https.post('/api/student/', data)
 }
 
-const updateStudentInfo = (data) => {
-  return https.patch('/api/student/', data, AuthHeader())
+const updateStudentInfo = (id, data) => {
+  return https.patch(`/api/student/${id}/`, data, AuthHeader())
 }
 
 const postOffer = (data) => {

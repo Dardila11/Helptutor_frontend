@@ -70,6 +70,17 @@ const TutorScheduleView = (props) => {
         <Grid item xs={3}>
           <Paper className={classes.root} elevation={3}>
             <Card className={classes.root}>
+              <Container className={classes.actions}>
+                <Button
+                  className={classes.button}
+                  fullWidth={true}
+                  color="secundary"
+                  variant="contained"
+                  startIcon={<ArrowBackIos />}
+                  onClick={() => navigate('/tutor/cuenta')}>
+                  Menú
+                </Button>
+              </Container>
               <Typography
                 className={classes.containerTitle}
                 variant="h4"
