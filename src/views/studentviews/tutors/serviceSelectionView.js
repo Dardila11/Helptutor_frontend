@@ -89,7 +89,6 @@ const ServiceSelectionView = (props) => {
   const steps = getSteps()
   const queryUseTutorInfo = useTutorInfo(props.tutorInfo.user.id)
   const reviewsQuery = useReviews(props.tutorInfo.user.id)
-  console.log(queryUseTutorInfo)
 
   const handleNext = () => {
     if (activeStep < 2) setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -152,7 +151,7 @@ const ServiceSelectionView = (props) => {
                 ) : (
                   <></>
                 )}
-                {activeStep === 1 ? <Schedule next={handleSchedule} /> : <></>}
+                {activeStep === 1 ? <Schedule next={handleSchedule} idTutor={contract.tutor.user.id}/> : <></>}
                 {activeStep === 2 ? (
                   <>
                     <Box
