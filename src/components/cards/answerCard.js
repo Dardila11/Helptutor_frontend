@@ -1,6 +1,5 @@
 import React from 'react'
 import { Avatar, Grid, makeStyles, Typography } from '@material-ui/core'
-import { capitalize } from 'lodash-es'
 
 const useStyles = makeStyles((theme) => ({
   coverAnswer: {
@@ -27,8 +26,8 @@ const AnswerCard = ({ answer }) => {
         <Grid className={classes.answer} item xs={11}>
           <Typography component="h6" lineheight={1} variant="h6">
             <b>
-              {capitalize(answer.user.first_name)}{' '}
-              {capitalize(answer.user.last_name)}
+              {answer.user.first_name}{' '}
+              {answer.user.last_name}
             </b>
           </Typography>
           <Typography component="h6" variant="h6">{answer.description}</Typography>

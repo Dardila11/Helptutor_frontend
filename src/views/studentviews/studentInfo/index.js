@@ -21,7 +21,6 @@ import EditProfileViewSkeleton from 'src/components/skeletons/EditProfileViewSke
 import Page from 'src/components/Page';
 import { useAuthState } from 'src/context/context';
 import { useStudentInfo, useUpdateStudentInfo } from 'src/hooks/StudentHooks/useStudentInfo'
-import { capitalize } from 'lodash-es';
 import { toast } from 'react-toastify';
 
 
@@ -152,7 +151,7 @@ const StudentEditInfoView = () => {
                                 src={preview === null ? userInfoQuery.data.user.photo : preview}
                               >
                                 <Typography variant='h1'>
-                                  <b>{capitalize(userInfoQuery.data.user.first_name[0])}</b>
+                                  <b>{userInfoQuery.data.user.first_name[0]}</b>
                                 </Typography>
                               </Avatar>
                             </Badge>

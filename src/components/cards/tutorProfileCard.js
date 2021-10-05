@@ -11,7 +11,7 @@ import {
 
 import { Rating } from '@material-ui/lab'
 import QualificationCard from 'src/components/cards/QualificationCard'
-import { capitalize } from 'lodash-es'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,8 +63,8 @@ const ProfileView = ({ tutor, reviews }) => {
           <Box className={classes.title} textAlign="center">
             <Typography variant="h3">
               <b>
-                {capitalize(tutor.user.first_name)}{' '}
-                {capitalize(tutor.user.last_name)}
+                {tutor.user.first_name}{' '}
+                {tutor.user.last_name}
               </b>
             </Typography>
             <Typography variant="h4">Tutor</Typography>
