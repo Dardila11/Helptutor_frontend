@@ -26,4 +26,6 @@
 
 .sec1--information {
   position: absolute;
+  margin-right: 30px;
+  text-align: center;
 }
