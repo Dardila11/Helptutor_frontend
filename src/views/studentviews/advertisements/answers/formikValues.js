@@ -10,7 +10,7 @@ const getValues = (values) => {
 const validation = Yup.object().shape({
   description: Yup.string()
     .max(255)
-    .min(5)
+    .min(5, 'Descripción debe tener por lo menos 5 caracteres')
     .test(
       'empty characters',
       'No puede estar vacio',
