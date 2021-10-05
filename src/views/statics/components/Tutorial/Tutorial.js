@@ -48,24 +48,8 @@ const Tutorial = () => {
             <div className="step--box">
               <img src={Horario} alt="schedule" />
             </div>
-          </div>
+          </div>          
           <div className="steps step3">
-            <div className="step--box">
-              <h3>Aprende en nuestra aula virtual</h3>
-              <p>
-                Nuestra aula virtual tiene todo lo necesario para que realices
-                las clases: Videoconferencia, pizarra, edición de documentos
-                online...
-              </p>
-            </div>
-            <div className="step--box step">
-              <span>3</span>
-            </div>
-            <div className="step--box">
-              <img src={Virtual} alt="virtual" />
-            </div>
-          </div>
-          <div className="steps step4">
             <div className="step--box">
               <h3>Publica sobre los temas que necesitas ayuda!</h3>
               <p>
@@ -75,7 +59,7 @@ const Tutorial = () => {
               </p>
             </div>
             <div className="step--box step">
-              <span>4</span>
+              <span>3</span>
             </div>
             <div className="step--box">
               <img src={Publicaciones} alt="publications" />

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
 	padding-left: 20px ;
   width: 100vw;
   height: 100vh;
@@ -13,7 +13,7 @@
 }
 
 .sec1--h2 {
-  color: #005676;
+  color: white;
   font-weight: bold;
   text-align: center;
 }
@@ -21,6 +21,7 @@
 .sec1--p {
 	width: 30vw;
   font-size: 1.2rem;
+  color: white;
 }
 
 .sec1--information {
