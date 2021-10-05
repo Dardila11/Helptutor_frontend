@@ -22,8 +22,11 @@ import NominationsView from './nominations'
 import ProfileView from 'src/components/cards/tutorProfileCard'
 import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 import useTutorInfo from 'src/hooks/TutorHooks/useTutorInfo'
-import {useReviews} from 'src/hooks/TutorHooks/useReviews'
+import { useReviews } from 'src/hooks/TutorHooks/useReviews'
 import Schedule from 'src/components/Schedule/Schedule'
+
+import { useUpdateNomination } from 'src/hooks/StudentHooks/useContract'
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,6 +101,8 @@ const TutorSelectionView = (props) => {
   const tutorInfoQuery = useTutorInfo(idTutor)
   const reviewsQuery = useReviews(idTutor)
   const [scheduleSelected, setScheduleSelected] = useState({})
+  const [payment, setPayment] = useState({})
+  const mutation = useUpdateNomination()
 
   useEffect(() => {
     if (idTutor !== null) {
@@ -109,10 +114,27 @@ const TutorSelectionView = (props) => {
 
   useEffect(() => {
     console.log(contract)
-  },[contract])
+  }, [contract])
 
   const handleNext = () => {
     if (activeStep < 3) setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    /* if (activeStep === 3) {
+      // actualizar la nominación
+      let jsonValues = {
+        "nomination": {
+          "price": contract.nomination.price
+        },
+        "time_slot": 1,
+        "payment": {
+          "entity": "Banco de Bogota"
+        }
+      }
+      mutation.mutate([contract.nomination.id,jsonValues], {
+        onSuccess: () => {
+          toast.success("Servicio contratado")
+        }
+      })
+    } */
   }
 
   const handleBack = () => {
@@ -127,7 +149,7 @@ const TutorSelectionView = (props) => {
   }
 
   const handleSchedule = (slot) => {
-    setContract({ ...contract, slot: slot , tutor: tutorInfoQuery.data})
+    setContract({ ...contract, slot: slot, tutor: tutorInfoQuery.data })
     handleNext()
   }
 
@@ -191,7 +213,7 @@ const TutorSelectionView = (props) => {
             flexDirection="column"
             justifyContent="center"
             alignItems="center">
-            <Grid container>              
+            <Grid container>
               <Grid item xs={12}>
                 {activeStep === 0 ? (
                   <NominationsView
