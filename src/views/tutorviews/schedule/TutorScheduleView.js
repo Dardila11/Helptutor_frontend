@@ -13,6 +13,8 @@ import React from 'react'
 import Page from 'src/components/Page'
 import SaveIcon from '@material-ui/icons/Save'
 import Schedule from 'src/components/Schedule/Schedule'
+import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
+import { useNavigate } from 'react-router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const TutorScheduleView = (props) => {
   const classes = useStyles()
   const { saveSchedule, schedule } = props
+  const navigate = useNavigate()
 
   const handleSave = () => {
     saveSchedule(schedule)
@@ -49,6 +52,17 @@ const TutorScheduleView = (props) => {
         <Grid item xs={3}>
           <Paper className={classes.root} elevation={3}>
             <Card className={classes.root}>
+              <Container className={classes.actions}>
+                <Button
+                  className={classes.button}
+                  fullWidth={true}
+                  color="secundary"
+                  variant="contained"
+                  startIcon={<ArrowBackIos />}
+                  onClick={() => navigate('/tutor/cuenta')}>
+                  Menú
+                </Button>
+              </Container>
               <Typography
                 className={classes.containerTitle}
                 variant="h4"
@@ -82,7 +96,7 @@ const TutorScheduleView = (props) => {
           </Paper>
         </Grid>
         <Grid item xs={9}>
-        <Schedule role={"tutor"}/>
+          <Schedule role={"tutor"} />
         </Grid>
       </Grid>
     </Page>
