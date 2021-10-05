@@ -5,7 +5,7 @@ import { useAuthDispatch } from 'src/context'
 import { STOP_ACTION, LOADING_ACTION } from 'src/context/types'
 
 const fetchAggrements = async (pk_user) => {
-  return Api.getAggrements(pk_user).then((res) => res.data)
+  return Api.getTutorAggrements(pk_user).then((res) => res.data)
 }
 
 const useAggrements = (pk_user) => {

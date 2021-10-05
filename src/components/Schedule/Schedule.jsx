@@ -4,6 +4,8 @@ import clsx from 'clsx'
 import { DataGrid } from '@material-ui/data-grid'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import useSchedule from 'src/hooks/TutorHooks/useSchedule'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,21 +38,23 @@ const useStyles = makeStyles((theme) => ({
 }))
 const month = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
 const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
-const scheduleInitial = [{day: "Lunes", start_time: 7, end_time: 9}, {day: "Martes", start_time: 10, end_time: 11},
-                  {day: "Miercoles", start_time: 13, end_time: 14}, {day: "Lunes", start_time: 16, end_time: 17},
-                  {day: "Martes", start_time: 7, end_time: 9} ]
 
-const Schedule = ({role, next}) => {
+const Schedule = ({role, next, handleTutor, idTutor}) => {
   const classes = useStyles()
+  const { useTutorSchedule } = useSchedule
+  const {isLoading, data } = useTutorSchedule(idTutor)
   const [rows, setRows] = useState(null)
   const [columns, setColumns] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [schedule, setSchedule] = useState(scheduleInitial)
+  const [schedule, setSchedule] = useState(data? data: [])
   const [studentSelect, setStudentSelect] = useState([])
   const [date, setDate] = useState(new Date(2021,9,3))
   const [nextButton, setNext] = useState(true)
+  const [dates, setDates] = useState(null)
+
   useEffect(()=> {
-    var newDays = getDate(date)
+    if(!isLoading){
+      var newDays = getDate(date)
     setStudentSelect([])
     const generatedRows = [], genetaredColumns = []
     for (let index = 6; index <= 22; index++) {
@@ -80,9 +84,10 @@ const Schedule = ({role, next}) => {
         })
     })
     setColumns(genetaredColumns)
-    loadSchedule(generatedRows)
+    loadSchedule(generatedRows, newDays)
     setLoading(false)
-  },[])
+    }    
+  },[isLoading])
 
   const getDate = (current) => {
     var week= new Array(); 
@@ -94,14 +99,16 @@ const Schedule = ({role, next}) => {
         current.setDate(current.getDate() +1);
     }
     setDate(new Date())
+    setDates(week)
     return week; 
   }
 
-  const loadSchedule = (generatedRows) => {
+  const loadSchedule = (generatedRows, newDays) => {
     let loadedSchedule = [...generatedRows]
     schedule.forEach(element => {
-      let slot = loadedSchedule.find( slot => slot.id === element.start_time)
-      let day = element.day
+      let slot = loadedSchedule.find( slot => slot.id === parseInt(element.start_time[0]+element.start_time[1]))
+      let newdate = new Date(element.day)
+      let day = newDays.find(element => element.date === newdate.getDate()+1).label
       let res ="Disponible"
       let index = loadedSchedule.indexOf(slot)
       slot = {...slot, [day]: res}        
@@ -120,6 +127,13 @@ const Schedule = ({role, next}) => {
       slot = {...slot, [day]: res}        
       let newRow = [...rows]
       newRow[index] = slot
+      let dat = e.colDef.headerName.props.children[3].props.children
+      let savedate = new Date(date.getFullYear(),month.indexOf(dat[2]),dat[0] )
+      let newSche = [...schedule]
+      let saveSlot = {day: savedate, start_time: e.id, end_time: e.id+1}
+      if(e.value==="No disponible") newSche.push(saveSlot)
+      else newSche = newSche.filter(element => element.day.toDateString()+""+element.start_time!==saveSlot.day.toDateString()+""+saveSlot.start_time)
+      setSchedule(newSche)
       setRows(newRow)
     }else{
       console.log(e)
@@ -142,10 +156,6 @@ const Schedule = ({role, next}) => {
       }
     }
   }
-  useEffect(()=>{
-    if(role!=="tutor")console.log(studentSelect)
-  },[studentSelect])
-  
   const handleClickWeek = () => {
     date.setDate(date.getDate()+7)
     setDate(date)
@@ -201,6 +211,10 @@ const Schedule = ({role, next}) => {
     setNext(true)
     setDate(new Date())
   }
+
+  useEffect(()=>{
+    if(role==="tutor") handleTutor(schedule)
+  },[schedule])
   return (
     <>
     {role!=="tutor"? 

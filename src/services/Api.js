@@ -223,6 +223,10 @@ const getAggrements = (id) => {
   return https.get(`api/student/${id}/aggrement/`, AuthHeader())
 }
 
+const getTutorAggrements = (id) => {
+  return https.get('api/tutor/' + id + '/aggrement/', AuthHeader())
+}
+
 const postAdvertisement = (data) => {
   return https.post('api/advertisement/', data, AuthHeader())
 }
@@ -276,13 +280,11 @@ const postAnswer = (data) => {
 }
 
 const getSchedule = (idTutor) => {
-  console.log('get schedule with id:' + idTutor)
-  //return https.post('api/tutor/'+idTutor+'/schedule', tokenConfig(state))
+  return https.get('api/tutor/'+idTutor+'/timeslot', AuthHeader())
 }
 
-const postSchedule = (idTutor) => {
-  console.log('post schedule with id:' + idTutor)
-  //return https.post('api/tutor/'+idTutor+'/schedule', tokenConfig(state))
+const postSchedule = (data) => {
+  return https.post('api/timeslot/',data,AuthHeader())
 }
 
 const logConstants = {
@@ -317,6 +319,7 @@ const logConstants = {
   getSchedule,
   getTutorReviews,
   getAgreements,
+  getTutorAggrements,
   postTutor,
   postGoogleTutor,
   postGoogleStudent,

@@ -211,7 +211,7 @@ const TutorSelectionView = (props) => {
                 ) : (
                   <></>
                 )}
-                {activeStep === 2 ? <Schedule next={handleSchedule} handleScheduleSelected={handleScheduleSelected} /> : <></>}
+                {activeStep === 2 ? <Schedule next={handleSchedule} handleScheduleSelected={handleScheduleSelected} idTutor={idTutor}/> : <></>}
                 {activeStep === 3 ? (
                   <>
                     <Box

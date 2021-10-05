@@ -73,7 +73,7 @@ const AnswerView = (props) => {
                     <Avatar
                       className={classes.cover}
                       alt="user photo"
-                      src="/static/images/avatars/avatar_6.png"
+                      src={studentInfoQuery.data.user.photo}
                     />
                     <Typography variant="h6">
                       <b>

@@ -9,10 +9,12 @@ import {
   Paper,
   Typography
 } from '@material-ui/core'
-import React from 'react'
+import React, { useState} from 'react'
 import Page from 'src/components/Page'
 import SaveIcon from '@material-ui/icons/Save'
 import Schedule from 'src/components/Schedule/Schedule'
+import useSchedule from 'src/hooks/TutorHooks/useSchedule'
+import { useAuthState } from 'src/context'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,10 +39,29 @@ const useStyles = makeStyles((theme) => ({
 
 const TutorScheduleView = (props) => {
   const classes = useStyles()
-  const { saveSchedule, schedule } = props
+  const id = useAuthState().user.id
+  const [schedule, setSchedule] = useState(null)
+  const { useCreateTutorSchedule } = useSchedule
+  const mutation = useCreateTutorSchedule()
 
   const handleSave = () => {
-    saveSchedule(schedule)
+    let formated = []
+    schedule.forEach(element => {
+      let month = ((element.day.getMonth()+1)+"").length === 1? "0"+(element.day.getMonth()+1): (element.day.getMonth()+1)
+      let day = ((element.day.getDate())+"").length === 1? "0"+(element.day.getDate()): (element.day.getDate())
+      let slot = {
+        day: element.day.getFullYear()+"-"+month+"-"+day,
+        start_time: (element.start_time+"").length === 1? "0"+element.start_time+":00:00": element.start_time+":00:00",
+        end_time: (element.end_time+"").length === 1? "0"+element.end_time+":00:00": element.end_time+":00:00",
+      }
+      formated.push(slot)
+    });
+    mutation.mutate({time_slots : formated})
+  }
+  
+
+  const handleSchedule = data => {
+    setSchedule(data)
   }
 
   return (
@@ -82,7 +103,7 @@ const TutorScheduleView = (props) => {
           </Paper>
         </Grid>
         <Grid item xs={9}>
-        <Schedule role={"tutor"}/>
+          <Schedule role={"tutor"} handleTutor={handleSchedule} idTutor={id}/>
         </Grid>
       </Grid>
     </Page>
