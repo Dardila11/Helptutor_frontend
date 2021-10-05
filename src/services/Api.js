@@ -219,6 +219,10 @@ const getOffersByStudentId = (id) => {
   return https.get(`api/student/${id}/offer/`, AuthHeader())
 }
 
+const postAggrement = (values) => {
+  return https.post(`api/aggrement/`, values, AuthHeader())
+}
+
 const getAggrements = (id) => {
   return https.get(`api/student/${id}/aggrement/`, AuthHeader())
 }
@@ -327,6 +331,7 @@ const logConstants = {
   postServiceTutor,
   postStudent,
   postOffer,
+  postAggrement,
   postAdvertisement,
   postNomination,
   postAnswer,

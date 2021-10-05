@@ -24,6 +24,8 @@ import ProfileViewSkeleton from 'src/components/skeletons/ProfileViewSkeleton'
 
 import useTutorInfo from 'src/hooks/TutorHooks/useTutorInfo'
 import { useReviews } from 'src/hooks/TutorHooks/useReviews'
+import useAggrement from 'src/hooks/TutorHooks/useAggrement'
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,9 +91,45 @@ const ServiceSelectionView = (props) => {
   const steps = getSteps()
   const queryUseTutorInfo = useTutorInfo(props.tutorInfo.user.id)
   const reviewsQuery = useReviews(props.tutorInfo.user.id)
+  const { useCreateAggrement } = useAggrement
+  const mutation = useCreateAggrement()
+
+  React.useEffect(() => {
+    console.log(contract)
+  },[contract])
+
+
+  const handleSchedule = (slot, scheEl) => {
+    let slotp = {...slot, id: scheEl.id}
+    setContract({ ...contract, slot: slotp, tutor: queryUseTutorInfo.data })
+    handleNext()
+  }
 
   const handleNext = () => {
     if (activeStep < 2) setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    if (activeStep === 2) {
+      let jsonValues = {
+        "aggrement": {
+          "service": service.id,
+          "price": service.price
+        },
+        "time_slot": contract.slot.id,
+        "payment": {
+          "entity": "Banco de Bogota"
+        }
+      }
+      console.log(jsonValues)
+      mutation.mutate(jsonValues, {
+        onSuccess: () => {
+          toast.success("Servicio contratado")
+          props.onClose()
+        },
+        onError: (err) => {
+          toast.error('hubo un error ', err)
+        }
+      })
+
+    }
   }
 
   const handleBack = () => {
@@ -100,11 +138,6 @@ const ServiceSelectionView = (props) => {
 
   const handleTutor = (tutor) => {
     setContract({ ...contract, tutor: tutor })
-    handleNext()
-  }
-
-  const handleSchedule = (slot) => {
-    setContract({ ...contract, slot: slot })
     handleNext()
   }
 
@@ -151,7 +184,7 @@ const ServiceSelectionView = (props) => {
                 ) : (
                   <></>
                 )}
-                {activeStep === 1 ? <Schedule next={handleSchedule} idTutor={contract.tutor.user.id}/> : <></>}
+                {activeStep === 1 ? <Schedule next={handleSchedule} idTutor={contract.tutor.user.id} /> : <></>}
                 {activeStep === 2 ? (
                   <>
                     <Box
@@ -170,7 +203,7 @@ const ServiceSelectionView = (props) => {
                             <Avatar
                               className={classes.cover}
                               alt="user photo"
-                              src="/static/images/avatars/avatar_6.png"
+                              src={contract.tutor.user.photo}
                             />
                           </Box>
                           <Box>

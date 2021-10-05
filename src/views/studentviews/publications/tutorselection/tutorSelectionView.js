@@ -104,6 +104,8 @@ const TutorSelectionView = (props) => {
   const [payment, setPayment] = useState({})
   const mutation = useUpdateNomination()
 
+  
+
   useEffect(() => {
     if (idTutor !== null) {
       tutorInfoQuery.refetch()
@@ -112,15 +114,19 @@ const TutorSelectionView = (props) => {
     }
   }, [idTutor])
 
+  useEffect(() => {
+    console.log(contract)
+  },[contract])
+
   const handleNext = () => {
     if (activeStep < 3) setActiveStep((prevActiveStep) => prevActiveStep + 1)
-    /* if (activeStep === 3) {
+     if (activeStep === 3) {
       // actualizar la nominación
       let jsonValues = {
         "nomination": {
           "price": contract.nomination.price
         },
-        "time_slot": 1,
+        "time_slot": contract.slot.id,
         "payment": {
           "entity": "Banco de Bogota"
         }
@@ -128,9 +134,13 @@ const TutorSelectionView = (props) => {
       mutation.mutate([contract.nomination.id,jsonValues], {
         onSuccess: () => {
           toast.success("Servicio contratado")
+          props.onClose()
+        },
+        onError: (err) => {
+          toast.error('hubo un error ', err)
         }
       })
-    } */
+    } 
   }
 
   const handleBack = () => {

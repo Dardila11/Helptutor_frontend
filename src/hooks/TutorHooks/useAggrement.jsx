@@ -35,4 +35,17 @@ const useUpdateAggrement = () => {
   )
 }
 
-export default { useAggrements, useUpdateAggrement }
+const useCreateAggrement = () => {
+  const queryClient = useQueryClient()
+  return useMutation( async (values) => {
+    return Api.postAggrement(values).then(res => res.data)
+  },
+  {
+    onSuccess: (res) => {
+      queryClient.invalidateQueries('aggrements')
+      console.log(res)
+    }
+  })
+}
+
+export default { useAggrements, useUpdateAggrement, useCreateAggrement }
