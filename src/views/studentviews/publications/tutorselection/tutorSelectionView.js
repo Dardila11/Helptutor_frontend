@@ -107,10 +107,6 @@ const TutorSelectionView = (props) => {
     }
   }, [idTutor])
 
-  useEffect(() => {
-    console.log(contract)
-  },[contract])
-
   const handleNext = () => {
     if (activeStep < 3) setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
@@ -121,7 +117,6 @@ const TutorSelectionView = (props) => {
 
   const handleNomination = (nomination) => {
     setContract({ ...contract, nomination: nomination })
-    console.log(nomination.tutor.user.id)
     setIdTutor(nomination.tutor.user.id)
     handleNext()
   }
@@ -220,7 +215,7 @@ const TutorSelectionView = (props) => {
                       justifyContent="center"
                       alignItems="center">
                       <Box>
-                        <Typography variant="h4" textAlign="center">
+                        <Typography variant="h4">
                           Información del servicio a contratar
                         </Typography>
                       </Box>

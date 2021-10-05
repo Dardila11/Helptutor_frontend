@@ -15,6 +15,8 @@ import SaveIcon from '@material-ui/icons/Save'
 import Schedule from 'src/components/Schedule/Schedule'
 import useSchedule from 'src/hooks/TutorHooks/useSchedule'
 import { useAuthState } from 'src/context'
+import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
+import { useNavigate } from 'react-router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +45,7 @@ const TutorScheduleView = (props) => {
   const [schedule, setSchedule] = useState(null)
   const { useCreateTutorSchedule } = useSchedule
   const mutation = useCreateTutorSchedule()
+  const navigate = useNavigate()
 
   const handleSave = () => {
     let formated = []

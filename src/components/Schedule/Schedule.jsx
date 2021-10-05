@@ -136,7 +136,6 @@ const Schedule = ({role, next, handleTutor, idTutor}) => {
       setSchedule(newSche)
       setRows(newRow)
     }else{
-      console.log(e)
       if(e.value==="Disponible" || e.value==="Seleccionado"){
         let slot = {id: e.field+e.id,day: e.field, start_time: e.id, end_time: e.id+1}
         let day = e.field
