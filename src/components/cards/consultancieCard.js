@@ -8,8 +8,9 @@ import {
   Container,
   Grid,
   Paper,
-  IconButton,
+  IconButton
 } from '@material-ui/core'
+import { Rating } from '@material-ui/lab'
 import ChatIcon from '@material-ui/icons/Chat';
 import { isUndefined } from 'lodash-es'
 import Videocam from '@material-ui/icons/Videocam'
@@ -39,8 +40,10 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     display: 'flex',
-    height: 120,
+    minHeight: '150px',
+    height: 'auto',
     borderRadius: '20px',
+    padding: theme.spacing(1),
     margin: theme.spacing(1),
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3)
@@ -83,6 +86,7 @@ const ConsultancieCard = (props) => {
               <Typography variant='h5'>
                 <b>{tutorInfo.user.first_name} {tutorInfo.user.last_name}</b>
               </Typography>
+              <Rating name="read-only" size="small" value={tutorInfo.score} readOnly />
             </Box>
           </Grid>
           <Grid item xs={7}>

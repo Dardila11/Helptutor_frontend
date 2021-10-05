@@ -46,14 +46,14 @@ const StudentConsultanciesView = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [query]
   )  */
-  /* 
+  
     useEffect(() => {
       filters(filter)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [filter]) */
+    [filter])
 
-  /* function filters(filt) {
+  function filters(filt) {
     switch (filt.label) {
       case 'cost':
         if(filt.value!==0){
@@ -65,7 +65,7 @@ const StudentConsultanciesView = (props) => {
       default:
         break;
     }
-  } */
+  }
 
   return (
     <Page title="Asesorias">
