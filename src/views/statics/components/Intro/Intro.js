@@ -9,7 +9,7 @@ const Intro = () => {
         <h2 className="sec1--h2">Tutorias especializadas en linea</h2>
         <p className="sec1--p">
           Si necesitas conocimiento en algún tema en especifico, nuestra
-          plataforma HelpTutor es nuestra solución a tus problemas.
+          plataforma <b>HelpTutor</b> es la solución a tus problemas.
         </p>
       </div>
     </div>
