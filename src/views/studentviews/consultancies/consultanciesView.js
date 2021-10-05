@@ -4,7 +4,7 @@ import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
 import { connect } from 'react-redux'
 import CardsViewSkeleton from 'src/components/skeletons/CardsViewSkeleton'
 import SearchBar from 'src/components/SearchBar'
-import ConsultancieCard from 'src/components/cards/consultancieCard'
+import ConsultancieCardStudent from 'src/components/cards/consultancieCardStudent'
 import Page from 'src/components/Page'
 import { useConsultancies } from 'src/hooks/StudentHooks/useConsultancies'
 import { useAuthState } from 'src/context/context'
@@ -32,10 +32,9 @@ const StudentConsultanciesView = (props) => {
   const [listFilter, setListFilter] = useState(null)
   const [filter, setFilter] = useState({ label: '', value: 0 })
   const loading = false
-  const { user } = useAuthState()
-  console.log(user)
-  const consultanciesQuery = useConsultancies(user.id)
-  console.log(consultanciesQuery)
+  const id = useAuthState().user.id
+  const {status, data} = useConsultancies(id)
+  console.log(data)
 
 
   /* useEffect(
@@ -58,7 +57,7 @@ const StudentConsultanciesView = (props) => {
       case 'cost':
         if(filt.value!==0){
           if(!listFilter===null)setListFilter(listFilter.filter(serv => serv.price <= filt.value))
-          else setListFilter(consultanciesQuery.data.filter(serv => serv.price <= filt.value))
+          else setListFilter(data.filter(serv => serv.price <= filt.value))
         }
         break;
     
@@ -71,26 +70,23 @@ const StudentConsultanciesView = (props) => {
     <Page title="Asesorias">
       <Box display='flex' flexDirection='row' justifyContent='center'>
         <Box>
-          <SearchBar option={'asesorias'} list={consultanciesQuery.data} setQuery={setQuery} setFilter={setFilter} />
+          <SearchBar option={'asesorias'} list={data} setQuery={setQuery} setFilter={setFilter} />
         </Box>
         <Box>
           <Paper elevation={3} className={classes.root}>
             <Box className={classes.title} textAlign="center">
               <Typography variant="h4">Asesorias</Typography>
             </Box>
-            {consultanciesQuery.status === 'success' ? (
-              consultanciesQuery.data.length > 0 ? (
+            {status === 'success' ? (
+              data.length > 0 ? (
                 <Box>
                   {listFilter === null ? (
                     <>
-                      {consultanciesQuery.data.map((consultancie, index) => (
-                        <ConsultancieCard
+                      {data.map((consultancie, index) => (
+                        <ConsultancieCardStudent
                           key={index}
                           id={consultancie.id}
-                          consultancie={consultancie}
-                          serviceInfo={consultancie.service}
-                          tutorInfo={consultancie.service.tutor}
-                          isStudent={true}
+                          aggrement={consultancie}
                           isSearch={false}
                         />
                       ))}
@@ -99,11 +95,11 @@ const StudentConsultanciesView = (props) => {
                     <>
                       {listFilter.length > 0 ? (
                         <>
-                          {consultanciesQuery.data.map((consultancie, index) => (
-                            <ConsultancieCard
+                          {data.map((consultancie, index) => (
+                            <ConsultancieCardStudent
                               key={index}
                               id={consultancie.id}
-                              consultancie={consultancie}
+                              aggrement={consultancie}
                               isStudent={true}
                               isSearch={true}
                               query={query}

@@ -10,7 +10,6 @@ import {
   Paper,
   IconButton
 } from '@material-ui/core'
-import { Rating } from '@material-ui/lab'
 import ChatIcon from '@material-ui/icons/Chat';
 import { isUndefined } from 'lodash-es'
 import Videocam from '@material-ui/icons/Videocam'
@@ -57,10 +56,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ConsultancieCard = (props) => {
-  const { consultancie, isSearch, query, tutorInfo, serviceInfo } = props
+const ConsultancieCardTutor = (props) => {
+  const { aggrement, isSearch, query} = props
   const classes = useStyles()
-
+  console.log(aggrement)
   const getHighlightedText = (text) => {
     // Split on highlight term and include term into parts, ignore case
     const parts = text.split(new RegExp(`(${query})`, 'gi'))
@@ -81,12 +80,11 @@ const ConsultancieCard = (props) => {
               <Avatar
                 className={classes.cover}
                 alt="user photo"
-                src={tutorInfo.user.photo}
+                src={aggrement.student.user.photo}
               />
               <Typography variant='h5'>
-                <b>{tutorInfo.user.first_name} {tutorInfo.user.last_name}</b>
+                <b>{aggrement.student.user.first_name} {aggrement.student.user.last_name}</b>
               </Typography>
-              <Rating name="read-only" size="small" value={tutorInfo.score} readOnly />
             </Box>
           </Grid>
           <Grid item xs={7}>
@@ -94,13 +92,11 @@ const ConsultancieCard = (props) => {
               <CardContent className={classes.content}>
                 <Typography component="h5" variant="h5">
                   <Box fontWeight="fontWeightBold">
-                  {isSearch && !isUndefined(query)? getHighlightedText(serviceInfo.title): serviceInfo.title}
+                  {isSearch && !isUndefined(query)? getHighlightedText(aggrement.service.title): aggrement.service.title}
                     </Box>
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                {/* {consultancie.slot.day} de {consultancie.slot.start <= 12 ? consultancie.slot.start : consultancie.slot.start - 12}{' '}
-                                  {consultancie.slot.start < 12 ? 'am' : 'pm'} a {consultancie.slot.end <= 12 ? consultancie.slot.end : consultancie.slot.end - 12}{' '}
-                                  {consultancie.slot.end < 12 ? 'am' : 'pm'} */}
+                {aggrement.service.description}
                 </Typography>
               </CardContent>
             </Container>
@@ -129,4 +125,4 @@ const ConsultancieCard = (props) => {
   )
 }
 
-export default ConsultancieCard
+export default ConsultancieCardTutor

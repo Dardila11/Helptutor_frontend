@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useAuthState } from 'src/context'
-import TutorServiceCard1 from 'src/components/cards/tutorServiceCard1.js'
+import ConsultancieCardTutor from 'src/components/cards/consultancieCardTutor'
 import Page from 'src/components/Page'
 import SearchBar from 'src/components/SearchBar'
 
@@ -22,7 +22,7 @@ const TutorAggrementsView = () => {
   const { useAggrements } = useAggrement
   const { data: services, isLoading } = useAggrements(user.id)
   const [filter, setFilter] = useState({ label: '', value: 0 })
-
+  console.log(services)
   const [listFilter, setListFilter] = useState(null)
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const TutorAggrementsView = () => {
               ) : listFilter === null ? (
                 <>
                   {services.map((item, key) => (
-                    <TutorServiceCard1 key={key} aggrement={item} />
+                    <ConsultancieCardTutor key={key} aggrement={item} />
                   ))}
                 </>
               ) : (
@@ -93,7 +93,7 @@ const TutorAggrementsView = () => {
                   {listFilter.length > 0 ? (
                     <>
                       {listFilter.map((item, index) => (
-                        <TutorServiceCard1
+                        <ConsultancieCardTutor
                           key={index}
                           aggrement={item}
                           isSearch={true}
@@ -104,7 +104,7 @@ const TutorAggrementsView = () => {
                   ) : (
                     <Box textAlign="center">
                       <Typography>
-                        No se encontraron publicaciones que contengan "{query}"
+                        No se encontraron asesorias que contengan "{query}"
                       </Typography>
                     </Box>
                   )}
